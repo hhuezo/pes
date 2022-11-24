@@ -1,6 +1,5 @@
 @extends ('dashboard')
 @section('contenido')
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <div class="row">
         <!-- left column -->
         <div class="col-md-12">
@@ -296,7 +295,6 @@
                     </div>
                 </form>
             </div>
-            @include('sweet::alert')
             <div class="col-md-12">&nbsp;</div>
         </div>
         <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>

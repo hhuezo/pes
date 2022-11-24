@@ -6,6 +6,7 @@ use App\Models\catalogue\NaicsCode;
 use App\Models\catalogue\primaryBusinessType;
 use App\Models\catalogue\State;
 use App\Models\Employer;
+use App\Models\EmployerWorksite;
 use Illuminate\Http\Request;
 
 class EmployerController extends Controller
@@ -84,8 +85,7 @@ class EmployerController extends Controller
             $employer->mailing_city = $request->get('mailing_city');
             $employer->mailing_state = $request->get('mailing_state');
             $employer->mailing_zip_code = $request->get('mailing_zip_code');
-        }
-        else{
+        } else {
             $employer->mailing_address_same_above = 1;
         }
 
@@ -111,14 +111,61 @@ class EmployerController extends Controller
             $employer->signatory_phone = $request->get('signatory_phone');
         }
         $employer->save();
-
-
     }
 
     public function place_employment($id)
     {
 
-        return view('employer.place_employment', ['employer' => Employer::findOrFail($id)]);
+        $states = State::get();
+        $worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
+        return view('employer.place_employment', ['employer' => Employer::findOrFail($id), 'states' => $states, 'worksites' => $worksites]);
+    }
+
+    public function employer_additional_location(Request $request)
+    {
+        $employer_worksite = new EmployerWorksite();
+        $employer_worksite->employer_id = $request->get('employer_id');
+        $employer_worksite->street_address = $request->get('street_address');
+        $employer_worksite->city_address = $request->get('city_address');
+        $employer_worksite->country_address = $request->get('country_address');
+        $employer_worksite->state_id_address = $request->get('state_id_address');
+        $employer_worksite->zip_code_address = $request->get('zip_code_address');
+        $employer_worksite->save();
+
+        $data = EmployerWorksite::where('employer_id', '=', $request->get('employer_id'))->get();
+
+        echo ' <table id="datatable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Street Address</th>
+                <th>City address</th>
+                <th>Country address</th>
+                <th>State</th>
+                <th>Zip code address</th>
+
+            </tr>
+        </thead>
+        <tbody>';
+
+
+
+
+        foreach ($data as $obj) {
+            echo '<tr><td>' . $obj->street_address . '</td>';
+            echo '<td>' . $obj->city_address . '</td>';
+            echo '<td>' . $obj->country_address . '</td>';
+            if($obj->state_id_address)
+            {
+                echo '<td>' . $obj->state->name . '</td>';
+            }
+            else{
+                echo '<td></td>';
+            }
+            echo '<td>' . $obj->zip_code_address . '</td>';
+        }
+        echo ' </tr>
+    </tbody>
+</table>';
     }
 
     /**
