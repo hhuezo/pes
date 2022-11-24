@@ -3,147 +3,197 @@
     <div class="row">
         <div class="col-md-12 ">
             <div class="box box-primary">
-                <div class="box-header  with-border">
-                    <h4><strong>{!! trans('employer.PlaceOfEmployment') !!}</strong></h4>
-                </div>
+                <form action="{{ url('employer_place_store') }}" method="POST">
+                    <div class="box-header  with-border">
+                        <h4><strong>{!! trans('employer.PlaceOfEmployment') !!}</strong></h4>
+                    </div>
 
+                    <input type="hidden" value="{{$employer->id}}" name="id">
 
-                <form action="{{ url('employer') }}" method="POST">
                     @csrf
 
-                    <div class="col-md-12">
+                    <div class="form-group">
+                        <br>
+                        <div class="col-md-12">
+                            <label>{!! trans('employer.MainWorksiteState') !!}</label>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="checkbox" id="SamePlaceBusiness"> &nbsp;&nbsp; {!! trans('employer.SamePlaceBusiness') !!}
+                        </div>
+                    </div>
+                    <div> &nbsp;</div>
+                    <div id="DivMainWorksite">
+                        <div class="col-md-12">
 
-                        <div class="box-body">
+                            <div class="box-body">
 
-                            <div class="form-group">
-                                <br>
-                                <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label>{!! trans('employer.MainWorksiteStreetAddress') !!}</label>
+                                    <input type="text" name="main_worksite_location" class="form-control">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label>{!! trans('employer.MainWorksiteCity') !!}</label>
+                                    <input type="text" name="main_worksite_city" class="form-control">
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
+                                    <input type="text" name="main_worksite_country" class="form-control">
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <label>{!! trans('employer.MainWorksiteState') !!}</label>
+                                    <select class="form-control" name="main_worksite_state">
+                                        @foreach ($states as $obj)
+                                            <option value="{{ $obj->id }}">{{ $obj->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-md-12">
-                                    <input type="checkbox"> &nbsp;&nbsp; {!! trans('employer.SamePlaceBusiness') !!}
-                                </div>
-                            </div>
-                            <div> &nbsp;</div>
-                            <div class="form-group">
-                                <label>{!! trans('employer.MainWorksiteStreetAddress') !!}</label>
-                                <input type="text" name="trade_name" class="form-control">
-                            </div>
 
+                                <div class="form-group">
+                                    <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
+                                    <input type="text" name="main_worksite_zip_code" class="form-control">
+                                </div>
+                            </div>
                         </div>
 
                     </div>
 
 
+
+
+
+
+
                     <div class="col-md-12">
+                        <h5><strong>{!! trans('employer.AdditionalEmployerWorksite') !!}</strong></h5>
                         <div class="col-md-6">
-
-                            <div class="form-group">
-                                <label>{!! trans('employer.MainWorksiteCity') !!}</label>
-                                <input type="text" name="trade_name" class="form-control">
+                            <div class="col-md-9">
+                                <select class="form-control" name="Additional_employer_worksite"
+                                    id="Additional_employer_worksite">
+                                    <option value="0">{!! trans('employer.No') !!} </option>
+                                    <option value="1">{!! trans('employer.Yes') !!} </option>
+                                </select>
                             </div>
-
-
-                            <div class="form-group">
-                                <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
-                                <input type="text" name="trade_name" class="form-control">
+                            <div class="col-md-3">
+                                <button class="btn btn-success" id="BtnAddAdditionalWorksite"
+                                    onclick="modal();">{!! trans('employer.AddAdditionalWorksite') !!}</button>
                             </div>
-
-
                         </div>
+                    </div>
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10" id="response">
+                        <table id="datatable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Street Address</th>
+                                    <th>City address</th>
+                                    <th>Country address</th>
+                                    <th>State</th>
+                                    <th>Zip code address</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($worksites as $obj)
+                                    <tr>
+                                        <td>{{ $obj->street_address }}</td>
+                                        <td>{{ $obj->city_address }}</td>
+                                        <td>{{ $obj->country_address }}</td>
+                                        @if ($obj->state_id_address)
+                                            <td>{{ $obj->state->name }}</td>
+                                        @else
+                                            <td></td>
+                                        @endif
+                                        <td>{{ $obj->zip_code_address }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="col-md-12">&nbsp;</div>
+                    <div class="col-md-12">
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label></label>
-                                <select class="form-control">
-                                    @foreach ($states as $obj)
+                                <label>{!! trans('employer.NormalBusinessDays') !!}</label>
+                                <select name="normal_business_days_id" id="NormalBusinessDays" class="form-control">
+                                    @foreach ($normal_business_days as $obj)
                                         <option value="{{ $obj->id }}">{{ $obj->name }}</option>
                                     @endforeach
+
                                 </select>
                             </div>
 
+
+
                             <div class="form-group">
-                                <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
-                                <input type="text" name="trade_name" class="form-control">
+                                <label>{!! trans('employer.TransportationProvided') !!}</label>
+                                <select class="form-control" name="is_transportation_provided">
+                                    <option value="1">{!! trans('employer.Yes') !!} </option>
+                                    <option value="0">{!! trans('employer.No') !!} </option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{!! trans('employer.Other') !!}</label>
+                                <input type="text" id="Other" name="normal_business_days_other" class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{!! trans('employer.PublicTransportation') !!}</label>
+                                <input type="text" name="how_far_transportation_from_worksite" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{!! trans('employer.LocalPublicTransportation') !!}</label>
+                                <input type="text" name="local_transportation_website" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>{!! trans('employer.Notes') !!}</label>
+                                <input type="text" name="place_employment_notes" class="form-control">
                             </div>
                         </div>
                     </div>
 
 
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success">submit</button>
+                    </div>
 
+                    <div class="col-md-12">&nbsp;</div>
                 </form>
-
-
-
-
-
-                <div class="col-md-12">
-                    <h5><strong>{!! trans('employer.AdditionalEmployerWorksite') !!}</strong></h5>
-                    <div class="col-md-6">
-                        <div class="col-md-9">
-                            <select class="form-control" name="Additional_employer_worksite"
-                                id="Additional_employer_worksite">
-                                <option value="0">{!! trans('employer.No') !!} </option>
-                                <option value="1">{!! trans('employer.Yes') !!} </option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <button class="btn btn-success" id="BtnAddAdditionalWorksite"
-                                onclick="modal();">{!! trans('employer.AddAdditionalWorksite') !!}</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">&nbsp;</div>
-                <div class="col-md-1"></div>
-                <div class="col-md-10" id="response">
-                    <table id="datatable" class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Street Address</th>
-                                <th>City address</th>
-                                <th>Country address</th>
-                                <th>State</th>
-                                <th>Zip code address</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($worksites as $obj)
-                                <tr>
-                                    <td>{{ $obj->street_address }}</td>
-                                    <td>{{ $obj->city_address }}</td>
-                                    <td>{{ $obj->country_address }}</td>
-                                    @if ($obj->state_id_address)
-                                        <td>{{ $obj->state->name }}</td>
-                                    @else
-                                        <td></td>
-                                    @endif
-                                    <td>{{ $obj->zip_code_address }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                </div>
-
-                <div class="col-md-12">&nbsp;</div>
-                <div class="col-md-12">
-                    <div class="box-header  with-border">
-                        <h5><strong>{!! trans('employer.NormalBusinessDays') !!}</strong></h5>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-3">
-                            <input type=""
-                        </div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3"></div>
-                        <div class="col-md-3"></div>
-                    </div>
-
-
-                </div>
-                <!-- nav-tabs-custom -->
             </div>
             <!-- /.col -->
 
@@ -240,8 +290,30 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#BtnAddAdditionalWorksite').hide();
-
+            $('#Other').prop("disabled", true);
         });
+
+
+        $("#SamePlaceBusiness").change(function() {
+            if (document.getElementById('SamePlaceBusiness').checked) {
+                //DivMainWorksite alert('checked')
+                $('#DivMainWorksite').hide();
+
+            } else {
+                $('#DivMainWorksite').show();
+            }
+        });
+
+        $("#NormalBusinessDays").change(function() {
+
+            if (document.getElementById('NormalBusinessDays').value == 4) {
+                $('#Other').prop("disabled", false);
+            } else {
+                $('#Other').prop("disabled", true);
+            }
+        });
+
+
 
         function add_employer_additional_location() {
             $('#response').html('<div><img src="../../public/img/ajax-loader.gif"/></div>');

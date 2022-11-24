@@ -46,6 +46,7 @@ return [
     'SignatoryEmail' => 'Signatory Email',
     'SignatoryPhone' => 'Signatory Phone',
     'PlaceOfEmployment' => 'PLACE OF EMPLOYMENT',
+
     'MainWorksiteLocation' => 'Main Worksite Location',
     'SamePlaceBusiness' => 'Same as Principal Place of Business',
     'MainWorksiteStreetAddress' => 'Main Worksite Street Address',
@@ -67,4 +68,9 @@ return [
     'ZipCode'  =>  'Zip Code',
 
     'NormalBusinessDays'  =>  'NORMAL business days at the place of employment:',
+    'TransportationProvided'  =>  'Is transportation provided to/​from housing and the Main Worksite?',
+    'Other'  =>  'Other',
+    'PublicTransportation' =>  'How far is public transportation from the Main Worksite?',
+    'LocalPublicTransportation' =>  'Please Provide Local Public Transportation Website',
+    'Notes' =>  'Notes',
 ];

@@ -64,5 +64,11 @@ return [
     'County'  =>  'Pais',
     'State'  =>  'Estado',
     'ZipCode'  =>  'Codigo postal',
+
     'NormalBusinessDays'  =>  'Días laborables NORMALES en el lugar de trabajo:',
+    'TransportationProvided'  =>  '¿Se proporciona transporte hacia/desde la vivienda y el lugar de trabajo principal?',
+    'Other'  =>  'Otro',
+    'PublicTransportation' =>  '¿A qué distancia está el transporte público del sitio de trabajo principal?',
+    'LocalPublicTransportation' =>  'Proporcione el sitio web de transporte público local',
+    'Notes' =>  'Notas',
 ];

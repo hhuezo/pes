@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\catalogue\NaicsCode;
+use App\Models\catalogue\NormalBusinessDays;
 use App\Models\catalogue\primaryBusinessType;
 use App\Models\catalogue\State;
 use App\Models\Employer;
@@ -113,12 +114,33 @@ class EmployerController extends Controller
         $employer->save();
     }
 
+    public function employer_place_store(Request $request)
+    {
+        $employer = Employer::findOrFail($request->get('id'));
+        $employer->main_worksite_location = $request->get('main_worksite_location');
+        $employer->main_worksite_city = $request->get('main_worksite_city');
+        $employer->main_worksite_country = $request->get('main_worksite_country');
+        $employer->main_worksite_state = $request->get('main_worksite_state');
+        $employer->main_worksite_zip_code = $request->get('main_worksite_zip_code');
+        $employer->normal_business_days_id = $request->get('normal_business_days_id');
+        $employer->normal_business_days_other = $request->get('normal_business_days_other');
+        $employer->how_far_transportation_from_worksite = $request->get('how_far_transportation_from_worksite');
+        $employer->local_transportation_website = $request->get('local_transportation_website');
+        $employer->place_employment_notes = $request->get('place_employment_notes');
+
+        $employer->update();
+
+    }
+
+
     public function place_employment($id)
     {
 
         $states = State::get();
         $worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
-        return view('employer.place_employment', ['employer' => Employer::findOrFail($id), 'states' => $states, 'worksites' => $worksites]);
+        $normal_business_days = NormalBusinessDays::get();
+
+        return view('employer.place_employment', ['employer' => Employer::findOrFail($id), 'states' => $states, 'worksites' => $worksites, 'normal_business_days' => $normal_business_days]);
     }
 
     public function employer_additional_location(Request $request)
