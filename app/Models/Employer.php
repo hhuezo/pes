@@ -73,6 +73,7 @@ class Employer extends Model
         'local_transportation_website',
         'place_employment_notes',
         'users_id',
+        'validated',
 
     ];
 

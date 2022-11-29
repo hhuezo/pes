@@ -40,8 +40,14 @@ require __DIR__.'/auth.php';
 
 
 Route::resource('employer', EmployerController::class);
-Route::get('employer_place_employment/{id}', [EmployerController::class, 'place_employment']);
 Route::post('employer_place_store', [EmployerController::class, 'employer_place_store']);
 Route::post('employer_additional_location', [EmployerController::class,'employer_additional_location']);
+Route::post('employer/activate', [EmployerController::class,'activate']);
+Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
+
+
+//Route::get('employer_place_employment/{id}', [EmployerController::class, 'place_employment']);
+
+
 

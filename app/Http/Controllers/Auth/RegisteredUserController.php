@@ -49,6 +49,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
 
+        //create user
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
@@ -61,11 +62,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        //dd($request);
+        //asign role
+        $user->assignRole('employer');
 
 
-
-
+        //create employer
         $employer = new Employer();
         $employer->users_id =  $user->id;
         $employer->legal_business_name = $request->get('legal_business_name');

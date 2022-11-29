@@ -8,10 +8,12 @@
     ?>
     <div class="row">
         <div class="col-md-12 ">
+
             <div class="box box-primary">
 
-
-
+                <br>
+                <button class="btn btn-info float-right" onclick="modal_activate();">Activate</button>
+                <button class="btn btn-danger float-right" onclick="modal_cancel();">cancel</button>
 
                 <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">
@@ -369,14 +371,14 @@
                                                     <label>{!! trans('employer.SignatoryName') !!}</label>
                                                     <input type="text" name="signatory_name"
                                                         value="{{ $employer->signatory_name }}" class="form-control"
-                                                        required>
+                                                        >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.SignatoryLastName') !!}</label>
                                                     <input type="text" name="signatory_last_name"
                                                         value="{{ $employer->signatory_last_name }}" class="form-control"
-                                                        required>
+                                                        >
                                                 </div>
 
                                                 <div class="form-group">
@@ -414,19 +416,6 @@
                                     <div class="col-md-12">&nbsp;</div>
                                 </div>
                             </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                         </div>
                         <!-- /.tab-pane -->
@@ -694,40 +683,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
             <!-- /.col -->
 
         </div>
 
     </div>
-
-
-
-
-
-
-
 
 
 
@@ -800,10 +761,66 @@
 
 
 
+    <div class="modal fade" id="modal_activate" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/activate') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+
+                        <div class="col-md-12"> <h2>Activate</h2></div>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $employer->id }}">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="cod" value="1">
+                        <h4>Do you want to activate the employer?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
+    <div class="modal fade" id="modal_cancel" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/activate') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
 
+                        <div class="col-md-12"> <h2>Cancel</h2></div>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $employer->id }}">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="cod" value="0">
+                        <h4>Do you want to cancel the employer?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit"  class="btn btn-danger">Save</button>
+                    </div>
 
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
 
@@ -970,5 +987,14 @@
         function modal() {
             $('#modal_employer_additional_location').modal('show');
         }
+
+        function modal_activate(){
+            $('#modal_activate').modal('show');
+        }
+
+        function modal_cancel(){
+            $('#modal_cancel').modal('show');
+        }
+
     </script>
 @endsection
