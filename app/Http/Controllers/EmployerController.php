@@ -130,17 +130,25 @@ class EmployerController extends Controller
 
         $employer->update();
 
+        return redirect('employer/' .$request->get('id'). '/edit');
+       // return redirect()->action([EmployerController::class, 'place_employment/'.$employer->id]);
+       // return redirect('employer_place_employment/' . $employer->id);
     }
 
 
     public function place_employment($id)
     {
-
+        $employer = Employer::findOrFail($id);
+        $naics = NaicsCode::where('primary_business_type_id', '=', $employer->naicsCode->primary_business_type_id)->get();
         $states = State::get();
         $worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
         $normal_business_days = NormalBusinessDays::get();
+        $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
+        $principal_states = State::get();
 
-        return view('employer.place_employment', ['employer' => Employer::findOrFail($id), 'states' => $states, 'worksites' => $worksites, 'normal_business_days' => $normal_business_days]);
+        return view('employer.place_employment', ['employer' => $employer, 'states' => $states, 'worksites' => $worksites,
+        'normal_business_days' => $normal_business_days, 'primary_business_types' => $primary_business_types,
+        'principal_states' => $principal_states, 'naics' => $naics]);
     }
 
     public function employer_additional_location(Request $request)
@@ -176,18 +184,16 @@ class EmployerController extends Controller
             echo '<tr><td>' . $obj->street_address . '</td>';
             echo '<td>' . $obj->city_address . '</td>';
             echo '<td>' . $obj->country_address . '</td>';
-            if($obj->state_id_address)
-            {
+            if ($obj->state_id_address) {
                 echo '<td>' . $obj->state->name . '</td>';
-            }
-            else{
+            } else {
                 echo '<td></td>';
             }
             echo '<td>' . $obj->zip_code_address . '</td>';
         }
         echo ' </tr>
-    </tbody>
-</table>';
+            </tbody>
+            </table>';
     }
 
     /**
@@ -198,7 +204,17 @@ class EmployerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employer = Employer::findOrFail($id);
+        $naics = NaicsCode::where('primary_business_type_id', '=', $employer->naicsCode->primary_business_type_id)->get();
+        $states = State::get();
+        $worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
+        $normal_business_days = NormalBusinessDays::get();
+        $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
+        $principal_states = State::get();
+
+        return view('employer.edit', ['employer' => $employer, 'states' => $states, 'worksites' => $worksites,
+        'normal_business_days' => $normal_business_days, 'primary_business_types' => $primary_business_types,
+         'principal_states' => $principal_states, 'naics' => $naics]);
     }
 
     /**

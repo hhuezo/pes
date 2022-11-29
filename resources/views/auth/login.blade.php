@@ -52,6 +52,12 @@
                     {{ __('Log in') }}
                 </x-primary-button>
             </div>
+
+            <div class="mt-4"></div>
+            <div class="mt-4"></div>
+            <a href="{{url('register')}}"><button type="button"  class="btn-primary ml-4">
+                Register
+            </button></a>
         </form>
     </x-auth-card>
 </x-guest-layout>

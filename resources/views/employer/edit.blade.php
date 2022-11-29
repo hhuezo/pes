@@ -1,12 +1,11 @@
 @extends ('dashboard')
 @section('contenido')
-
-<?php if (isset($_GET["action"])) {
-    $action = $_GET["action"];
-} else {
-    $action = 1;
-}
-?>
+    <?php if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+    } else {
+        $action = 2;
+    }
+    ?>
     <div class="row">
         <div class="col-md-12 ">
             <div class="box box-primary">
@@ -14,24 +13,20 @@
 
 
 
-
-
-
                 <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_1" data-toggle="tab">{!! trans('employer.Title') !!}</a></li>
-                        <li><a href="#tab_2" data-toggle="tab">{!! trans('employer.PlaceOfEmployment') !!}</a></li>
+                        <li><a href="#tab_1" data-toggle="tab">{!! trans('employer.Title') !!}</a></li>
+                        <li class="active"><a href="#tab_2" data-toggle="tab">{!! trans('employer.PlaceOfEmployment') !!}</a></li>
 
                         <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1">
+                        <div class="tab-pane " id="tab_1">
 
 
-
-
-                            <form action="{{ url('employer') }}" method="POST">
+                            <form method="POST" action="{{ route('employer.update', $employer->id) }}">
+                                @method('PUT')
                                 @csrf
                                 <div class="col-md-12">
                                     <div class="col-md-6">
@@ -435,7 +430,7 @@
 
                         </div>
                         <!-- /.tab-pane -->
-                        <div class="tab-pane" id="tab_2">
+                        <div class="tab-pane active" id="tab_2">
 
 
 
@@ -625,8 +620,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.Other') !!}</label>
-                                            <input type="text" id="Other" name="normal_business_days_other" value="{{ $employer->normal_business_days_other }}"
-                                                class="form-control">
+                                            <input type="text" id="Other" name="normal_business_days_other"
+                                                value="{{ $employer->normal_business_days_other }}" class="form-control">
                                         </div>
 
                                     </div>
@@ -634,7 +629,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.PublicTransportation') !!}</label>
-                                            <input type="text" name="how_far_transportation_from_worksite" value="{{ $employer->how_far_transportation_from_worksite }}"
+                                            <input type="text" name="how_far_transportation_from_worksite"
+                                                value="{{ $employer->how_far_transportation_from_worksite }}"
                                                 class="form-control">
                                         </div>
                                     </div>
@@ -645,14 +641,16 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.LocalPublicTransportation') !!}</label>
-                                            <input type="text" name="local_transportation_website" value="{{ $employer->local_transportation_website }}"
+                                            <input type="text" name="local_transportation_website"
+                                                value="{{ $employer->local_transportation_website }}"
                                                 class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.Notes') !!}</label>
-                                            <input type="text" name="place_employment_notes" value="{{ $employer->place_employment_notes }}" class="form-control">
+                                            <input type="text" name="place_employment_notes"
+                                                value="{{ $employer->place_employment_notes }}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -817,8 +815,8 @@
 
             var action = '<?php echo $action; ?>';
             switch (action) {
-                case '2':
-                    $('.nav-tabs a[href="#tab_2"]').tab('show');
+                case '1':
+                    $('.nav-tabs a[href="#tab_1"]').tab('show');
                     break;
             }
 

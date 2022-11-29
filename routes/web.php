@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//validacion email
+Route::get('validate_email/{id}', [RegisteredUserController::class, 'validate_email']);
+Route::post('register_employer', [RegisteredUserController::class, 'store']);
 
 Route::get('lang/{lang}', [LanguageController::class, 'swap'])->name('lang.swap');
 

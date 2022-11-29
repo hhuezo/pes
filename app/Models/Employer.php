@@ -72,8 +72,17 @@ class Employer extends Model
         'how_far_transportation_from_worksite',
         'local_transportation_website',
         'place_employment_notes',
+        'users_id',
 
     ];
 
+
+
     protected $guarded = [];
+
+
+    public function naicsCode()
+    {
+        return $this->belongsTo('App\Models\catalogue\NaicsCode', 'naics_id', 'id');
+    }
 }

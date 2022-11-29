@@ -20,10 +20,12 @@
     <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 
 
-        <!-- select 2 -->
-        <link rel="stylesheet" href="{{ asset('bower_components/select2/select2.min.css') }}">
+    <!-- select 2 -->
+    <link rel="stylesheet" href="{{ asset('bower_components/select2/select2.min.css') }}">
 
-         <script src="{{ asset('bower_components/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('bower_components/sweetalert/sweetalert.min.js') }}"></script>
+
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -126,9 +128,16 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Sign out</a>
                                     </div>
                                 </li>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->

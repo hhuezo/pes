@@ -291,7 +291,7 @@
 
                             </div>
                         </div>
-
+                        @include('sweetalert::alert')
                     </div>
                 </form>
             </div>
