@@ -7,6 +7,18 @@
                 <div class="box-header with-border">
                     <h4><strong>{!! trans('employer.Title') !!}</strong></h4>
                 </div>
+
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form action="{{ url('employer') }}" method="POST">
                     @csrf
                     <div class="col-md-12">
@@ -16,7 +28,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}</label>
-                                        <input type="text" name="legal_business_name" required class="form-control">
+                                        <input type="text" name="legal_business_name" class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label>{!! trans('employer.TradeName') !!}</label>
@@ -163,7 +175,7 @@
 
                             <br>
                             <div class="form-group">
-                                <input type="checkbox" name="mailing_address_same_above" id="SameAsAbove">&nbsp;{!! trans('employer.SameAsAbove') !!}
+                                <input type="checkbox" {{ old('mailing_address_same_above') == 'on' ? 'checked' : '' }}  name="mailing_address_same_above" id="SameAsAbove">&nbsp;{!! trans('employer.SameAsAbove') !!}
                             </div>
                             <br>
                             <div id="DivMailin">
@@ -202,6 +214,7 @@
                                 <h4><strong>{!! trans('employer.EmployerContactInformation') !!}</strong></h4>
                             </div>
                         </div>
+
                         <div class="col-md-12">
                             <br>
                             <div class="col-md-6">
@@ -243,24 +256,24 @@
 
 
 
-                                <div class="form-group">
-                                    <label>{!! trans('employer.PrimaryContactListed') !!}</label>
-                                    <select class="form-control" name="signed_all_documents" id="PrimaryContactListed">
-                                        <option value="1">{!! trans('employer.Yes') !!} </option>
-                                        <option value="0">{!! trans('employer.No') !!} </option>
 
-                                    </select>
-                                </div>
+
+                                <br>
+                            <div class="form-group">
+                                <input type="checkbox" {{ old('signed_all_documents') == 'on' ? 'checked' : '' }}  name="signed_all_documents" id="SignedAllDocuments">&nbsp;{!! trans('employer.SignedAllDocuments') !!}
+                            </div>
+                            
+                            <br>
                                 <div id="DivSignatory">
 
                                     <div class="form-group">
                                         <label>{!! trans('employer.SignatoryName') !!}</label>
-                                        <input type="text" name="signatory_name" class="form-control" required>
+                                        <input type="text" name="signatory_name" class="form-control" >
                                     </div>
 
                                     <div class="form-group">
                                         <label>{!! trans('employer.SignatoryLastName') !!}</label>
-                                        <input type="text" name="signatory_last_name" class="form-control" required>
+                                        <input type="text" name="signatory_last_name" class="form-control" >
                                     </div>
 
                                     <div class="form-group">
@@ -279,6 +292,72 @@
                                     </div>
 
                                 </div>
+
+
+                            </div>
+                            <div class="col-md-3">&nbsp;</div>
+                        </div>
+                        
+
+                        <div class="col-md-12">
+                            <br>
+                            <div class="col-md-6">
+
+                            <br>
+                                <div class="form-group">
+
+                                    <input type="checkbox" {{ old('add_contact_person') == 'on' ? 'checked' : '' }}  name="add_contact_person" id="AddContactPerson">&nbsp;{!! trans('employer.AddContactPerson') !!}
+                                </div>
+                            
+                                <div id="DivContactPerson1">
+
+                                    <div class="form-group">
+                                        <label>{!! trans('employer.AdditionalContactName') !!}</label>
+                                        <input type="text" name="additional_contact_name" class="form-control" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{!! trans('employer.AdditionalContactJobTitle') !!}</label>
+                                        <input type="text" name="additional_contact_job_title" class="form-control" >
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{!! trans('employer.AdditionalContactPhone') !!}</label>
+                                        <input type="text" name="additional_contact_phone" class="form-control" >
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+
+                            <div id="DivContactPerson2">
+                            <div class="form-group">
+                                <label></label>
+                                <br>
+                                <br>
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.AdditionalLastName') !!}</label>
+                                <input type="text" name="additional_last_name" class="form-control" >
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.AdditionalContactEmail') !!}</label>
+                                <input type="text" name="additional_contact_email" class="form-control" >
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.AdditionalContactCellPhone') !!}</label>
+                                <input type="text" name="additional_contact_cellphone" class="form-control" >
+                            </div>
+
+
+                            </div>
+
+
+
 
 
                             </div>
@@ -330,6 +409,34 @@
             });
 
 
+            $("#SignedAllDocuments").change(function() {
+                
+                if (document.getElementById('SignedAllDocuments').checked == true) {
+                    $('#DivSignatory').hide();
+
+                } else {
+                    $('#DivSignatory').show();
+                }
+
+            });
+
+
+            $("#AddContactPerson").change(function() {
+                
+                if (document.getElementById('AddContactPerson').checked == true) {
+                    $('#DivContactPerson1').hide();
+                    $('#DivContactPerson2').hide();
+
+                } else {
+                    $('#DivContactPerson1').show();
+                    $('#DivContactPerson2').show();
+                }
+
+            });
+
+
+
+
 
             $("#PrimaryBusinessType").change(function() {
                 var PrimaryBusinessType = $(this).val();
@@ -361,10 +468,43 @@
 
             $(document).ready(function() {
                 $('#DivYearsCompanyParticipated').hide();
-                $('#DivSignatory').hide();
+                //$('#DivSignatory').show();
+                $("#PrimaryContactListed").change();
 
                 $('#DivNaicsCodCompany').show();
                 $('#DivNaicsNameCompany').hide();
+
+                
+                //Inicializar controles para Mailing
+                if (document.getElementById('SameAsAbove').checked == true) {
+                    $('#DivMailin').hide();
+
+                } else {
+                    $('#DivMailin').show();
+                }
+
+                //Inicializar controles para firma de todos los documentos
+                if (document.getElementById('SignedAllDocuments').checked == true) {
+                    $('#DivSignatory').hide();
+
+                } else {
+                    $('#DivSignatory').show();
+                }
+
+                //Inicializar controles para agregar contacto de persona
+                if (document.getElementById('AddContactPerson').checked == true) {
+                    $('#DivContactPerson1').hide();
+                    $('#DivContactPerson2').hide();
+
+                } else {
+                    $('#DivContactPerson1').show();
+                    $('#DivContactPerson2').show();
+                }
+
+
+
             });
+
+
         </script>
     @endsection
