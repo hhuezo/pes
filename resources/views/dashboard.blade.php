@@ -19,11 +19,15 @@
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('dist/css/skins/_all-skins.min.css') }}">
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 
-        <!-- select 2 -->
-        <link rel="stylesheet" href="{{ asset('bower_components/select2/select2.min.css') }}">
+    <!-- select 2 -->
+    <link rel="stylesheet" href="{{ asset('bower_components/select2/select2.min.css') }}">
 
-         <script src="{{ asset('bower_components/sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('bower_components/sweetalert/sweetalert.min.js') }}"></script>
+
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -126,9 +130,17 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Sign
+                                            out</a>
                                     </div>
                                 </li>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
                             </ul>
                         </li>
                         <!-- Control Sidebar Toggle Button -->
@@ -147,31 +159,31 @@
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
                 <!-- Sidebar user panel -->
-                <div class="user-panel">
-                    <div class="pull-left image">
-                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                <a href="{{ url('profile_employer') }}/{{ auth()->user()->id }}">
+                    <div class="user-panel">
+
+                        <div class="pull-left image">
+                            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                        </div>
+                        <div class="pull-left info">
+                            <p>Alexander Pierce</p>
+                            <i class="fa fa-circle text-success"></i> Online
+                        </div>
+
                     </div>
-                    <div class="pull-left info">
-                        <p>Alexander Pierce</p>
-                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                    </div>
-                </div>
-                <!-- search form -->
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
-                                    class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-                <!-- /.search form -->
-                <!-- sidebar menu: : style can be found in sidebar.less -->
-                <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">MAIN NAVIGATION</li>
-                    <li class="treeview">
+                </a>
+                <br>
+
+                <li class="treeview">
+                    <a href="{{ url('employer') }}">
+                        <i class="fa fa-dashboard"></i> <span>Employer</span>
+
+                    </a>
+
+                </li>
+
+
+                <!-- <li class="treeview">
                         <a href="#">
                             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             <span class="pull-right-container">
@@ -344,7 +356,7 @@
                     <li class="header">LABELS</li>
                     <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
                     <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+                    <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>-->
                 </ul>
             </section>
             <!-- /.sidebar -->
@@ -361,9 +373,9 @@
             <section class="content">
 
                 <!-- Default box -->
-                <div class="box">
+
                     @yield('contenido')
-                </div>
+
                 <!-- /.box -->
 
             </section>
@@ -580,6 +592,11 @@
     <!-- jQuery 3 -->
     <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap 3.3.7 -->
+
+    <!-- DataTables -->
+    <script src="{{ asset('bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
     <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- SlimScroll -->
     <script src="{{ asset('bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
@@ -601,6 +618,23 @@
             $('.sidebar-menu').tree()
         })
     </script>
+
+
+    <script>
+        $(function() {
+            $('#example1').DataTable()
+            $('#example2').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
+        })
+    </script>
+
+
 </body>
 
 </html>

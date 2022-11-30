@@ -1,37 +1,34 @@
 @extends ('dashboard')
 @section('contenido')
-
-<?php if (isset($_GET["action"])) {
-    $action = $_GET["action"];
-} else {
-    $action = 1;
-}
-?>
+    <?php if (isset($_GET['action'])) {
+        $action = $_GET['action'];
+    } else {
+        $action = 2;
+    }
+    ?>
     <div class="row">
         <div class="col-md-12 ">
+
             <div class="box box-primary">
 
-
-
-
-
-
+                <br>
+                <button class="btn btn-info float-right" onclick="modal_activate();">Activate</button>
+                <button class="btn btn-danger float-right" onclick="modal_cancel();">cancel</button>
 
                 <!-- Custom Tabs -->
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#tab_1" data-toggle="tab">{!! trans('employer.Title') !!}</a></li>
-                        <li><a href="#tab_2" data-toggle="tab">{!! trans('employer.PlaceOfEmployment') !!}</a></li>
+                        <li><a href="#tab_1" data-toggle="tab">{!! trans('employer.Title') !!}</a></li>
+                        <li class="active"><a href="#tab_2" data-toggle="tab">{!! trans('employer.PlaceOfEmployment') !!}</a></li>
 
                         <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab_1">
+                        <div class="tab-pane " id="tab_1">
 
 
-
-
-                            <form action="{{ url('employer') }}" method="POST">
+                            <form method="POST" action="{{ route('employer.update', $employer->id) }}">
+                                @method('PUT')
                                 @csrf
                                 <div class="col-md-12">
                                     <div class="col-md-6">
@@ -374,14 +371,14 @@
                                                     <label>{!! trans('employer.SignatoryName') !!}</label>
                                                     <input type="text" name="signatory_name"
                                                         value="{{ $employer->signatory_name }}" class="form-control"
-                                                        required>
+                                                        >
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.SignatoryLastName') !!}</label>
                                                     <input type="text" name="signatory_last_name"
                                                         value="{{ $employer->signatory_last_name }}" class="form-control"
-                                                        required>
+                                                        >
                                                 </div>
 
                                                 <div class="form-group">
@@ -420,22 +417,9 @@
                                 </div>
                             </form>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
                         </div>
                         <!-- /.tab-pane -->
-                        <div class="tab-pane" id="tab_2">
+                        <div class="tab-pane active" id="tab_2">
 
 
 
@@ -625,8 +609,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.Other') !!}</label>
-                                            <input type="text" id="Other" name="normal_business_days_other" value="{{ $employer->normal_business_days_other }}"
-                                                class="form-control">
+                                            <input type="text" id="Other" name="normal_business_days_other"
+                                                value="{{ $employer->normal_business_days_other }}" class="form-control">
                                         </div>
 
                                     </div>
@@ -634,7 +618,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.PublicTransportation') !!}</label>
-                                            <input type="text" name="how_far_transportation_from_worksite" value="{{ $employer->how_far_transportation_from_worksite }}"
+                                            <input type="text" name="how_far_transportation_from_worksite"
+                                                value="{{ $employer->how_far_transportation_from_worksite }}"
                                                 class="form-control">
                                         </div>
                                     </div>
@@ -645,14 +630,16 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.LocalPublicTransportation') !!}</label>
-                                            <input type="text" name="local_transportation_website" value="{{ $employer->local_transportation_website }}"
+                                            <input type="text" name="local_transportation_website"
+                                                value="{{ $employer->local_transportation_website }}"
                                                 class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>{!! trans('employer.Notes') !!}</label>
-                                            <input type="text" name="place_employment_notes" value="{{ $employer->place_employment_notes }}" class="form-control">
+                                            <input type="text" name="place_employment_notes"
+                                                value="{{ $employer->place_employment_notes }}" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -696,40 +683,12 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
             <!-- /.col -->
 
         </div>
 
     </div>
-
-
-
-
-
-
-
 
 
 
@@ -802,10 +761,66 @@
 
 
 
+    <div class="modal fade" id="modal_activate" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/activate') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+
+                        <div class="col-md-12"> <h2>Activate</h2></div>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $employer->id }}">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="cod" value="1">
+                        <h4>Do you want to activate the employer?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
+    <div class="modal fade" id="modal_cancel" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/activate') }}">
+                    @csrf
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
 
+                        <div class="col-md-12"> <h2>Cancel</h2></div>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $employer->id }}">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="cod" value="0">
+                        <h4>Do you want to cancel the employer?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        <button type="submit"  class="btn btn-danger">Save</button>
+                    </div>
 
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
 
@@ -817,8 +832,8 @@
 
             var action = '<?php echo $action; ?>';
             switch (action) {
-                case '2':
-                    $('.nav-tabs a[href="#tab_2"]').tab('show');
+                case '1':
+                    $('.nav-tabs a[href="#tab_1"]').tab('show');
                     break;
             }
 
@@ -972,5 +987,14 @@
         function modal() {
             $('#modal_employer_additional_location').modal('show');
         }
+
+        function modal_activate(){
+            $('#modal_activate').modal('show');
+        }
+
+        function modal_cancel(){
+            $('#modal_cancel').modal('show');
+        }
+
     </script>
 @endsection

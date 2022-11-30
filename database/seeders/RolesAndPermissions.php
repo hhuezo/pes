@@ -38,7 +38,12 @@ class RolesAndPermissions extends Seeder
         $role = Role::create( ['name' => 'recruiter'] );
         $role = Role::create( ['name' => 'company'] );*/
 
-
+        $consulta = User::create( [
+            'name'=>'aaron',
+            'email'=>'aaron@mail.com',
+            'password'=> bcrypt( '12345678' ),
+        ] );
+        $consulta->assignRole('administrator pes');
 
     }
 }
