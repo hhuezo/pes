@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\JobApplicationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,8 @@ Route::post('employer_additional_location', [EmployerController::class,'employer
 Route::post('employer/activate', [EmployerController::class,'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
+
+Route::resource('job_application', JobApplicationController::class);
 
 
 //Route::get('employer_place_employment/{id}', [EmployerController::class, 'place_employment']);

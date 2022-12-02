@@ -36,14 +36,32 @@ class RolesAndPermissions extends Seeder
         $role = Role::create( ['name' => 'administrator pes'] );
         $role = Role::create( ['name' => 'applicant'] );
         $role = Role::create( ['name' => 'recruiter'] );
-        $role = Role::create( ['name' => 'company'] );*/
+        $role = Role::create( ['name' => 'company'] );
 
         $consulta = User::create( [
             'name'=>'aaron',
             'email'=>'aaron@mail.com',
             'password'=> bcrypt( '12345678' ),
         ] );
-        $consulta->assignRole('administrator pes');
+        $consulta->assignRole('administrator pes');*/
+
+        Permission::create( ['name' => 'create employer'] );
+        Permission::create( ['name' => 'read employer'] );
+        Permission::create( ['name' => 'edit employer'] );
+        Permission::create( ['name' => 'delete employer'] );
+        Permission::create( ['name' => 'read admin employer'] );
+
+        Permission::create( ['name' => 'create job application'] );
+        Permission::create( ['name' => 'read job application'] );
+        Permission::create( ['name' => 'edit job application'] );
+        Permission::create( ['name' => 'delete job application'] );
+        Permission::create( ['name' => 'read admin job application'] );
+
+        $role = Role::findByName('administrator pes');
+        $role->givePermissionTo( 'read employer', 'edit employer', 'create job application', 'read job application','edit job application');
+
+        $role = Role::findByName('employer');
+        $role->givePermissionTo( 'read employer', 'edit employer', 'read admin employer','create job application','read admin job application', 'read job application','edit job application');
 
     }
 }
