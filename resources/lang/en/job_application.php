@@ -22,4 +22,23 @@ return [
 
     'job_title' => 'Job Title',
     'Number_of_Workers' => 'Number of Workers',
+    'collective_bargaining' => 'Is this position covered by a Collective Bargaining Agreement (CBA)?',
+    'workers_paid_position'=> 'How are workers paid in this position?',
+    'PayRate'=> 'Current Pay Rate Offered',
+    'tip_credit'=> 'Are you planning to use tip credit?',
+    'position_eligible' => 'Is this position eligible to receive bonus, incentive or other additional pay/​benefits?',
+    'SpecialRequirements' => 'Special Requirements - Are there any specific skills, training, licenses/​certificates/​certifications, or other special requirements for this position?',
+    'lift50lbs' =>"Able to lift 50 lbs, driver's license, CPR certification, food service training, etc.",
+    'additional_notes' => 'Please list any additional wage notes',
+    'IsOvertimeAvailable' => 'Is Overtime Available?',
+    'AnticipatedWorkdays' => 'Anticipated Workdays for this Position',
+    'Sunday' => 'Sunday',
+    'Monday' => 'Monday',
+    'Tuesday' => 'Tuesday',
+    'Wednesday' => 'Wednesday',
+    'Thursday' => 'Thursday',
+    'Friday' => 'Friday',
+    'Saturday' => 'Saturday',
+
+
 ];

@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
 //validacion email
 Route::get('validate_email/{id}', [RegisteredUserController::class, 'validate_email']);
-Route::post('register_employer', [RegisteredUserController::class, 'store']);
+Route::post('register', [RegisteredUserController::class, 'store']);
 
 Route::get('lang/{lang}', [LanguageController::class, 'swap'])->name('lang.swap');
 

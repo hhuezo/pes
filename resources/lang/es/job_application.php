@@ -23,4 +23,22 @@ return [
 
     'job_title' => 'Nombre',
     'Number_of_Workers' => 'Numero de trabajadores',
+    'collective_bargaining' => '¿Esta posición está cubierta por un Acuerdo de Negociación Colectiva (CBA)?',
+    'workers_paid_position' => '¿Cómo se les paga a los trabajadores en este puesto?',
+    'PayRate' => 'Tasa de pago actual ofrecida',
+    'tip_credit' => '¿Está planeando usar el crédito de propinas?',
+    'position_eligible' => '¿Este puesto es elegible para recibir bonos, incentivos u otros pagos/beneficios adicionales?',
+    'SpecialRequirements' => 'Requisitos especiales: ¿Existen habilidades específicas, capacitación, licencias/​certificados/​certificaciones u otros requisitos especiales para este puesto?',
+    'lift50lbs' => "Capaz de levantar 50 libras, licencia de conducir, certificación de RCP, capacitación en servicio de alimentos, etc.",
+    'additional_notes' => 'Enumere cualquier nota de salario adicional',
+    'IsOvertimeAvailable' => '¿Está disponible el tiempo extra?',
+    'AnticipatedWorkdays' => 'Días de trabajo previstos para este puesto',
+    'Sunday' => 'Domingo',
+    'Monday' => 'Lunes',
+    'Tuesday' => 'Martes',
+    'Wednesday' => 'Miercoles',
+    'Thursday' => 'Jueves',
+    'Friday' => 'Viernes',
+    'Saturday' => 'Sabado',
+
 ];

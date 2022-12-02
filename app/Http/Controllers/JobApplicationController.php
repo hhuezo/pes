@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\catalogue\JobTitle;
 use App\Models\Employer;
 use App\Models\JobApplication;
 use App\Models\User;
@@ -84,7 +85,8 @@ class JobApplicationController extends Controller
     public function edit($id)
     {
         $job = JobApplication::findOrFail($id);
-        return view('job_application.edit', ['job' => $job]);
+        $job_titles = JobTitle::get();
+        return view('job_application.edit', ['job' => $job,'job_titles' => $job_titles]);
     }
 
     /**

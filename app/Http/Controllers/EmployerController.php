@@ -10,6 +10,7 @@ use App\Models\Employer;
 use App\Models\EmployerWorksite;
 use App\Models\User;
 use Illuminate\Http\Request;
+use PhpParser\Builder\Use_;
 
 class EmployerController extends Controller
 {
@@ -32,8 +33,14 @@ class EmployerController extends Controller
     public function create()
     {
         $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
-        $principal_states = State::get();
-        return view('employer.create', ['primary_business_types' => $primary_business_types, 'principal_states' => $principal_states]);
+        $states = State::get();
+        $user = auth()->user();
+        //$worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
+        $normal_business_days = NormalBusinessDays::get();
+        $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
+        return view('employer.create', ['primary_business_types' => $primary_business_types, 'states' => $states,'user' => $user
+        ,'normal_business_days' => $normal_business_days,'user' => $user
+    ]);
     }
 
     public function get_naics_code($id)
@@ -50,12 +57,12 @@ class EmployerController extends Controller
         return redirect('employer/');
     }
 
-    public function profile_employer($id)
+  /*  public function profile_employer($id)
     {
         $employer = Employer::where('users_id', '=', $id)->first();
 
         return redirect('employer/' . $employer->id . '/edit');
-    }
+    }*/
 
     /**
      * Store a newly created resource in storage.
@@ -113,7 +120,8 @@ class EmployerController extends Controller
         $employer->primary_contact_email = $request->get('primary_contact_email');
         $employer->primary_contact_phone = $request->get('primary_contact_phone');
         $employer->primary_contact_cellphone = $request->get('primary_contact_cellphone');
-        /* $employer->add_contact_person = $request->get('add_contact_person');
+
+        /*$employer->add_contact_person = $request->get('add_contact_person');
         $employer->additional_contact = $request->get('additional_contact');
         $employer->additional_contact_job_title = $request->get('additional_contact_job_title');
         $employer->additional_contact_email = $request->get('additional_contact_email');
@@ -128,7 +136,55 @@ class EmployerController extends Controller
             $employer->signatory_email = $request->get('signatory_email');
             $employer->signatory_phone = $request->get('signatory_phone');
         }
+
+
+
+
+
+
+
+
+        if($request->get('is_there_additional_worksite') == null)
+        {
+            $employer->is_there_additional_worksite = 0;
+        }
+        else{
+            $employer->is_there_additional_worksite = 1;
+        }
+        $employer->main_worksite_location = $request->get('main_worksite_location');
+        $employer->main_worksite_city = $request->get('main_worksite_city');
+        $employer->main_worksite_country = $request->get('main_worksite_country');
+        $employer->main_worksite_state = $request->get('main_worksite_state');
+        $employer->main_worksite_zip_code = $request->get('main_worksite_zip_code');
+        $employer->normal_business_days_id = $request->get('normal_business_days_id');
+        $employer->normal_business_days_other = $request->get('normal_business_days_other');
+        $employer->how_far_transportation_from_worksite = $request->get('how_far_transportation_from_worksite');
+        $employer->local_transportation_website = $request->get('local_transportation_website');
+        $employer->place_employment_notes = $request->get('place_employment_notes');
+        $employer->users_id = auth()->user()->id ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $employer->save();
+
+        return redirect('employer/' . $employer->id . '/edit');
     }
 
     public function employer_place_store(Request $request)

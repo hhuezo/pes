@@ -65,7 +65,7 @@ class RegisteredUserController extends Controller
         //asign role
         $user->assignRole('employer');
 
-
+        /*
         //create employer
         $employer = new Employer();
         $employer->users_id =  $user->id;
@@ -116,12 +116,15 @@ class RegisteredUserController extends Controller
         $employer->primary_contact_email = $request->get('primary_contact_email');
         $employer->primary_contact_phone = $request->get('primary_contact_phone');
         $employer->primary_contact_cellphone = $request->get('primary_contact_cellphone');
-        /* $employer->add_contact_person = $request->get('add_contact_person');
+
+
+
+        <!-- $employer->add_contact_person = $request->get('add_contact_person');
         $employer->additional_contact = $request->get('additional_contact');
         $employer->additional_contact_job_title = $request->get('additional_contact_job_title');
         $employer->additional_contact_email = $request->get('additional_contact_email');
         $employer->additional_contact_phone = $request->get('additional_contact_phone');
-        $employer->additional_contact_cellphone = $request->get('additional_contact_cellphone');*/
+        $employer->additional_contact_cellphone = $request->get('additional_contact_cellphone');-->
 
         $employer->signed_all_documents = $request->get('signed_all_documents');
         if ($request->get('signed_all_documents') == 0) {
@@ -132,15 +135,17 @@ class RegisteredUserController extends Controller
             $employer->signatory_phone = $request->get('signatory_phone');
         }
         $employer->save();
-
+*/
         event(new Registered($user));
 
         Auth::login($user);
 
 
 
-        return redirect('employer/' . $employer->id . '/edit');
+        // return redirect('employer/' . $employer->id . '/edit');
 
-        //return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::HOME);
     }
+
+
 }
