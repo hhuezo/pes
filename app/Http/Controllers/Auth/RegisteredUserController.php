@@ -66,6 +66,15 @@ class RegisteredUserController extends Controller
         $user->assignRole('employer');
 
 
+
+
+
+        
+
+
+
+
+
         //create employer
         $employer = new Employer();
         $employer->users_id =  $user->id;
