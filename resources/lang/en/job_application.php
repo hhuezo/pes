@@ -20,9 +20,10 @@ return [
     'uniform_pieces' => 'List all required uniform pieces',
 
 
+    'location_listed_above' => 'Is this position for the MAIN Worksite Location listed above?',
     'job_title' => 'Job Title',
     'Number_of_Workers' => 'Number of Workers',
-    'collective_bargaining' => 'Is this position covered by a Collective Bargaining Agreement (CBA)?',
+
     'workers_paid_position'=> 'How are workers paid in this position?',
     'PayRate'=> 'Current Pay Rate Offered',
     'tip_credit'=> 'Are you planning to use tip credit?',

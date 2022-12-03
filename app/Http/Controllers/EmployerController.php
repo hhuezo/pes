@@ -32,9 +32,15 @@ class EmployerController extends Controller
      */
     public function create()
     {
+        $employer = Employer::where('users_id','=',auth()->user()->id)->first();
+        if($employer)
+        {
+            return redirect('employer/' . $employer->id . '/edit');
+        }
+        $user = auth()->user();
         $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
         $states = State::get();
-        $user = auth()->user();
+
         //$worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
         $normal_business_days = NormalBusinessDays::get();
         $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
@@ -64,12 +70,7 @@ class EmployerController extends Controller
         return redirect('employer/' . $employer->id . '/edit');
     }*/
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $employer = new Employer();
@@ -237,7 +238,9 @@ class EmployerController extends Controller
         $employer_worksite->zip_code_address = $request->get('zip_code_address');
         $employer_worksite->save();
 
-        $data = EmployerWorksite::where('employer_id', '=', $request->get('employer_id'))->get();
+        return redirect('employer/' . $request->get('employer_id') . '/edit');
+
+       /* $data = EmployerWorksite::where('employer_id', '=', $request->get('employer_id'))->get();
 
         echo ' <table id="datatable" class="table table-striped table-bordered">
         <thead>
@@ -268,15 +271,10 @@ class EmployerController extends Controller
         }
         echo ' </tr>
             </tbody>
-            </table>';
+            </table>';*/
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $employer = Employer::findOrFail($id);
@@ -294,13 +292,7 @@ class EmployerController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         $employer =  Employer::findOrFail($id);
@@ -374,12 +366,7 @@ class EmployerController extends Controller
         return redirect('employer/' . $employer->id . '/edit');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

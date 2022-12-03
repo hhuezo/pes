@@ -9,6 +9,10 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('template/images/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('template/vendor/select2/css/select2.min.css') }}">
+
+    <!-- Datatable -->
+    <link href="{{ asset('template/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 
@@ -185,8 +189,10 @@
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
 
-                    <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i class="icon icon-globe-2"></i><span
-                        class="nav-text">Employer</span></a></li>
+                    <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i
+                                class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
+                    <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Job application</span></a></li>
 
                     <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
@@ -356,6 +362,12 @@
     <script src="{{ asset('template/js/custom.min.js') }}"></script>
     <script src="{{ asset('template/vendor/select2/js/select2.full.min.js') }}"></script>
     <script src="{{ asset('template/js/plugins-init/select2-init.js') }}"></script>
+
+
+
+    <!-- Datatable -->
+    <script src="{{ asset('template/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('template/js/plugins-init/datatables.init.js') }}"></script>
 </body>
 
 </html>

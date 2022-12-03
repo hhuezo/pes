@@ -32,7 +32,7 @@
 
                                 <div class="row">
                                     <div class="col-xl-12 col-xxl-12">
-                                        <div class="card">
+
                                             <div class="card-header">
                                                 <h4 class="card-title">EMPLOYER INFORMATION</h4>
                                             </div>
@@ -505,7 +505,7 @@
 
                                                 </form>
                                             </div>
-                                        </div>
+
                                     </div>
                                 </div>
 
@@ -516,31 +516,73 @@
 
 
                                 <div class="col-xl-12 col-xxl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title">{!! trans('employer.AdditionalEmployerWorksite') !!}</h4>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">{!! trans('employer.AdditionalEmployerWorksite') !!}</h4>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="card-header">
+                                                    <button type="button" class="btn btn-success" data-toggle="modal"
+                                                        data-target=".bd-example-modal-lg">{!! trans('employer.AddAdditionalWorksite') !!}</button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="card-body">
 
 
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <select class="form-control" name="Additional_employer_worksite"
-                                                        id="Additional_employer_worksite">
-                                                        <option value="0">{!! trans('employer.No') !!} </option>
-                                                        <option value="1">{!! trans('employer.Yes') !!} </option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <button type="button" class="btn btn-success"
-                                                        id="BtnAddAdditionalWorksite"
-                                                        onclick="modal();">{!! trans('employer.AddAdditionalWorksite') !!}</button>
+
+
+
+                                            <div class="col-xl-12 col-xxl-12 col-lg-12 col-sm-12">
+                                                <div class="card">
+
+                                                    <div class="card-body">
+
+
+
+                                                        <table id="example2" class="display" style="min-width: 845px">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Street Address</th>
+                                                                    <th>City address</th>
+                                                                    <th>Country address</th>
+                                                                    <th>State</th>
+                                                                    <th>Zip code address</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($worksites as $obj)
+                                                                    <tr>
+                                                                        <td>{{ $obj->street_address }}</td>
+                                                                        <td>{{ $obj->city_address }}</td>
+                                                                        <td>{{ $obj->country_address }}</td>
+                                                                        @if ($obj->state_id_address)
+                                                                            <td>{{ $obj->state->name }}</td>
+                                                                        @else
+                                                                            <td></td>
+                                                                        @endif
+
+                                                                        <td>{{ $obj->zip_code_address }}</td>
+                                                                    </tr>
+                                                                @endforeach
+
+                                                            </tbody>
+                                                        </table>
+
+
+                                                    </div>
+
                                                 </div>
                                             </div>
+
                                         </div>
+
                                     </div>
-
-
 
 
 
@@ -557,65 +599,92 @@
     </div>
 
 
+
+    <!-- Large modal -->
+
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{!! trans('employer.AdditionalEmployerWorksiteAddress') !!}</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+
+                    <form method="POST" action="{{ url('employer_additional_location') }}">
+                        @csrf
+                        <div class="modal-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4><strong>{!! trans('employer.AdditionalEmployerworksiteLocation') !!}</strong></h4>
+                                </div>
+                                <div class="col-md-12">{!! trans('employer.DoIncludeCustomer') !!}</div>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="employer_id" value="{{ $employer->id }}">
+                            <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                            <div class="form-group">
+                                <label>{!! trans('employer.StreetAddress') !!}</label>
+                                <input type="text" name="street_address" required class="form-control">
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.City') !!}</label>
+                                <input type="text" name="city_address" required class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.County') !!}</label>
+                                <input type="text" name="country_address" required class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.State') !!}</label>
+                                <select class="form-control" name="state_id_address">
+                                    @foreach ($states as $obj)
+                                        <option value="{{ $obj->id }}">{{ $obj->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.ZipCode') !!}</label>
+                                <input type="text" name="zip_code_address" required class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+
+                    </form>
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="modal fade" id="modal_employer_additional_location" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true" data-tipo="1">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" action="{{ url('employer_additional_location') }}">
-                    @csrf
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
 
-                        <div class="col-md-12">{!! trans('employer.AdditionalEmployerWorksiteAddress') !!}</div>
-                        <div class="col-md-12">&nbsp;</div>
-                        <div class="col-md-12">
-                            <h4><strong>{!! trans('employer.AdditionalEmployerworksiteLocation') !!}</strong></h4>
-                        </div>
-                        <div class="col-md-12">{!! trans('employer.DoIncludeCustomer') !!}</div>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="employer_id" value="{{ $employer->id }}">
-                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                        <div class="form-group">
-                            <label>{!! trans('employer.StreetAddress') !!}</label>
-                            <input type="text" id="street_address" required class="form-control">
-                        </div>
-
-
-
-                        <div class="form-group">
-                            <label>{!! trans('employer.City') !!}</label>
-                            <input type="text" id="city_address" required class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>{!! trans('employer.County') !!}</label>
-                            <input type="text" id="country_address" required class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label>{!! trans('employer.State') !!}</label>
-                            <select class="form-control" id="state_id_address">
-                                @foreach ($states as $obj)
-                                    <option value="{{ $obj->id }}">{{ $obj->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-
-                        <div class="form-group">
-                            <label>{!! trans('employer.ZipCode') !!}</label>
-                            <input type="text" id="zip_code_address" required class="form-control">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                        <button type="button" onclick="add_employer_additional_location()" class="btn btn-primary">Save
-                            changes</button>
-                    </div>
-
-                </form>
             </div>
             <!-- /.modal-content -->
         </div>

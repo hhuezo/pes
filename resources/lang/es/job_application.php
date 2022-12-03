@@ -21,9 +21,10 @@ return [
     'additional_space' => 'Espacio adicional para notas, si es necesario.',
     'uniform_pieces' => 'Listar todas las piezas uniformes requeridas',
 
+
+    'location_listed_above' => '¿Este puesto es para la ubicación PRINCIPAL del lugar de trabajo mencionada anteriormente?',
     'job_title' => 'Nombre',
     'Number_of_Workers' => 'Numero de trabajadores',
-    'collective_bargaining' => '¿Esta posición está cubierta por un Acuerdo de Negociación Colectiva (CBA)?',
     'workers_paid_position' => '¿Cómo se les paga a los trabajadores en este puesto?',
     'PayRate' => 'Tasa de pago actual ofrecida',
     'tip_credit' => '¿Está planeando usar el crédito de propinas?',
