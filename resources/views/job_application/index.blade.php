@@ -4,19 +4,15 @@
 
     <div class="col-xl-12 col-xxl-12">
         <div class="card">
+
             <div class="card-header">
-
-                <div class="col-xl-12 col-xxl-12">
-                    <div class="row">
-                        <h4 class="card-title">Job applications listing</h4>
-                        <a href="{{ url('job_application/create') }}"> <button type="button"
-                                class="btn btn-success float-right">New</button></a>
-                    </div>
-
-                </div>
+                <h4 class="card-title">Job applications listing</h4>
+                <a href="{{ url('job_application/create') }}"><button type="button" class="btn btn-success float-right" data-toggle="modal"
+                    data-target=".bd-example-modal-lg">Add</button></a>
             </div>
+
             <div class="card-body">
-                <table id="example2" class="display" style="min-width: 845px">
+                <table id="example" class="display" style="min-width: 845px">
                     <thead>
                         <tr>
 
@@ -41,7 +37,8 @@
                                 @endif
                                 <td>{{ $obj->job_notes }}</td>
                                 <td align="center">
-                                    <a href="{{ url('job_application') }}/{{ $obj->id }}/edit" class="on-default edit-row">
+                                    <a href="{{ url('job_application') }}/{{ $obj->id }}/edit"
+                                        class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
                                 </td>
                             </tr>

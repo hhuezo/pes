@@ -9,6 +9,7 @@ use App\Models\JobApplicationDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+
 class JobApplicationController extends Controller
 {
     public function __construct()

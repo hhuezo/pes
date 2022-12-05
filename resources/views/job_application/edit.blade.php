@@ -194,16 +194,17 @@
                     <button type="button" class="btn btn-success float-right" data-toggle="modal"
                         data-target=".bd-example-modal-lg">Add</button>
                 </div>
+
+
                 <div class="card-body">
 
-                    <table id="example1" class="display" style="min-width: 845px">
+                    <table id="example2" class="display" style="min-width: 845px">
                         <thead>
                             <tr>
                                 <th>Job Title</th>
                                 <th>Number of Workers</th>
-                                <th>Country address</th>
-                                <th>Zip code address</th>
-
+                                <th>{!! trans('job_application.total_hours') !!}</th>
+                                <th>Option</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -211,9 +212,12 @@
                                 <tr>
                                     <td>{{ $obj->title->name }}</td>
                                     <td>{{ $obj->number_workers }}</td>
-                                    <td>{{ $obj->job_title }}</td>
-
-                                    <td>{{ $obj->job_title }}</td>
+                                    <td>{{ $obj->ant_workday_total_hours }}</td>
+                                    <td align="center">
+                                        <a href="{{ url('job_application') }}/{{ $obj->id }}/edit"
+                                            class="on-default edit-row">
+                                            <i class="fa fa-edit fa-lg"></i></a>
+                                    </td>
                                 </tr>
                             @endforeach
 
@@ -244,7 +248,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="hidden" name="job_app_id" value="{{$job->id}}">
+                                            <input type="hidden" name="job_app_id" value="{{ $job->id }}">
                                             <label for="exampleInputEmail1">{!! trans('job_application.job_title') !!}</label>
                                             <select class="form-control select2" name="job_title">
                                                 @foreach ($job_titles as $obj)
@@ -257,7 +261,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">{!! trans('job_application.Number_of_Workers') !!}</label>
-                                            <input type="number" name="number_workers" class="form-control" min="1">
+                                            <input type="number" name="number_workers" class="form-control"
+                                                min="1">
                                         </div>
                                     </div>
                                 </div>
@@ -285,8 +290,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.PayRate') !!}</label>
-                                        <input type="number" name="pay_rate" class="form-control" step="0.01" min="1"
-                                            required>
+                                        <input type="number" name="pay_rate" class="form-control" step="0.01"
+                                            min="1" required>
                                     </div>
                                 </div>
 
@@ -399,32 +404,32 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Sunday') !!}</label>
-                                        <input type="number" name="ant_workday_sun_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_sun_hour" id="ant_workday_sun_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Monday') !!}</label>
-                                        <input type="number" name="ant_workday_mon_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_mon_hour" id="ant_workday_mon_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Tuesday') !!}</label>
-                                        <input type="number" name="ant_workday_tue_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_tue_hour" id="ant_workday_tue_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Wednesday') !!}</label>
-                                        <input type="number" name="ant_workday_wed_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_wed_hour" id="ant_workday_wed_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
                             </div>
@@ -433,32 +438,32 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Thursday') !!}</label>
-                                        <input type="number" name="ant_workday_thu_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_thu_hour" id="ant_workday_thu_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Friday') !!}</label>
-                                        <input type="number" name="ant_workday_fri_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_fri_hour" id="ant_workday_fri_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">{!! trans('job_application.Saturday') !!}</label>
-                                        <input type="number" name="ant_workday_sat_hour" class="form-control" step="1" max="24"
-                                            min="1">
+                                        <input type="number" name="ant_workday_sat_hour" id="ant_workday_sat_hour"
+                                            class="form-control" step="1" max="24" min="1">
                                     </div>
                                 </div>
 
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1"><strong>{!! trans('job_application.total_hours') !!}</strong></label>
-                                        <input type="number" name="ant_workday_total_hours" class="form-control" step="1" min="1"
-                                            required>
+                                        <input type="number" readonly name="ant_workday_total_hours" id="ant_workday_total_hours"
+                                            class="form-control" step="1" min="1" required>
                                     </div>
                                     {!! trans('job_application.reminder') !!}
                                 </div>
@@ -517,8 +522,71 @@
         $(document).ready(function() {
             hide_div_explain_benefits();
             hide_div_requeriments();
-
         });
+
+
+        function total_horas() {
+            var horas = 0;
+
+            if (document.getElementById('ant_workday_sun_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_sun_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_mon_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_mon_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_tue_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_tue_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_wed_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_wed_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_thu_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_thu_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_fri_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_fri_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_sat_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_sat_hour').value);
+            }
+
+            document.getElementById('ant_workday_total_hours').value = horas;
+        }
+
+        $("#ant_workday_sun_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_mon_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_tue_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_wed_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_thu_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_fri_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_sat_hour").change(function() {
+            total_horas();
+        })
+
 
         $("#is_there_benefits").change(function() {
             show_div_explain_benefits()

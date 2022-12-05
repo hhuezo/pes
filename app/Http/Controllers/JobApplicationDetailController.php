@@ -63,6 +63,8 @@ class JobApplicationDetailController extends Controller
         $detail->primary_shift_time = $request->get('primary_shift_time');
         $detail->are_there_additional_shift_times = $request->get('are_there_additional_shift_times');
         $detail->save();
+
+        return redirect('job_application/' . $request->get('job_app_id') . '/edit');
     }
 
     /**
