@@ -16,6 +16,32 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 
+    <style>
+        .nav-header {
+            background-color: #ffffff;
+        }
+
+        .quixnav .metismenu {
+            background-color: #ffffff;
+        }
+
+        .quixnav {
+            background-color: #ffffff;
+        }
+
+        .quixnav .metismenu>li>a {
+            color: #8598AD;
+            font-size: 15.8939px;
+        }
+
+        .quixnav .metismenu>li:hover>a,
+        .quixnav .metismenu>li:focus>a,
+        .quixnav .metismenu>li.mm-active>a {
+            background-color: #2763FF;
+            color: #fff;
+        }
+
+    </style>
 </head>
 
 <body>
