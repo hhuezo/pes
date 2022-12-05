@@ -51,4 +51,10 @@ class JobApplicationDetail extends Model
 
     protected $guarded = [];
 
+
+    public function title()
+    {
+        return $this->belongsTo('App\Models\catalogue\JobTitle', 'job_title', 'id');
+    }
+
 }
