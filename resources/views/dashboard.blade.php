@@ -112,6 +112,22 @@
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    @if (config('locale.status') && count(config('locale.languages')) > 1)
+
+                                    @foreach (array_keys(config('locale.languages')) as $lang)
+                                        @if ($lang != App::getLocale())
+                                            <a href="{!! route('lang.swap', $lang) !!}">
+                                                @if ($lang == 'es')
+                                                    <img src="{{ asset('img/español.png') }}" style="width: 25px;">
+                                                @else
+                                                    <img src="{{ asset('img/ingles.png') }}" style="width: 25px;">
+                                                @endif
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                </a>
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
                                     <div class="pulse-css"></div>
                                 </a>

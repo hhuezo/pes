@@ -10,6 +10,11 @@
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 
+    <style>
+        body {
+            background-image: url("{{ asset('img/background.png') }}");
+        }
+    </style>
 </head>
 
 <body class="h-100">
@@ -31,7 +36,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label><strong>Email</strong></label>
-                                            <input type="email" name="email" id="email" class="form-control" required>
+                                            <input type="email" name="email" id="email" class="form-control"
+                                                required>
                                         </div>
                                         <div id="alert_email" class="alert alert-danger alert-dismissible">
                                             <button type="button" class="close" data-dismiss="alert"
@@ -62,7 +68,7 @@
 
                                         <div class="new-account mt-3">
                                             <p>Already have an account? <a class="text-primary"
-                                                    href="page-login.html">Sign
+                                                    href="{{ url('login') }}">Sign
                                                     in</a></p>
                                         </div>
                                     </form>
@@ -86,7 +92,6 @@
 
 <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
 <script type="text/javascript">
-
     $("#email").blur(function() {
         var email = $(this).val();
         $.get("{{ url('validate_email') }}" + '/' + email, function(data) {
