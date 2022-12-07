@@ -8,7 +8,7 @@ use App\Models\JobApplication;
 use App\Models\JobApplicationDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JobApplicationController extends Controller
 {
@@ -18,6 +18,9 @@ class JobApplicationController extends Controller
     }
     public function index()
     {
+
+     //alert()->success('Title','Lorem Lorem Lorem');
+
         if (auth()->user()->can('read admin job application')) {
             $job_apllications = JobApplication::get();
         } else if (auth()->user()->can('read job application')) {
