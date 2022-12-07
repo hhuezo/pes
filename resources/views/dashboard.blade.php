@@ -16,6 +16,32 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 
+    <style>
+        .nav-header {
+            background-color: #ffffff;
+        }
+
+        .quixnav .metismenu {
+            background-color: #ffffff;
+        }
+
+        .quixnav {
+            background-color: #ffffff;
+        }
+
+        .quixnav .metismenu>li>a {
+            color: #8598AD;
+            font-size: 15.8939px;
+        }
+
+        .quixnav .metismenu>li:hover>a,
+        .quixnav .metismenu>li:focus>a,
+        .quixnav .metismenu>li.mm-active>a {
+            background-color: #2763FF;
+            color: #fff;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -85,6 +111,22 @@
 
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                                    @if (config('locale.status') && count(config('locale.languages')) > 1)
+
+                                    @foreach (array_keys(config('locale.languages')) as $lang)
+                                        @if ($lang != App::getLocale())
+                                            <a href="{!! route('lang.swap', $lang) !!}">
+                                                @if ($lang == 'es')
+                                                    <img src="{{ asset('img/español.png') }}" style="width: 25px;">
+                                                @else
+                                                    <img src="{{ asset('img/ingles.png') }}" style="width: 25px;">
+                                                @endif
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                </a>
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
                                     <div class="pulse-css"></div>
@@ -191,6 +233,11 @@
 
                     <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i
                                 class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
+<<<<<<< HEAD
+=======
+                    <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
+                                class="icon icon-form"></i><span class="nav-text">Job application</span></a></li>
+>>>>>>> 5ce6eee1f7ea5b7896d3a2a1a9d364354e8497e8
 
                     <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>

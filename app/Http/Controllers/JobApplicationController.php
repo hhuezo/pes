@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\catalogue\JobTitle;
 use App\Models\Employer;
 use App\Models\JobApplication;
+use App\Models\JobApplicationDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+
 
 class JobApplicationController extends Controller
 {
@@ -86,7 +88,8 @@ class JobApplicationController extends Controller
     {
         $job = JobApplication::findOrFail($id);
         $job_titles = JobTitle::get();
-        return view('job_application.edit', ['job' => $job,'job_titles' => $job_titles]);
+        $job_details = JobApplicationDetail::where('job_app_id','=',$id)->get();
+        return view('job_application.edit', ['job' => $job,'job_titles' => $job_titles,'job_details' => $job_details]);
     }
 
     /**

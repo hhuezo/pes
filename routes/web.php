@@ -6,6 +6,8 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\JobApplicationDetailController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,6 +50,7 @@ Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employe
 Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
 
 Route::resource('job_application', JobApplicationController::class);
+Route::resource('job_application_detail', JobApplicationDetailController::class);
 
 
 //Route::get('employer_place_employment/{id}', [EmployerController::class, 'place_employment']);

@@ -32,9 +32,15 @@ class EmployerController extends Controller
      */
     public function create()
     {
+        $employer = Employer::where('users_id','=',auth()->user()->id)->first();
+        if($employer)
+        {
+            return redirect('employer/' . $employer->id . '/edit');
+        }
+        $user = auth()->user();
         $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
         $states = State::get();
-        $user = auth()->user();
+
         //$worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
         $normal_business_days = NormalBusinessDays::get();
         $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
