@@ -73,6 +73,699 @@ class EmployerController extends Controller
 
     public function store(Request $request)
     {
+
+        //dd($request);
+
+        $mailing_address_same_above = $request['mailing_address_same_above'];
+
+        if ($mailing_address_same_above == 'on') {
+            $mailing_address_same_above = 1;
+        }else{
+            $mailing_address_same_above = 0;
+        }
+
+
+        $signed_all_documents = $request['signed_all_documents'];
+
+        if ($signed_all_documents == 'on') {
+            $signed_all_documents = 1;
+        }else{
+            $signed_all_documents = 0;
+        }
+
+
+        $add_contact_person = $request['add_contact_person'];
+
+        if ($add_contact_person == 'on') {
+            $add_contact_person = 0;
+        }else{
+            $add_contact_person = 1;
+        }
+
+
+//dd($mailing_address_same_above);
+//dd($signed_all_documents);
+//dd($add_contact_person);
+
+
+        if ($mailing_address_same_above == 0 && $signed_all_documents == 0 && $add_contact_person == 0) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+                'mailing_address.required' => 'mailing_address is required',
+                'mailing_city.required' => 'mailing_city is required',
+                'mailing_state_id.required' => 'mailing_state_id is required',
+                'mailing_zip_code.required' => 'mailing_zip_code is required',
+
+                'signatory_name.required' => 'signatory_name is required',
+                'signatory_last_name.required' => 'signatory_last_name is required',
+                'signatory_job_title.required' => 'signatory_job_title is required',
+                'signatory_email.required' => 'signatory_email is required',
+                'signatory_phone.required' => 'signatory_phone is required',
+
+                'primary_contact_name.required' => 'primary_contact_name is required',
+                'primary_contact_last_name.required' => 'primary_contact_last_name is required',
+                'primary_contact_job_title.required' => 'primary_contact_job_title is required',
+                'primary_contact_email.required' => 'primary_contact_email is required',
+                'primary_contact_phone.required' => 'primary_contact_phone is required',
+                'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'mailing_address.min' => 'mailing_address be greater than 6 caracters',
+                'mailing_city.min' => 'mailing_city be greater than 4 caracters',
+                'mailing_state_id.min' => 'mailing_state_id must be greater than 0',
+                'mailing_zip_code.min' => 'mailing_zip_code is must be 5 digits',
+
+                'signatory_name.min' => 'signatory_name must be greater than 4 caracters',
+                'signatory_last_name.min' => 'signatory_last_name must be greater than 4 caracters',
+                'signatory_job_title.min' => 'signatory_job_title must be greater than 6 caracters',
+                'signatory_email.min' => 'signatory_email must be 6 caracters',
+                'signatory_phone.min' => 'signatory_phone must be 10 digits',
+
+                'primary_contact_name.min' => 'primary_contact_name must be greater than 4 caracters',
+                'primary_contact_last_name.min' => 'primary_contact_last_name must be greater than 4 caracters',
+                'primary_contact_job_title.min' => 'primary_contact_job_title must be greater than 6 caracters',
+                'primary_contact_email.min' => 'primary_contact_email must be greater than 6 caracters',
+                'primary_contact_phone.min' => 'primary_contact_phone must be 10 digits',
+                'primary_contact_cellphone.min' => 'primary_contact_cellphone must be 10 digits',
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'mailing_address' => 'required|min:6',
+                'mailing_city' => 'required|min:4',
+                'mailing_state_id' => 'required|min:0',
+                'mailing_zip_code' => 'required|min:5',
+
+                'signatory_name' => 'required|min:4',
+                'signatory_last_name' => 'required|min:4',
+                'signatory_job_title' => 'required|min:6',
+                'signatory_email' => 'required|min:6',
+                'signatory_phone' => 'required|min:13',
+
+                'primary_contact_name' => 'required|min:4',
+                'primary_contact_last_name' => 'required|min:4',
+                'primary_contact_job_title' => 'required|min:10',
+                'primary_contact_email' => 'required|min:10',
+                'primary_contact_phone' => 'required|min:13',
+                'primary_contact_cellphone' => 'required|min:13',
+              ], $messages);
+
+        }
+
+
+        if ($mailing_address_same_above == 0 && $signed_all_documents == 0 && $add_contact_person == 1) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+                'mailing_address.required' => 'mailing_address is required',
+                'mailing_city.required' => 'mailing_city is required',
+                'mailing_state_id.required' => 'mailing_state_id is required',
+                'mailing_zip_code.required' => 'mailing_zip_code is required',
+
+                'signatory_name.min' => 'signatory_name must be greater than 4 caracters',
+                'signatory_last_name.min' => 'signatory_last_name must be greater than 4 caracters',
+                'signatory_job_title.min' => 'signatory_job_title must be greater than 6 caracters',
+                'signatory_email.min' => 'signatory_email must be 6 caracters',
+                'signatory_phone.min' => 'signatory_phone must be 10 digits',
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 6 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'mailing_address.min' => 'mailing_address be greater than 6 caracters',
+                'mailing_city.min' => 'mailing_city be greater than 4 caracters',
+                'mailing_state_id.min' => 'mailing_state_id must be greater than 0',
+                'mailing_zip_code.min' => 'mailing_zip_code is must be 5 digits',
+
+
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'mailing_address' => 'required|min:6',
+                'mailing_city' => 'required|min:4',
+                'mailing_state_id' => 'required|min:0',
+                'mailing_zip_code' => 'required|min:5',
+
+                'signatory_name' => 'required|min:4',
+                'signatory_last_name' => 'required|min:4',
+                'signatory_job_title' => 'required|min:6',
+                'signatory_email' => 'required|min:6',
+                'signatory_phone' => 'required|min:13',
+
+              ], $messages);
+        }
+
+
+
+        if ($mailing_address_same_above == 0 && $signed_all_documents == 1 && $add_contact_person == 0) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+                'mailing_address.required' => 'mailing_address is required',
+                'mailing_city.required' => 'mailing_city is required',
+                'mailing_state_id.required' => 'mailing_state_id is required',
+                'mailing_zip_code.required' => 'mailing_zip_code is required',
+
+                'primary_contact_name.required' => 'primary_contact_name is required',
+                'primary_contact_last_name.required' => 'primary_contact_last_name is required',
+                'primary_contact_job_title.required' => 'primary_contact_job_title is required',
+                'primary_contact_email.required' => 'primary_contact_email is required',
+                'primary_contact_phone.required' => 'primary_contact_phone is required',
+                'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'mailing_address.min' => 'mailing_address be greater than 6 caracters',
+                'mailing_city.min' => 'mailing_city be greater than 4 caracters',
+                'mailing_state_id.min' => 'mailing_state_id must be greater than 0',
+                'mailing_zip_code.min' => 'mailing_zip_code is must be 5 digits',
+
+
+                'primary_contact_name.min' => 'primary_contact_name must be greater than 4 caracters',
+                'primary_contact_last_name.min' => 'primary_contact_last_name must be greater than 4 caracters',
+                'primary_contact_job_title.min' => 'primary_contact_job_title must be greater than 6 caracters',
+                'primary_contact_email.min' => 'primary_contact_email must be greater than 6 caracters',
+                'primary_contact_phone.min' => 'primary_contact_phone must be 10 digits',
+                'primary_contact_cellphone.min' => 'primary_contact_cellphone must be 10 digits',
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'mailing_address' => 'required|min:6',
+                'mailing_city' => 'required|min:4',
+                'mailing_state_id' => 'required|min:0',
+                'mailing_zip_code' => 'required|min:5',
+
+
+                'primary_contact_name' => 'required|min:4',
+                'primary_contact_last_name' => 'required|min:4',
+                'primary_contact_job_title' => 'required|min:10',
+                'primary_contact_email' => 'required|min:10',
+                'primary_contact_phone' => 'required|min:13',
+                'primary_contact_cellphone' => 'required|min:13',
+              ], $messages);
+        }
+
+
+
+        if ($mailing_address_same_above == 0 && $signed_all_documents == 1 && $add_contact_person == 1) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+                'mailing_address.required' => 'mailing_address is required',
+                'mailing_city.required' => 'mailing_city is required',
+                'mailing_state_id.required' => 'mailing_state_id is required',
+                'mailing_zip_code.required' => 'mailing_zip_code is required',
+
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'mailing_address.min' => 'mailing_address be greater than 6 caracters',
+                'mailing_city.min' => 'mailing_city be greater than 4 caracters',
+                'mailing_state_id.min' => 'mailing_state_id must be greater than 0',
+                'mailing_zip_code.min' => 'mailing_zip_code is must be 5 digits',
+
+
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'mailing_address' => 'required|min:6',
+                'mailing_city' => 'required|min:4',
+                'mailing_state_id' => 'required|min:0',
+                'mailing_zip_code' => 'required|min:5',
+
+
+              ], $messages);
+
+        }
+
+
+
+        if ($mailing_address_same_above == 1 && $signed_all_documents == 0 && $add_contact_person == 0) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+                'signatory_name.required' => 'signatory_name is required',
+                'signatory_last_name.required' => 'signatory_last_name is required',
+                'signatory_job_title.required' => 'signatory_job_title is required',
+                'signatory_email.required' => 'signatory_email is required',
+                'signatory_phone.required' => 'signatory_phone is required',
+
+                'primary_contact_name.required' => 'primary_contact_name is required',
+                'primary_contact_last_name.required' => 'primary_contact_last_name is required',
+                'primary_contact_job_title.required' => 'primary_contact_job_title is required',
+                'primary_contact_email.required' => 'primary_contact_email is required',
+                'primary_contact_phone.required' => 'primary_contact_phone is required',
+                'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'signatory_name.min' => 'signatory_name must be greater than 4 caracters',
+                'signatory_last_name.min' => 'signatory_last_name must be greater than 4 caracters',
+                'signatory_job_title.min' => 'signatory_job_title must be greater than 6 caracters',
+                'signatory_email.min' => 'signatory_email must be 6 caracters',
+                'signatory_phone.min' => 'signatory_phone must be 10 digits',
+
+                'primary_contact_name.min' => 'primary_contact_name must be greater than 4 caracters',
+                'primary_contact_last_name.min' => 'primary_contact_last_name must be greater than 4 caracters',
+                'primary_contact_job_title.min' => 'primary_contact_job_title must be greater than 6 caracters',
+                'primary_contact_email.min' => 'primary_contact_email must be greater than 6 caracters',
+                'primary_contact_phone.min' => 'primary_contact_phone must be 10 digits',
+                'primary_contact_cellphone.min' => 'primary_contact_cellphone must be 10 digits',
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'signatory_name' => 'required|min:4',
+                'signatory_last_name' => 'required|min:4',
+                'signatory_job_title' => 'required|min:6',
+                'signatory_email' => 'required|min:6',
+                'signatory_phone' => 'required|min:13',
+
+                'primary_contact_name' => 'required|min:4',
+                'primary_contact_last_name' => 'required|min:4',
+                'primary_contact_job_title' => 'required|min:10',
+                'primary_contact_email' => 'required|min:10',
+                'primary_contact_phone' => 'required|min:13',
+                'primary_contact_cellphone' => 'required|min:13',
+              ], $messages);
+        }
+
+
+        if ($mailing_address_same_above == 1 && $signed_all_documents == 0 && $add_contact_person == 1) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+
+                'signatory_name.required' => 'signatory_name is required',
+                'signatory_last_name.required' => 'signatory_last_name is required',
+                'signatory_job_title.required' => 'signatory_job_title is required',
+                'signatory_email.required' => 'signatory_email is required',
+                'signatory_phone.required' => 'signatory_phone is required',
+
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'signatory_name.min' => 'signatory_name must be greater than 4 caracters',
+                'signatory_last_name.min' => 'signatory_last_name must be greater than 4 caracters',
+                'signatory_job_title.min' => 'signatory_job_title must be greater than 6 caracters',
+                'signatory_email.min' => 'signatory_email must be 6 caracters',
+                'signatory_phone.min' => 'signatory_phone must be 10 digits',
+
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+
+                'signatory_name' => 'required|min:4',
+                'signatory_last_name' => 'required|min:4',
+                'signatory_job_title' => 'required|min:6',
+                'signatory_email' => 'required|min:6',
+                'signatory_phone' => 'required|min:13',
+
+              ], $messages);
+
+        }
+
+
+        if ($mailing_address_same_above == 1 && $signed_all_documents == 1 && $add_contact_person == 0) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+
+                'primary_contact_name.required' => 'primary_contact_name is required',
+                'primary_contact_last_name.required' => 'primary_contact_last_name is required',
+                'primary_contact_job_title.required' => 'primary_contact_job_title is required',
+                'primary_contact_email.required' => 'primary_contact_email is required',
+                'primary_contact_phone.required' => 'primary_contact_phone is required',
+                'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+                'primary_contact_name.min' => 'primary_contact_name must be greater than 4 caracters',
+                'primary_contact_last_name.min' => 'primary_contact_last_name must be greater than 4 caracters',
+                'primary_contact_job_title.min' => 'primary_contact_job_title must be greater than 6 caracters',
+                'primary_contact_email.min' => 'primary_contact_email must be greater than 6 caracters',
+                'primary_contact_phone.min' => 'primary_contact_phone must be 10 digits',
+                'primary_contact_cellphone.min' => 'primary_contact_cellphone must be 10 digits',
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'primary_contact_name' => 'required|min:4',
+                'primary_contact_last_name' => 'required|min:4',
+                'primary_contact_job_title' => 'required|min:10',
+                'primary_contact_email' => 'required|min:10',
+                'primary_contact_phone' => 'required|min:13',
+                'primary_contact_cellphone' => 'required|min:13',
+              ], $messages);
+        }
+
+
+
+        if ($mailing_address_same_above == 1 && $signed_all_documents == 1 && $add_contact_person == 1) {
+            $messages = [
+                'legal_business_name.required' => 'legal_business_name is required',
+                'federal_id_number.required' => 'federal_id_number is required',
+                'year_business_established.required' => 'year_business_established is required',
+                'number_employees_full_time.required' => 'number_employees_full_time is required',
+                'primary_business_phone.required' => 'primary_business_phone is required',
+                'primary_business_type_id.required' => 'primary_business_type_id is required',
+                'naics_id.required' => 'naics_id is required',
+                'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+
+
+                'legal_business_name.min' => 'Legal business name must be greater than 4 caracters',
+                'federal_id_number.min' => 'federal id number must be 9 digits',
+                'year_business_established.min' => 'year_business_established must be 4 digits',
+                'number_employees_full_time.min' => 'Number employees must be greater than 0',
+                'primary_business_phone.min' => 'primary_business_phone name must be 10 digits',
+                'primary_business_type_id.min' => 'primary_business_type_id must be greater than 0',
+                'naics_id.min' => 'naics_id must be greater than 0',
+                'year_end_gross_company_income.min' => 'year_end_gross_company_income must be 4 digits',
+                'principal_street_address.min' => 'principal_street_address be greater than 6 caracters',
+                'principal_city.min' => 'principal_city be greater than 4 caracters',
+                'principal_country.min' => 'principal_country be greater than 6 caracters',
+                'principal_state_id.min' => 'principal_state_id is must be greater than 0',
+                'principal_zip_code.min' => 'principal_zip_code is must be 5 digits',
+
+
+            ];
+
+            $request->validate([
+                'legal_business_name' => 'required|min:4',
+                'federal_id_number' => 'required|min:9',
+                'year_business_established' => 'required|min:4',
+                'number_employees_full_time' => 'required|min:1',
+                'primary_business_phone' => 'required|min:13',
+                'primary_business_type_id' => 'required|min:0',
+                'naics_id' => 'required|min:0',
+                'year_end_gross_company_income' => 'required|min:4',
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+              ], $messages);
+        }
+
+
+
+        //dd($mailing_address_same_above);
+
+
+
+
+
         $employer = new Employer();
         $employer->legal_business_name = $request->get('legal_business_name');
         $employer->applicable_trade_name = $request->get('applicable_trade_name');

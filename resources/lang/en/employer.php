@@ -27,6 +27,8 @@ return [
     'MailingCity' => 'Mailing City',
     'MailingState' => 'Mailing State',
     'MailingZipCode' => 'Mailing Zip Code',
+    'SignedAllDocuments' => 'Will the PRIMARY Contact listed above SIGN all documents?',    
+    'AddContactPerson' => 'Would you like to add an Additional Contact Person?',    
     'EmployerContactInformation'  => 'EMPLOYER CONTACT INFORMATION',
     'PrimaryContact'  => 'Primary Contact',
     'Name'  => 'First',
@@ -45,6 +47,14 @@ return [
     'SignatoryJobTitle' => 'Signatory Job Title',
     'SignatoryEmail' => 'Signatory Email',
     'SignatoryPhone' => 'Signatory Phone',
+
+    'AdditionalContactName' => 'Additional contact name',
+    'AdditionalLastName' => 'Additional contact lastName',
+    'AdditionalContactJobTitle' => 'Additional contact job title',
+    'AdditionalContactEmail' => 'Additional contact email',
+    'AdditionalContactPhone' => 'Additional contact phone',
+    'AdditionalContactCellPhone' => 'Additional contact cellPhone',
+    
     'PlaceOfEmployment' => 'PLACE OF EMPLOYMENT',
 
     'MainWorksiteLocation' => 'Main Worksite Location',
