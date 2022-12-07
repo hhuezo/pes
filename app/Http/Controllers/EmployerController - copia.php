@@ -117,9 +117,18 @@ class EmployerController extends Controller
 //dd($add_contact_person);
 //main_worksite_location
 
+//dd($is_there_additional_worksite);
+
+//dd($is_there_additional_worksite, $mailing_address_same_above, $signed_all_documents, $add_contact_person);
+
+
+
 
         if ($is_there_additional_worksite == 0) {
             if ($mailing_address_same_above == 0 && $signed_all_documents == 0 && $add_contact_person == 0) {
+
+               
+
                 $messages = [
                     'legal_business_name.required' => 'legal_business_name is required',   
                     'federal_id_number.required' => 'federal_id_number is required',   
@@ -201,7 +210,9 @@ class EmployerController extends Controller
                     'main_worksite_zip_code.min' => 'Worksite zip code must be 5 digits',  
     
                 ];
-    
+
+            
+
                 $request->validate([
                     'legal_business_name' => 'required|min:4',
                     'federal_id_number' => 'required|min:9',
@@ -213,40 +224,28 @@ class EmployerController extends Controller
                     'naics_id' => 'required|min:0',
                     'year_end_gross_company_income' => 'required|min:4',
                     'principal_street_address' => 'required|min:6',
+          
                     'principal_city' => 'required|min:4',
                     'principal_country' => 'required|min:6',
                     'principal_state_id' => 'required|min:0',
                     'principal_zip_code' => 'required|min:5',
-    
-                    'mailing_address' => 'required|min:6',   
-                    'mailing_city' => 'required|min:4',   
-                    'mailing_state_id' => 'required|min:0',   
-                    'mailing_zip_code' => 'required|min:5',   
-    
-                    'signatory_name' => 'required|min:4',
-                    'signatory_last_name' => 'required|min:4',
-                    'signatory_job_title' => 'required|min:6',
-                    'signatory_email' => 'required|min:6',
-                    'signatory_phone' => 'required|min:10',
-    
-                    'primary_contact_name' => 'required|min:4',
-                    'primary_contact_last_name' => 'required|min:4',
-                    'primary_contact_job_title' => 'required|min:10',
-                    'primary_contact_email' => 'required|min:10',
-                    'primary_contact_phone' => 'required|min:10',
-                    'primary_contact_cellphone' => 'required|min:10',
 
-                    'main_worksite_location' => 'required|min:4',   
-                    'main_worksite_city' => 'required|min:4',   
-                    'main_worksite_country' => 'required|min:4',   
-                    'main_worksite_state' => 'required|min:1',   
-                    'main_worksite_zip_code' => 'required|min:5',   
-    
+                    // 'mailing_address' => 'required|min:6',   
+                    // 'mailing_city' => 'required|min:4',   
+                    // 'mailing_state_id' => 'required|min:0',   
+                    // 'mailing_zip_code' => 'required|min:5',   
+                      
+
                   ], $messages);
-          
+
+                 
+                  
             }
-    
-    
+  
+            dd("Empleador creado correctamente 4");
+            
+
+            /*
             if ($mailing_address_same_above == 0 && $signed_all_documents == 0 && $add_contact_person == 1) {
     
                 
@@ -998,6 +997,12 @@ class EmployerController extends Controller
     
                   ], $messages);
             }
+            */
+        }
+
+
+
+/*
         }else{
             if ($mailing_address_same_above == 0 && $signed_all_documents == 0 && $add_contact_person == 0) {
                 $messages = [
@@ -1736,17 +1741,12 @@ class EmployerController extends Controller
                   ], $messages);
             }
         }
-
-
-        
-
+*/
 
   
-        dd("registro guardado correctamente");
+        //dd($mailing_address_same_above);
 
-
-
-
+    
 
         $employer = new Employer();
         $employer->legal_business_name = $request->get('legal_business_name');
@@ -1780,7 +1780,7 @@ class EmployerController extends Controller
 
 
 
-        if ($request->get('mailing_address_same_above') == null) {
+        if ($request->get('mailing_address_same_above') == 0) {
             $employer->mailing_address_same_above = 0;
             $employer->mailing_address = $request->get('mailing_address');
             $employer->mailing_city = $request->get('mailing_city');
@@ -1834,7 +1834,7 @@ class EmployerController extends Controller
 
 
 
-        if($request->get('is_there_additional_worksite') == null)
+        if($request->get('is_there_additional_worksite') == 0)
         {
             $employer->is_there_additional_worksite = 0;
         }
@@ -1854,11 +1854,27 @@ class EmployerController extends Controller
         $employer->users_id = auth()->user()->id ;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $employer->save();
 
-
-
-        //return redirect('employer/' . $employer->id . '/edit');
+        return redirect('employer/' . $employer->id . '/edit');
     }
 
     public function employer_place_store(Request $request)
