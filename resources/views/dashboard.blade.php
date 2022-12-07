@@ -234,7 +234,7 @@
                     <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i
                                 class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
                     <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
-                                class="icon icon-form"></i><span class="nav-text">Job application</span></a></li>
+                                class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
 
                     <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
@@ -410,6 +410,20 @@
     <!-- Datatable -->
     <script src="{{ asset('template/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/js/plugins-init/datatables.init.js') }}"></script>
+
+
+    <!-- mascara de entrada -->
+     <script src="{{ asset('template/vendor/input-mask/jquery.inputmask.js') }}"></script>
+
+
+    <script>
+        $(function() {
+            //Initialize Select2 Elements
+            $('.select2').select2()
+            //Dui
+            $('[data-mask]').inputmask()
+        });
+    </script>
 </body>
 
 </html>

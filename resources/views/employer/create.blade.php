@@ -1,5 +1,6 @@
 @extends ('dashboard')
 @section('contenido')
+
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
@@ -18,7 +19,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}</label>
-                                <input type="text" name="legal_business_name" value="{{ old('legal_business_name') }}"
+                                <input type="text" name="legal_business_name"   value="{{ old('legal_business_name') }}"
                                     class="form-control">
                                 @error('legal_business_name')
                                     <div class="alert-danger">{{ $message }}</div>
@@ -679,15 +680,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
-
-    <!-- mascara de entrada -->
-    <!-- <script src="{{ asset('bower_components/input-mask/jquery.inputmask.js') }}"></script> -->
-
-    <!-- <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.0.js'></script> -->
-    <script type='text/javascript'
-        src="https://rawgit.com/RobinHerbots/jquery.inputmask/3.x/dist/jquery.inputmask.bundle.js"></script>
-
+    <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
 
 
 

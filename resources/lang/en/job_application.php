@@ -3,7 +3,7 @@
 //resources/lang/es/messages.php
 
 return [
-    'Title' => 'TEMPORARY NEED INFORMATION',
+    'Title' => 'New requirement',
     'maximun' => 'Maximum 10 months',
     'start_date' => 'Start Date of Employment',
     'end_date' => 'End Date of Employment',
@@ -11,6 +11,26 @@ return [
     'need_workers' => 'Do you need H-2B workers (in the same position) during DIFFERENT Employment Periods?',
     'message2' => 'For example, 20 workers from Feb 1 to Nov 30, and an additional 30 workers from April 1 to Nov 30.',
     'multiple_employment_period' => 'Please explain multiple Employment period filings',
+
+
+    'EmployeeRights' => 'Employer Rights Under The H-2b Program',
+    'message4' => 'Two types of workers have rights under this program: <br><br>
+    <strong>H-2B WORKERS and OTHER WORKERS performing substantially the same work included in
+    the H-2B job order or substantially the same work as that performed by the H-2B workers,
+    except for certain long-term existing employees and certain employees under a collective bargaining
+    agreement or individual employment contract.<br><br>
+    To receive accurate, WRITTEN INFORMATION about the wages, hours, working conditions,
+    and benefits of the employment being offered </strong>',
+    'Agree'=>'Agree',
+    'message5' => 'I have read and reviewed this form. To the best of my knowledge the information contained
+    the-rein is true and accurate.',
+    'PleasSign' => 'Please sign',
+    'printed_name' => 'PRINTED NAME',
+
+
+
+
+
     'workers_paid' => 'How often are workers PAID?',
     'Weekly' => 'Weekly',
     'Bi-weekly' => 'Bi-weekly',

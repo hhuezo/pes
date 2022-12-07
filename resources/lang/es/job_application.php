@@ -3,16 +3,33 @@
 //resources/lang/es/messages.php
 
 return [
-    'Title' => 'INFORMACIÓN DE NECESIDAD TEMPORAL',
+    'Title' => 'Nuevo requerimiento',
     'maximun' => 'Máximo 10 meses',
     'start_date' => 'Fecha de inicio del empleo',
     'end_date' => 'Fecha final del empleo',
     'message' => 'Las fechas solicitadas de necesidad y la cantidad de trabajadores DEBEN reflejar con precisión su carga máxima o necesidad estacional.
     El DOL y USCIS requieren evidencia financiera que respalde CLARAMENTE las fechas solicitadas de necesidad temporal y la cantidad de trabajadores.
-     El período máximo de empleo permitido para H-2B es de 10 meses.',
+    El período máximo de empleo permitido para H-2B es de 10 meses.',
     'need_workers' => '¿Necesita trabajadores H-2B (en el mismo puesto) durante DIFERENTES periodos de empleo?',
     'message2' => 'Por ejemplo, 20 trabajadores del 1 de febrero al 30 de noviembre y 30 trabajadores adicionales del 1 de abril al 30 de noviembre.',
     'multiple_employment_period' => 'Por favor explique las presentaciones de múltiples períodos de empleo',
+
+    'EmployeeRights' => 'Derechos del empleador bajo el programa H-2b',
+    'message4' => 'Dos tipos de trabajadores tienen derechos bajo este programa: <br><br>
+    <strong>TRABAJADORES H-2B y OTROS TRABAJADORES que realizan sustancialmente el mismo trabajo incluido en
+    la orden de trabajo H-2B o sustancialmente el mismo trabajo que el realizado por los trabajadores H-2B,
+    excepto para ciertos empleados existentes a largo plazo y ciertos empleados bajo una negociación colectiva
+    acuerdo o contrato individual de trabajo.<br><br>
+    A recibir INFORMACIÓN ESCRITA precisa sobre los salarios, horas, condiciones de trabajo,
+    y beneficios del empleo que se ofrece </strong>',
+    'Agree'=>'Aceptar',
+    'message5' => 'He leído y revisado este formulario. A mi leal saber y entender, la información contenida
+    la rienda es verdadera y precisa.',
+    'PleasSign' => 'Por favor firma',
+    'printed_name' => 'NOMBRE IMPRESO',
+
+
+
     'workers_paid' => '¿Con qué frecuencia se les paga a los trabajadores?',
     'Weekly' => 'Semanal',
     'Bi-weekly' => 'Quincenal',
