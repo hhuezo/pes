@@ -14,6 +14,20 @@
             height: 309.93px;
         }
     </style>
+
+    <style>
+        .nav-tabs-custom>.tab-content {
+
+            padding: 0px;
+        }
+
+        .modal-lg,
+        .modal-xl {
+            max-width: 70%;
+        }
+    </style>
+
+    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
@@ -36,14 +50,15 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
-                                    <input type="date" name="start_date" class="form-control">
+                                    <input type="date" min="{{ date('Y-m-d') }}" name="start_date" id="start_date"
+                                        class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
-                                    <input type="date" name="end_date" class="form-control">
+                                    <input type="date" name="end_date" id="end_date" class="form-control">
                                 </div>
 
                             </div>
@@ -57,10 +72,12 @@
                                     <label for="exampleInputEmail1">{!! trans('job_application.need_workers') !!}</label>
                                     <br>
                                     {!! trans('employer.Yes') !!}
-                                    <input type="radio" value="1" checked name="is_uniform_required">
+                                    <input type="radio" value="1" onclick="show_multiple_employment_period();"
+                                        id="need_h2b_workers" name="need_h2b_workers">
                                     &nbsp;&nbsp;
                                     {!! trans('employer.No') !!}
-                                    <input type="radio" value="0" name="is_uniform_required">
+                                    <input type="radio" value="0" onclick="hide_multiple_employment_period();"
+                                        checked id="need_h2b_workers2" name="need_h2b_workers">
                                     <br>
 
                                     {!! trans('job_application.message2') !!}
@@ -69,10 +86,11 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-6" id="div_multiple_employment_period">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.multiple_employment_period') !!}</label>
-                                    <input type="text" name="explain_multiple_employment" class="form-control">
+                                    <input type="text" name="explain_multiple_employment"
+                                        id="explain_multiple_employment" class="form-control">
                                 </div>
                             </div>
 
@@ -92,39 +110,39 @@
 
                             <!-- END ADD PISITION -->
 
-                            <div class="col-sm-12">&nbsp;</div>
+                            <!-- <div class="col-sm-12">&nbsp;</div>
 
-                            <div class="col-sm-12" style="text-align: center;">
-                                <h3>{!! trans('job_application.EmployeeRights') !!}</h3>
-                            </div>
+                                        <div class="col-sm-12" style="text-align: center;">
+                                            <h3>{!! trans('job_application.EmployeeRights') !!}</h3>
+                                        </div>
 
-                            <div class="col-sm-12">
-                                {!! trans('job_application.message4') !!}
-                            </div>
-                            <div class="col-sm-12">
-                                <input type="checkbox"> &nbsp;&nbsp;{!! trans('job_application.Agree') !!}
-                            </div>
-                            <div class="col-sm-12">&nbsp;</div>
-                            <div class="col-sm-12">
-                                {!! trans('job_application.message5') !!}
-                            </div>
-                            <div class="col-sm-12">
-                                <input type="checkbox"> &nbsp;&nbsp;{!! trans('employer.Yes') !!}
-                            </div>
-                            <div class="col-sm-12">&nbsp;</div>
-                            <div class="col-sm-12">
-                                {!! trans('job_application.PleasSign') !!}
-                            </div>
-                            <div class="col-sm-12">
-                                <div class="div_canvas"> <canvas id="pizarra"></canvas></div>
-                            </div>
-                            <div class="col-sm-12">&nbsp;</div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
-                                    <input type="text" name="explain_multiple_employment" class="form-control">
-                                </div>
-                            </div>
+                                        <div class="col-sm-12">
+                                            {!! trans('job_application.message4') !!}
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="checkbox"> &nbsp;&nbsp;{!! trans('job_application.Agree') !!}
+                                        </div>
+                                        <div class="col-sm-12">&nbsp;</div>
+                                        <div class="col-sm-12">
+                                            {!! trans('job_application.message5') !!}
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <input type="checkbox"> &nbsp;&nbsp;{!! trans('employer.Yes') !!}
+                                        </div>
+                                        <div class="col-sm-12">&nbsp;</div>
+                                        <div class="col-sm-12">
+                                            {!! trans('job_application.PleasSign') !!}
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="div_canvas"> <canvas id="pizarra"></canvas></div>
+                                        </div>
+                                        <div class="col-sm-12">&nbsp;</div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
+                                                <input type="text" name="explain_multiple_employment" class="form-control">
+                                            </div>
+                                        </div>-->
 
 
                             <div class="col-sm-12 form-group">
@@ -140,7 +158,7 @@
         </div>
     </div>
 
-
+    @include('sweetalert::alert')
 
 
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
@@ -160,6 +178,17 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <input type="hidden" name="job_app_id" value="0">
+                                            <input type="hidden" name="start_date_modal" id="start_date_modal"
+                                                class="form-control">
+                                            <input type="hidden" name="end_date_modal" id="end_date_modal"
+                                                class="form-control">
+                                            <input type="hidden" value="0" name="need_h2b_workers_modal"
+                                                id="need_h2b_workers_modal" class="form-control">
+                                            <input type="hidden" name="explain_multiple_employment_modal"
+                                                id="explain_multiple_employment_modal" class="form-control">
+
+
+
                                             <label for="exampleInputEmail1">{!! trans('job_application.job_title') !!}</label>
                                             <select class="form-control select2" name="job_title">
                                                 @foreach ($job_titles as $obj)
@@ -434,7 +463,145 @@
 
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript">
+        $(document).ready(function() {
+            hide_multiple_employment_period();
+            hide_div_explain_benefits();
+            hide_div_requeriments();
+        });
 
+        function hide_multiple_employment_period() {
+            $('#div_multiple_employment_period').hide();
+        }
+
+        function show_multiple_employment_period() {
+            $('#div_multiple_employment_period').show();
+        }
+        //
+        $("#start_date").change(function() {
+            document.getElementById('start_date_modal').value = document.getElementById('start_date').value;
+        });
+
+        $("#end_date").change(function() {
+            document.getElementById('end_date_modal').value = document.getElementById('end_date').value;
+        });
+
+        $("#explain_multiple_employment").change(function() {
+            document.getElementById('explain_multiple_employment_modal').value = document.getElementById(
+                'explain_multiple_employment').value;
+        });
+
+        $("#need_h2b_workers").change(function() {
+            if (document.getElementById('need_h2b_workers').checked == true) {
+                document.getElementById('need_h2b_workers_modal').value = 1;
+            } else {
+                document.getElementById('need_h2b_workers_modal').value = 0;
+            }
+        });
+
+        $("#need_h2b_workers2").change(function() {
+            if (document.getElementById('need_h2b_workers2').checked == true) {
+                document.getElementById('need_h2b_workers_modal').value = 0;
+            } else {
+                document.getElementById('need_h2b_workers_modal').value = 1;
+            }
+        });
+
+
+        $("#is_there_benefits").change(function() {
+            show_div_explain_benefits()
+        })
+
+        $("#is_there_benefits2").change(function() {
+            hide_div_explain_benefits()
+        })
+
+        function show_div_explain_benefits() {
+            $('#div_explain_benefits').show();
+        }
+
+        function hide_div_explain_benefits() {
+            $('#div_explain_benefits').hide();
+        }
+
+        $("#are_there_any_requeriments").change(function() {
+            show_div_requeriments()
+        })
+
+        $("#are_there_any_requeriments2").change(function() {
+            hide_div_requeriments()
+        })
+
+        function show_div_requeriments() {
+            $('#div_requeriments').show();
+        }
+
+        function hide_div_requeriments() {
+            $('#div_requeriments').hide();
+        }
+
+
+
+        function total_horas() {
+            var horas = 0;
+
+            if (document.getElementById('ant_workday_sun_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_sun_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_mon_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_mon_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_tue_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_tue_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_wed_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_wed_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_thu_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_thu_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_fri_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_fri_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_sat_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_sat_hour').value);
+            }
+
+            document.getElementById('ant_workday_total_hours').value = horas;
+        }
+
+        $("#ant_workday_sun_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_mon_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_tue_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_wed_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_thu_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_fri_hour").change(function() {
+            total_horas();
+        })
+
+        $("#ant_workday_sat_hour").change(function() {
+            total_horas();
+        })
     </script>
 
 
