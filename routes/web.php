@@ -8,16 +8,6 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobApplicationDetailController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,11 +33,18 @@ require __DIR__.'/auth.php';
 
 
 Route::resource('employer', EmployerController::class);
+Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
+Route::post('employer_place_of_business', [EmployerController::class, 'employer_place_of_business']);
+Route::post('employer_contact_information', [EmployerController::class, 'employer_contact_information']);
+
+
+
+
 Route::post('employer_place_store', [EmployerController::class, 'employer_place_store']);
 Route::post('employer_additional_location', [EmployerController::class,'employer_additional_location']);
 Route::post('employer/activate', [EmployerController::class,'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
-Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
+
 
 Route::resource('job_application', JobApplicationController::class);
 Route::resource('job_application_detail', JobApplicationDetailController::class);

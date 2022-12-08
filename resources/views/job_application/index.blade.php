@@ -2,7 +2,10 @@
 @section('contenido')
     <!-- /.box -->
 
+
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
     <div class="col-xl-12 col-xxl-12">
+
         <div class="card">
 
             <div class="card-header">
@@ -52,5 +55,7 @@
             </div>
 
         </div>
+        @include('sweetalert::alert')
     </div>
+
 @endsection

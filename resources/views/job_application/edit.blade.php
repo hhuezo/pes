@@ -12,10 +12,10 @@
         }
     </style>
 
-
+    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 ">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">{!! trans('job_application.Title') !!}</h4>
@@ -24,9 +24,7 @@
                     <form method="POST" action="{{ route('job_application.update', $job->id) }}">
                         @method('PUT')
                         @csrf
-
                         <div class="row">
-                            <div class="col-md-12">&nbsp;</div>
                             <div class="col-md-6">
 
                                 <div class="form-group">
@@ -46,14 +44,8 @@
 
                             </div>
 
+                            <div class="col-sm-12">{!! trans('job_application.message') !!}</div>
 
-                        </div>
-
-                        <div class="col-sm-12">{!! trans('job_application.message') !!}</div>
-
-                        <div class="col-sm-12">&nbsp;</div>
-
-                        <div class="row">
                             <div class="col-md-6">
 
                                 <div class="form-group">
@@ -77,54 +69,54 @@
                                     <br>{!! trans('job_application.message2') !!}
                                 </div>
 
-
-
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.workers_paid') !!}</label>
-                                    <br>
-                                    {!! trans('job_application.Weekly') !!}
-                                    @if ($job->paid == 1)
-                                        <input type="radio" value="1" checked name="paid">
-                                    @else
-                                        <input type="radio" value="1" name="paid">
-                                    @endif
-
-
-                                    &nbsp;&nbsp;
-                                    {!! trans('job_application.Bi-weekly') !!}
-                                    @if ($job->paid == 2)
-                                        <input type="radio" value="2" checked name="paid">
-                                    @else
-                                        <input type="radio" value="2" name="paid">
-                                    @endif
-                                </div>
-
-
-
-
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.uniform_pieces') !!}</label>
-                                    <input type="text" name="uniform_pieces_required"
-                                        value="{{ $job->uniform_pieces_required }}" class="form-control">
-                                </div>
-
-
-
-                                {!! trans('job_application.message3') !!}
-
-
                             </div>
-                            <div class="col-md-6">
 
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.multiple_employment_period') !!}</label>
                                     <input type="text" name="explain_multiple_employment"
                                         value="{{ $job->explain_multiple_employment }}" class="form-control">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
+
+                            <div class="col-sm-12" style="text-align: center;">
+
+                                <button type="button" class="btn btn-rounded btn-info btn-lg" data-toggle="modal"
+                                    data-target=".bd-example-modal-lg"><strong>Add
+                                        position</strong><span class="btn-icon-right">
+                                        <i class="fa fa-plus color-info"></i></span>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+
+
+                        <div class="row">
+                            <div class="col-md-12">&nbsp;</div>
+
+
+
+                        </div>
+
+
+
+                        <div class="col-sm-12">&nbsp;</div>
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+
+
+
+                                      <!--  <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.uniform') !!}</label>
                                     <br>
                                     {!! trans('employer.Yes') !!}
@@ -153,6 +145,42 @@
                                     {!! trans('job_application.additional_space') !!}
                                 </div>
 
+
+
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">{!! trans('job_application.workers_paid') !!}</label>
+                                    <br>
+                                    {!! trans('job_application.Weekly') !!}
+                                    @if ($job->paid == 1)
+                                        <input type="radio" value="1" checked name="paid">
+                                    @else
+                                        <input type="radio" value="1" name="paid">
+                                    @endif
+
+
+                                    &nbsp;&nbsp;
+                                    {!! trans('job_application.Bi-weekly') !!}
+                                    @if ($job->paid == 2)
+                                        <input type="radio" value="2" checked name="paid">
+                                    @else
+                                        <input type="radio" value="2" name="paid">
+                                    @endif
+                                </div>
+
+
+
+                                {!! trans('job_application.message3') !!}
+
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">{!! trans('job_application.uniform_pieces') !!}</label>
+                                    <input type="text" name="uniform_pieces_required"
+                                        value="{{ $job->uniform_pieces_required }}" class="form-control">
+                                </div>
+
+      -->
+
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary float-right">Submit</button>
                                 </div>
@@ -160,8 +188,6 @@
                             </div>
 
                         </div>
-
-
 
 
 
@@ -462,8 +488,9 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1"><strong>{!! trans('job_application.total_hours') !!}</strong></label>
-                                        <input type="number" readonly name="ant_workday_total_hours" id="ant_workday_total_hours"
-                                            class="form-control" step="1" min="1" required>
+                                        <input type="number" readonly name="ant_workday_total_hours"
+                                            id="ant_workday_total_hours" class="form-control" step="1"
+                                            min="1" required>
                                     </div>
                                     {!! trans('job_application.reminder') !!}
                                 </div>
@@ -513,6 +540,7 @@
         </div>
     </div>
 
+    @include('sweetalert::alert')
 
 
 

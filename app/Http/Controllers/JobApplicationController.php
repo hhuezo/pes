@@ -8,7 +8,7 @@ use App\Models\JobApplication;
 use App\Models\JobApplicationDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 class JobApplicationController extends Controller
 {
@@ -18,6 +18,9 @@ class JobApplicationController extends Controller
     }
     public function index()
     {
+
+     //alert()->success('Title','Lorem Lorem Lorem');
+
         if (auth()->user()->can('read admin job application')) {
             $job_apllications = JobApplication::get();
         } else if (auth()->user()->can('read job application')) {
@@ -52,6 +55,7 @@ class JobApplicationController extends Controller
     {
         $employer = Employer::where('users_id', '=', auth()->user()->id)->first();
 
+
         $job = new JobApplication();
         $job->employer_id = $employer->id;
         $job->start_date = $request->get('start_date');
@@ -60,11 +64,12 @@ class JobApplicationController extends Controller
 
         $job->explain_multiple_employment = $request->get('explain_multiple_employment');
         $job->paid  = $request->get('paid');
-        $job->is_uniform_required  = $request->get('is_uniform_required');
+        /*$job->is_uniform_required  = $request->get('is_uniform_required');
         $job->uniform_pieces_required = $request->get('uniform_pieces_required');
-        $job->job_notes = $request->get('job_notes');
+        $job->job_notes = $request->get('job_notes');*/
         $job->save();
 
+        Alert::success('Ok', 'Record saved');
         return redirect('job_application/' . $job->id . '/edit');
     }
 

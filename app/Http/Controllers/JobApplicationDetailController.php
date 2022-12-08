@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\JobApplicationDetail;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\Employer;
+use App\Models\JobApplication;
 
 class JobApplicationDetailController extends Controller
 {
@@ -34,8 +37,32 @@ class JobApplicationDetailController extends Controller
      */
     public function store(Request $request)
     {
+
+        if ($request->get('job_app_id') == 0) {
+            $employer = Employer::where('users_id', '=', auth()->user()->id)->first();
+
+            $job = new JobApplication();
+            $job->employer_id = $employer->id;
+            $job->start_date = $request->get('start_date_modal');
+            $job->end_date = $request->get('end_date_modal');
+            $job->need_h2b_workers = $request->get('need_h2b_workers_modal');
+
+            $job->explain_multiple_employment = $request->get('explain_multiple_employment_modal');
+            /* $job->paid  = $request->get('paid');
+          $job->is_uniform_required  = $request->get('is_uniform_required');
+            $job->uniform_pieces_required = $request->get('uniform_pieces_required');
+            $job->job_notes = $request->get('job_notes');*/
+            $job->save();
+        }
+
+
         $detail =  new JobApplicationDetail();
-        $detail->job_app_id = $request->get('job_app_id');
+        if ($request->get('job_app_id') == 0) {
+            $detail->job_app_id = $job->id;
+        } else {
+            $detail->job_app_id = $request->get('job_app_id');
+        }
+
         $detail->job_title = $request->get('job_title');
         $detail->number_workers = $request->get('number_workers');
         if ($request->get('it_has_cba') == null) {
@@ -63,6 +90,11 @@ class JobApplicationDetailController extends Controller
         $detail->primary_shift_time = $request->get('primary_shift_time');
         $detail->are_there_additional_shift_times = $request->get('are_there_additional_shift_times');
         $detail->save();
+
+        Alert::success('Ok', 'Record saved');
+        if ($request->get('job_app_id') == 0) {
+            return redirect('job_application/' . $job->id . '/edit');
+        }
 
         return redirect('job_application/' . $request->get('job_app_id') . '/edit');
     }
