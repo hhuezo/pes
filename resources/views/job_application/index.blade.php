@@ -6,9 +6,9 @@
         <div class="card">
 
             <div class="card-header">
-                <h4 class="card-title">Job applications listing</h4>
+                <h4 class="card-title">Requirements</h4>
                 <a href="{{ url('job_application/create') }}"><button type="button" class="btn btn-success float-right" data-toggle="modal"
-                    data-target=".bd-example-modal-lg">Add</button></a>
+                    data-target=".bd-example-modal-lg">New Requirement</button></a>
             </div>
 
             <div class="card-body">

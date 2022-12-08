@@ -41,7 +41,8 @@ class JobApplicationController extends Controller
 
     public function create()
     {
-        return view('job_application.create');
+        $job_titles = JobTitle::get();
+        return view('job_application.create',['job_titles'=>$job_titles]);
     }
 
 
@@ -75,7 +76,7 @@ class JobApplicationController extends Controller
      */
     public function show($id)
     {
-        //
+        //|
     }
 
     /**

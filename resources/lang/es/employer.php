@@ -27,6 +27,8 @@ return [
     'MailingCity' => 'Ciudad de envío',
     'MailingState' => 'Estado de envío',
     'MailingZipCode' => 'Código postal de envío',
+    'SignedAllDocuments' => 'FIRMARÁ el contacto PRINCIPAL mencionado anteriormente todos los documentos?',    
+    'AddContactPerson' => 'Le gustaría agregar una persona de contacto adicional?',
     'EmployerContactInformation'  => 'INFORMACIÓN DE CONTACTO DEL EMPLEADOR',
     'PrimaryContact'  => 'Contacto primario',
     'Name'  => 'Nombre',
@@ -45,6 +47,14 @@ return [
     'SignatoryJobTitle' => 'Cargo del firmante',
     'SignatoryEmail' => 'Correo electrónico del firmante',
     'SignatoryPhone' => 'Teléfono del firmante',
+
+    'AdditionalContactName' => 'Nombre de contacto adicional',
+    'AdditionalLastName' => 'Apellido de contacto adicional',
+    'AdditionalContactJobTitle' => 'Título del trabajo de contacto adicional',
+    'AdditionalContactEmail' => 'Email de contacto adicional',
+    'AdditionalContactPhone' => 'Teléfono de contacto adicional',
+    'AdditionalContactCellPhone' => 'Celular de contacto adicional',
+
     'PlaceOfEmployment' => 'LUGAR DE EMPLEO',
     'MainWorksiteLocation' => 'Ubicación principal del lugar de trabajo',
     'SamePlaceBusiness' => 'Igual que el lugar principal de negocios',
