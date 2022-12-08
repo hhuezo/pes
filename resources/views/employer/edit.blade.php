@@ -27,9 +27,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tab_content3">{!! trans('employer.EmployerContactInformation') !!}</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#message">Message</a>
-                            </li>
+
                         </ul>
                         <div class="tab-content">
                             <!-- tab 1 -->
@@ -485,17 +483,7 @@
 
                             </div>
                             <!-- end tab 3 -->
-                            <div class="tab-pane fade" id="message">
-                                <div class="pt-4">
-                                    <h4>This is message title</h4>
-                                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu
-                                        stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.
-                                    </p>
-                                    <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu
-                                        stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.
-                                    </p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
