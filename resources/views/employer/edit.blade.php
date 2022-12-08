@@ -19,7 +19,7 @@
                     <div class="default-tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tab_content1">Home</a>
+                                <a class="nav-link active" data-toggle="tab" href="#tab_content1">{!! trans('employer.Title') !!}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tab_content2">{!! trans('employer.PrincipalPlaceBusiness') !!}</a>
@@ -143,7 +143,7 @@
                                                 <input type="number" name="quantity_year_has_participate_h2b"
                                                     id="quantity_year_has_participate_h2b"
                                                     value="{{ $employer->quantity_year_has_participate_h2b }}"
-                                                    min="1" maxlength="4" required class="form-control">
+                                                    min="1" maxlength="4"  class="form-control">
                                                 @error('quantity_year_has_participate_h2b')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
