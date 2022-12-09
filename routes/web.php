@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('permission', PermissionsController::class);
     Route::post('permission/unlink', [PermissionController::class, 'unlink']);
     Route::post('permission/link', [PermissionController::class, 'link']);
+    Route::post('role/unlink', [UserController::class, 'unlink']);
+    Route::post('role/link', [UserController::class, 'link']);
     Route::resource('role', RoleController::class);
     Route::resource('user', UserController::class);
 });

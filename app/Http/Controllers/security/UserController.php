@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\security;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -17,69 +21,90 @@ class UserController extends Controller
         return view('security.user.index', ['users' => User::get()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function link(Request $request)
     {
-        //
+        $user = User::findOrFail($request->get('user'));
+        $role = Role::findOrFail($request->get('role'));
+        $user->assignRole($role->id);
+        Alert::success('', 'Record saved');
+        return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function unlink(Request $request)
+    {
+        $user = User::findOrFail($request->get('user'));
+        $role = Role::findOrFail($request->get('role'));
+        $user->removeRole($role->id);
+        Alert::success('', 'Record saved');
+        return back();
+    }
+
+    public function store(Request $request)
+    {
+        $count = User::where('email', '=', $request->get('email'))->count();
+
+        if ($count > 0) {
+            Alert::error('', 'the mail already exists');
+        } else if (Str::length($request->get('password')) < 8) {
+            Alert::error('', 'password must be at least 8 characters');
+        } else {
+            $user = new User();
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
+        return back();
+    }
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $current_roles = $user->user_has_role;
+        $roles = Role::get();
+        return view('security.user.edit', ['user' => $user,'roles' => $roles,'current_roles' => $current_roles]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        $count = User::where('email', '=', $request->get('email'))->where('id','<>',$id)->count();
+
+        if ($count > 0) {
+            Alert::error('', 'the mail already exists');
+        } else if (Str::length($request->get('password')) < 8) {
+            Alert::error('', 'password must be at least 8 characters');
+        } else {
+            $user = User::findOrFail($id);
+            $user->name = $request->get('name');
+            $user->email = $request->get('email');
+            if ($request->get('password') != "") {
+                $user->password = Hash::make($request->password);
+            }
+            $user->update();
+            Alert::success('', 'Record saved');
+        }
+        return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        Alert::error('', 'Record delete');
+        return back();
     }
 }

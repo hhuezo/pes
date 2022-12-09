@@ -41,7 +41,8 @@
                                                 class="on-default edit-row">
                                                 <i class="icon icon-form lg"></i></a>
                                             &nbsp;&nbsp;
-                                            <a href="" data-target="#modal-delete-{{ $obj->id }}" data-toggle="modal"><i class="fa fa-trash"></i></a>
+                                            <a href="" data-target="#modal-delete-{{ $obj->id }}"
+                                                data-toggle="modal"><i class="fa fa-trash"></i></a>
                                             <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
                                         </td>
                                     </tr>
@@ -73,6 +74,14 @@
                                     <label for="exampleInputEmail1">Name</label>
                                     <input type="text" name="name" class="form-control" required>
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Email</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <input type="text" name="password" class="form-control" required>
+                                </div>
 
                             </div>
                         </div>
@@ -94,9 +103,6 @@
 
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript">
-        /*$(document).ready(function() {
-
-                });*/
 
         function modal(id) {
             $('#modal_delete').modal('show');

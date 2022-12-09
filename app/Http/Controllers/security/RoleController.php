@@ -21,22 +21,12 @@ class RoleController extends Controller
         return view('security.role.index', ['roles' => Role::get()]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $role = new Role;
@@ -47,23 +37,11 @@ class RoleController extends Controller
         return back();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $role = Role::findOrFail($id);
@@ -91,4 +69,6 @@ class RoleController extends Controller
         Alert::error('', 'Record delete');
         return back();
     }
+
+
 }
