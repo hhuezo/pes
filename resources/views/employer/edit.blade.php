@@ -206,11 +206,11 @@
                                                 @enderror
                                             </div>
                                         </div>
-
+                                        @can('edit employer')
                                         <div class="col-md-12">
                                             <button type="submit" class="btn btn-primary float-right">Submit</button>
                                         </div>
-
+                                        @endcan
                                     </div>
 
                                 </form>

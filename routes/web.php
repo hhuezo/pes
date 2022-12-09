@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobApplicationDetailController;
+use App\Http\Controllers\security\PermissionsController;
 
 
 Route::get('/', function () {
@@ -21,6 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+
+    //security
+    Route::resource('permission', PermissionsController::class);
 });
 
 //validacion email
@@ -29,7 +34,7 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 
 Route::get('lang/{lang}', [LanguageController::class, 'swap'])->name('lang.swap');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 Route::resource('employer', EmployerController::class);
@@ -41,8 +46,8 @@ Route::post('employer_contact_information', [EmployerController::class, 'employe
 
 
 Route::post('employer_place_store', [EmployerController::class, 'employer_place_store']);
-Route::post('employer_additional_location', [EmployerController::class,'employer_additional_location']);
-Route::post('employer/activate', [EmployerController::class,'activate']);
+Route::post('employer_additional_location', [EmployerController::class, 'employer_additional_location']);
+Route::post('employer/activate', [EmployerController::class, 'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 
 
@@ -51,6 +56,3 @@ Route::resource('job_application_detail', JobApplicationDetailController::class)
 
 
 //Route::get('employer_place_employment/{id}', [EmployerController::class, 'place_employment']);
-
-
-

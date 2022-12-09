@@ -40,7 +40,6 @@
             background-color: #2763FF;
             color: #fff;
         }
-
     </style>
 </head>
 
@@ -112,20 +111,21 @@
                         <ul class="navbar-nav header-right">
                             <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                                    @if (config('locale.status') && count(config('locale.languages')) > 1)
 
-                                    @foreach (array_keys(config('locale.languages')) as $lang)
-                                        @if ($lang != App::getLocale())
-                                            <a href="{!! route('lang.swap', $lang) !!}">
-                                                @if ($lang == 'es')
-                                                    <img src="{{ asset('img/español.png') }}" style="width: 25px;">
-                                                @else
-                                                    <img src="{{ asset('img/ingles.png') }}" style="width: 25px;">
-                                                @endif
-                                            </a>
-                                        @endif
-                                    @endforeach
-                                @endif
+                                    @if (config('locale.status') && count(config('locale.languages')) > 1)
+                                        @foreach (array_keys(config('locale.languages')) as $lang)
+                                            @if ($lang != App::getLocale())
+                                                <a href="{!! route('lang.swap', $lang) !!}">
+                                                    @if ($lang == 'es')
+                                                        <img src="{{ asset('img/español.png') }}" style="width: 25px;">
+                                                    @else
+                                                        <img src="{{ asset('img/ingles.png') }}" style="width: 25px;">
+                                                    @endif
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
                                 </a>
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
@@ -230,9 +230,11 @@
         <div class="quixnav">
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
+                    @can('create employer')
+                        <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i
+                                    class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
+                    @endcan
 
-                    <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i
-                                class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
                     <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
                                 class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
 
@@ -413,7 +415,7 @@
 
 
     <!-- mascara de entrada -->
-     <script src="{{ asset('template/vendor/input-mask/jquery.inputmask.js') }}"></script>
+    <script src="{{ asset('template/vendor/input-mask/jquery.inputmask.js') }}"></script>
 
 
     <script>
