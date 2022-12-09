@@ -8,7 +8,9 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobApplicationDetailController;
 use App\Http\Controllers\security\PermissionsController;
-
+use App\Http\Controllers\security\PermissionController;
+use App\Http\Controllers\security\RoleController;
+use App\Http\Controllers\security\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,6 +28,10 @@ Route::middleware('auth')->group(function () {
 
     //security
     Route::resource('permission', PermissionsController::class);
+    Route::post('permission/unlink', [PermissionController::class, 'unlink']);
+    Route::post('permission/link', [PermissionController::class, 'link']);
+    Route::resource('role', RoleController::class);
+    Route::resource('user', UserController::class);
 });
 
 //validacion email

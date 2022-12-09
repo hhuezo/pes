@@ -21,4 +21,14 @@ class Role extends Model
     ];
 
     protected $guarded = [];
+
+    public function user_has_role()
+    {
+        return $this->belongsToMany('App\Models\User', 'model_has_roles', 'role_id', 'model_id');
+    }
+
+    public function role_has_permissions()
+    {
+        return $this->belongsToMany('App\Models\Permission', 'role_has_permissions', 'role_id');
+    }
 }

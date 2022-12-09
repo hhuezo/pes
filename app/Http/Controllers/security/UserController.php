@@ -3,23 +3,18 @@
 namespace App\Http\Controllers\security;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Permission;
-//use Spatie\Permission\Models\Permission;
-use RealRashid\SweetAlert\Facades\Alert;
 
-class PermissionsController extends Controller
+class UserController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
     }
-
     public function index()
     {
-        $permissions = Permission::get();
-        return view('security.permission.index', ['permissions' => $permissions]);
+        return view('security.user.index', ['users' => User::get()]);
     }
 
     /**
@@ -32,25 +27,37 @@ class PermissionsController extends Controller
         //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $permission = new Permission();
-        $permission->name = $request->get('name');
-        $permission->guard_name = "web";
-        $permission->save();
-        Alert::success('', 'Record saved');
-        return back();
+        //
     }
 
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function show($id)
     {
         //
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        return view('security.permission.edit', ['permission' => Permission::findOrFail($id)]);
+        //
     }
 
     /**
@@ -62,11 +69,7 @@ class PermissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $permission = Permission::findOrFail($id);
-        $permission->name = $request->get('name');
-        $permission->update();
-        Alert::success('', 'Record saved');
-        return back();
+        //
     }
 
     /**
@@ -77,9 +80,6 @@ class PermissionsController extends Controller
      */
     public function destroy($id)
     {
-        $permission = Permission::findOrFail($id);
-        $permission->delete();
-        Alert::error('', 'Record delete');
-        return back();
+        //
     }
 }

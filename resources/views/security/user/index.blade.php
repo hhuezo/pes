@@ -11,7 +11,7 @@
             <div class="card-body">
                 <div class="col-md-12 row">
                     <div class="col-md-6">
-                        <h4 class="card-title">Permissions listing</h4>
+                        <h4 class="card-title">Users listing</h4>
                     </div>
                     <div class="col-md-6">
                         <button type="button" class="btn btn-primary float-right" data-toggle="modal"
@@ -32,12 +32,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($permissions as $obj)
+                                @foreach ($users as $obj)
                                     <tr>
                                         <td>{{ $obj->id }}</td>
                                         <td>{{ $obj->name }}</td>
                                         <td align="center">
-                                            <a href="{{ url('permission') }}/{{ $obj->id }}/edit"
+                                            <a href="{{ url('user') }}/{{ $obj->id }}/edit"
                                                 class="on-default edit-row">
                                                 <i class="icon icon-form lg"></i></a>
                                             &nbsp;&nbsp;
@@ -45,7 +45,7 @@
                                             <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
                                         </td>
                                     </tr>
-                                    @include('security.permission.modal')
+                                    @include('security.user.modal')
                                 @endforeach
                             </tbody>
                         </table>
@@ -56,15 +56,15 @@
         </div>
     </div>
 
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" user="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Permissions</h5>
+                    <h5 class="modal-title">Users</h5>
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('permission') }}" method="POST" class="forms-sample">
+                <form action="{{ url('user') }}" method="POST" class="forms-sample">
                     @csrf
                     <div class="modal-body">
                         <div class="row">

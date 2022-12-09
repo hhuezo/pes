@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Permissions extends Model
+class Permission extends Model
 {
     use HasFactory;
     protected $table = 'permissions';
@@ -21,4 +21,9 @@ class Permissions extends Model
     ];
 
     protected $guarded = [];
+
+    public function permissions_has_role()
+    {
+        return $this->belongsToMany('App\Models\Role', 'role_has_permissions', 'permission_id');
+    }
 }
