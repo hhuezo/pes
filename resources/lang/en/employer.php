@@ -83,4 +83,15 @@ return [
     'PublicTransportation' =>  'How far is public transportation from the Main Worksite?',
     'LocalPublicTransportation' =>  'Please Provide Local Public Transportation Website',
     'Notes' =>  'Notes',
+
+    'SignedAllDocuments' =>  ' Will the PRIMARY Contact listed above SIGN all documents?',
+    'AddContactPerson' =>  ' Would you like to add an Additional Contact Person?',
+
+    'AdditionalContactName' =>  'Additional Contact Name',
+    'AdditionalLastName' =>  'Additional Contact Lastname',
+    'AdditionalContactJobTitle' =>  'Additional Contact Job Title',
+    'AdditionalContactEmail' =>  'Additional Contact Email',
+    'AdditionalContactPhone' =>  'Additional Contact Phone',
+    'AdditionalContactCellPhone' =>  'Additional Contact Cell Phone',
+
 ];

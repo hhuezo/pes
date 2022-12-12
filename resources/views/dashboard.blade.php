@@ -250,6 +250,7 @@
                     <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
                                 class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
 
+
                     <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                     </li> -->

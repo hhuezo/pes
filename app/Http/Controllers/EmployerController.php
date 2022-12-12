@@ -17,11 +17,18 @@ class EmployerController extends Controller
     {
         $this->middleware('auth');
     }
+
     public function index()
     {
-        $employers = Employer::get();
-        $estate = ["Cancel", "Active"];
-        return view('employer.index', ['employers' => $employers, 'estate' => $estate]);
+        $user = auth()->user();
+        if ($user->hasRole('administrator') || $user->hasRole('administrator pes')) {
+            $employers = Employer::get();
+            $estate = ["Cancel", "Active"];
+            return view('employer.index', ['employers' => $employers, 'estate' => $estate]);
+        } else {
+            return redirect('employer/create');
+        }
+        return view();
     }
 
     /**
@@ -51,6 +58,39 @@ class EmployerController extends Controller
 
     public function store(Request $request)
     {
+
+
+
+
+        $messages = [
+            'legal_business_name.required' => 'legal_business_name is required',
+            'federal_id_number.required' => 'federal_id_number is required',
+            'year_business_established.required' => 'year_business_established is required',
+            'number_employees_full_time.required' => 'number_employees_full_time is required',
+            'primary_business_phone.required' => 'primary_business_phone is required',
+            'primary_business_type_id.required' => 'primary_business_type_id is required',
+            'naics_id.required' => 'naics_id is required',
+            'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
+        ];
+
+
+
+        $request->validate([
+            'legal_business_name' => 'required|min:4',
+            'federal_id_number' => 'required|min:9',
+            'year_business_established' => 'required|min:4',
+            'number_employees_full_time' => 'required|min:1',
+            'primary_business_phone' => 'required|min:10',
+            'primary_business_type_id' => 'required|min:0',
+            'naics_id' => 'required|min:0',
+            'year_end_gross_company_income' => 'required|min:4',
+          ], $messages);
+
+
+
+
+
+        //dd($request);
 
         /* validations  */
 
@@ -84,6 +124,7 @@ class EmployerController extends Controller
         session(['action' => '2']);
         Alert::success('Ok', 'Record saved');
         return redirect('employer/' . $employer->id . '/edit');
+
     }
 
 
@@ -92,14 +133,16 @@ class EmployerController extends Controller
         return NaicsCode::where('primary_business_type_id', '=', $id)->get();
     }
 
-    /*    public function activate(Request $request)
+
+    public function activate(Request $request)
     {
         $employer = Employer::findOrFail($request->get('id'));
-        $employer->validated = $request->get('cod');
+        $employer->validated = 1;
         $employer->save();
-
+        Alert::success('Ok', 'Record saved');
         return redirect('employer/');
     }
+
 
 
 
@@ -111,7 +154,7 @@ class EmployerController extends Controller
         $employer->main_worksite_location = $request->get('main_worksite_location');
         $employer->main_worksite_city = $request->get('main_worksite_city');
         $employer->main_worksite_country = $request->get('main_worksite_country');
-        $employer->main_worksite_state = $request->get('main_worksite_state');
+        $employer->main_worksite_state_id_id = $request->get('main_worksite_state_id_id');
         $employer->main_worksite_zip_code = $request->get('main_worksite_zip_code');
         $employer->normal_business_days_id = $request->get('normal_business_days_id');
         $employer->normal_business_days_other = $request->get('normal_business_days_other');
@@ -251,8 +294,83 @@ class EmployerController extends Controller
 
     public function employer_place_of_business(Request $request)
     {
-        $employer = Employer::findOrFail($request->get('id'));
 
+
+
+        $mailing_address_same_above = $request['mailing_address_same_above'];
+
+        if ($mailing_address_same_above == 'on') {
+            $mailing_address_same_above = 1;
+        }else{
+            $mailing_address_same_above = 0;
+        }
+
+
+        //dd($mailing_address_same_above);
+
+        if ($mailing_address_same_above == 0) {
+
+
+
+            $messages = [
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+                'mailing_address.required' => 'mailing_address is required',
+                'mailing_city.required' => 'mailing_city is required',
+                'mailing_state_id.required' => 'mailing_state_id is required',
+                'mailing_zip_code.required' => 'mailing_zip_code is required'
+
+            ];
+
+
+
+            $request->validate([
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+                'mailing_address' => 'required|min:6',
+                'mailing_city' => 'required|min:4',
+                'mailing_state_id' => 'required|min:0',
+                'mailing_zip_code' => 'required|min:5',
+              ], $messages);
+
+
+
+
+        }else{
+            $messages = [
+                'principal_street_address.required' => 'principal_street_address is required',
+                'principal_city.required' => 'principal_city is required',
+                'principal_country.required' => 'principal_country is required',
+                'principal_state_id.required' => 'principal_state_id is required',
+                'principal_zip_code.required' => 'principal_zip_code is required',
+
+            ];
+
+
+
+            $request->validate([
+                'principal_street_address' => 'required|min:6',
+                'principal_city' => 'required|min:4',
+                'principal_country' => 'required|min:6',
+                'principal_state_id' => 'required|min:0',
+                'principal_zip_code' => 'required|min:5',
+
+              ], $messages);
+        }
+
+
+
+
+
+        $employer = Employer::findOrFail($request->get('id'));
 
         $employer->principal_street_address = $request->get('principal_street_address');
         $employer->principal_city = $request->get('principal_city');
@@ -265,13 +383,13 @@ class EmployerController extends Controller
             $employer->mailing_address_same_above = 0;
             $employer->mailing_address = $request->get('mailing_address');
             $employer->mailing_city = $request->get('mailing_city');
-            $employer->mailing_state = $request->get('mailing_state');
+            $employer->mailing_state_id = $request->get('mailing_state_id');
             $employer->mailing_zip_code = $request->get('mailing_zip_code');
         } else {
             $employer->mailing_address_same_above = 1;
             $employer->mailing_address = null;
             $employer->mailing_city = null;
-            $employer->mailing_state = null;
+            $employer->mailing_state_id = null;
             $employer->mailing_zip_code = null;
         }
         Alert::info('', 'Record saved');
@@ -279,11 +397,90 @@ class EmployerController extends Controller
         session(['action' => '3']);
         $employer->update();
         return redirect('employer/' . $employer->id . '/edit');
+
     }
 
 
     public function employer_contact_information(Request $request)
     {
+
+        $signed_all_documents = $request->get('signed_all_documents');
+
+
+        if ($signed_all_documents == '0') {
+
+            $messages = [
+                'signatory_name.required' => 'signatory_name is required',
+                'signatory_last_name.required' => 'signatory_last_name is required',
+                'signatory_job_title.required' => 'signatory_job_title is required',
+                'signatory_email.required' => 'signatory_email is required',
+                'signatory_phone.required' => 'signatory_phone is required',
+
+                'primary_contact_name.required' => 'primary_contact_name is required',
+                'primary_contact_last_name.required' => 'primary_contact_last_name is required',
+                'primary_contact_job_title.required' => 'primary_contact_job_title is required',
+                'primary_contact_email.required' => 'primary_contact_email is required',
+                'primary_contact_phone.required' => 'primary_contact_phone is required',
+                'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
+
+            ];
+
+
+            $request->validate([
+                'signatory_name' => 'required|min:4',
+                'signatory_last_name' => 'required|min:4',
+                'signatory_job_title' => 'required|min:6',
+                'signatory_email' => 'required|min:6',
+                'signatory_phone' => 'required|min:10',
+
+                'primary_contact_name' => 'required|min:4',
+                'primary_contact_last_name' => 'required|min:4',
+                'primary_contact_job_title' => 'required|min:10',
+                'primary_contact_email' => 'required|min:10',
+                'primary_contact_phone' => 'required|min:10',
+                'primary_contact_cellphone' => 'required|min:10',
+
+              ], $messages);
+        }else{
+
+            $messages = [
+
+                'primary_contact_name.required' => 'primary_contact_name is required',
+                'primary_contact_last_name.required' => 'primary_contact_last_name is required',
+                'primary_contact_job_title.required' => 'primary_contact_job_title is required',
+                'primary_contact_email.required' => 'primary_contact_email is required',
+                'primary_contact_phone.required' => 'primary_contact_phone is required',
+                'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
+
+            ];
+
+
+            $request->validate([
+
+                'primary_contact_name' => 'required|min:4',
+                'primary_contact_last_name' => 'required|min:4',
+                'primary_contact_job_title' => 'required|min:10',
+                'primary_contact_email' => 'required|min:10',
+                'primary_contact_phone' => 'required|min:10',
+                'primary_contact_cellphone' => 'required|min:10',
+
+              ], $messages);
+        }
+
+
+
+
+
+
+
+dd($request);
+
+
+
+
+
+
+
         $employer = Employer::findOrFail($request->get('id'));
         $employer->primary_contact_name = $request->get('primary_contact_name');
         $employer->primary_contact_last_name = $request->get('primary_contact_last_name');
