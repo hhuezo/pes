@@ -41,7 +41,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}</label>
                                                     <input type="text" name="legal_business_name"
-                                                        value="{{ $user->name }}" required class="form-control">
+                                                        value="{{ $user->name }}" class="form-control">
                                                     @error('legal_business_name')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
@@ -53,9 +53,11 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.IdentificationNumber') !!}</label>
+                                                    <label>{!! trans('employer.IdentificationNumber') !!} <b style="color: #FF9696">(*This field is
+                                                            required
+                                                            )</b></label>
                                                     <input type="text" name="federal_id_number"
-                                                        value="{{ old('federal_id_number') }}" required class="form-control"
+                                                        value="{{ old('federal_id_number') }}" class="form-control"
                                                         data-inputmask="'mask': ['99-9999999']" data-mask
                                                         class="form-control" maxlength="10">
                                                     @error('federal_id_number')
@@ -64,10 +66,12 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.YearBusinessEstablished') !!}</label>
+                                                    <label>{!! trans('employer.YearBusinessEstablished') !!} <b style="color: #FF9696">(*This field is
+                                                            required
+                                                            )</b></label>
                                                     <input type="text" name="year_business_established"
                                                         value="{{ old('year_business_established') }}" min="1900"
-                                                        max="<?php echo date('Y'); ?>" class="form-control" required
+                                                        max="<?php echo date('Y'); ?>" class="form-control"
                                                         data-inputmask="'mask': ['9999']" data-mask class="form-control"
                                                         maxlength="4">
                                                     @error('year_business_established')
@@ -76,9 +80,11 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.NumberEmployees') !!}</label>
+                                                    <label>{!! trans('employer.NumberEmployees') !!} <b style="color: #FF9696">(*This field is
+                                                            required
+                                                            )</b></label>
                                                     <input type="number" min="1" name="number_employees_full_time"
-                                                        value="{{ old('number_employees_full_time') }}" required
+                                                        value="{{ old('number_employees_full_time') }}"
                                                         class="form-control">
                                                     @error('number_employees_full_time')
                                                         <div class="alert-danger">{{ $message }}</div>
@@ -86,11 +92,13 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.PrimaryBusinessPhone') !!}</label>
+                                                    <label>{!! trans('employer.PrimaryBusinessPhone') !!} <b style="color: #FF9696">(*This field is
+                                                            required
+                                                            )</b></label>
                                                     <input type="text" name="primary_business_phone"
-                                                        value="{{ old('primary_business_phone') }}" required
-                                                        class="form-control" data-inputmask="'mask': ['(999)999-9999']"
-                                                        data-mask class="form-control" maxlength="13">
+                                                        value="{{ old('primary_business_phone') }}" class="form-control"
+                                                        data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                        class="form-control" maxlength="13">
                                                     @error('primary_business_phone')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
@@ -142,16 +150,23 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.PrimaryBusiness') !!}</label>
+                                                    <label>{!! trans('employer.PrimaryBusiness') !!} <b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
                                                     <select class="form-control" name="primary_business_type_id"
-                                                        value="{{ old('primary_business_type_id') }}" required
+                                                        value="{{ old('primary_business_type_id') }}"
                                                         id="PrimaryBusinessType">
                                                         <option value="">Select</option>
                                                         @foreach ($primary_business_types as $obj)
-                                                            <option value="{{ $obj->id }}">{{ $obj->name_english }}
+                                                            <option value="{{ $obj->id }}"
+                                                                {{ old('primary_business_type_id') == $obj->id ? 'selected' : '' }}>
+                                                                {{ $obj->name_english }}
                                                             </option>
                                                         @endforeach
                                                     </select>
+                                                    @error('primary_business_type_id')
+                                                        <div class="alert-danger">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
 
                                                 <div class="form-group" id="DivNaicsCodCompany">
@@ -172,11 +187,13 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.GrossCompanyIncome') !!}</label>
-                                                    <input type="number" step="0.01"
-                                                        name="year_end_gross_company_income"
-                                                        value="{{ old('year_end_gross_company_income') }}"
-                                                        class="form-control" required class="form-control">
+                                                    <label>{!! trans('employer.GrossCompanyIncome') !!} <b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
+                                                    <input type="text" name="year_end_gross_company_income"
+                                                        data-inputmask="'mask': ['9999']" data-mask class="form-control"
+                                                        maxlength="4" value="{{ old('year_end_gross_company_income') }}"
+                                                        class="form-control" class="form-control">
                                                     @error('year_end_gross_company_income')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
@@ -277,77 +294,12 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#DivYearsCompanyParticipated').hide(); <<
-            << << < HEAD
-            $('#DivSignatory').hide();
-
-            $('#DivNaicsCodCompany').show();
-            $('#DivNaicsNameCompany').hide();
-
-
-
-
-            //Inicializar controles para Mailing
-            if (document.getElementById('SameAsAbove').checked == true) {
-                $('#DivMailin').hide();
-
-            } else {
-                $('#DivMailin').show();
-            }
-
-            //Inicializar controles para firma de todos los documentos
-            if (document.getElementById('SignedAllDocuments').checked == true) {
-                $('#DivSignatory').hide();
-
-            } else {
-                $('#DivSignatory').show();
-            }
-
-            //Inicializar controles para agregar contacto de persona
-            if (document.getElementById('AddContactPerson').checked == false) {
-                $('#DivContactPerson1').hide();
-                $('#DivContactPerson2').hide();
-
-            } else {
-                $('#DivContactPerson1').show();
-                $('#DivContactPerson2').show();
-            }
-
-            //Add contact person
-            if (document.getElementById('AddContactPerson').checked == false) {
-                $('#DivContactPerson1').hide();
-                $('#DivContactPerson2').hide();
-
-            } else {
-                $('#DivContactPerson1').show();
-                $('#DivContactPerson2').show();
-            }
-
-            ===
-            === =
-            $('#DivNaicsCodCompany').hide(); >>>
-            >>> > 8429 a4adddb3feb18647819d57c2866e32e59eef
+            $('#DivYearsCompanyParticipated').hide();
+            $('#DivNaicsCodCompany').hide();
 
         });
 
 
-        <<
-        << << < HEAD
-
-        function selectBusiness() {
-            //alert('select Business Type');
-            document.getElementById('primary_business_type_id_selected').value = document.getElementById(
-                'PrimaryBusinessType').value;
-
-            document.getElementById('primary_business_type_txt_selected').value = $("#PrimaryBusinessType option:selected")
-                .text();
-
-
-
-        }
-
-        ===
-        === =
         // tab one
         $("#PrimaryBusinessType").change(function() {
             var PrimaryBusinessType = $(this).val();
@@ -374,8 +326,6 @@
         });
 
 
-        >>>
-        >>> > 8429 a4adddb3feb18647819d57c2866e32e59eef
         $("#ParticipatedH-2B").change(function() {
             if (document.getElementById('ParticipatedH-2B').value == 1) {
                 $('#DivYearsCompanyParticipated').show();
@@ -383,99 +333,6 @@
                 $('#DivYearsCompanyParticipated').hide();
             }
 
-            <<
-            << << < HEAD
-        });
-
-        $("#SignedAllDocuments").change(function() {
-
-            if (document.getElementById('SignedAllDocuments').checked == true) {
-                $('#DivSignatory').hide();
-
-            } else {
-                $('#DivSignatory').show();
-            }
-
-        });
-
-        $("#AddContactPerson").change(function() {
-
-            if (document.getElementById('AddContactPerson').checked == false) {
-                $('#DivContactPerson1').hide();
-                $('#DivContactPerson2').hide();
-
-            } else {
-                $('#DivContactPerson1').show();
-                $('#DivContactPerson2').show();
-            }
-
-        });
-
-
-        $("#ParticipatedH-2B").change(function() {
-            if (document.getElementById('ParticipatedH-2B').value == 1) {
-                $('#DivYearsCompanyParticipated').show();
-            } else {
-                $('#DivYearsCompanyParticipated').hide();
-            }
-
-        });
-
-        $("#PrimaryContactListed").change(function() {
-            if (document.getElementById('PrimaryContactListed').value == 1) {
-                $('#DivSignatory').hide();
-
-            } else {
-                $('#DivSignatory').show();
-            }
-
-        });
-
-        $("#SameAsAbove").change(function() {
-            if (document.getElementById('SameAsAbove').checked == true) {
-                $('#DivMailin').hide();
-
-            } else {
-                $('#DivMailin').show();
-            }
-
-        });
-
-        $("#SamePlaceBusiness").change(function() {
-            if (document.getElementById('SamePlaceBusiness').checked) {
-                //DivMainWorksite alert('checked')
-                $('#DivMainWorksite').hide();
-
-            } else {
-                $('#DivMainWorksite').show();
-            }
-        });
-
-
-        $("#PrimaryBusinessType").change(function() {
-            var PrimaryBusinessType = $(this).val();
-
-            if (PrimaryBusinessType != 6) {
-                $('#DivNaicsCodCompany').show();
-                $('#DivNaicsNameCompany').hide();
-
-                $.get("{{ url('get_naics_code') }}" + '/' + PrimaryBusinessType, function(data) {
-                    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                    console.log(data);
-                    var _select = ''
-                    for (var i = 0; i < data.length; i++)
-                        _select += '<option value="' + data[i].id + '"  >' + data[i].code +
-                        ' ' + data[i]
-                        .name +
-                        '</option>';
-                    $("#NaicsCod").html(_select);
-                });
-            } else {
-                $('#DivNaicsCodCompany').hide();
-                $('#DivNaicsNameCompany').show();
-            } ===
-            === = >>>
-            >>> > 8429 a4adddb3feb18647819d57c2866e32e59eef
         });
         // end tab one
     </script>

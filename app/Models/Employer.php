@@ -40,7 +40,7 @@ class Employer extends Model
         'mailing_address_same_above',
         'mailing_address',
         'mailing_city',
-        'mailing_state',
+        'mailing_state_id',
         'mailing_zip_code',
         'primary_contact_name',
         'primary_contact_last_name',
