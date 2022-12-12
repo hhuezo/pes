@@ -5,7 +5,7 @@ namespace App\Http\Controllers\security;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Permission;
-//use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Permission as PermissionSpatie;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PermissionsController extends Controller
@@ -34,9 +34,7 @@ class PermissionsController extends Controller
 
     public function store(Request $request)
     {
-        $permission = new Permission();
-        $permission->name = $request->get('name');
-        $permission->guard_name = "web";
+        $permission = PermissionSpatie::create(['name' => $request->get('name')]);
         $permission->save();
         Alert::success('', 'Record saved');
         return back();
