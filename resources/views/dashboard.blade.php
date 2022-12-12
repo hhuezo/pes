@@ -230,9 +230,21 @@
         <div class="quixnav">
             <div class="quixnav-scroll">
                 <ul class="metismenu" id="menu">
-                    @can('create employer')
-                        <li> <a href="{{ url('employer/create') }}" aria-expanded="false"><i
-                                    class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
+
+                    @can('security')
+                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                                    class="icon icon-single-04"></i><span class="nav-text">Security</span></a>
+                            <ul aria-expanded="false">
+                                <li><a href="{{ url('user') }}">Users</a></li>
+                                <li><a href="{{ url('role') }}">Role</a></li>
+                                <li><a href="{{ url('permission') }}">Permissions</a></li>
+                            </ul>
+                        </li>
+                    @endcan
+
+                    @can('read employer')
+                    <li> <a href="{{ url('employer') }}" aria-expanded="false"><i
+                                class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
                     @endcan
 
                     <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
