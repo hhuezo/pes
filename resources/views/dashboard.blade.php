@@ -40,6 +40,11 @@
             background-color: #2763FF;
             color: #fff;
         }
+        .quixnav .metismenu ul a:hover, .quixnav .metismenu ul a:focus, .quixnav .metismenu ul a.mm-active {
+            text-decoration: none;
+            color: #2763FF;
+            font-weight: bold;
+        }
     </style>
 </head>
 

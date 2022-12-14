@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\catalogue\JobTitle;
 use App\Models\JobApplicationDetail;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -118,7 +119,12 @@ class JobApplicationDetailController extends Controller
      */
     public function edit($id)
     {
-        //
+        $detail = JobApplicationDetail::findOrFail($id);
+        $job_titles = JobTitle::get();
+
+        $response = array("detail" => $detail,"job_titles"=>$job_titles );
+
+        return $response;
     }
 
     /**
@@ -141,6 +147,9 @@ class JobApplicationDetailController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $detail = JobApplicationDetail::findOrFail($id);
+        $detail->delete();
+        Alert::error('', 'Record delete');
+        return back();
     }
 }

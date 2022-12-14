@@ -2,7 +2,6 @@
 @section('contenido')
     <style>
         .nav-tabs-custom>.tab-content {
-
             padding: 0px;
         }
 
@@ -10,10 +9,87 @@
         .modal-xl {
             max-width: 70%;
         }
+
+
+
+
+        #draw-canvas {
+            border: 2px dotted #050505;
+            border-radius: 10px;
+            cursor: crosshair;
+        }
+
+        #draw-dataUrl {
+            width: 100%;
+        }
+
+        h3 {
+            margin: 10px 15px;
+        }
+
+        header {
+            background: #273B47;
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        section {
+            flex: 1;
+        }
+
+        h1 {
+            margin: 10px 15px;
+        }
+
+        header {
+            color: white;
+            font-weight: 500;
+            padding-left: 15px;
+        }
+
+
+        .button {
+            background: #3071a9;
+            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3);
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .button:active {
+            transform: scale(0.9);
+        }
+
+        .contenedor {
+            width: 100% margin: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .instrucciones {
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin: 0 15px;
+        }
     </style>
 
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
-
+    @php($id_detail = 0)
     <div class="row">
         <div class="col-md-12 ">
             <div class="card">
@@ -90,19 +166,37 @@
 
                             </div>
 
-                        </div>
-
-
-
-
-
-
-
-
-                        <div class="row">
                             <div class="col-md-12">&nbsp;</div>
+                            <div class="col-sm-12" style="text-align: center;">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-responsive-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Job Title</th>
+                                                <th>Number of Workers</th>
+                                                <th>{!! trans('job_application.total_hours') !!}</th>
+                                                <th>Option</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($job_details as $obj)
+                                                <tr>
+                                                    <td>{{ $obj->title->name }}</td>
+                                                    <td>{{ $obj->number_workers }}</td>
+                                                    <td>{{ $obj->ant_workday_total_hours }}</td>
+                                                    <td align="center">
+                                                        &nbsp;&nbsp;
+                                                        <a href="" data-target="#modal-delete-{{ $obj->id }}"
+                                                            data-toggle="modal"><i class="fa fa-trash fa-lg"></i></a>
+                                                    </td>
+                                                </tr>
+                                                @include('job_application.modal_detail')
+                                            @endforeach
 
-
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -110,149 +204,55 @@
 
                         <div class="col-sm-12">&nbsp;</div>
 
-                        <div class="row">
-
-                            <div class="col-md-6">
-
-
-
-                                      <!--  <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.uniform') !!}</label>
-                                    <br>
-                                    {!! trans('employer.Yes') !!}
-
-                                    @if ($job->is_uniform_required == 1)
-                                        <input type="radio" value="1" checked name="is_uniform_required">
-                                    @else
-                                        <input type="radio" value="1" name="is_uniform_required">
-                                    @endif
-
-                                    &nbsp;&nbsp;
-                                    {!! trans('employer.No') !!}
-                                    @if ($job->is_uniform_required == 0)
-                                        <input type="radio" value="0" checked name="is_uniform_required">
-                                    @else
-                                        <input type="radio" value="0" name="is_uniform_required">
-                                    @endif
-                                </div>
-
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('employer.Notes') !!}</label>
-                                    <input type="text" name="job_notes" value="{{ $job->job_notes }}"
-                                        class="form-control">
-                                    <br>
-                                    {!! trans('job_application.additional_space') !!}
-                                </div>
-
-
-
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.workers_paid') !!}</label>
-                                    <br>
-                                    {!! trans('job_application.Weekly') !!}
-                                    @if ($job->paid == 1)
-                                        <input type="radio" value="1" checked name="paid">
-                                    @else
-                                        <input type="radio" value="1" name="paid">
-                                    @endif
-
-
-                                    &nbsp;&nbsp;
-                                    {!! trans('job_application.Bi-weekly') !!}
-                                    @if ($job->paid == 2)
-                                        <input type="radio" value="2" checked name="paid">
-                                    @else
-                                        <input type="radio" value="2" name="paid">
-                                    @endif
-                                </div>
-
-
-
-                                {!! trans('job_application.message3') !!}
-
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.uniform_pieces') !!}</label>
-                                    <input type="text" name="uniform_pieces_required"
-                                        value="{{ $job->uniform_pieces_required }}" class="form-control">
-                                </div>
-
-      -->
-
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary float-right">Submit</button>
-                                </div>
+                        <div class="col-sm-12">
+                            <h4>{!! trans('job_application.EmployeeRights') !!}</h4>
+                        </div>
+                        <div class="col-sm-12">{!! trans('job_application.message4') !!}</div>
+                        <div class="col-sm-12">
+                            <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
+                        </div>
+                        <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
+                        <div class="col-sm-12">
+                            <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                        </div>
+                        <div class="col-sm-12">&nbsp;</div>
+                        <div class="col-sm-12">{!! trans('job_application.PleasSign') !!}</div>
+                        <div class="col-sm-12">
+                            <canvas id="draw-canvas" width="300" height="200">
+                            </canvas>
+                            <div id="div_name_sing" width="300" height="200">
 
                             </div>
-
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" class="button" id="draw-clearBtn" value="Clear"></input>
+                                <input type="button" class="button" id="draw-submitBtn" value="Crear Imagen"></input>
+                                <input type="color" id="color">
+                                <input type="range" id="puntero" min="1" default="1" max="5"
+                                    width="10%">
+                            </div>
+                        </div>
 
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="printed_name" class="form-control">
+                                </div>
+                            </div>
+                        </div>
 
-
-
-
-
-
-
-                    </form>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                        </div>
                 </div>
+
             </div>
-        </div>
-    </div>
 
-
-
-
-
-
-
-
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">{!! trans('job_application.Title') !!}</h4>
-                    <button type="button" class="btn btn-success float-right" data-toggle="modal"
-                        data-target=".bd-example-modal-lg">Add</button>
-                </div>
-
-
-                <div class="card-body">
-
-                    <table id="example2" class="display" style="min-width: 845px">
-                        <thead>
-                            <tr>
-                                <th>Job Title</th>
-                                <th>Number of Workers</th>
-                                <th>{!! trans('job_application.total_hours') !!}</th>
-                                <th>Option</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($job_details as $obj)
-                                <tr>
-                                    <td>{{ $obj->title->name }}</td>
-                                    <td>{{ $obj->number_workers }}</td>
-                                    <td>{{ $obj->ant_workday_total_hours }}</td>
-                                    <td align="center">
-                                        <a href="{{ url('job_application') }}/{{ $obj->id }}/edit"
-                                            class="on-default edit-row">
-                                            <i class="fa fa-edit fa-lg"></i></a>
-                                    </td>
-                                </tr>
-                            @endforeach
-
-                        </tbody>
-                    </table>
-
-
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -540,6 +540,7 @@
         </div>
     </div>
 
+
     @include('sweetalert::alert')
 
 
@@ -550,7 +551,15 @@
         $(document).ready(function() {
             hide_div_explain_benefits();
             hide_div_requeriments();
+
+            $('#draw-submitBtn').hide();
+            $('#color').hide();
+            $('#puntero').hide();
         });
+
+        $("#printed_name").change(function() {
+
+        })
 
 
         function total_horas() {
@@ -650,33 +659,156 @@
         }
     </script>
 
+    <script>
+        (function() { // Comenzamos una funcion auto-ejecutable
+
+            // Obtenenemos un intervalo regular(Tiempo) en la pamtalla
+            window.requestAnimFrame = (function(callback) {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame ||
+                    window.msRequestAnimaitonFrame ||
+                    function(callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                        // Retrasa la ejecucion de la funcion para mejorar la experiencia
+                    };
+            })();
+
+            // Traemos el canvas mediante el id del elemento html
+            var canvas = document.getElementById("draw-canvas");
+            var ctx = canvas.getContext("2d");
 
 
+            // Mandamos llamar a los Elemetos interactivos de la Interfaz HTML
+            var drawText = document.getElementById("draw-dataUrl");
+            var drawImage = document.getElementById("draw-image");
+            var clearBtn = document.getElementById("draw-clearBtn");
+            var submitBtn = document.getElementById("draw-submitBtn");
+            clearBtn.addEventListener("click", function(e) {
+                // Definimos que pasa cuando el boton draw-clearBtn es pulsado
+                clearCanvas();
+                //drawImage.setAttribute("src", "");
+            }, false);
+            // Definimos que pasa cuando el boton draw-submitBtn es pulsado
+            submitBtn.addEventListener("click", function(e) {
+                var dataUrl = canvas.toDataURL();
+                drawText.innerHTML = dataUrl;
+                drawImage.setAttribute("src", dataUrl);
+            }, false);
 
+            // Activamos MouseEvent para nuestra pagina
+            var drawing = false;
+            var mousePos = {
+                x: 0,
+                y: 0
+            };
+            var lastPos = mousePos;
+            canvas.addEventListener("mousedown", function(e) {
+                /*
+                  Mas alla de solo llamar a una funcion, usamos function (e){...}
+                  para mas versatilidad cuando ocurre un evento
+                */
+                var tint = document.getElementById("color");
+                var punta = document.getElementById("puntero");
+                console.log(e);
+                drawing = true;
+                lastPos = getMousePos(canvas, e);
+            }, false);
+            canvas.addEventListener("mouseup", function(e) {
+                drawing = false;
+            }, false);
+            canvas.addEventListener("mousemove", function(e) {
+                mousePos = getMousePos(canvas, e);
+            }, false);
 
+            // Activamos touchEvent para nuestra pagina
+            canvas.addEventListener("touchstart", function(e) {
+                mousePos = getTouchPos(canvas, e);
+                console.log(mousePos);
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+            canvas.addEventListener("touchend", function(e) {
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var mouseEvent = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+            canvas.addEventListener("touchleave", function(e) {
+                // Realiza el mismo proceso que touchend en caso de que el dedo se deslice fuera del canvas
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var mouseEvent = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+            canvas.addEventListener("touchmove", function(e) {
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent("mousemove", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
 
+            // Get the position of the mouse relative to the canvas
+            function getMousePos(canvasDom, mouseEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                /*
+                  Devuelve el tamaño de un elemento y su posición relativa respecto
+                  a la ventana de visualización (viewport).
+                */
+                return {
+                    x: mouseEvent.clientX - rect.left,
+                    y: mouseEvent.clientY - rect.top
+                };
+            }
 
+            // Get the position of a touch relative to the canvas
+            function getTouchPos(canvasDom, touchEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                console.log(touchEvent);
+                /*
+                  Devuelve el tamaño de un elemento y su posición relativa respecto
+                  a la ventana de visualización (viewport).
+                */
+                return {
+                    x: touchEvent.touches[0].clientX - rect.left, // Popiedad de todo evento Touch
+                    y: touchEvent.touches[0].clientY - rect.top
+                };
+            }
 
+            // Draw to the canvas
+            function renderCanvas() {
+                if (drawing) {
+                    var tint = document.getElementById("color");
+                    var punta = document.getElementById("puntero");
+                    ctx.strokeStyle = tint.value;
+                    ctx.beginPath();
+                    ctx.moveTo(lastPos.x, lastPos.y);
+                    ctx.lineTo(mousePos.x, mousePos.y);
+                    console.log(punta.value);
+                    ctx.lineWidth = punta.value;
+                    ctx.stroke();
+                    ctx.closePath();
+                    lastPos = mousePos;
+                }
+            }
 
+            function clearCanvas() {
+                canvas.width = canvas.width;
+            }
 
+            // Allow for animation
+            (function drawLoop() {
+                requestAnimFrame(drawLoop);
+                renderCanvas();
+            })();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="{{ asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <script type="text/javascript"></script>
+        })();
+    </script>
 @endsection

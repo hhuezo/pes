@@ -10,7 +10,7 @@
 
             <div class="card-header">
                 <h4 class="card-title">Requirements</h4>
-                <a href="{{ url('job_application/create') }}"><button type="button" class="btn btn-success float-right" data-toggle="modal"
+                <a href="{{ url('job_application/create') }}"><button type="button" class="btn btn-info float-right" data-toggle="modal"
                     data-target=".bd-example-modal-lg">New Requirement</button></a>
             </div>
 
@@ -46,8 +46,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
-
                     </tbody>
 
                 </table>

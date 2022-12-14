@@ -50,7 +50,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
-                                    <input type="date" min="{{ date('Y-m-d') }}" name="start_date" id="start_date"
+                                    <input type="date" min="{{ date('Y-m-d') }}" name="start_date" id="start_date" required
                                         class="form-control">
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
-                                    <input type="date" name="end_date" id="end_date" class="form-control">
+                                    <input type="date" name="end_date" id="end_date" required class="form-control">
                                 </div>
 
                             </div>
