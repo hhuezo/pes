@@ -25,6 +25,7 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php($i = 1)
                         @foreach ($employers as $obj)
                             <tr>
                                 <td>{{ $obj->legal_business_name }}</td>
@@ -42,9 +43,10 @@
                                 @endif
                                 <td align="center">
                                     <a href="{{ url('employer') }}/{{ $obj->id }}/edit" class="on-default edit-row">
-                                        <i class="mdi mdi-table-edit lg"></i></a>
+                                        <i class="fa fa-eye fa-lg"></i></a>
                                 </td>
                             </tr>
+                            @php($i++)
                         @endforeach
 
 

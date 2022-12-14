@@ -249,8 +249,12 @@
 
                     @can('read employer')
                     <li> <a href="{{ url('employer') }}" aria-expanded="false"><i
-                                class="icon icon-globe-2"></i><span class="nav-text">Employer</span></a></li>
+                                class="fa fa-user fa-lg"></i><span class="nav-text">Employer</span></a></li>
                     @endcan
+
+
+                    <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span class="nav-text">Create acounts</span></a></li>
+
 
                     <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
                                 class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>

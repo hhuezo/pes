@@ -11,6 +11,7 @@ use App\Http\Controllers\security\PermissionsController;
 use App\Http\Controllers\security\PermissionController;
 use App\Http\Controllers\security\RoleController;
 use App\Http\Controllers\security\UserController;
+use App\Http\Controllers\security\AccountController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('role/link', [UserController::class, 'link']);
     Route::resource('role', RoleController::class);
     Route::resource('user', UserController::class);
+    Route::resource('account', AccountController::class);
 });
 
 //validacion email
