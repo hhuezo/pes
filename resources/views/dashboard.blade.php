@@ -40,7 +40,10 @@
             background-color: #2763FF;
             color: #fff;
         }
-        .quixnav .metismenu ul a:hover, .quixnav .metismenu ul a:focus, .quixnav .metismenu ul a.mm-active {
+
+        .quixnav .metismenu ul a:hover,
+        .quixnav .metismenu ul a:focus,
+        .quixnav .metismenu ul a.mm-active {
             text-decoration: none;
             color: #2763FF;
             font-weight: bold;
@@ -196,7 +199,7 @@
                             </li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                                    <i class="mdi mdi-account"></i>
+                                    {{session('user_name')}}&nbsp;&nbsp;<i class="mdi mdi-account"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="./app-profile.html" class="dropdown-item">
@@ -248,22 +251,35 @@
                     @endcan
 
                     @can('read employer')
-                    <li> <a href="{{ url('employer') }}" aria-expanded="false"><i
-                                class="fa fa-user fa-lg"></i><span class="nav-text">Employer</span></a></li>
+                        <li> <a href="{{ url('dashboard') }}" aria-expanded="false"><i
+                                    class="fa fa-bar-chart fa-lg"></i><span class="nav-text">Dashboar</span></a></li>
+                    @endcan
+
+                    @can('read employer')
+                        <li> <a href="{{ url('employer') }}" aria-expanded="false"><i class="fa fa-user-o fa-lg"></i><span
+                                    class="nav-text">Employer</span></a></li>
                     @endcan
 
 
-                    <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span class="nav-text">Create acounts</span></a></li>
+                    <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
+                                class="nav-text">Create acounts</span></a></li>
 
 
                     <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
                                 class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
 
 
-                    <li class="nav-label first">Main Menu</li>
+                    <li> <a href="# " aria-expanded="false"><i class="fa fa-newspaper-o"></i><span
+                                class="nav-text">Case managers</span></a></li>
+
+                    <li> <a href="# " aria-expanded="false"><i class="fa fa-bell-o"></i><span
+                                class="nav-text">Pending tasks</span></a></li>
+
+
+                   <!-- <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                     </li> -->
-                    <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
+                    <!-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i
                                 class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                         <ul aria-expanded="false">
                             <li><a href="./index.html">Dashboard 1</a></li>
@@ -372,7 +388,7 @@
                             </li>
                             <li><a href="./page-lock-screen.html">Lock Screen</a></li>
                         </ul>
-                    </li>
+                    </li>-->
                 </ul>
             </div>
         </div>

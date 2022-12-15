@@ -32,6 +32,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $user = auth()->user();
+        $user_name = "";
+        for ($i = 0; $i < strlen($user->email); $i++) {
+
+            if ($user->email[$i] == '@') {
+                $i = strlen($user->email) + 1;
+            } else {
+                $user_name = $user_name . $user->email[$i];
+            }
+        }
+        session(['user_name' => $user_name]);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
