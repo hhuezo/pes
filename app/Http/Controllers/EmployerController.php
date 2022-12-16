@@ -7,6 +7,7 @@ use App\Models\catalogue\NormalBusinessDays;
 use App\Models\catalogue\primaryBusinessType;
 use App\Models\catalogue\County;
 use App\Models\catalogue\City;
+use App\Models\catalogue\CityZip;
 use App\Models\Employer;
 use App\Models\EmployerWorksite;
 use Illuminate\Http\Request;
