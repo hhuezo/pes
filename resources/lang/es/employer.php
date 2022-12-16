@@ -27,7 +27,7 @@ return [
     'MailingCity' => 'Ciudad de envío',
     'MailingState' => 'Estado de envío',
     'MailingZipCode' => 'Código postal de envío',
-    'SignedAllDocuments' => 'FIRMARÁ el contacto PRINCIPAL mencionado anteriormente todos los documentos?',    
+    'SignedAllDocuments' => 'FIRMARÁ el contacto PRINCIPAL mencionado anteriormente todos los documentos?',
     'AddContactPerson' => 'Le gustaría agregar una persona de contacto adicional?',
     'EmployerContactInformation'  => 'INFORMACIÓN DE CONTACTO DEL EMPLEADOR',
     'PrimaryContact'  => 'Contacto primario',
@@ -81,4 +81,9 @@ return [
     'PublicTransportation' =>  '¿A qué distancia está el transporte público del sitio de trabajo principal?',
     'LocalPublicTransportation' =>  'Proporcione el sitio web de transporte público local',
     'Notes' =>  'Notas',
+
+    'GeneralData' =>  'Datos generales',
+    'EmployerInformation' =>  'Información de Empleador',
+    'EmployerData' =>  'Datos de Empleador',
+    'Contact' =>  'Contacto',
 ];

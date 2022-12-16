@@ -5,10 +5,10 @@ namespace App\Models\catalogue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class NaicsCode extends Model
+class CityZip extends Model
 {
     use HasFactory;
-    protected $table = 'catalog_naics_code';
+    protected $table = 'catalog_city_zip';
 
     protected $primaryKey = 'id';
 
@@ -16,10 +16,12 @@ class NaicsCode extends Model
 
 
     protected $fillable = [
-        'code',
-        'name',
-        'primary_business_type_id'
-
+        'czc_state_fips',
+        'czc_state',
+        'czc_state_abbr',
+        'czc_zipcode',
+        'czc_county',
+        'czc_city',
     ];
 
     protected $guarded = [];

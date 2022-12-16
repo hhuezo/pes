@@ -50,15 +50,9 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Role','model_has_roles','model_id');
     }
 
-    public function countries()
+    public function user_has_employer()
     {
-        return $this->belongsTo('App\Models\catalogue\Country','country','id');
-    }
-
-
-    public function case_managers()
-    {
-        return $this->belongsTo('App\Models\User','case_manager','id');
+        return $this->belongsToMany('App\Models\Employer','users_has_employers','users_id');
     }
 
 }
