@@ -118,14 +118,13 @@ return new class extends Migration
         });
 
 
-        Schema::create('users_has_employers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('employer_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+Schema::create('users_has_employers', function (Blueprint $table) {
+    $table->increments('id');
+    $table->integer('employer_id')->unsigned();
+    $table->bigInteger('user_id')->unsigned();
 
-            $table->foreign('employer_id')->references('id')->on('employer');
-            $table->foreign('user_id')->references('id')->on('users');
-        });
+    $table->foreign('employer_id')->references('id')->on('employer');
+    $table->foreign('user_id')->references('id')->on('users');
 
 
         Schema::create('casemanager_has_recruiter', function (Blueprint $table) {
@@ -146,8 +145,10 @@ return new class extends Migration
             $table->foreign('casemanager_id')->references('id')->on('users');
             $table->foreign('employer_id')->references('id')->on('employer');
         });
-*/
 
+
+
+});*/
 
     }
 

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('employer_id')->references('id')->on('employer');
         });
-*/
+
 
       Schema::create('request_detail', function (Blueprint $table) {
             $table->increments('id')->primary();
@@ -44,7 +44,7 @@ return new class extends Migration
 
             $table->foreign('request_id')->references('id')->on('request');
             $table->foreign('job_title_id')->references('id')->on('catalog_job_title');
-        });
+        });*/
     }
 
     /**
@@ -54,7 +54,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_detail');
+       // Schema::dropIfExists('request_detail');
        // Schema::dropIfExists('request');
     }
 };

@@ -46,7 +46,7 @@ class EmployerController extends Controller
         $user =  auth()->user();
         $employer = $user->user_has_employer->first();
 
-        if ($employer->count() > 0) {
+        if ($employer) {
             return redirect('employer/' . $employer->id . '/edit');
         }
         $user = auth()->user();
