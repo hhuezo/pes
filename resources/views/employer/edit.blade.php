@@ -194,8 +194,7 @@
                                             <div class="form-group" id="DivNaicsCodCompany">
                                                 <label>{!! trans('employer.NaicsCodCompany') !!}</label>
                                                 <select class="form-control select2" name="naics_id"
-                                                    value="{{ old('primary_contact_name', $employer->naics_id) }}"
-                                                    id="NaicsCod">
+                                                    value="{{ old('naics_id', $employer->naics_id) }}" id="NaicsCod">
 
                                                 </select>
                                             </div>
@@ -253,41 +252,10 @@
 
                                         <div class="col-xl-12 col-xxl-12">&nbsp;</div>
                                         <div class="col-xl-6 col-xxl-6">
-                                            <div class="form-group">
-                                                <input type="hidden" name="id" value="{{ $employer->id }}">
-                                                <label>{!! trans('employer.PrincipalStreetAddress') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
-                                                <input type="text" name="principal_street_address"
-                                                    value="{{ old('principal_street_address', $employer->principal_street_address) }}"
-                                                    class="form-control">
-                                                @error('principal_street_address')
-                                                    <div class="alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                            <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCity') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
-                                                <input type="text" name="principal_city"
-                                                    value="{{ old('principal_city', $employer->principal_city) }}"
-                                                    class="form-control">
-                                                @error('principal_city')
-                                                    <div class="alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
 
-                                            <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCountry') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
-                                                <input type="text" name="principal_country"
-                                                    value="{{ old('principal_country', $employer->principal_country) }}"
-                                                    class="form-control">
-                                                @error('principal_country')
-                                                    <div class="alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+
+
+
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.PrincipalState') !!}</label>
@@ -309,6 +277,30 @@
                                             </div>
 
                                             <div class="form-group">
+                                                <label>{!! trans('employer.PrincipalCountry') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
+                                                <input type="text" name="principal_country"
+                                                    value="{{ old('principal_country', $employer->principal_country) }}"
+                                                    class="form-control">
+                                                @error('principal_country')
+                                                    <div class="alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.PrincipalCity') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
+                                                <input type="text" name="principal_city"
+                                                    value="{{ old('principal_city', $employer->principal_city) }}"
+                                                    class="form-control">
+                                                @error('principal_city')
+                                                    <div class="alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-group">
                                                 <label>{!! trans('employer.PrincipalZipCode') !!}<b style="color: #FF9696">(*This field
                                                         is required
                                                         )</b></label>
@@ -320,12 +312,30 @@
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
+
+                                            <div class="form-group">
+                                                <input type="hidden" name="id" value="{{ $employer->id }}">
+                                                <label>{!! trans('employer.PrincipalStreetAddress') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
+                                                <input type="text" name="principal_street_address"
+                                                    value="{{ old('principal_street_address', $employer->principal_street_address) }}"
+                                                    class="form-control">
+                                                @error('principal_street_address')
+                                                    <div class="alert-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+
+
                                         </div>
 
 
                                         <div class="col-xl-6 col-xxl-6">
-                                            <br>
+
                                             <div class="form-group">
+                                                <br>
+                                                <br>
                                                 @if (old('mailing_address_same_above', $employer->mailing_address_same_above) === 1)
                                                     <input type="checkbox" name="mailing_address_same_above"
                                                         id="SameAsAbove" checked="">
@@ -336,8 +346,7 @@
                                                 @endif
                                                 &nbsp;{!! trans('employer.SameAsAbove') !!}
                                             </div>
-                                            <br>
-                                            <br>
+
                                             <div id="DivMailin">
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.MailingAddress') !!}<b style="color: #FF9696">(*This field
@@ -806,24 +815,10 @@
                         <div class="modal-body">
                             <input type="hidden" name="employer_id" value="{{ $employer->id }}">
                             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                            <div class="form-group">
-                                <label>{!! trans('employer.StreetAddress') !!}</label>
-                                <input type="text" name="street_address" class="form-control">
-                            </div>
-
 
 
                             <div class="form-group">
-                                <label>{!! trans('employer.City') !!}</label>
-                                <input type="text" name="city_address" class="form-control">
-                            </div>
 
-                            <div class="form-group">
-                                <label>{!! trans('employer.County') !!}</label>
-                                <input type="text" name="country_address" class="form-control">
-                            </div>
-
-                            <div class="form-group">
                                 <label>{!! trans('employer.State') !!}</label>
                                 <select class="form-control" name="state_id_address">
                                     @foreach ($states as $obj)
@@ -832,11 +827,29 @@
                                 </select>
                             </div>
 
+                            <div class="form-group">
+                                <label>{!! trans('employer.County') !!}</label>
+                                <input type="text" name="country_address" class="form-control">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.City') !!}</label>
+                                <input type="text" name="city_address" class="form-control">
+                            </div>
+
 
                             <div class="form-group">
                                 <label>{!! trans('employer.ZipCode') !!}</label>
                                 <input type="text" name="zip_code_address" class="form-control">
                             </div>
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.StreetAddress') !!}</label>
+                                <input type="text" name="street_address" class="form-control">
+                            </div>
+
+
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -267,6 +267,19 @@ class EmployerController extends Controller
     }
 
 
+    public function get_counties($id){
+      /*  $counties = CityZip::select('czc_state_fips as id','czc_county as name')
+        ->where('czc_state_fips','=',$id)
+        ->groupBy('czc_state_fips','czc_county')
+        ->get();*/
+
+        $counties = CityZip::select('id','czc_state_fips as id','czc_county as name')
+        ->where('czc_state_fips','=',$id)->unique('czc_state_fips')
+        ///->groupBy('czc_state_fips','czc_county')
+        ->get();
+        dd();
+    }
+
     public function update(Request $request, $id)
     {
 
