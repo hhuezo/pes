@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class primaryBusinessType extends Model
 {
     use HasFactory;
-    protected $table = 'catalogue_primary_business_type';
+    protected $table = 'catalog_primary_business_type';
 
     protected $primaryKey = 'id';
 

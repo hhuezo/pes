@@ -86,4 +86,10 @@ class Employer extends Model
     {
         return $this->belongsTo('App\Models\catalogue\NaicsCode', 'naics_id', 'id');
     }
+
+    public function user_has_employer()
+    {
+        return $this->belongsToMany('App\Models\User','users_has_employers','employer_id');
+    }
+
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NormalBusinessDays extends Model
 {
     use HasFactory;
-    protected $table = 'catalogue_normal_business_days';
+    protected $table = 'catalog_normal_business_days';
 
     protected $primaryKey = 'id';
 

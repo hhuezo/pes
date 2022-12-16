@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\catalogue\primaryBusinessType;
-use App\Models\catalogue\State;
+use App\Models\catalogue\CityZip;
 use App\Models\Employer;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -28,9 +28,11 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $primary_business_types =  primaryBusinessType::where('active', '=', 1)->get();
-        $principal_states =  State::get();
-        return view('auth.register', ['primary_business_types' => $primary_business_types, 'principal_states' => $principal_states]);
+       /* $primary_business_types =  primaryBusinessType::where('active', '=', 1)->get(); //czc_state
+        $states =  CityZip::select('czc_state_fips as id','czc_state as name')
+        ->groupBy('czc_state_fips','czc_state')
+        ->get();*/
+        return view('auth.register');
     }
 
     public function validate_email($id)
@@ -142,9 +144,9 @@ class RegisteredUserController extends Controller
 
 
 
-        // return redirect('employer/' . $employer->id . '/edit');
+         return redirect('employer/create');
 
-        return redirect(RouteServiceProvider::HOME);
+        //return redirect(RouteServiceProvider::HOME);
     }
 
 

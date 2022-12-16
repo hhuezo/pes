@@ -1,4 +1,4 @@
-@extends ('dashboard')
+@extends ('dashboard2')
 @section('contenido')
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
@@ -14,22 +14,28 @@
                     <div class="card-body">
                         <!-- Nav tabs -->
                         <div class="default-tab">
+
+
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+                                    <a class="nav-link" data-toggle="tab">{!! trans('employer.GeneralData') !!}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#profile">Profile</a>
+                                    <a class="nav-link active" data-toggle="tab"
+                                        href="#tab_content1">{!! trans('employer.EmployerInformation') !!}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#contact">Contact</a>
+                                    <a class="nav-link" data-toggle="tab">{!! trans('employer.EmployerData') !!}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#message">Message</a>
+                                    <a class="nav-link" data-toggle="tab">{!! trans('employer.Contact') !!}</a>
                                 </li>
+
                             </ul>
+
+
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="home" role="tabpanel">
+                                <div class="tab-pane fade show active" id="tab_content1" role="tabpanel">
                                     <form action="{{ url('employer') }}" method="POST">
                                         @csrf
                                         <div class="row">
@@ -39,7 +45,10 @@
                                             <div class="col-xl-6 col-xxl-6">
 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}</label>
+                                                    <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}<b
+                                                            style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
                                                     <input type="text" name="legal_business_name"
                                                         value="{{ $user->name }}" class="form-control">
                                                     @error('legal_business_name')
@@ -53,8 +62,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.IdentificationNumber') !!} <b style="color: #FF9696">(*This field is
-                                                            required
+                                                    <label>{!! trans('employer.IdentificationNumber') !!}<b style="color: #FF9696">(*This field
+                                                            is required
                                                             )</b></label>
                                                     <input type="text" name="federal_id_number"
                                                         value="{{ old('federal_id_number') }}" class="form-control"
@@ -66,8 +75,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.YearBusinessEstablished') !!} <b style="color: #FF9696">(*This field is
-                                                            required
+                                                    <label>{!! trans('employer.YearBusinessEstablished') !!}<b style="color: #FF9696">(*This field
+                                                            is required
                                                             )</b></label>
                                                     <input type="text" name="year_business_established"
                                                         value="{{ old('year_business_established') }}" min="1900"
@@ -80,8 +89,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.NumberEmployees') !!} <b style="color: #FF9696">(*This field is
-                                                            required
+                                                    <label>{!! trans('employer.NumberEmployees') !!}<b style="color: #FF9696">(*This field
+                                                            is required
                                                             )</b></label>
                                                     <input type="number" min="1" name="number_employees_full_time"
                                                         value="{{ old('number_employees_full_time') }}"
@@ -92,8 +101,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.PrimaryBusinessPhone') !!} <b style="color: #FF9696">(*This field is
-                                                            required
+                                                    <label>{!! trans('employer.PrimaryBusinessPhone') !!}<b style="color: #FF9696">(*This field
+                                                            is required
                                                             )</b></label>
                                                     <input type="text" name="primary_business_phone"
                                                         value="{{ old('primary_business_phone') }}" class="form-control"
@@ -150,7 +159,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.PrimaryBusiness') !!} <b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.PrimaryBusiness') !!}<b style="color: #FF9696">(*This field
                                                             is required
                                                             )</b></label>
                                                     <select class="form-control" name="primary_business_type_id"
@@ -158,9 +167,7 @@
                                                         id="PrimaryBusinessType">
                                                         <option value="">Select</option>
                                                         @foreach ($primary_business_types as $obj)
-                                                            <option value="{{ $obj->id }}"
-                                                                {{ old('primary_business_type_id') == $obj->id ? 'selected' : '' }}>
-                                                                {{ $obj->name_english }}
+                                                            <option value="{{ $obj->id }}">{{ $obj->name_english }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -187,12 +194,12 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.GrossCompanyIncome') !!} <b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.GrossCompanyIncome') !!}<b style="color: #FF9696">(*This field
                                                             is required
                                                             )</b></label>
-                                                    <input type="text" name="year_end_gross_company_income"
-                                                        data-inputmask="'mask': ['9999']" data-mask class="form-control"
-                                                        maxlength="4" value="{{ old('year_end_gross_company_income') }}"
+                                                    <input type="number" step="0.01"
+                                                        name="year_end_gross_company_income"
+                                                        value="{{ old('year_end_gross_company_income') }}"
                                                         class="form-control" class="form-control">
                                                     @error('year_end_gross_company_income')
                                                         <div class="alert-danger">{{ $message }}</div>
