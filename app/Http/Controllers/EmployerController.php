@@ -271,7 +271,13 @@ class EmployerController extends Controller
     public function get_counties($id){
 
         $counties = County::where('state','=',$id)->get();
-        dd($counties);
+        return $counties;
+    }
+
+    public function get_cities($id){
+        $county = County::findOrFail($id);
+        $cities = City::where('state','=',$county->state)->where('county','=',$county->county)->get();
+        return $cities;
     }
 
     public function update(Request $request, $id)
