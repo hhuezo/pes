@@ -42,7 +42,7 @@ class EmployerController extends Controller
 
         //dd(auth()->user()->id);
         $user =  auth()->user();
-        $employer = $user->user_has_employer;
+        $employer = $user->user_has_employer->first();
 
         if ($employer->count() > 0) {
             return redirect('employer/' . $employer->id . '/edit');
@@ -126,9 +126,9 @@ class EmployerController extends Controller
         }
         $employer->year_end_gross_company_income = $request->get('year_end_gross_company_income');
         $employer->year_end_net_company_income = $request->get('year_end_net_company_income');
-        //$employer->users_id = auth()->user()->id;
 
         $employer->save();
+        $employer->user_has_employer()->attach(auth()->user()->id);
         session_start();
         session(['action' => '3']);
         Alert::success('Ok', 'Record saved');

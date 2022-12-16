@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('czc_zipcode',5);
             $table->string('czc_county');
             $table->string('czc_city');
-        });*/
+        });
 
         Schema::create('employer', function (Blueprint $table) {
             $table->increments('id');
@@ -117,18 +117,18 @@ return new class extends Migration
             $table->foreign('main_worksite_city_id')->references('id')->on('catalog_city_zip');
         });
 
-
+*/
         Schema::create('users_has_employers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employer_id')->unsigned();
-            $table->bigInteger('users_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
 
             $table->foreign('employer_id')->references('id')->on('employer');
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
 
 
-        Schema::create('casemanager_has_recruiter', function (Blueprint $table) {
+     /*   Schema::create('casemanager_has_recruiter', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('casemanager_id')->unsigned();
             $table->bigInteger('recruiter_id')->unsigned();
@@ -146,7 +146,7 @@ return new class extends Migration
             $table->foreign('casemanager_id')->references('id')->on('users');
             $table->foreign('employer_id')->references('id')->on('employer');
         });
-
+*/
 
 
     }
@@ -158,10 +158,11 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('casemanager_has_employer');
-        Schema::dropIfExists('casemanager_has_recruiter');
         Schema::dropIfExists('users_has_employers');
+       /* Schema::dropIfExists('casemanager_has_employer');
+        Schema::dropIfExists('casemanager_has_recruiter');
+
         Schema::dropIfExists('employer');
-        Schema::dropIfExists('catalog_city_zip');
+        Schema::dropIfExists('catalog_city_zip');*/
     }
 };

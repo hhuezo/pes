@@ -72,7 +72,6 @@ class Employer extends Model
         'how_far_transportation_from_worksite',
         'local_transportation_website',
         'place_employment_notes',
-        'users_id',
         'validated',
 
     ];

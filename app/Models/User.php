@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function user_has_employer()
     {
-        return $this->belongsToMany('App\Models\Employer','users_has_employers','users_id');
+        return $this->belongsToMany('App\Models\Employer','users_has_employers','user_id');
     }
 
 }
