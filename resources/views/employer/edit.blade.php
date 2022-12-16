@@ -259,7 +259,8 @@
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.PrincipalState') !!}</label>
-                                                <select class="form-control select2" name="principal_state_id">
+                                                <select class="form-control select2" name="principal_state_id"
+                                                    id="PrincipalState">
                                                     @foreach ($states as $obj)
                                                         @if ($obj->id == $employer->principal_state_id)
                                                             <option value="{{ $obj->id }}" selected>
@@ -276,29 +277,38 @@
                                                 @enderror
                                             </div>
 
+
+
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCountry') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
-                                                <input type="text" name="principal_country"
-                                                    value="{{ old('principal_country', $employer->principal_country) }}"
-                                                    class="form-control">
+                                                <label>{!! trans('employer.PrincipalCountry') !!}</label>
+                                                <select class="form-control select2" name="principal_county_id"
+                                                    id="principal_county_id"
+                                                    value="{{ old('principal_county_id', $employer->principal_county_id) }}"
+                                                    id="PrincipalCountiesId">
+
+                                                </select>
                                                 @error('principal_country')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
+
+
+
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCity') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
-                                                <input type="text" name="principal_city"
-                                                    value="{{ old('principal_city', $employer->principal_city) }}"
-                                                    class="form-control">
+                                                <label>{!! trans('employer.PrincipalCity') !!}</label>
+                                                <select class="form-control select2" name="principal_city_id"
+                                                    id="principal_city_id"
+                                                    value="{{ old('principal_city_id', $employer->principal_city_id) }}"
+                                                    id="PrincipalCitiesId">
+
+                                                </select>
                                                 @error('principal_city')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
+
+
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.PrincipalZipCode') !!}<b style="color: #FF9696">(*This field
@@ -947,6 +957,8 @@
                     $('#DivNaicsCodCompany').show();
                     $('#DivNaicsNameCompany').hide();
 
+                    // alert("{{ url('get_naics_code') }}" + '/' + PrimaryBusinessType);
+
                     $.get("{{ url('get_naics_code') }}" + '/' + PrimaryBusinessType, function(data) {
                         //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
                         console.log(data);
@@ -976,6 +988,76 @@
 
 
             // end tab one
+
+
+
+
+            // llenado de counties
+            $("#PrincipalState").change(function() {
+                var PrincipalState = $(this).val();
+                var principal_state_id = <?php echo $employer->principal_state_id; ?>;
+                if (PrincipalState > 0) {
+                    $.get("{{ url('get_counties') }}" + '/' + PrincipalState, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == principal_state_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' + ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                                '</option>';
+                        }
+
+                        $("#principal_county_id").html(_select);
+                    });
+                }
+            });
+
+
+            //PrincipalCitiesId
+
+
+
+            // llenado de cities
+            $("#principal_county_id").change(function() {
+                var PrincipalCounty = $(this).val();
+
+                alert(PrincipalCounty);
+                alert("{{ url('get_cities') }}" + '/' + PrincipalCounty);
+
+                var principal_county_id = <?php echo $employer->principal_county_id; ?>;
+                if (PrincipalCounty > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + PrincipalCounty, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == principal_county_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' + ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                                '</option>';
+                        }
+
+                        $("#principal_city_id").html(_select);
+                    });
+                }
+            });
 
 
 
