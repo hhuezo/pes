@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\catalogue\NaicsCode;
 use App\Models\catalogue\NormalBusinessDays;
 use App\Models\catalogue\primaryBusinessType;
-use App\Models\catalogue\CityZip;
+use App\Models\catalogue\County;
+use App\Models\catalogue\City;
 use App\Models\Employer;
 use App\Models\EmployerWorksite;
 use Illuminate\Http\Request;
@@ -268,16 +269,8 @@ class EmployerController extends Controller
 
 
     public function get_counties($id){
-      /*  $counties = CityZip::select('czc_state_fips as id','czc_county as name')
-        ->where('czc_state_fips','=',$id)
-        ->groupBy('czc_state_fips','czc_county')
-        ->get();*/
 
-        $counties = CityZip::select(\DB::raw("czc_county,(select id from catalog_city_zip as city_zip where city_zip.czc_state_fips = catalog_city_zip.czc_state_fips
-        and city_zip.czc_county = catalog_city_zip.czc_county  limit 1)") )
-        ->where('czc_state_fips','=',$id)
-        ->groupBy('czc_county')
-        ->get();
+        $counties = County::where('state','=',$id)->get();
         dd($counties);
     }
 
