@@ -273,11 +273,12 @@ class EmployerController extends Controller
         ->groupBy('czc_state_fips','czc_county')
         ->get();*/
 
-        $counties = CityZip::select('id','czc_state_fips as id','czc_county as name')
-        ->where('czc_state_fips','=',$id)->unique('czc_state_fips')
-        ///->groupBy('czc_state_fips','czc_county')
+        $counties = CityZip::select(\DB::raw("czc_county,(select id from catalog_city_zip as city_zip where city_zip.czc_state_fips = catalog_city_zip.czc_state_fips
+        and city_zip.czc_county = catalog_city_zip.czc_county  limit 1)") )
+        ->where('czc_state_fips','=',$id)
+        ->groupBy('czc_county')
         ->get();
-        dd();
+        dd($counties);
     }
 
     public function update(Request $request, $id)
