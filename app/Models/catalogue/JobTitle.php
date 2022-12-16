@@ -9,7 +9,7 @@ class JobTitle extends Model
 {
     use HasFactory;
 
-    protected $table = 'catalogue_job_title';
+    protected $table = 'catalog_job_title';
 
     protected $primaryKey = 'id';
 

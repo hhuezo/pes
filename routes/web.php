@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\JobApplicationController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\JobApplicationDetailController;
 use App\Http\Controllers\security\PermissionsController;
 use App\Http\Controllers\security\PermissionController;
@@ -68,7 +68,7 @@ Route::post('employer/activate', [EmployerController::class, 'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 
 
-Route::resource('job_application', JobApplicationController::class);
+Route::resource('request', RequestController::class);
 Route::resource('job_application_detail', JobApplicationDetailController::class);
 
 
