@@ -44,6 +44,17 @@ class AuthenticatedSessionController extends Controller
         }
         session(['user_name' => $user_name]);
 
+        if ($user->hasRole('employer')) {
+            $employer = $user->user_has_employer->first();
+            if ($employer) {
+                if ($employer->validated != '1') {
+                    return redirect('employer/' . $employer->id . '/edit');
+                }
+            } else {
+                return redirect('employer/create');
+            }
+        }
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
