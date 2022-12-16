@@ -55,6 +55,10 @@ Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code'])
 #counties
 Route::get('get_counties/{id}', [EmployerController::class, 'get_counties']);
 
+#cities
+Route::get('get_cities/{id}', [EmployerController::class, 'get_cities']);
+
+
 Route::post('employer_place_of_business', [EmployerController::class, 'employer_place_of_business']);
 Route::post('employer_contact_information', [EmployerController::class, 'employer_contact_information']);
 
