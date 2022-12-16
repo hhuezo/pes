@@ -117,7 +117,7 @@ return new class extends Migration
             $table->foreign('main_worksite_city_id')->references('id')->on('catalog_city_zip');
         });
 
-*/
+
         Schema::create('users_has_employers', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employer_id')->unsigned();
@@ -128,7 +128,7 @@ return new class extends Migration
         });
 
 
-     /*   Schema::create('casemanager_has_recruiter', function (Blueprint $table) {
+        Schema::create('casemanager_has_recruiter', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('casemanager_id')->unsigned();
             $table->bigInteger('recruiter_id')->unsigned();
@@ -158,7 +158,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_has_employers');
+       // Schema::dropIfExists('users_has_employers');
        /* Schema::dropIfExists('casemanager_has_employer');
         Schema::dropIfExists('casemanager_has_recruiter');
 
