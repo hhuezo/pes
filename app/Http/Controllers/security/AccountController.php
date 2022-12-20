@@ -20,33 +20,25 @@ class AccountController extends Controller
 
     public function index()
     {
-        $users_all = User::get();
-        $array_id_user = array();
-        $array_id_case_manager = array();
-        foreach($users_all as $user)
+        $role = Role::findOrFail(4);
+        $case_managers = $role->user_has_role;
+        foreach($case_managers as $obj)
         {
-            if($user->hasAnyRole(['case manager', 'recruiter']))
-            {
-                array_push($array_id_user,$user->id);
-            }
+            $obj->role = $role->name;
         }
-        $users = User::whereIn('id',$array_id_user)->get();
-        foreach($users as $user)
+
+        $role = Role::findOrFail(5);
+        $recluters = $role->user_has_role;
+
+        foreach($recluters as $obj)
         {
-            if($user->hasAnyRole(['case manager']))
-            {
-                $user->role = 'case manager';
-                array_push($array_id_case_manager,$user->id);
-            }else  if($user->hasAnyRole(['recruiter']))
-            {
-                $user->role = 'recruiter';
-            }
+            $obj->role = $role->name;
         }
-        $case_managers = User::whereIn('id',$array_id_case_manager)->get();
+
         $countries = Country::get();
         $roles = Role::whereIn('id',[4,5])->get();
 
-        return view('security.account.index', ['users' => $users,'countries' => $countries,'roles' => $roles,'case_managers' => $case_managers]);
+        return view('security.account.index', ['recluters' => $recluters,'roles' => $roles,'countries' => $countries,'case_managers' => $case_managers]);
     }
 
 
@@ -58,7 +50,7 @@ class AccountController extends Controller
         $user->name = $request->get('name');
         $user->last_name = $request->get('last_name');
         $user->password = Hash::make($request->password);
-        $user->country = $request->get('country');
+        $user->country_id = $request->get('country');
         $user->date_admission = $time->toDateTimeString();
         if($request->get('role') == 5)
         {

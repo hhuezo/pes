@@ -6,9 +6,10 @@
                 <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                 </button>
             </div>
-            <form action="{{ route('job_application_detail.destroy', $obj->id) }}" method="POST">
+            <form action="{{ route('job_request_detail.destroy', $obj->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
+                {{$obj->id}}
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -21,7 +22,6 @@
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </form>
-
         </div>
-
     </div>
+</div>

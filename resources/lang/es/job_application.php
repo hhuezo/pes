@@ -27,8 +27,13 @@ return [
     la rienda es verdadera y precisa.',
     'PleasSign' => 'Por favor firma',
     'printed_name' => 'NOMBRE IMPRESO',
-
-
+    'ACWIA'=>'1. ¿El empleador está cubierto por ACWIA, como se describe en 20 CFR 656.40(e)(1)? * (No aplica para H-2B)',
+    'ifACWIA'=>'a. Si la respuesta es "Sí", identifique qué disposición de ACWIA cubre el empleador (elija todas las que correspondan)',
+    'i'=>'(i) Institución de educación superior',
+    'ii'=>'(ii) Entidad sin fines de lucro afiliada o relacionada conectada o asociada con una institución de educación superior',
+    'iii'=>'(iii) Organización de investigación sin fines de lucro u organización de investigación gubernamental',
+    'noACWIA'=>'b. Si se ha determinado previamente que el empleador no está cubierto por ACWIA, ¿el empleador  ¿Tiene alguna razón para creer que su estado ha cambiado?',
+    'SportsLeagueRules' => '2. ¿El puesto está cubierto por las Reglas o Reglamentos de una Liga de Deportes Profesionales?',
 
     'workers_paid' => '¿Con qué frecuencia se les paga a los trabajadores?',
     'Weekly' => 'Semanal',
@@ -38,6 +43,18 @@ return [
     'additional_space' => 'Espacio adicional para notas, si es necesario.',
     'uniform_pieces' => 'Listar todas las piezas uniformes requeridas',
 
+
+
+    'Attorney_applicable'=> 'Información del abogado o agente (si corresponde)',
+    'type_representation' => 'Indique el tipo de representación del empleador en la presentación de esta solicitud * Si D.1 es "Abogado" o "Agente", se requiere el resto de esta sección',
+    'Attorney'=> 'Abogado',
+    'Agent'=> 'Agente',
+    'None'=> 'No aplica',
+    'attorney_last_name'=> 'Apellido (familia) del abogado o agente',
+    'attorney_first_name'=> 'Primer nombre',
+    'attorney_middle_name'=> 'Segundo nombre',
+
+    'address'=> 'Dirección',
 
     'location_listed_above' => '¿Este puesto es para la ubicación PRINCIPAL del lugar de trabajo mencionada anteriormente?',
     'job_title' => 'Nombre',

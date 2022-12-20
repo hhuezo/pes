@@ -287,7 +287,7 @@
                     <li> <a href="# " aria-expanded="false"><i class="fa fa-bell-o"></i><span
                                 class="nav-text">Pending tasks</span></a></li>
 
-                    <li> <a href="{{ url('job_application') }}" aria-expanded="false"><i
+                    <li> <a href="{{ url('job_request') }}" aria-expanded="false"><i
                                 class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
 
 

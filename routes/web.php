@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\RequestController;
-use App\Http\Controllers\JobApplicationDetailController;
+use App\Http\Controllers\JobRequestController;
+use App\Http\Controllers\JobRequestDetailController;
 use App\Http\Controllers\security\PermissionsController;
 use App\Http\Controllers\security\PermissionController;
 use App\Http\Controllers\security\RoleController;
@@ -67,12 +67,9 @@ Route::post('employer_additional_location', [EmployerController::class, 'employe
 Route::post('employer/activate', [EmployerController::class, 'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 
-
-Route::resource('request', RequestController::class);
-Route::resource('job_application_detail', JobApplicationDetailController::class);
-
-
+Route::resource('job_request', JobRequestController::class);
+Route::resource('job_request_detail', JobRequestDetailController::class);
+Route::post('job_request_detail/delete', [JobRequestDetailController::class, 'delete']);
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);
-//Route::get('employer_place_employment/{id}', [EmployerController::class, 'place_employment']);

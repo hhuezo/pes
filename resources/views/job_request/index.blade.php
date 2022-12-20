@@ -10,7 +10,7 @@
 
             <div class="card-header">
                 <h4 class="card-title">Requirements</h4>
-                <a href="{{ url('job_application/create') }}"><button type="button" class="btn btn-info float-right" data-toggle="modal"
+                <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right" data-toggle="modal"
                     data-target=".bd-example-modal-lg">New Requirement</button></a>
             </div>
 
@@ -28,7 +28,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($job_applications as $obj)
+                        @foreach ($job_requests as $obj)
                             <tr>
                                 <td>{{ $obj->employer->legal_business_name }}</td>
                                 <td>{{ $obj->start_date }}</td>
@@ -40,7 +40,7 @@
                                 @endif
                                 <td>{{ $obj->job_notes }}</td>
                                 <td align="center">
-                                    <a href="{{ url('job_application') }}/{{ $obj->id }}/edit"
+                                    <a href="{{ url('job_request') }}/{{ $obj->id }}/edit"
                                         class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
                                 </td>

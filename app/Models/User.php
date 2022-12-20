@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'country',
+        'country_id',
     ];
 
     /**
@@ -54,5 +54,17 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\Employer','users_has_employers','user_id');
     }
+
+    public function countries()
+    {
+        return $this->belongsTo('App\Models\catalogue\Country','country_id','id');
+    }
+
+
+    public function case_managers()
+    {
+        return $this->belongsTo('App\Models\User','case_manager','id');
+    }
+
 
 }

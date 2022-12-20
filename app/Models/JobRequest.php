@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobApplication extends Model
+class JobRequest extends Model
 {
     use HasFactory;
-
-    protected $table = 'job_application';
+    protected $table = 'request';
 
     protected $primaryKey = 'id';
 
@@ -26,7 +25,8 @@ class JobApplication extends Model
         'paid_biweekly',
         'is_uniform_required',
         'uniform_pieces_required',
-        'job_notes'
+        'job_notes',
+        'signature'
 
     ];
 

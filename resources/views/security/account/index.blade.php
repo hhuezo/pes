@@ -35,16 +35,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $obj)
+                                @foreach ($case_managers as $obj)
                                     <tr>
                                         <td>{{ $obj->id }}</td>
                                         <td>{{ $obj->email }}</td>
                                         <td>{{ $obj->name }} {{ $obj->last_name }}</td>
                                         <td>{{ $obj->role }}</td>
                                         @if ($obj->case_manager)
-                                        <td>{{ $obj->case_managers->name }}</td>
+                                            <td>{{ $obj->case_managers->name }}</td>
                                         @else
-                                        <td></td>
+                                            <td></td>
+                                        @endif
+
+                                        <td>{{ $obj->countries->name }}</td>
+                                        <td align="center">
+                                            <a href="{{ url('user') }}/{{ $obj->id }}/edit"
+                                                class="on-default edit-row">
+                                                <i class="icon icon-form lg"></i></a>
+                                            &nbsp;&nbsp;
+                                            <a href="" data-target="#modal-delete-{{ $obj->id }}"
+                                                data-toggle="modal"><i class="fa fa-trash"></i></a>
+                                            <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
+                                        </td>
+                                    </tr>
+                                    @include('security.user.modal')
+                                @endforeach
+
+                                @foreach ($recluters as $obj)
+                                    <tr>
+                                        <td>{{ $obj->id }}</td>
+                                        <td>{{ $obj->email }}</td>
+                                        <td>{{ $obj->name }} {{ $obj->last_name }}</td>
+                                        <td>{{ $obj->role }}</td>
+                                        @if ($obj->case_manager)
+                                            <td>{{ $obj->case_managers->name }}</td>
+                                        @else
+                                            <td></td>
                                         @endif
 
                                         <td>{{ $obj->countries->name }}</td>

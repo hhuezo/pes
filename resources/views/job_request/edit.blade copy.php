@@ -1,23 +1,7 @@
 @extends ('dashboard')
 @section('contenido')
     <style>
-        canvas {
-            width: 556.51px;
-            height: 285.93px;
-            background-color: #ffff;
-            margin: 12px;
-        }
-
-        .div_canvas {
-            background-color: #E5E5E5;
-            width: 580.51px;
-            height: 309.93px;
-        }
-    </style>
-
-    <style>
         .nav-tabs-custom>.tab-content {
-
             padding: 0px;
         }
 
@@ -25,78 +9,153 @@
         .modal-xl {
             max-width: 70%;
         }
+
+
+
+
+        #draw-canvas {
+            border: 2px dotted #050505;
+            border-radius: 10px;
+            cursor: crosshair;
+        }
+
+        #draw-dataUrl {
+            width: 100%;
+        }
+
+        h3 {
+            margin: 10px 15px;
+        }
+
+        header {
+            background: #273B47;
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        section {
+            flex: 1;
+        }
+
+        h1 {
+            margin: 10px 15px;
+        }
+
+        header {
+            color: white;
+            font-weight: 500;
+            padding-left: 15px;
+        }
+
+
+        .button {
+            background: #3071a9;
+            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3);
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 0 15px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .button:active {
+            transform: scale(0.9);
+        }
+
+        .contenedor {
+            width: 100% margin: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .instrucciones {
+            width: 90%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        label {
+            margin: 0 15px;
+        }
     </style>
 
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+    @php($id_detail = 0)
     <div class="row">
-        <div class="col-xl-12 col-xxl-12">
+        <div class="col-md-12 ">
             <div class="card">
                 <div class="card-header">
-                    <div class="col-xl-12 col-xxl-12">
-                        <h4 class="card-title">{!! trans('job_application.Title') !!}</h4>
-                        <p class="card-description">
-                            {!! trans('job_application.maximun') !!}
-                        </p>
-                    </div>
+                    <h4 class="card-title">{!! trans('job_application.Title') !!}</h4>{{ $model_request->id }}
                 </div>
                 <div class="card-body">
-
-
-                    <form action="{{ url('job_application') }}" method="POST" class="forms-sample">
+                    <form method="POST" action="{{ route('request.update', $model_request->id) }}">
+                        @method('PUT')
                         @csrf
-                        <div class="col-xl-12 col-xxl-12 row">
-
+                        <div class="row">
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
-                                    <input type="date" min="{{ date('Y-m-d') }}" name="start_date" id="start_date" required
+                                    <label for="exampleInputEmail1">{!! trans('job_application.start_date') !!}</label>
+                                    <input type="date" name="start_date"
+                                        value="{{ date('Y-m-d', strtotime($model_request->start_date)) }}"
                                         class="form-control">
                                 </div>
-                            </div>
 
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
-                                    <input type="date" name="end_date" id="end_date" required class="form-control">
+                                    <input type="date" name="end_date"
+                                        value="{{ date('Y-m-d', strtotime($model_request->end_date)) }}"
+                                        class="form-control">
                                 </div>
 
                             </div>
 
                             <div class="col-sm-12">{!! trans('job_application.message') !!}</div>
 
-                            <div class="col-sm-12">&nbsp;</div>
-
                             <div class="col-md-6">
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.need_workers') !!}</label>
                                     <br>
                                     {!! trans('employer.Yes') !!}
-                                    <input type="radio" value="1" onclick="show_multiple_employment_period();"
-                                        id="need_h2b_workers" name="need_h2b_workers">
+                                    @if ($model_request->need_h2b_workers == 1)
+                                        <input type="radio" value="1" checked name="need_h2b_workers">
+                                    @else
+                                        <input type="radio" value="1" name="need_h2b_workers">
+                                    @endif
+
                                     &nbsp;&nbsp;
                                     {!! trans('employer.No') !!}
-                                    <input type="radio" value="0" onclick="hide_multiple_employment_period();"
-                                        checked id="need_h2b_workers2" name="need_h2b_workers">
-                                    <br>
+                                    @if ($model_request->need_h2b_workers == 0)
+                                        <input type="radio" value="0" checked name="need_h2b_workers">
+                                    @else
+                                        <input type="radio" value="0" name="need_h2b_workers">
+                                    @endif
 
-                                    {!! trans('job_application.message2') !!}
-
-
+                                    <br>{!! trans('job_application.message2') !!}
                                 </div>
+
                             </div>
 
-                            <div class="col-md-6" id="div_multiple_employment_period">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.multiple_employment_period') !!}</label>
                                     <input type="text" name="explain_multiple_employment"
-                                        id="explain_multiple_employment" class="form-control">
+                                        value="{{ $model_request->explain_multiple_employment }}" class="form-control">
                                 </div>
                             </div>
 
-
-
-                            <!-- ADD PISITION -->
 
                             <div class="col-sm-12" style="text-align: center;">
 
@@ -108,57 +167,96 @@
 
                             </div>
 
-                            <!-- END ADD PISITION -->
+                            <div class="col-md-12">&nbsp;</div>
+                            <div class="col-sm-12" style="text-align: center;">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-responsive-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Job Title</th>
+                                                <th>Number of Workers</th>
+                                                <th>{!! trans('job_application.total_hours') !!}</th>
+                                                <th>Option</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($details as $obj)
+                                                <tr>
+                                                    <td>{{ $obj->title->name }}</td>
+                                                    <td>{{ $obj->number_workers }}</td>
+                                                    <td>{{ $obj->ant_workday_total_hours }}</td>
+                                                    <td align="center">
+                                                        &nbsp;&nbsp;
+                                                        <a href="" data-target="#modal-delete-{{ $obj->id }}"
+                                                            data-toggle="modal"><i class="fa fa-trash fa-lg"></i></a>
+                                                    </td>
+                                                </tr>
+                                                @include('request.modal_detail')
+                                            @endforeach
 
-                            <!-- <div class="col-sm-12">&nbsp;</div>
-
-                                        <div class="col-sm-12" style="text-align: center;">
-                                            <h3>{!! trans('job_application.EmployeeRights') !!}</h3>
-                                        </div>
-
-                                        <div class="col-sm-12">
-                                            {!! trans('job_application.message4') !!}
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input type="checkbox"> &nbsp;&nbsp;{!! trans('job_application.Agree') !!}
-                                        </div>
-                                        <div class="col-sm-12">&nbsp;</div>
-                                        <div class="col-sm-12">
-                                            {!! trans('job_application.message5') !!}
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input type="checkbox"> &nbsp;&nbsp;{!! trans('employer.Yes') !!}
-                                        </div>
-                                        <div class="col-sm-12">&nbsp;</div>
-                                        <div class="col-sm-12">
-                                            {!! trans('job_application.PleasSign') !!}
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <div class="div_canvas"> <canvas id="pizarra"></canvas></div>
-                                        </div>
-                                        <div class="col-sm-12">&nbsp;</div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
-                                                <input type="text" name="explain_multiple_employment" class="form-control">
-                                            </div>
-                                        </div>-->
-
-
-                            <div class="col-sm-12 form-group">
-                                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
 
                         </div>
+
+
+
+                        <div class="col-sm-12">&nbsp;</div>
+
+                        <div class="col-sm-12">
+                            <h4>{!! trans('job_application.EmployeeRights') !!}</h4>
+                        </div>
+                        <div class="col-sm-12">{!! trans('job_application.message4') !!}</div>
+                        <div class="col-sm-12">
+                            <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
+                        </div>
+                        <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
+                        <div class="col-sm-12">
+                            <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                        </div>
+                        <div class="col-sm-12">&nbsp;</div>
+                        <div class="col-sm-12">{!! trans('job_application.PleasSign') !!}</div>
+                        <div class="col-sm-12">
+                            <canvas id="draw-canvas" width="300" height="200">
+                            </canvas>
+                            <textarea id="draw-dataUrl" name="sign" class="form-control" rows="5"></textarea>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" class="button" id="draw-clearBtn" value="Clear"></input>
+                                <input type="button" class="button" id="draw-submitBtn" value="Crear Imagen"></input>
+                                <input type="color" id="color">
+                                <input type="range" id="puntero" min="1" default="1" max="5"
+                                    width="10%">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">&nbsp;</div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
+                                <div class="col-md-6">
+                                    <input type="text" id="printed_name" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                        </div>
+
+
                     </form>
-
-
                 </div>
+
             </div>
+
         </div>
     </div>
 
-    @include('sweetalert::alert')
 
 
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
@@ -169,7 +267,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('job_application_detail') }}" method="POST" class="forms-sample">
+                <form action="{{ url('request_detail') }}" method="POST" class="forms-sample">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -177,18 +275,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="hidden" name="job_app_id" value="0">
-                                            <input type="hidden" name="start_date_modal" id="start_date_modal"
-                                                class="form-control">
-                                            <input type="hidden" name="end_date_modal" id="end_date_modal"
-                                                class="form-control">
-                                            <input type="hidden" value="0" name="need_h2b_workers_modal"
-                                                id="need_h2b_workers_modal" class="form-control">
-                                            <input type="hidden" name="explain_multiple_employment_modal"
-                                                id="explain_multiple_employment_modal" class="form-control">
-
-
-
+                                            <input type="hidden" name="job_app_id" value="{{ $model_request->id }}">
                                             <label for="exampleInputEmail1">{!! trans('job_application.job_title') !!}</label>
                                             <select class="form-control select2" name="job_title">
                                                 @foreach ($job_titles as $obj)
@@ -455,8 +542,7 @@
     </div>
 
 
-
-
+    @include('sweetalert::alert')
 
 
 
@@ -464,81 +550,19 @@
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            hide_multiple_employment_period();
             hide_div_explain_benefits();
             hide_div_requeriments();
+
+            $('#draw-submitBtn').hide();
+            $('#color').hide();
+            $('#puntero').hide();
+            $('#draw-dataUrl').hide();
         });
 
-        function hide_multiple_employment_period() {
-            $('#div_multiple_employment_period').hide();
-        }
-
-        function show_multiple_employment_period() {
-            $('#div_multiple_employment_period').show();
-        }
-        //
-        $("#start_date").change(function() {
-            document.getElementById('start_date_modal').value = document.getElementById('start_date').value;
+        //captura de firma
+        $("#draw-canvas").click(function() {
+            $('#draw-submitBtn').click();
         });
-
-        $("#end_date").change(function() {
-            document.getElementById('end_date_modal').value = document.getElementById('end_date').value;
-        });
-
-        $("#explain_multiple_employment").change(function() {
-            document.getElementById('explain_multiple_employment_modal').value = document.getElementById(
-                'explain_multiple_employment').value;
-        });
-
-        $("#need_h2b_workers").change(function() {
-            if (document.getElementById('need_h2b_workers').checked == true) {
-                document.getElementById('need_h2b_workers_modal').value = 1;
-            } else {
-                document.getElementById('need_h2b_workers_modal').value = 0;
-            }
-        });
-
-        $("#need_h2b_workers2").change(function() {
-            if (document.getElementById('need_h2b_workers2').checked == true) {
-                document.getElementById('need_h2b_workers_modal').value = 0;
-            } else {
-                document.getElementById('need_h2b_workers_modal').value = 1;
-            }
-        });
-
-
-        $("#is_there_benefits").change(function() {
-            show_div_explain_benefits()
-        })
-
-        $("#is_there_benefits2").change(function() {
-            hide_div_explain_benefits()
-        })
-
-        function show_div_explain_benefits() {
-            $('#div_explain_benefits').show();
-        }
-
-        function hide_div_explain_benefits() {
-            $('#div_explain_benefits').hide();
-        }
-
-        $("#are_there_any_requeriments").change(function() {
-            show_div_requeriments()
-        })
-
-        $("#are_there_any_requeriments2").change(function() {
-            hide_div_requeriments()
-        })
-
-        function show_div_requeriments() {
-            $('#div_requeriments').show();
-        }
-
-        function hide_div_requeriments() {
-            $('#div_requeriments').hide();
-        }
-
 
 
         function total_horas() {
@@ -602,106 +626,192 @@
         $("#ant_workday_sat_hour").change(function() {
             total_horas();
         })
+
+
+        $("#is_there_benefits").change(function() {
+            show_div_explain_benefits()
+        })
+
+        $("#is_there_benefits2").change(function() {
+            hide_div_explain_benefits()
+        })
+
+        function show_div_explain_benefits() {
+            $('#div_explain_benefits').show();
+        }
+
+        function hide_div_explain_benefits() {
+            $('#div_explain_benefits').hide();
+        }
+
+
+        $("#are_there_any_requeriments").change(function() {
+            show_div_requeriments()
+        })
+
+        $("#are_there_any_requeriments2").change(function() {
+            hide_div_requeriments()
+        })
+
+        function show_div_requeriments() {
+            $('#div_requeriments').show();
+        }
+
+        function hide_div_requeriments() {
+            $('#div_requeriments').hide();
+        }
     </script>
 
-
     <script>
-        //======================================================================
-        // VARIABLES
-        //======================================================================
-        let miCanvas = document.querySelector('#pizarra');
-        let lineas = [];
-        let correccionX = 0;
-        let correccionY = 0;
-        let pintarLinea = false;
-        // Marca el nuevo punto
-        let nuevaPosicionX = 0;
-        let nuevaPosicionY = 0;
+        (function() { // Comenzamos una funcion auto-ejecutable
 
-        let posicion = miCanvas.getBoundingClientRect()
-        correccionX = posicion.x;
-        correccionY = posicion.y;
+            // Obtenenemos un intervalo regular(Tiempo) en la pamtalla
+            window.requestAnimFrame = (function(callback) {
+                return window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame ||
+                    window.oRequestAnimationFrame ||
+                    window.msRequestAnimaitonFrame ||
+                    function(callback) {
+                        window.setTimeout(callback, 1000 / 60);
+                        // Retrasa la ejecucion de la funcion para mejorar la experiencia
+                    };
+            })();
 
-        miCanvas.width = 556.51;
-        miCanvas.height = 285.93;
+            // Traemos el canvas mediante el id del elemento html
+            var canvas = document.getElementById("draw-canvas");
+            var ctx = canvas.getContext("2d");
 
-        //======================================================================
-        // FUNCIONES
-        //======================================================================
 
-        /**
-         * Funcion que empieza a dibujar la linea
-         */
-        function empezarDibujo() {
-            pintarLinea = true;
-            lineas.push([]);
-        };
+            // Mandamos llamar a los Elemetos interactivos de la Interfaz HTML
+            var drawText = document.getElementById("draw-dataUrl");
+            var drawImage = document.getElementById("draw-image");
+            var clearBtn = document.getElementById("draw-clearBtn");
+            var submitBtn = document.getElementById("draw-submitBtn");
+            clearBtn.addEventListener("click", function(e) {
+                // Definimos que pasa cuando el boton draw-clearBtn es pulsado
+                clearCanvas();
+                //drawImage.setAttribute("src", "");
+            }, false);
+            // Definimos que pasa cuando el boton draw-submitBtn es pulsado
+            submitBtn.addEventListener("click", function(e) {
+                var dataUrl = canvas.toDataURL();
+                drawText.innerHTML = dataUrl;
+                drawImage.setAttribute("src", dataUrl);
+            }, false);
 
-        /**
-         * Funcion que guarda la posicion de la nueva línea
-         */
-        function guardarLinea() {
-            lineas[lineas.length - 1].push({
-                x: nuevaPosicionX,
-                y: nuevaPosicionY
-            });
-        }
+            // Activamos MouseEvent para nuestra pagina
+            var drawing = false;
+            var mousePos = {
+                x: 0,
+                y: 0
+            };
+            var lastPos = mousePos;
+            canvas.addEventListener("mousedown", function(e) {
+                /*
+                  Mas alla de solo llamar a una funcion, usamos function (e){...}
+                  para mas versatilidad cuando ocurre un evento
+                */
+                var tint = document.getElementById("color");
+                var punta = document.getElementById("puntero");
+                console.log(e);
+                drawing = true;
+                lastPos = getMousePos(canvas, e);
+            }, false);
+            canvas.addEventListener("mouseup", function(e) {
+                drawing = false;
+            }, false);
+            canvas.addEventListener("mousemove", function(e) {
+                mousePos = getMousePos(canvas, e);
+            }, false);
 
-        /**
-         * Funcion dibuja la linea
-         */
-        function dibujarLinea(event) {
-            event.preventDefault();
-            if (pintarLinea) {
-                let ctx = miCanvas.getContext('2d')
-                // Estilos de linea
-                ctx.lineJoin = ctx.lineCap = 'round';
-                ctx.lineWidth = 5;
-                // Color de la linea
-                ctx.strokeStyle = '#0D0909';
-                // Marca el nuevo punto
-                if (event.changedTouches == undefined) {
-                    // Versión ratón
-                    nuevaPosicionX = event.layerX;
-                    nuevaPosicionY = event.layerY;
-                } else {
-                    // Versión touch, pantalla tactil
-                    nuevaPosicionX = event.changedTouches[0].pageX - correccionX;
-                    nuevaPosicionY = event.changedTouches[0].pageY - correccionY;
-                }
-                // Guarda la linea
-                guardarLinea();
-                // Redibuja todas las lineas guardadas
-                ctx.beginPath();
-                lineas.forEach(function(segmento) {
-                    ctx.moveTo(segmento[0].x, segmento[0].y);
-                    segmento.forEach(function(punto, index) {
-                        ctx.lineTo(punto.x, punto.y);
-                    });
+            // Activamos touchEvent para nuestra pagina
+            canvas.addEventListener("touchstart", function(e) {
+                mousePos = getTouchPos(canvas, e);
+                console.log(mousePos);
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent("mousedown", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
                 });
-                ctx.stroke();
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+            canvas.addEventListener("touchend", function(e) {
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var mouseEvent = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+            canvas.addEventListener("touchleave", function(e) {
+                // Realiza el mismo proceso que touchend en caso de que el dedo se deslice fuera del canvas
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var mouseEvent = new MouseEvent("mouseup", {});
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+            canvas.addEventListener("touchmove", function(e) {
+                e.preventDefault(); // Prevent scrolling when touching the canvas
+                var touch = e.touches[0];
+                var mouseEvent = new MouseEvent("mousemove", {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }, false);
+
+            // Get the position of the mouse relative to the canvas
+            function getMousePos(canvasDom, mouseEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                /*
+                  Devuelve el tamaño de un elemento y su posición relativa respecto
+                  a la ventana de visualización (viewport).
+                */
+                return {
+                    x: mouseEvent.clientX - rect.left,
+                    y: mouseEvent.clientY - rect.top
+                };
             }
-        }
 
-        /**
-         * Funcion que deja de dibujar la linea
-         */
-        function pararDibujar() {
-            pintarLinea = false;
-            guardarLinea();
-        }
+            // Get the position of a touch relative to the canvas
+            function getTouchPos(canvasDom, touchEvent) {
+                var rect = canvasDom.getBoundingClientRect();
+                console.log(touchEvent);
+                /*
+                  Devuelve el tamaño de un elemento y su posición relativa respecto
+                  a la ventana de visualización (viewport).
+                */
+                return {
+                    x: touchEvent.touches[0].clientX - rect.left, // Popiedad de todo evento Touch
+                    y: touchEvent.touches[0].clientY - rect.top
+                };
+            }
 
-        //======================================================================
-        // EVENTOS
-        //======================================================================
+            // Draw to the canvas
+            function renderCanvas() {
+                if (drawing) {
+                    var tint = document.getElementById("color");
+                    var punta = document.getElementById("puntero");
+                    ctx.strokeStyle = tint.value;
+                    ctx.beginPath();
+                    ctx.moveTo(lastPos.x, lastPos.y);
+                    ctx.lineTo(mousePos.x, mousePos.y);
+                    console.log(punta.value);
+                    ctx.lineWidth = punta.value;
+                    ctx.stroke();
+                    ctx.closePath();
+                    lastPos = mousePos;
+                }
+            }
 
-        // Eventos raton
-        miCanvas.addEventListener('mousedown', empezarDibujo, false);
-        miCanvas.addEventListener('mousemove', dibujarLinea, false);
-        miCanvas.addEventListener('mouseup', pararDibujar, false);
+            function clearCanvas() {
+                canvas.width = canvas.width;
+            }
 
-        // Eventos pantallas táctiles
-        miCanvas.addEventListener('touchstart', empezarDibujo, false);
-        miCanvas.addEventListener('touchmove', dibujarLinea, false);
+            // Allow for animation
+            (function drawLoop() {
+                requestAnimFrame(drawLoop);
+                renderCanvas();
+            })();
+
+        })();
     </script>
 @endsection

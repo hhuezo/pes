@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RequestDetail extends Model
+class JobRequestDetail extends Model
 {
     use HasFactory;
     protected $table = 'request_detail';
@@ -17,7 +17,7 @@ class RequestDetail extends Model
 
     protected $fillable = [
         'job_app_id',
-        'job_title',
+        'job_title_id',
         'number_workers',
         'it_has_cba',
         'how_paid',
@@ -47,6 +47,6 @@ class RequestDetail extends Model
 
     public function title()
     {
-        return $this->belongsTo('App\Models\catalogue\JobTitle', 'job_title', 'id');
+        return $this->belongsTo('App\Models\catalogue\JobTitle', 'job_title_id', 'id');
     }
 }

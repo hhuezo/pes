@@ -1,95 +1,6 @@
 @extends ('dashboard')
 @section('contenido')
-    <style>
-        .nav-tabs-custom>.tab-content {
-            padding: 0px;
-        }
-
-        .modal-lg,
-        .modal-xl {
-            max-width: 70%;
-        }
-
-
-
-
-        #draw-canvas {
-            border: 2px dotted #050505;
-            border-radius: 10px;
-            cursor: crosshair;
-        }
-
-        #draw-dataUrl {
-            width: 100%;
-        }
-
-        h3 {
-            margin: 10px 15px;
-        }
-
-        header {
-            background: #273B47;
-            height: 100%;
-            width: 100%;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        section {
-            flex: 1;
-        }
-
-        h1 {
-            margin: 10px 15px;
-        }
-
-        header {
-            color: white;
-            font-weight: 500;
-            padding-left: 15px;
-        }
-
-
-        .button {
-            background: #3071a9;
-            box-shadow: inset 0 -3px 0 rgba(0, 0, 0, .3);
-            font-size: 14px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin: 0 15px;
-            text-decoration: none;
-            color: white;
-        }
-
-        .button:active {
-            transform: scale(0.9);
-        }
-
-        .contenedor {
-            width: 100% margin: 5px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .instrucciones {
-            width: 90%;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        label {
-            margin: 0 15px;
-        }
-    </style>
-
-    @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
-    @php($id_detail = 0)
+    <link rel="stylesheet" href="{{ asset('job_application/style.css') }}">
     <div class="row">
         <div class="col-md-12 ">
             <div class="card">
@@ -97,7 +8,7 @@
                     <h4 class="card-title">{!! trans('job_application.Title') !!}</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('job_application.update', $job->id) }}">
+                    <form method="POST" action="{{ route('job_request.update', $job_request->id) }}">
                         @method('PUT')
                         @csrf
                         <div class="row">
@@ -106,16 +17,17 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.start_date') !!}</label>
                                     <input type="date" name="start_date"
-                                        value="{{ date('Y-m-d', strtotime($job->start_date)) }}" class="form-control">
+                                        value="{{ date('Y-m-d', strtotime($job_request->start_date)) }}"
+                                        class="form-control">
                                 </div>
 
                             </div>
-                            <div class="col-md-6">
 
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
                                     <input type="date" name="end_date"
-                                        value="{{ date('Y-m-d', strtotime($job->end_date)) }}" class="form-control">
+                                        value="{{ date('Y-m-d', strtotime($job_request->end_date)) }}" class="form-control">
                                 </div>
 
                             </div>
@@ -128,7 +40,7 @@
                                     <label for="exampleInputEmail1">{!! trans('job_application.need_workers') !!}</label>
                                     <br>
                                     {!! trans('employer.Yes') !!}
-                                    @if ($job->need_h2b_workers == 1)
+                                    @if ($job_request->need_h2b_workers == 1)
                                         <input type="radio" value="1" checked name="need_h2b_workers">
                                     @else
                                         <input type="radio" value="1" name="need_h2b_workers">
@@ -136,7 +48,7 @@
 
                                     &nbsp;&nbsp;
                                     {!! trans('employer.No') !!}
-                                    @if ($job->need_h2b_workers == 0)
+                                    @if ($job_request->need_h2b_workers == 0)
                                         <input type="radio" value="0" checked name="need_h2b_workers">
                                     @else
                                         <input type="radio" value="0" name="need_h2b_workers">
@@ -151,10 +63,9 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.multiple_employment_period') !!}</label>
                                     <input type="text" name="explain_multiple_employment"
-                                        value="{{ $job->explain_multiple_employment }}" class="form-control">
+                                        value="{{ $job_request->explain_multiple_employment }}" class="form-control">
                                 </div>
                             </div>
-
 
                             <div class="col-sm-12" style="text-align: center;">
 
@@ -179,82 +90,104 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($job_details as $obj)
+                                            @foreach ($details as $obj)
                                                 <tr>
                                                     <td>{{ $obj->title->name }}</td>
                                                     <td>{{ $obj->number_workers }}</td>
                                                     <td>{{ $obj->ant_workday_total_hours }}</td>
                                                     <td align="center">
                                                         &nbsp;&nbsp;
-                                                        <a href="" data-target="#modal-delete-{{ $obj->id }}"
-                                                            data-toggle="modal"><i class="fa fa-trash fa-lg"></i></a>
+                                                        <i class="fa fa-trash fa-lg"
+                                                            onclick="modal_delete({{ $obj->id }})"></i>
                                                     </td>
                                                 </tr>
-                                                @include('job_application.modal_detail')
                                             @endforeach
 
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
-                        </div>
-
-
-
-                        <div class="col-sm-12">&nbsp;</div>
-
-                        <div class="col-sm-12">
-                            <h4>{!! trans('job_application.EmployeeRights') !!}</h4>
-                        </div>
-                        <div class="col-sm-12">{!! trans('job_application.message4') !!}</div>
-                        <div class="col-sm-12">
-                            <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
-                        </div>
-                        <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
-                        <div class="col-sm-12">
-                            <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
-                        </div>
-                        <div class="col-sm-12">&nbsp;</div>
-                        <div class="col-sm-12">{!! trans('job_application.PleasSign') !!}</div>
-                        <div class="col-sm-12">
-                            <canvas id="draw-canvas" width="300" height="200">
-                            </canvas>
-                            <div id="div_name_sing" width="300" height="200">
-
+                            <div class="col-sm-12">&nbsp;</div>
+                            <div class="col-sm-12">
+                                <h4>{!! trans('job_application.EmployeeRights') !!}</h4>
                             </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input type="button" class="button" id="draw-clearBtn" value="Clear"></input>
-                                <input type="button" class="button" id="draw-submitBtn" value="Crear Imagen"></input>
-                                <input type="color" id="color">
-                                <input type="range" id="puntero" min="1" default="1" max="5"
-                                    width="10%">
+                            <div class="col-sm-12">{!! trans('job_application.message4') !!}</div>
+                            <div class="col-sm-12">
+                                <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
                             </div>
-                        </div>
+                            <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
+                            <div class="col-sm-12">
+                                <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                            </div>
+                            <div class="col-sm-12">&nbsp;</div>
+                            <div class="col-sm-12">{!! trans('job_application.PleasSign') !!}</div>
+                            <div class="col-sm-12">
+                                <canvas id="draw-canvas" width="300" height="200">
+                                </canvas>
+                                <textarea id="draw-dataUrl" name="sign" class="form-control" rows="5"></textarea>
+                            </div>
 
-                        <div class="col-md-12">&nbsp;</div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
-                                <div class="col-md-6">
-                                    <input type="text" id="printed_name" class="form-control">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="button" class="button" id="draw-clearBtn" value="Clear"></input>
+                                    <input type="button" class="button" id="draw-submitBtn" value="Crear Imagen"></input>
+                                    <input type="color" id="color">
+                                    <input type="range" id="puntero" min="1" default="1" max="5"
+                                        width="10%">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                            <div class="col-md-12">&nbsp;</div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">{!! trans('job_application.printed_name') !!}</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="printed_name" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary float-right">Submit</button>
+                            </div>
                         </div>
+                    </form>
                 </div>
-
             </div>
-
-            </form>
         </div>
     </div>
+
+
+
+
+    <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{!! trans('job_application.Position') !!}</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                    </button>
+                </div>
+                <form method="POST" action="{{ url('job_request_detail/delete') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="hidden" id="id_detail" name="id">
+                                <h5>Do you want to delete the record?</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -266,7 +199,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('job_application_detail') }}" method="POST" class="forms-sample">
+                <form action="{{ url('job_request_detail') }}" method="POST" class="forms-sample">
                     @csrf
                     <div class="modal-body">
                         <div class="row">
@@ -274,7 +207,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="hidden" name="job_app_id" value="{{ $job->id }}">
+                                            <input type="hidden" name="job_request_id" value="{{ $job_request->id }}">
                                             <label for="exampleInputEmail1">{!! trans('job_application.job_title') !!}</label>
                                             <select class="form-control select2" name="job_title">
                                                 @foreach ($job_titles as $obj)
@@ -546,20 +479,40 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
+
     <script type="text/javascript">
         $(document).ready(function() {
-            hide_div_explain_benefits();
-            hide_div_requeriments();
+            //   hide_div_explain_benefits();
+            //hide_div_requeriments();
 
             $('#draw-submitBtn').hide();
             $('#color').hide();
             $('#puntero').hide();
+            $('#draw-dataUrl').hide();
         });
 
-        $("#printed_name").change(function() {
 
-        })
+        function modal_delete(id) {
+            document.getElementById('id_detail').value = id;
+            $('#modal-delete').modal('show');
+        }
+
+        //captura de firma
+        $("#draw-canvas").click(function() {
+            $('#draw-submitBtn').click();
+        });
 
 
         function total_horas() {
@@ -623,192 +576,7 @@
         $("#ant_workday_sat_hour").change(function() {
             total_horas();
         })
-
-
-        $("#is_there_benefits").change(function() {
-            show_div_explain_benefits()
-        })
-
-        $("#is_there_benefits2").change(function() {
-            hide_div_explain_benefits()
-        })
-
-        function show_div_explain_benefits() {
-            $('#div_explain_benefits').show();
-        }
-
-        function hide_div_explain_benefits() {
-            $('#div_explain_benefits').hide();
-        }
-
-
-        $("#are_there_any_requeriments").change(function() {
-            show_div_requeriments()
-        })
-
-        $("#are_there_any_requeriments2").change(function() {
-            hide_div_requeriments()
-        })
-
-        function show_div_requeriments() {
-            $('#div_requeriments').show();
-        }
-
-        function hide_div_requeriments() {
-            $('#div_requeriments').hide();
-        }
     </script>
 
-    <script>
-        (function() { // Comenzamos una funcion auto-ejecutable
-
-            // Obtenenemos un intervalo regular(Tiempo) en la pamtalla
-            window.requestAnimFrame = (function(callback) {
-                return window.requestAnimationFrame ||
-                    window.webkitRequestAnimationFrame ||
-                    window.mozRequestAnimationFrame ||
-                    window.oRequestAnimationFrame ||
-                    window.msRequestAnimaitonFrame ||
-                    function(callback) {
-                        window.setTimeout(callback, 1000 / 60);
-                        // Retrasa la ejecucion de la funcion para mejorar la experiencia
-                    };
-            })();
-
-            // Traemos el canvas mediante el id del elemento html
-            var canvas = document.getElementById("draw-canvas");
-            var ctx = canvas.getContext("2d");
-
-
-            // Mandamos llamar a los Elemetos interactivos de la Interfaz HTML
-            var drawText = document.getElementById("draw-dataUrl");
-            var drawImage = document.getElementById("draw-image");
-            var clearBtn = document.getElementById("draw-clearBtn");
-            var submitBtn = document.getElementById("draw-submitBtn");
-            clearBtn.addEventListener("click", function(e) {
-                // Definimos que pasa cuando el boton draw-clearBtn es pulsado
-                clearCanvas();
-                //drawImage.setAttribute("src", "");
-            }, false);
-            // Definimos que pasa cuando el boton draw-submitBtn es pulsado
-            submitBtn.addEventListener("click", function(e) {
-                var dataUrl = canvas.toDataURL();
-                drawText.innerHTML = dataUrl;
-                drawImage.setAttribute("src", dataUrl);
-            }, false);
-
-            // Activamos MouseEvent para nuestra pagina
-            var drawing = false;
-            var mousePos = {
-                x: 0,
-                y: 0
-            };
-            var lastPos = mousePos;
-            canvas.addEventListener("mousedown", function(e) {
-                /*
-                  Mas alla de solo llamar a una funcion, usamos function (e){...}
-                  para mas versatilidad cuando ocurre un evento
-                */
-                var tint = document.getElementById("color");
-                var punta = document.getElementById("puntero");
-                console.log(e);
-                drawing = true;
-                lastPos = getMousePos(canvas, e);
-            }, false);
-            canvas.addEventListener("mouseup", function(e) {
-                drawing = false;
-            }, false);
-            canvas.addEventListener("mousemove", function(e) {
-                mousePos = getMousePos(canvas, e);
-            }, false);
-
-            // Activamos touchEvent para nuestra pagina
-            canvas.addEventListener("touchstart", function(e) {
-                mousePos = getTouchPos(canvas, e);
-                console.log(mousePos);
-                e.preventDefault(); // Prevent scrolling when touching the canvas
-                var touch = e.touches[0];
-                var mouseEvent = new MouseEvent("mousedown", {
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
-                });
-                canvas.dispatchEvent(mouseEvent);
-            }, false);
-            canvas.addEventListener("touchend", function(e) {
-                e.preventDefault(); // Prevent scrolling when touching the canvas
-                var mouseEvent = new MouseEvent("mouseup", {});
-                canvas.dispatchEvent(mouseEvent);
-            }, false);
-            canvas.addEventListener("touchleave", function(e) {
-                // Realiza el mismo proceso que touchend en caso de que el dedo se deslice fuera del canvas
-                e.preventDefault(); // Prevent scrolling when touching the canvas
-                var mouseEvent = new MouseEvent("mouseup", {});
-                canvas.dispatchEvent(mouseEvent);
-            }, false);
-            canvas.addEventListener("touchmove", function(e) {
-                e.preventDefault(); // Prevent scrolling when touching the canvas
-                var touch = e.touches[0];
-                var mouseEvent = new MouseEvent("mousemove", {
-                    clientX: touch.clientX,
-                    clientY: touch.clientY
-                });
-                canvas.dispatchEvent(mouseEvent);
-            }, false);
-
-            // Get the position of the mouse relative to the canvas
-            function getMousePos(canvasDom, mouseEvent) {
-                var rect = canvasDom.getBoundingClientRect();
-                /*
-                  Devuelve el tamaño de un elemento y su posición relativa respecto
-                  a la ventana de visualización (viewport).
-                */
-                return {
-                    x: mouseEvent.clientX - rect.left,
-                    y: mouseEvent.clientY - rect.top
-                };
-            }
-
-            // Get the position of a touch relative to the canvas
-            function getTouchPos(canvasDom, touchEvent) {
-                var rect = canvasDom.getBoundingClientRect();
-                console.log(touchEvent);
-                /*
-                  Devuelve el tamaño de un elemento y su posición relativa respecto
-                  a la ventana de visualización (viewport).
-                */
-                return {
-                    x: touchEvent.touches[0].clientX - rect.left, // Popiedad de todo evento Touch
-                    y: touchEvent.touches[0].clientY - rect.top
-                };
-            }
-
-            // Draw to the canvas
-            function renderCanvas() {
-                if (drawing) {
-                    var tint = document.getElementById("color");
-                    var punta = document.getElementById("puntero");
-                    ctx.strokeStyle = tint.value;
-                    ctx.beginPath();
-                    ctx.moveTo(lastPos.x, lastPos.y);
-                    ctx.lineTo(mousePos.x, mousePos.y);
-                    console.log(punta.value);
-                    ctx.lineWidth = punta.value;
-                    ctx.stroke();
-                    ctx.closePath();
-                    lastPos = mousePos;
-                }
-            }
-
-            function clearCanvas() {
-                canvas.width = canvas.width;
-            }
-
-            // Allow for animation
-            (function drawLoop() {
-                requestAnimFrame(drawLoop);
-                renderCanvas();
-            })();
-
-        })();
-    </script>
+    <script src="{{ asset('job_application/sign.js') }}"></script>
 @endsection

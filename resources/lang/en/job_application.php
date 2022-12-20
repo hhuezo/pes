@@ -26,9 +26,25 @@ return [
     the-rein is true and accurate.',
     'PleasSign' => 'Please sign',
     'printed_name' => 'PRINTED NAME',
+    'ACWIA'=>'1. Is the employer covered by ACWIA, as described in 20 CFR 656.40(e)(1)? * (Not applicable for H-2B)',
+    'ifACWIA'=>'a. If “Yes,” identify which ACWIA provision the employer is covered under (choose all that apply)',
+    'i'=>'(i) Institution of higher education',
+    'ii'=>'(ii) Affiliated or related nonprofit entity connected or associated with an institution of higher education',
+    'iii'=>'(iii) Nonprofit research organization or Governmental research organization',
+    'noACWIA'=>'b.  If the employer has previously been determined not covered under ACWIA, does the employer have any reason to believe that its status has changed?',
+    'SportsLeagueRules' => '2. Is the position covered by a Professional Sports League Rules or Regulations?',
 
 
+    'Attorney_applicable'=> 'Attorney or Agent Information (if applicable)',
+    'type_representation' => 'Indicate the type of representation for the employer in the filing of this application * If D.1 is “Attorney” or “Agent” the remainder of this section is required',
+    'Attorney'=> 'Attorney',
+    'Agent'=> 'Agent',
+    'None'=> 'None',
+    'attorney_last_name'=> 'Attorney or Agent’s Last (family) Name',
+    'attorney_first_name'=> 'First (given) Name',
+    'attorney_middle_name'=> 'Middle Name(s)',
 
+    'address'=> 'Address',
 
 
     'workers_paid' => 'How often are workers PAID?',
