@@ -7,6 +7,8 @@ use App\Models\catalogue\NormalBusinessDays;
 use App\Models\catalogue\primaryBusinessType;
 use App\Models\catalogue\County;
 use App\Models\catalogue\City;
+use App\Models\catalogue\CodeZip;
+
 use App\Models\catalogue\CityZip;
 use App\Models\Employer;
 use App\Models\EmployerWorksite;
@@ -192,6 +194,37 @@ class EmployerController extends Controller
 
     }
 
+    public function get_counties_mailing($id){
+
+        $counties = County::where('state','=',$id)->get();
+
+        return response()->json(
+            $counties,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
+
+
+    }
+
+    public function get_counties_worksite($id){
+
+        $counties = County::where('state','=',$id)->get();
+
+        return response()->json(
+            $counties,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
+
+
+    }
+
+
     public function get_cities($id){
 
         //dd($id);
@@ -200,14 +233,115 @@ class EmployerController extends Controller
         //$county = County::where('id','=',$id)->get();
 
 
+        $cities = City::where('state','=',$county->state)->where('county','=',$county->name)->get();
+
+        return response()->json(
+            $cities,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
+    }
+
+    public function get_cities_mailing($id){
+
+        //dd($id);
+
+        $county = County::findOrFail($id);
+        //$county = County::where('id','=',$id)->get();
 
 
         $cities = City::where('state','=',$county->state)->where('county','=',$county->name)->get();
 
+        return response()->json(
+            $cities,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
 
+    }
+
+
+    public function get_cities_worksite($id){
+
+        //dd($id);
+
+        $county = County::findOrFail($id);
+        //$county = County::where('id','=',$id)->get();
+
+
+        $cities = City::where('state','=',$county->state)->where('county','=',$county->name)->get();
 
         return response()->json(
             $cities,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
+    }
+
+
+    public function get_zipcodes($id){
+
+        //dd($id);
+
+        $cities = City::findOrFail($id);
+        //$county = County::where('id','=',$id)->get();
+
+
+        $codes_zip = CodeZip::where('czc_state_fips','=',$cities->state)->where('czc_county','=',$cities->county)->where('czc_city','=',$cities->name)->get();
+
+        //dd($codes_zip);
+
+        return response()->json(
+            $codes_zip,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
+    }
+
+
+    public function get_zipcodes_mailing($id){
+
+        //dd($id);
+
+        $cities = City::findOrFail($id);
+        //$county = County::where('id','=',$id)->get();
+
+
+        $codes_zip = CodeZip::where('czc_state_fips','=',$cities->state)->where('czc_county','=',$cities->county)->where('czc_city','=',$cities->name)->get();
+
+        //dd($codes_zip);
+
+        return response()->json(
+            $codes_zip,
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
+    }
+
+
+    public function get_zipcodes_worksite($id){
+
+        //dd($id);
+
+        $cities = City::findOrFail($id);
+        //$county = County::where('id','=',$id)->get();
+
+
+        $codes_zip = CodeZip::where('czc_state_fips','=',$cities->state)->where('czc_county','=',$cities->county)->where('czc_city','=',$cities->name)->get();
+
+        //dd($codes_zip);
+
+        return response()->json(
+            $codes_zip,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -244,6 +378,8 @@ class EmployerController extends Controller
           ], $messages);
 
 
+          //dd($request->get('has_participate_h2b'));
+          //dd($request->get('naics_id'));
 
 
 
@@ -260,17 +396,23 @@ class EmployerController extends Controller
         $employer->has_participate_h2b = $request->get('has_participate_h2b');
         if ($request->get('has_participate_h2b') == 1) {
             $employer->quantity_year_has_participate_h2b = $request->get('quantity_year_has_participate_h2b');
+        }else{
+            $employer->quantity_year_has_participate_h2b = null;
         }
 
         $employer->primary_business_type_id = $request->get('primary_business_type_id');
-        $employer->naics_id = $request->get('naics_id');
 
-        if ($request->get('naics_code') == 6) {
+
+        if ($request->get('naics_code') != 6)
+        {
+            $employer->naics_id = $request->get('naics_id');
+        }else  if ($request->get('naics_code') == 6) {
             $employer->naics_code = $request->get('naics_code');
         }
+
         $employer->year_end_gross_company_income = $request->get('year_end_gross_company_income');
         $employer->year_end_net_company_income = $request->get('year_end_net_company_income');
-        $employer->users_id = auth()->user()->id;
+        //$employer->users_id = auth()->user()->id;
 
         $employer->save();
 
@@ -286,7 +428,7 @@ class EmployerController extends Controller
     public function employer_place_of_business(Request $request)
     {
 
-        //dd($request);
+
 
 
         $mailing_address_same_above = $request['mailing_address_same_above'];
@@ -297,6 +439,8 @@ class EmployerController extends Controller
             $mailing_address_same_above = 0;
         }
 
+        //dd($mailing_address_same_above);
+        //dd($request);
 
         //dd($mailing_address_same_above);
 
@@ -308,8 +452,8 @@ class EmployerController extends Controller
 
             $messages = [
                 'principal_street_address.required' => 'principal_street_address is required',
-                'principal_city.required' => 'principal_city is required',
-                'principal_country.required' => 'principal_country is required',
+                'principal_city_id.required' => 'principal_city_id is required',
+                'principal_county_id.required' => 'principal_county_id is required',
                 'principal_state_id.required' => 'principal_state_id is required',
                 'principal_zip_code.required' => 'principal_zip_code is required',
 
@@ -320,29 +464,32 @@ class EmployerController extends Controller
 
             ];
 
-
+            //dd("uno");
 
 
             $request->validate([
                 'principal_street_address' => 'required|min:6',
-                'principal_city' => 'required|min:4',
-                'principal_country' => 'required|min:6',
+                'principal_city_id' => 'required|min:0',
+                'principal_county_id' => 'required|min:0',
                 'principal_state_id' => 'required|min:0',
                 'principal_zip_code' => 'required|min:5',
 
-                 'mailing_address' => 'required|min:6',
-                'mailing_city' => 'required|min:4',
+                'mailing_street_address' => 'required|min:6',
+                'mailing_city_id' => 'required|min:0',
+                'mailing_county_id' => 'required|min:0',
                 'mailing_state_id' => 'required|min:0',
                 'mailing_zip_code' => 'required|min:5',
               ], $messages);
+
+              //dd("dos");
 
               //dd($messages);
 
         }else{
             $messages = [
                 'principal_street_address.required' => 'principal_street_address is required',
-                'principal_city.required' => 'principal_city is required',
-                'principal_country.required' => 'principal_country is required',
+                'principal_city_id.required' => 'principal_city is required',
+                'principal_county_id.required' => 'principal_county_id is required',
                 'principal_state_id.required' => 'principal_state_id is required',
                 'principal_zip_code.required' => 'principal_zip_code is required',
 
@@ -352,14 +499,15 @@ class EmployerController extends Controller
 
             $request->validate([
                 'principal_street_address' => 'required|min:6',
-                'principal_city' => 'required|min:4',
-                'principal_country' => 'required|min:6',
+                'principal_city_id' => 'required|min:0',
+                'principal_county_id' => 'required|min:0',
                 'principal_state_id' => 'required|min:0',
                 'principal_zip_code' => 'required|min:5',
 
               ], $messages);
 
         }
+
 
 
 
@@ -375,22 +523,22 @@ class EmployerController extends Controller
         $employer = Employer::findOrFail($request->get('id'));
 
         $employer->principal_street_address = $request->get('principal_street_address');
-        $employer->principal_city = $request->get('principal_city');
-        $employer->principal_country = $request->get('principal_country');
+        $employer->principal_city_id = $request->get('principal_city_id');
+        $employer->principal_county_id = $request->get('principal_county_id');
         $employer->principal_state_id = $request->get('principal_state_id');
         $employer->principal_zip_code = $request->get('principal_zip_code');
 
 
         if ($mailing_address_same_above == 0) {
             $employer->mailing_address_same_above = 0;
-            $employer->mailing_address = $request->get('mailing_address');
-            $employer->mailing_city = $request->get('mailing_city');
+            $employer->mailing_street_address = $request->get('mailing_street_address');
+            $employer->mailing_city_id = $request->get('mailing_city_id');
             $employer->mailing_state_id = $request->get('mailing_state_id');
             $employer->mailing_zip_code = $request->get('mailing_zip_code');
         } else {
             $employer->mailing_address_same_above = 1;
-            $employer->mailing_address = null;
-            $employer->mailing_city = null;
+            $employer->mailing_street_address = null;
+            $employer->mailing_city_id = null;
             $employer->mailing_state_id = null;
             $employer->mailing_zip_code = null;
         }
