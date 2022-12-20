@@ -58,9 +58,12 @@
                                         <div class="col-xl-12 col-xxl-12">&nbsp;</div>
                                         <div class="col-xl-6 col-xxl-6">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}</label>
+                                                <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}<b
+                                                        style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <input type="text" name="legal_business_name"
-                                                    value="{{ old('primary_contact_name', $employer->legal_business_name) }}"
+                                                    value="{{ old('legal_business_name', $employer->legal_business_name) }}"
                                                     class="form-control">
                                                 @error('legal_business_name')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -69,21 +72,29 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.TradeName') !!}</label>
                                                 <input type="text" name="trade_name"
-                                                    value="{{ old('primary_contact_name', $employer->trade_name) }}"
+                                                    value="{{ old('trade_name', $employer->trade_name) }}"
                                                     class="form-control">
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.IdentificationNumber') !!}</label>
+                                                <label>{!! trans('employer.IdentificationNumber') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <input type="text" name="federal_id_number"
-                                                    value="{{ old('primary_contact_name', $employer->federal_id_number) }}"
+                                                    data-inputmask="'mask': ['99-9999999']" data-mask
+                                                    value="{{ old('federal_id_number', $employer->federal_id_number) }}"
                                                     class="form-control">
+                                                @error('federal_id_number')
+                                                    <div class="alert-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.YearBusinessEstablished') !!}</label>
+                                                <label>{!! trans('employer.YearBusinessEstablished') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <input type="text" name="year_business_established"
-                                                    value="{{ old('primary_contact_name', $employer->year_business_established) }}"
+                                                    value="{{ old('year_business_established', $employer->year_business_established) }}"
                                                     min="1900" max="<?php echo date('Y'); ?>" class="form-control"
                                                     data-inputmask="'mask': ['9999']" data-mask class="form-control"
                                                     maxlength="4">
@@ -93,9 +104,11 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.NumberEmployees') !!}</label>
+                                                <label>{!! trans('employer.NumberEmployees') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <input type="text" name="number_employees_full_time"
-                                                    value="{{ old('primary_contact_name', $employer->number_employees_full_time) }}"
+                                                    value="{{ old('number_employees_full_time', $employer->number_employees_full_time) }}"
                                                     class="form-control">
                                                 @error('number_employees_full_time')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -103,9 +116,12 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryBusinessPhone') !!}</label>
+                                                <label>{!! trans('employer.PrimaryBusinessPhone') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <input type="text" name="primary_business_phone"
-                                                    value="{{ old('primary_contact_name', $employer->primary_business_phone) }}"
+                                                    data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                    value="{{ old('primary_business_phone', $employer->primary_business_phone) }}"
                                                     class="form-control">
                                                 @error('primary_business_phone')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -115,7 +131,8 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.PrimaryBusinessFax') !!}</label>
                                                 <input type="text" name="primary_business_fax"
-                                                    value="{{ old('primary_contact_name', $employer->primary_business_fax) }}"
+                                                    data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                    value="{{ old('primary_business_fax', $employer->primary_business_fax) }}"
                                                     class="form-control">
                                             </div>
                                         </div>
@@ -126,7 +143,7 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.CompanyWebsite') !!}</label>
                                                 <input type="text" name="company_website"
-                                                    value="{{ old('primary_contact_name', $employer->company_website) }}"
+                                                    value="{{ old('company_website', $employer->company_website) }}"
                                                     class="form-control">
                                                 @error('company_website')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -137,7 +154,8 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.ParticipatedH-2B') !!}</label>
                                                 <select class="form-control" name="has_participate_h2b"
-                                                    value="{{ old('has_participate_h2b') }}" id="ParticipatedH-2B">
+                                                    value="{{ old('has_participate_h2b', $employer->has_participate_h2b) }}"
+                                                    id="ParticipatedH-2B">
                                                     @if ($employer->has_participate_h2b == 0)
                                                         <option value="0" selected>
                                                             {!! trans('employer.No') !!}
@@ -164,7 +182,7 @@
                                                 <label>{!! trans('employer.YearsCompanyParticipated') !!}</label>
                                                 <input type="number" name="quantity_year_has_participate_h2b"
                                                     id="quantity_year_has_participate_h2b"
-                                                    value="{{ $employer->quantity_year_has_participate_h2b }}"
+                                                    value="{{ old('quantity_year_has_participate_h2b', $employer->quantity_year_has_participate_h2b) }}"
                                                     min="1" maxlength="4" class="form-control">
                                                 @error('quantity_year_has_participate_h2b')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -172,9 +190,11 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryBusiness') !!}</label>
+                                                <label>{!! trans('employer.PrimaryBusiness') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <select class="form-control select2" name="primary_business_type_id"
-                                                    value="{{ $employer->primary_business_type_id }}"
+                                                    value="{{ old('primary_business_type_id', $employer->primary_business_type_id) }}"
                                                     id="PrimaryBusinessType">
                                                     <option value="">Select</option>
                                                     @foreach ($primary_business_types as $obj)
@@ -192,7 +212,9 @@
                                             </div>
 
                                             <div class="form-group" id="DivNaicsCodCompany">
-                                                <label>{!! trans('employer.NaicsCodCompany') !!}</label>
+                                                <label>{!! trans('employer.NaicsCodCompany') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <select class="form-control select2" name="naics_id"
                                                     value="{{ old('naics_id', $employer->naics_id) }}" id="NaicsCod">
 
@@ -202,7 +224,7 @@
                                             <div class="form-group" id="DivNaicsNameCompany">
                                                 <label>{!! trans('employer.NaicsCodCompany') !!}</label>
                                                 <input type="text" name="naics_code"
-                                                    value="{{ old('primary_contact_name', $employer->naics_code) }}"
+                                                    value="{{ old('naics_code', $employer->naics_code) }}"
                                                     class="form-control">
                                                 @error('naics_code')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -210,9 +232,11 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.GrossCompanyIncome') !!}</label>
+                                                <label>{!! trans('employer.GrossCompanyIncome') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <input type="number" step="0.01" name="year_end_gross_company_income"
-                                                    value="{{ old('primary_contact_name', $employer->year_end_gross_company_income) }}"
+                                                    value="{{ old('year_end_gross_company_income', $employer->year_end_gross_company_income) }}"
                                                     class="form-control" class="form-control">
                                                 @error('year_end_gross_company_income')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -222,7 +246,7 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.NetCompanyIncome') !!}</label>
                                                 <input type="number" step="0.01" name="year_end_net_company_income"
-                                                    value="{{ old('primary_contact_name', $employer->year_end_net_company_income) }}"
+                                                    value="{{ old('year_end_net_company_income', $employer->year_end_net_company_income) }}"
                                                     class="form-control" class="form-control">
                                                 @error('year_end_net_company_income')
                                                     <div class="alert-danger">{{ $message }}</div>
@@ -255,12 +279,15 @@
 
 
 
+                                            <br>
+                                            <br>
 
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.PrincipalState') !!}</label>
                                                 <select class="form-control select2" name="principal_state_id"
                                                     id="PrincipalState">
+                                                    <option value="">Select</option>
                                                     @foreach ($states as $obj)
                                                         @if ($obj->id == $employer->principal_state_id)
                                                             <option value="{{ $obj->id }}" selected>
@@ -283,11 +310,10 @@
                                                 <label>{!! trans('employer.PrincipalCountry') !!}</label>
                                                 <select class="form-control select2" name="principal_county_id"
                                                     id="principal_county_id"
-                                                    value="{{ old('principal_county_id', $employer->principal_county_id) }}"
-                                                    id="PrincipalCountiesId">
+                                                    value="{{ old('principal_county_id', $employer->principal_county_id) }}">
 
                                                 </select>
-                                                @error('principal_country')
+                                                @error('principal_county_id')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -299,29 +325,30 @@
                                                 <label>{!! trans('employer.PrincipalCity') !!}</label>
                                                 <select class="form-control select2" name="principal_city_id"
                                                     id="principal_city_id"
-                                                    value="{{ old('principal_city_id', $employer->principal_city_id) }}"
-                                                    id="PrincipalCitiesId">
+                                                    value="{{ old('principal_city_id', $employer->principal_city_id) }}">
 
                                                 </select>
-                                                @error('principal_city')
+                                                @error('principal_city_id')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
 
-
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalZipCode') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
-                                                <input type="text" name="principal_zip_code"
-                                                    value="{{ old('principal_zip_code', $employer->principal_zip_code) }}"
-                                                    minlength="5" maxlength="5" data-inputmask="'mask': ['99999']"
-                                                    data-mask class="form-control">
+                                                <label>{!! trans('employer.PrincipalZipCode') !!}</label>
+                                                <select class="form-control select2" name="principal_zip_code"
+                                                    id="principal_zip_code"
+                                                    value="{{ old('principal_zip_code', $employer->principal_zip_code) }}">
+
+                                                </select>
                                                 @error('principal_zip_code')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
+
+
+
+
 
                                             <div class="form-group">
                                                 <input type="hidden" name="id" value="{{ $employer->id }}">
@@ -342,10 +369,7 @@
 
 
                                         <div class="col-xl-6 col-xxl-6">
-
                                             <div class="form-group">
-                                                <br>
-                                                <br>
                                                 @if (old('mailing_address_same_above', $employer->mailing_address_same_above) === 1)
                                                     <input type="checkbox" name="mailing_address_same_above"
                                                         id="SameAsAbove" checked="">
@@ -359,40 +383,18 @@
 
                                             <div id="DivMailin">
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingAddress') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    <input type="text" name="mailing_address"
-                                                        value="{{ old('mailing_address', $employer->mailing_address) }}"
-                                                        class="form-control">
-                                                    @error('mailing_address')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCity') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    <input type="text" name="mailing_city"
-                                                        value="{{ old('mailing_city', $employer->mailing_city) }}"
-                                                        class="form-control">
-                                                    @error('mailing_city')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
                                                     <label>{!! trans('employer.MailingState') !!}</label>
-                                                    <select class="form-control select2" name="mailing_state_id">
+                                                    <select class="form-control select2" name="mailing_state_id"
+                                                        id="MailingState">
+                                                        <option value="">Select</option>
                                                         @foreach ($states as $obj)
                                                             @if ($obj->id == $employer->mailing_state_id)
                                                                 <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}</option>
-                                                            @else
-                                                                <option value="{{ $obj->id }}">
                                                                     {{ $obj->name }}
                                                                 </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -401,20 +403,57 @@
                                                     @enderror
                                                 </div>
 
+
+
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingZipCode') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    <input type="text" name="mailing_zip_code"
-                                                        value="{{ old('mailing_zip_code', $employer->mailing_zip_code) }}"
-                                                        minlength="5" maxlength="5" class="form-control"
-                                                        data-inputmask="'mask': ['99999']" data-mask>
+                                                    <label>{!! trans('employer.MailingCounty') !!}</label>
+                                                    <select class="form-control select2" name="mailing_county_id"
+                                                        id="mailing_county_id"
+                                                        value="{{ old('mailing_county_id', $employer->mailing_county_id) }}">
+
+                                                    </select>
+                                                    @error('mailing_county_id')
+                                                        <div class="alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('employer.MailingCity') !!}</label>
+                                                    <select class="form-control select2" name="mailing_city_id"
+                                                        id="mailing_city_id"
+                                                        value="{{ old('mailing_city_id', $employer->mailing_city_id) }}">
+
+                                                    </select>
+                                                    @error('mailing_city_id')
+                                                        <div class="alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('employer.MailingZipCode') !!}</label>
+                                                    <select class="form-control select2" name="mailing_zip_code"
+                                                        id="mailing_zip_code"
+                                                        value="{{ old('mailing_zip_code', $employer->mailing_zip_code) }}">
+
+                                                    </select>
                                                     @error('mailing_zip_code')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
 
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id" value="{{ $employer->id }}">
+                                                    <label>{!! trans('employer.MailingAddress') !!}<b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
+                                                    <input type="text" name="mailing_street_address"
+                                                        value="{{ old('mailing_street_address', $employer->mailing_street_address) }}"
+                                                        class="form-control">
+                                                    @error('mailing_street_address')
+                                                        <div class="alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
 
                                         </div>
 
@@ -655,6 +694,40 @@
                                             <br>
                                             <br>
                                             <div id="DivSamePlaceBusiness1">
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('employer.MainWorksiteState') !!}</label>
+                                                    <select class="form-control select2" name="main_worksite_state_id"
+                                                        id="MainworksiteState">
+                                                        <option value="">Select</option>
+                                                        @foreach ($states as $obj)
+                                                            @if ($obj->id == $employer->main_worksite_state_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    @error('main_worksite_state_id')
+                                                        <div class="alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('employer.MainWorksiteCity') !!}</label>
+                                                    <select class="form-control select2" name="main_worksite_city_id"
+                                                        id="main_worksite_city_id"
+                                                        value="{{ old('main_worksite_city_id', $employer->main_worksite_city_id) }}">
+
+                                                    </select>
+                                                    @error('main_worksite_city_id')
+                                                        <div class="alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.MainWorksiteStreetAddress') !!}<b style="color: #FF9696">(*This field
                                                             is required
@@ -667,39 +740,10 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteCity') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    <input type="text" name="main_worksite_city"
-                                                        value="{{ old('main_worksite_city', $employer->main_worksite_city) }}"
-                                                        class="form-control">
-                                                    @error('main_worksite_city')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteState') !!}</label>
-                                                    <select class="form-control select2" name="main_worksite_state">
-                                                        @foreach ($states as $obj)
-                                                            @if ($obj->id == $employer->main_worksite_state)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}</option>
-                                                            @else
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                    @error('main_worksite_state')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-
                                             </div>
+
+
+
 
 
                                         </div>
@@ -720,33 +764,30 @@
 
 
                                                 <div class="form-group">
-                                                    <br>
-                                                    <br>
-                                                    <br>
+
 
 
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteCounty') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    <input type="text" name="main_worksite_country"
-                                                        value="{{ old('main_worksite_country', $employer->main_worksite_country) }}"
-                                                        class="form-control">
-                                                    @error('main_worksite_country')
+                                                    <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
+                                                    <select class="form-control select2" name="main_worksite_county_id"
+                                                        id="main_worksite_county_id"
+                                                        value="{{ old('main_worksite_county_id', $employer->main_worksite_county_id) }}">
+
+                                                    </select>
+                                                    @error('main_worksite_county_id')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteZipCode') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    <input type="text" name="main_worksite_zip_code"
-                                                        value="{{ old('main_worksite_zip_code', $employer->main_worksite_zip_code) }}"
-                                                        minlength="5" maxlength="5" class="form-control"
-                                                        data-inputmask="'mask': ['99999']" data-mask>
+                                                    <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
+                                                    <select class="form-control select2" name="main_worksite_zip_code"
+                                                        id="main_worksite_zip_code"
+                                                        value="{{ old('main_worksite_zip_code', $employer->main_worksite_zip_code) }}">
+
+                                                    </select>
                                                     @error('main_worksite_zip_code')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
@@ -754,8 +795,8 @@
                                             </div>
 
 
-                                        </div>
 
+                                        </div>
 
 
 
@@ -913,7 +954,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
 
-
+            if (document.getElementById('ParticipatedH-2B').value == 1) {
+                $('#DivYearsCompanyParticipated').show();
+            } else {
+                $('#DivYearsCompanyParticipated').hide();
+                document.getElementById('quantity_year_has_participate_h2b').value = '';
+            }
 
             var action = '<?php echo $action; ?>';
             //alert(action);
@@ -943,6 +989,10 @@
                 $("#PrimaryBusinessType").change();
                 $("#SameAsAbove").change();
                 $("#signed_all_documents").change();
+
+                $("#PrincipalState").change();
+                $("#MailingState").change();
+
 
             });
 
@@ -995,8 +1045,15 @@
             // llenado de counties
             $("#PrincipalState").change(function() {
                 var PrincipalState = $(this).val();
-                var principal_state_id = <?php echo $employer->principal_state_id; ?>;
+                var principal_county_id = <?php echo $employer->principal_county_id; ?>;
+                var principal_city_id = <?php echo $employer->principal_city_id; ?>;
+                var principal_zip_code = <?php echo $employer->principal_zip_code; ?>;
+
+
                 if (PrincipalState > 0) {
+
+                    //alert("{{ url('get_counties') }}" + '/' + PrincipalState);
+
                     $.get("{{ url('get_counties') }}" + '/' + PrincipalState, function(data) {
                         //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
                         console.log(data);
@@ -1004,45 +1061,40 @@
 
                         var _select = '<option value="">Select</option>'
                         for (var i = 0; i < data.length; i++)
-                            if (data[i].id == principal_state_id) {
+                            if (data[i].id == principal_county_id) {
 
-
-                                _select += '<option value="' + data[i].id + '" selected >' + ' ' +
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
                                     data[i].name +
                                     '</option>';
                             }
                         else {
+
                             _select += '<option value="' + data[i].id + '"  >' + data[i].name +
                                 '</option>';
                         }
 
                         $("#principal_county_id").html(_select);
                     });
+
+
+
                 }
-            });
 
 
-            //PrincipalCitiesId
+                // alert('principal_county_id=' + principal_county_id);
+                // alert('principal_city_id=' + principal_city_id);
+                // alert("{{ url('get_cities') }}" + '/' + principal_county_id);
 
-
-
-            // llenado de cities
-            $("#principal_county_id").change(function() {
-                var PrincipalCounty = $(this).val();
-
-                alert(PrincipalCounty);
-                alert("{{ url('get_cities') }}" + '/' + PrincipalCounty);
-
-                var principal_county_id = <?php echo $employer->principal_county_id; ?>;
-                if (PrincipalCounty > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + PrincipalCounty, function(data) {
+                if (principal_county_id > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + principal_county_id, function(data) {
                         //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
                         console.log(data);
 
 
                         var _select = '<option value="">Select</option>'
                         for (var i = 0; i < data.length; i++)
-                            if (data[i].id == principal_county_id) {
+                            if (data[i].id == principal_city_id) {
 
 
                                 _select += '<option value="' + data[i].id + '" selected >' + ' ' +
@@ -1057,6 +1109,400 @@
                         $("#principal_city_id").html(_select);
                     });
                 }
+
+
+                if (principal_city_id > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + principal_city_id, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].czc_zipcode == principal_zip_code) {
+                                _select += '<option value="' + data[i].czc_zipcode +
+                                    '" selected >' + data[i]
+                                    .czc_zipcode +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
+                                .czc_zipcode +
+                                '</option>';
+                        }
+
+
+
+                        $("#principal_zip_code").html(_select);
+                    });
+                }
+
+
+            });
+
+
+            // llenado de counties mailing
+            $("#MailingState").change(function() {
+                var MailingState = $(this).val();
+                var mailing_county_id = <?php echo $employer->mailing_county_id; ?>;
+                var mailing_city_id = <?php echo $employer->mailing_city_id; ?>;
+                var mailing_zip_code = <?php echo $employer->mailing_zip_code; ?>;
+
+                var mailing_state_id = <?php echo $employer->mailing_state_id; ?>;
+                alert('MailingState= ' + MailingState);
+                alert('mailing_county_id= ' + mailing_county_id);
+                alert("{{ url('get_counties_mailing') }}" + '/' + MailingState);
+
+                if (MailingState > 0) {
+                    $.get("{{ url('get_counties_mailing') }}" + '/' + MailingState, function(
+                        data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log('data counties mailing', data);
+
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == mailing_county_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i]
+                                .name +
+                                '</option>';
+                        }
+
+                        $("#mailing_county_id").html(_select);
+                    });
+                }
+
+
+
+                if (mailing_county_id > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + mailing_county_id, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == mailing_city_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i]
+                                .name +
+                                '</option>';
+                        }
+
+                        $("#mailing_city_id").html(_select);
+                    });
+                }
+
+
+                if (mailing_city_id > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + mailing_city_id, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].czc_zipcode == mailing_zip_code) {
+                                _select += '<option value="' + data[i].czc_zipcode +
+                                    '" selected >' + data[i]
+                                    .czc_zipcode +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' +
+                                data[i]
+                                .czc_zipcode +
+                                '</option>';
+                        }
+
+
+
+                        $("#mailing_zip_code").html(_select);
+                    });
+                }
+
+            });
+
+
+
+            // llenado de counties worksite
+            $("#MainworksiteState").change(function() {
+                var MainworksiteState = $(this).val();
+
+
+                var main_worksite_state_id = <?php echo $employer->main_worksite_state_id; ?>;
+                //alert(main_worksite_state_id);
+
+                if (MainworksiteState > 0) {
+                    $.get("{{ url('get_counties_worksite') }}" + '/' + MainworksiteState, function(
+                        data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == main_worksite_state_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                                '</option>';
+                        }
+
+                        $("#main_worksite_county_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de cities
+            $("#principal_county_id").change(function() {
+                var PrincipalCounty = $(this).val();
+
+                // alert("{{ url('get_cities') }}" + '/' + PrincipalCounty);
+
+                var principal_city_id = <?php echo $employer->principal_city_id; ?>;
+
+
+                if (PrincipalCounty > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + PrincipalCounty, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == principal_city_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                                '</option>';
+                        }
+
+                        $("#principal_city_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de cities mailing
+            $("#mailing_county_id").change(function() {
+                var MailingCounty = $(this).val();
+
+                // alert(mailingCounty);
+                // alert("{{ url('get_cities') }}" + '/' + mailingCounty);
+
+                var mailing_county_id = <?php echo $employer->mailing_county_id; ?>;
+                if (MailingCounty > 0) {
+                    $.get("{{ url('get_cities_mailing') }}" + '/' + MailingCounty, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == mailing_county_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                                '</option>';
+                        }
+
+                        $("#mailing_city_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de cities main_worksite
+            $("#main_worksite_county_id").change(function() {
+                var MainWorksiteCounty = $(this).val();
+
+                // alert(main_worksiteCounty);
+                // alert("{{ url('get_cities') }}" + '/' + main_worksiteCounty);
+
+                var main_worksite_county_id = <?php echo $employer->main_worksite_county_id; ?>;
+                if (MainWorksiteCounty > 0) {
+                    $.get("{{ url('get_cities_worksite') }}" + '/' + MainWorksiteCounty, function(
+                        data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].id == main_worksite_county_id) {
+
+
+                                _select += '<option value="' + data[i].id + '" selected >' +
+                                    ' ' +
+                                    data[i].name +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                                '</option>';
+                        }
+
+                        $("#main_worksite_city_id").html(_select);
+                    });
+                }
+            });
+
+
+
+            // llenado de codes zip
+            $("#principal_city_id").change(function() {
+                var PrincipalCity = $(this).val();
+
+                // alert(PrincipalCity);
+
+
+                // alert("{{ url('get_zipcodes') }}" + '/' + PrincipalCity);
+
+                var principal_zip_code = <?php echo $employer->principal_zip_code; ?>;
+                if (PrincipalCity > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + PrincipalCity, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].czc_zipcode == principal_zip_code) {
+                                _select += '<option value="' + data[i].czc_zipcode +
+                                    '" selected >' + data[i]
+                                    .czc_zipcode +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[
+                                    i]
+                                .czc_zipcode +
+                                '</option>';
+                        }
+
+
+
+                        $("#principal_zip_code").html(_select);
+                    });
+                }
+
+            });
+
+
+            // llenado de codes zip mailing
+            $("#mailing_city_id").change(function() {
+                var MailingCity = $(this).val();
+
+                // alert(MailingCity);
+
+
+                // alert("{{ url('get_zipcodes') }}" + '/' + MailingCity);
+
+                var mailing_zip_code = <?php echo $employer->mailing_zip_code; ?>;
+                if (MailingCity > 0) {
+                    $.get("{{ url('get_zipcodes_mailing') }}" + '/' + MailingCity, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].czc_zipcode == mailing_zip_code) {
+                                _select += '<option value="' + data[i].czc_zipcode +
+                                    '" selected >' + data[i]
+                                    .czc_zipcode +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[
+                                    i]
+                                .czc_zipcode +
+                                '</option>';
+                        }
+
+
+
+                        $("#mailing_zip_code").html(_select);
+                    });
+                }
+
+            });
+
+
+            // llenado de codes zip main_worksite
+            $("#main_worksite_city_id").change(function() {
+                var MainWorksiteCity = $(this).val();
+
+                // alert(main_worksiteCity);
+
+
+                // alert("{{ url('get_zipcodes') }}" + '/' + main_worksiteCity);
+
+                var main_worksite_zip_code = <?php echo $employer->main_worksite_zip_code; ?>;
+                if (MainWorksiteCity > 0) {
+                    $.get("{{ url('get_zipcodes_worksite') }}" + '/' + MainWorksiteCity, function(
+                        data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            if (data[i].czc_zipcode == main_worksite_zip_code) {
+                                _select += '<option value="' + data[i].czc_zipcode +
+                                    '" selected >' + data[i]
+                                    .czc_zipcode +
+                                    '</option>';
+                            }
+                        else {
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[
+                                    i]
+                                .czc_zipcode +
+                                '</option>';
+                        }
+
+
+
+                        $("#main_worksite_zip_code").html(_select);
+                    });
+                }
+
             });
 
 
@@ -1088,10 +1534,12 @@
                 if (document.getElementById('IsMainWorksiteLocation').checked == true) {
                     $('#DivSamePlaceBusiness1').hide();
                     $('#DivSamePlaceBusiness2').hide();
+                    $('#DivSamePlaceBusiness3').hide();
 
                 } else {
                     $('#DivSamePlaceBusiness1').show();
                     $('#DivSamePlaceBusiness2').show();
+                    $('#DivSamePlaceBusiness3').show();
                 }
 
             });

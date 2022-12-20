@@ -26,6 +26,7 @@ return [
     'SameAsAbove'  => 'Lo mismo que arriba',
     'MailingCity' => 'Ciudad de envío',
     'MailingState' => 'Estado de envío',
+    'MailingCounty' => 'Mailing County',
     'MailingZipCode' => 'Código postal de envío',
     'SignedAllDocuments' => 'FIRMARÁ el contacto PRINCIPAL mencionado anteriormente todos los documentos?',
     'AddContactPerson' => 'Le gustaría agregar una persona de contacto adicional?',

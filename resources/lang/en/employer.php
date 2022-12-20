@@ -26,6 +26,7 @@ return [
     'SameAsAbove'  => 'Same as above',
     'MailingCity' => 'Mailing City',
     'MailingState' => 'Mailing State',
+    'MailingCounty' => 'Mailing County',
     'MailingZipCode' => 'Mailing Zip Code',
     'SignedAllDocuments' => 'Will the PRIMARY Contact listed above SIGN all documents?',
     'AddContactPerson' => 'Would you like to add an Additional Contact Person?',
