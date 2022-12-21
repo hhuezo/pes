@@ -13,6 +13,8 @@ use App\Http\Controllers\security\RoleController;
 use App\Http\Controllers\security\UserController;
 use App\Http\Controllers\security\AccountController;
 use App\Http\Controllers\CaseManagerController;
+use App\Http\Controllers\CityZipController;
+
 
 
 Route::get('/', function () {
@@ -53,32 +55,16 @@ Route::resource('employer', EmployerController::class);
 Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
 
 #counties
-Route::get('get_counties/{id}', [EmployerController::class, 'get_counties']);
+Route::get('get_counties/{id}', [CityZipController::class, 'get_counties']);
 
-#counties mailing
-Route::get('get_counties_mailing/{id}', [EmployerController::class, 'get_counties_mailing']);
-
-#counties worksite
-Route::get('get_counties_worksite/{id}', [EmployerController::class, 'get_counties_worksite']);
 
 
 #cities
-Route::get('get_cities/{id}', [EmployerController::class, 'get_cities']);
+Route::get('get_cities/{id}', [CityZipController::class, 'get_cities']);
 
-#cities mailing
-Route::get('get_cities_mailing/{id}', [EmployerController::class, 'get_cities_mailing']);
-
-#cities worksite
-Route::get('get_cities_worksite/{id}', [EmployerController::class, 'get_cities_worksite']);
 
 #codes zip
-Route::get('get_zipcodes/{id}', [EmployerController::class, 'get_zipcodes']);
-
-#codes zip mailing
-Route::get('get_zipcodes_mailing/{id}', [EmployerController::class, 'get_zipcodes_mailing']);
-
-#codes zip worksite
-Route::get('get_zipcodes_worksite/{id}', [EmployerController::class, 'get_zipcodes_worksite']);
+Route::get('get_zipcodes/{id}', [CityZipController::class, 'get_zipcodes']);
 
 
 Route::post('employer_place_of_business', [EmployerController::class, 'employer_place_of_business']);
