@@ -11,8 +11,21 @@ return [
     El DOL y USCIS requieren evidencia financiera que respalde CLARAMENTE las fechas solicitadas de necesidad temporal y la cantidad de trabajadores.
     El período máximo de empleo permitido para H-2B es de 10 meses.',
     'need_workers' => '¿Necesita trabajadores H-2B (en el mismo puesto) durante DIFERENTES periodos de empleo?',
+    'Yes' => 'Si',
+    'No' => 'No',
     'message2' => 'Por ejemplo, 20 trabajadores del 1 de febrero al 30 de noviembre y 30 trabajadores adicionales del 1 de abril al 30 de noviembre.',
     'multiple_employment_period' => 'Por favor explique las presentaciones de múltiples períodos de empleo',
+    'workers_paid' => '¿Con qué frecuencia se les paga a los trabajadores?',
+    'Weekly' => 'Semanal',
+    'Bi-weekly' => 'Quincenal',
+    'uniform' => '¿Se requiere UNIFORME?',
+    'message3' => 'El empleador debe proporcionar a los trabajadores SIN CARGO todas las herramientas, suministros y equipos necesarios para realizar el trabajo (incluido el uniforme).',
+    'additional_space' => 'Espacio adicional para notas, si es necesario.',
+    'notes' => 'Notas',
+    'uniform_pieces' => 'Listar todas las piezas uniformes requeridas',
+
+
+
 
     'EmployeeRights' => 'Derechos del empleador bajo el programa H-2b',
     'message4' => 'Dos tipos de trabajadores tienen derechos bajo este programa: <br><br>
@@ -35,13 +48,8 @@ return [
     'noACWIA'=>'b. Si se ha determinado previamente que el empleador no está cubierto por ACWIA, ¿el empleador  ¿Tiene alguna razón para creer que su estado ha cambiado?',
     'SportsLeagueRules' => '2. ¿El puesto está cubierto por las Reglas o Reglamentos de una Liga de Deportes Profesionales?',
 
-    'workers_paid' => '¿Con qué frecuencia se les paga a los trabajadores?',
-    'Weekly' => 'Semanal',
-    'Bi-weekly' => 'Quincenal',
-    'uniform' => '¿Se requiere UNIFORME?',
-    'message3' => 'El empleador debe proporcionar a los trabajadores SIN CARGO todas las herramientas, suministros y equipos necesarios para realizar el trabajo (incluido el uniforme).',
-    'additional_space' => 'Espacio adicional para notas, si es necesario.',
-    'uniform_pieces' => 'Listar todas las piezas uniformes requeridas',
+
+
 
 
 
@@ -55,6 +63,13 @@ return [
     'attorney_middle_name'=> 'Segundo nombre',
 
     'address'=> 'Dirección',
+    'province'=> ' Provincia (si es aplicable)',
+    'telephone_number'=>'Número de teléfono',
+    'extension' => 'Extensión',
+    'business_email' => 'Bufete de abogados/Dirección de correo electrónico comercial',
+    'business_name' => 'Bufete de abogados/Nombre comercial',
+    'business_fein' => 'Bufete de Abogados/Empresa FEIN',
+
 
     'location_listed_above' => '¿Este puesto es para la ubicación PRINCIPAL del lugar de trabajo mencionada anteriormente?',
     'job_title' => 'Nombre',

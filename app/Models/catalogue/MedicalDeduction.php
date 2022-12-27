@@ -5,11 +5,10 @@ namespace App\Models\catalogue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobTitle extends Model
+class MedicalDeduction extends Model
 {
     use HasFactory;
-
-    protected $table = 'catalog_job_title';
+    protected $table = 'catalog_medical_deduction';
 
     protected $primaryKey = 'id';
 
@@ -17,12 +16,7 @@ class JobTitle extends Model
 
 
     protected $fillable = [
-        'name',
-        'onetsoc_code ',
-        'title',
-        'description',
-        'status',
-
+        'name'
     ];
 
     protected $guarded = [];

@@ -75,9 +75,14 @@ Route::post('employer_additional_location', [EmployerController::class, 'employe
 Route::post('employer/activate', [EmployerController::class, 'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 
+Route::post('job_request_deductions', [JobRequestController::class,'job_request_deductions']);
+Route::get('job_request/get_div_deductions', [JobRequestController::class,'get_div_deductions']);
+Route::get('job_request/get_div_deductions_medical', [JobRequestController::class,'get_div_deductions_medical']);
 Route::resource('job_request', JobRequestController::class);
+
 Route::resource('job_request_detail', JobRequestDetailController::class);
 Route::post('job_request_detail/delete', [JobRequestDetailController::class, 'delete']);
+
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);

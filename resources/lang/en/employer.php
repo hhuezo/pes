@@ -77,6 +77,7 @@ return [
     'County'  =>  'County',
     'State'  =>  'State',
     'ZipCode'  =>  'Zip Code',
+    'PostalCode'  =>  'Postal Code',
 
     'NormalBusinessDays'  =>  'NORMAL business days at the place of employment:',
     'TransportationProvided'  =>  'Is transportation provided to/​from housing and the Main Worksite?',

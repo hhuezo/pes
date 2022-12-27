@@ -9,8 +9,18 @@ return [
     'end_date' => 'End Date of Employment',
     'message' => 'The requested dates of need and number of workers MUST accurately reflect your peakload or seasonal need. The DOL & USCIS require financial evidence that CLEARLY supports the requested dates of temporary need and number of workers. The maximum employment period allowed for H-2B is 10 months.',
     'need_workers' => 'Do you need H-2B workers (in the same position) during DIFFERENT Employment Periods?',
+    'Yes' => 'Yes',
+    'No' => 'No',
     'message2' => 'For example, 20 workers from Feb 1 to Nov 30, and an additional 30 workers from April 1 to Nov 30.',
     'multiple_employment_period' => 'Please explain multiple Employment period filings',
+    'workers_paid' => 'How often are workers PAID?',
+    'Weekly' => 'Weekly',
+    'Bi-weekly' => 'Bi-weekly',
+    'uniform' => 'Is a UNIFORM required?',
+    'message3' => 'Employer must provide workers AT NO CHARGE all tools, supplies, and equipment required to perform the job (including uniform).',
+    'additional_space' => 'Additional space for notes, if needed.',
+    'notes' => 'Notes',
+    'uniform_pieces' => 'List all required uniform pieces',
 
 
     'EmployeeRights' => 'Employer Rights Under The H-2b Program',
@@ -35,6 +45,66 @@ return [
     'SportsLeagueRules' => '2. Is the position covered by a Professional Sports League Rules or Regulations?',
 
 
+
+    'tab3_title'=>'DEDUCTIONS FROM THE WORKER\'S PAYCHECK',
+    'tab3_title2'=>'H-2B Regulations require that ALL deductions (that are not required by law) from a worker\'s paycheck (U.S. and H-2B) be disclosed in the Job Order and newspaper advertisement. Each payroll deduction and the amount MUST be disclosed.',
+    'tab3_title3'=>'All deductions not required by law must be OPTIONAL.',
+    'deductions'=>'DEDUCTIONS',
+    'select_deductions'=>'Select all DEDUCTIONS from paycheck that are available to employees:',
+
+    'Housing'=>'Housing/​Utilities',
+    'Medical'=>'Medical/​Dental/​Vision Insurance',
+    'DailyTransportation'=>'Daily Transportation (to/​from main worksite)',
+    'Other'=>'Other',
+    'Meals'=>'Meals (during shift)',
+    'NoDeductions'=>'No Deductions (that are not required by law)',
+
+
+    'HousingTitle'=>'Housing / Utilities',
+    'DeductionAmount'=>'Enter the DEDUCTION amount per person, per WEEK',
+    'HousingDeduction'=>'Does the HOUSING DEDUCTION include UTILITIES?',
+    'RequiredHousing'=>'Is a DEPOSIT required for Housing?',
+
+
+    'MedicalTitle'=>'Medical/Dental/Vision or Other Insurance',
+    'SelectInsurance'=>'Select insurance DEDUCTIONS available',
+    'Medical'=>'Medical',
+    'Dental'=>'Dental',
+    'Vision'=>'Vision',
+    'DeductionAmountMedical'=>'Enter the DEDUCTION amount for Medical/​Dental/​Vision, per PAYCHECK',
+    'CanBeRange'=>'Can be a range based on available plans/premiums',
+
+
+
+    'DailyTransportationTitle'=>'Daily Transportation (to/from Main Worksite)',
+    'DeductionPerWeek'=>'Enter the DEDUCTION amount per person, per WEEK',
+
+
+    'OtherTitle'=>'Other Deductions',
+    'listAdditionalDeduction'=>'Please list any additional DEDUCTION(S) from paycheck',
+
+
+
+
+
+    'MealsTitle'=>'Meals During Shift',
+    'MealsPerShift'=>'How many MEALS per shift are provided?',
+    'ThereCost'=>'Is there a COST (to the worker) per meal?',
+    'EnterCost'=>'Enter the COST, per meal',
+    'EnterDeduction'=>'Enter the DEDUCTION amount, per MEAL',
+    'AdditionalNotesMeals'=>'Additional space for notes on Meals, if needed.',
+
+
+    'NoDeductionsTitle'=>'If housing is not provided, please be prepared to help workers locate appropriate and affordable housing.',
+
+
+
+
+
+
+
+
+
     'Attorney_applicable'=> 'Attorney or Agent Information (if applicable)',
     'type_representation' => 'Indicate the type of representation for the employer in the filing of this application * If D.1 is “Attorney” or “Agent” the remainder of this section is required',
     'Attorney'=> 'Attorney',
@@ -45,15 +115,15 @@ return [
     'attorney_middle_name'=> 'Middle Name(s)',
 
     'address'=> 'Address',
+    'province'=> ' Province (if applicable)',
+    'telephone_number'=>'Telephone Number',
+    'extension' => 'Extension',
+    'business_email' => 'Law Firm/Business E-Mail Address',
+    'business_name' => 'Law Firm/Business Name',
+    'business_fein' => 'Law Firm/Business FEIN',
 
 
-    'workers_paid' => 'How often are workers PAID?',
-    'Weekly' => 'Weekly',
-    'Bi-weekly' => 'Bi-weekly',
-    'uniform' => 'Is a UNIFORM required?',
-    'message3' => 'Employer must provide workers AT NO CHARGE all tools, supplies, and equipment required to perform the job (including uniform).',
-    'additional_space' => 'Additional space for notes, if needed.',
-    'uniform_pieces' => 'List all required uniform pieces',
+
 
 
     'location_listed_above' => 'Is this position for the MAIN Worksite Location listed above?',
