@@ -72,14 +72,21 @@ class RolesAndPermissions extends Seeder
         $consulta->assignRole('administrator pes');*/
 
 
+        $consulta = User::create([
+            'name' => 'admin',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('12345678'),
+        ]);
+        $consulta->assignRole('administrator');
 
 
-        $role = Role::findByName('administrator pes');
+
+       /* $role = Role::findByName('administrator pes');
         $role->givePermissionTo( 'read employer', 'edit employer', 'create job application', 'read job application','edit job application');
 
         $role = Role::findByName('employer');
         $role->givePermissionTo( 'read employer', 'edit employer', 'read admin employer','create job application','read admin job application', 'read job application','edit job application');
-
+*/
 
 
 
