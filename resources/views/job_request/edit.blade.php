@@ -24,11 +24,15 @@
                             <a class="nav-link" data-toggle="tab" href="#tab3">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#message">Message</a>
+                            <a class="nav-link" data-toggle="tab" href="#tab4">Message</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab5">tab5</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="tab1" role="tabpanel">
+                        <div class="tab-pane fade" id="tab1" role="tabpanel">
                             <form method="POST" action="{{ route('job_request.update', $job_request->id) }}">
                                 @method('PUT')
                                 @csrf
@@ -630,17 +634,231 @@
                             </div>
 
                         </div>
-                        <div class="tab-pane fade" id="message">
-                            <div class="pt-4">
-                                <h4>This is message title</h4>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin.
-                                    Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-                                    Mustache cliche tempor.
-                                </p>
-                                <p>Raw denim you probably haven't heard of them jean shorts Austin.
-                                    Nesciunt tofu stumptown aliqua, retro synth master cleanse.
-                                    Mustache cliche tempor.
-                                </p>
+                        <div class="tab-pane fade" id="tab4">
+
+                            <h3>JOB REQUIREMENTS / CONDITIONS OF EMPLOYMENT</h3>
+                            <p>Background checks, drug testing and/or other job requirements and conditions of employment must not favor either U.S. or H-2B workers, they must be applied on an equal basis for all employees.</p>
+                            <h5>All job requirements and conditions of employment must be disclosed in the Job Order. </h5>
+                            <h5>{!! trans('job_application.BackgroundChecks') !!} </h5>
+
+                            <div class="col-xl-12 col-xxl-12">
+                                <div class="col-sm-12">&nbsp;</div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.IsBackgroundChecks') !!}</label>
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                        @if ($job_request->is_uniform_required == 1)
+                                            <input type="radio" value="1" checked name="is_uniform_required">
+                                        @else
+                                            <input type="radio" value="1" name="is_uniform_required">
+                                        @endif
+                                        &nbsp;&nbsp;
+                                        {!! trans('job_application.No') !!}
+                                        @if ($job_request->is_uniform_required == 0)
+                                            <input type="radio" value="0" checked >
+                                        @else
+                                            <input type="radio" value="0" >
+                                        @endif
+                                        <br>
+                                        <label for="exampleInputEmail1">{!! trans('job_application.AppliesAllApplicants') !!}</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.CheckCriminalHistory') !!}</label>
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                        @if ($job_request->is_uniform_required == 1)
+                                            <input type="radio" value="1" checked name="is_uniform_required">
+                                        @else
+                                            <input type="radio" value="1" name="is_uniform_required">
+                                        @endif
+                                        &nbsp;&nbsp;
+                                        {!! trans('job_application.No') !!}
+                                        @if ($job_request->is_uniform_required == 0)
+                                            <input type="radio" value="0" checked >
+                                        @else
+                                            <input type="radio" value="0" >
+                                        @endif
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.BackgroundChecksConducted') !!}</label>
+                                        <br>
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.Pre-employment') !!}
+
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.Post-employment') !!}
+
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.Other') !!}
+
+                                        <br>
+                                        <label for="exampleInputEmail1">{!! trans('job_application.SelectApply') !!}</label>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.DrugTesting') !!}</label>
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                        @if ($job_request->is_uniform_required == 1)
+                                            <input type="radio" value="1" checked name="is_uniform_required">
+                                        @else
+                                            <input type="radio" value="1" name="is_uniform_required">
+                                        @endif
+                                        &nbsp;&nbsp;
+                                        {!! trans('job_application.No') !!}
+                                        @if ($job_request->is_uniform_required == 0)
+                                            <input type="radio" value="0" checked >
+                                        @else
+                                            <input type="radio" value="0" >
+                                        @endif
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.DrugTestingConducted') !!}</label>
+                                        <br>
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.Pre-employment') !!}
+
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.Post-employment') !!}
+
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.PostInjury') !!}
+
+
+                                        &nbsp;&nbsp;
+                                        <input type="checkbox">&nbsp;&nbsp;
+                                        {!! trans('job_application.Other') !!}
+                                        <br>
+                                        <label for="exampleInputEmail1">{!! trans('job_application.SelectApply') !!}</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.JobRequirements') !!}</label>
+                                        <br>
+                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                        @if ($job_request->is_uniform_required == 1)
+                                            <input type="radio" value="1" checked name="is_uniform_required">
+                                        @else
+                                            <input type="radio" value="1" name="is_uniform_required">
+                                        @endif
+                                        &nbsp;&nbsp;
+                                        {!! trans('job_application.No') !!}
+                                        @if ($job_request->is_uniform_required == 0)
+                                            <input type="radio" value="0" checked >
+                                        @else
+                                            <input type="radio" value="0" >
+                                        @endif
+                                        <br>
+                                        {!! trans('job_application.AppliesUS') !!}
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+
+
+
+
+
+                            <div class="col-sm-12">&nbsp;</div>
+
+                            <h3>{!! trans('job_application.Transportation&Daily') !!}</h3>
+                            <h5>{!! trans('job_application.InboundTransportation') !!}</h5>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1"><strong>{!! trans('job_application.PleaseTransportation') !!}</strong></label>
+                                    <br>
+                                    <input type="radio">  &nbsp;&nbsp;Arrange and pay directly for transportation and subsistence (recommended)
+                                    <br>
+                                    <input type="radio">  &nbsp;&nbsp;Reimburse the worker for transportation and subsistence
+                                    <br>
+                                    <input type="radio">  &nbsp;&nbsp;Provide advance payment (to the worker) for transportation and subsistence
+                                    <br>
+                                </div>
+
+                            </div>
+                            <p>{!! trans('job_application.message6') !!}</p>
+                        </div>
+
+                        <div class="tab-pane fade  show active" id="tab5">
+                            <div class="col-xl-12 col-xxl-12 row">
+                                <div class="col-sm-12">&nbsp;</div>
+                                <div class="col-sm-12">
+                                    <h3>{!! trans('job_application.USWorker') !!}</h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">{!! trans('job_application.StateWorkforce') !!}</label>
+                                        <input type="date" name="start_date" value="{{ $job_request->start_date }}"
+                                            required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
+                                        <input type="date" name="end_date" value="{{ $job_request->end_date }}"
+                                            required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
+                                        <input type="date" name="start_date" value="{{ $job_request->start_date }}"
+                                            required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
+                                        <input type="date" name="end_date" value="{{ $job_request->end_date }}"
+                                            required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
+                                        <input type="date" name="start_date" value="{{ $job_request->start_date }}"
+                                            required class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12">&nbsp;</div>
+
+
+
                             </div>
                         </div>
                     </div>
