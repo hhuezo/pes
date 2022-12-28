@@ -24,6 +24,7 @@ return [
     'PrincipalZipCode' => 'Código postal principal',
     'MailingAddress' => 'Dirección de envio',
     'SameAsAbove'  => 'Lo mismo que arriba',
+    'SameAsLeft'  => 'Lo mismo que izquierda',
     'MailingCity' => 'Ciudad de envío',
     'MailingState' => 'Estado de envío',
     'MailingCounty' => 'Mailing County',
@@ -59,11 +60,19 @@ return [
     'PlaceOfEmployment' => 'LUGAR DE EMPLEO',
     'MainWorksiteLocation' => 'Ubicación principal del lugar de trabajo',
     'SamePlaceBusiness' => 'Igual que el lugar principal de negocios',
+
     'MainWorksiteStreetAddress' => 'Dirección de la calle principal del lugar de trabajo',
     'MainWorksiteCity' => 'Ciudad principal del lugar de trabajo',
     'MainWorksiteCounty' => 'Condado del lugar de trabajo principal',
     'MainWorksiteState' => 'Estado principal del lugar de trabajo',
     'MainWorksiteZipCode'=> 'Código postal del lugar de trabajo principal',
+
+    'WorksiteStreetAddress' => 'Dirección del lugar de trabajo',
+    'WorksiteCity' => 'Ciudad del lugar de trabajo',
+    'WorksiteCounty' => 'Condado del lugar de trabajo',
+    'WorksiteState' => 'Estado del lugar de trabajo',
+    'WorksiteZipCode'=> 'Zip code del lugar de trabajo',
+
     'AdditionalEmployerWorksite' => '¿Hay lugares de trabajo adicionales del EMPLEADOR donde trabajará H-2B, dentro de un viaje normal? es decir, oficina satélite/otra sucursal',
     'AdditionalEmployerWorksiteAddress' => 'Se pueden ingresar direcciones adicionales del lugar de trabajo del empleador que no se encuentran dentro de un viaje normal en la sección Necesidad temporal de este formulario.',
     'AdditionalEmployerworksiteLocation' => 'Ubicaciones adicionales del lugar de trabajo del EMPLEADOR dentro de un VIAJE AL TRABAJO NORMAL:',

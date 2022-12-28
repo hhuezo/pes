@@ -193,21 +193,22 @@
                                                 <label>{!! trans('employer.PrimaryBusiness') !!}<b style="color: #FF9696">(*This field
                                                         is required
                                                         )</b></label>
-                                                <select class="form-control select2" name="primary_business_type_id"
-                                                    value="{{ old('primary_business_type_id', $employer->primary_business_type_id) }}"
-                                                    id="PrimaryBusinessType">
+                                                <select class="form-control select2" name="industry_id"
+                                                    value="{{ old('industry_id', $employer->industry_id) }}"
+                                                    id="Industry">
                                                     <option value="">Select</option>
-                                                    @foreach ($primary_business_types as $obj)
-                                                        @if ($obj->id == $employer->primary_business_type_id)
+                                                    @foreach ($industries as $obj)
+                                                        @if ($obj->id == $employer->catalog_industry_id)
                                                             <option value="{{ $obj->id }}" selected>
-                                                                {{ $obj->name_english }}
+                                                                {{ $obj->id_code . ' ' . $obj->name }}
                                                             </option>
                                                         @else
                                                             <option value="{{ $obj->id }}">
-                                                                {{ $obj->name_english }}
+                                                                {{ $obj->id_code . ' ' . $obj->name }}
                                                             </option>
                                                         @endif
                                                     @endforeach
+
                                                 </select>
                                             </div>
 
@@ -284,7 +285,9 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalState') !!}</label>
+                                                <label>{!! trans('employer.PrincipalState') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <select class="form-control select2" name="principal_state_id"
                                                     id="PrincipalState">
                                                     <option value="">Select</option>
@@ -307,10 +310,26 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCountry') !!}</label>
+                                                <label>{!! trans('employer.PrincipalCountry') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <select class="form-control select2" name="principal_county_id"
                                                     id="principal_county_id"
                                                     value="{{ old('principal_county_id', $employer->principal_county_id) }}">
+                                                    @if ($counties_principal)
+                                                        @foreach ($counties_principal as $obj)
+                                                            @if ($obj->id == $employer->principal_county_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+
 
                                                 </select>
                                                 @error('principal_county_id')
@@ -320,12 +339,26 @@
 
 
 
-
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCity') !!}</label>
+                                                <label>{!! trans('employer.PrincipalCity') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <select class="form-control select2" name="principal_city_id"
                                                     id="principal_city_id"
                                                     value="{{ old('principal_city_id', $employer->principal_city_id) }}">
+                                                    @if ($cities_principal)
+                                                        @foreach ($cities_principal as $obj)
+                                                            @if ($obj->id == $employer->principal_city_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
 
                                                 </select>
                                                 @error('principal_city_id')
@@ -335,10 +368,26 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalZipCode') !!}</label>
+                                                <label>{!! trans('employer.PrincipalZipCode') !!}<b style="color: #FF9696">(*This field
+                                                        is required
+                                                        )</b></label>
                                                 <select class="form-control select2" name="principal_zip_code"
                                                     id="principal_zip_code"
                                                     value="{{ old('principal_zip_code', $employer->principal_zip_code) }}">
+                                                    @if ($codes_zip_principal)
+                                                        @foreach ($codes_zip_principal as $obj)
+                                                            @if ($obj->czc_zipcode == $employer->principal_zip_code)
+                                                                <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                    {{ $obj->czc_zipcode }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->czc_zipcode }}">
+                                                                    {{ $obj->czc_zipcode }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+
 
                                                 </select>
                                                 @error('principal_zip_code')
@@ -378,12 +427,15 @@
                                                         id="SameAsAbove"
                                                         {{ old('mailing_address_same_above') ? 'checked' : '' }}>
                                                 @endif
-                                                &nbsp;{!! trans('employer.SameAsAbove') !!}
+                                                &nbsp;{!! trans('employer.SameAsLeft') !!}
                                             </div>
 
                                             <div id="DivMailin">
+
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingState') !!}</label>
+                                                    <label>{!! trans('employer.MailingState') !!}<b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
                                                     <select class="form-control select2" name="mailing_state_id"
                                                         id="MailingState">
                                                         <option value="">Select</option>
@@ -406,10 +458,26 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCounty') !!}</label>
+                                                    <label>{!! trans('employer.MailingCountry') !!}<b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
                                                     <select class="form-control select2" name="mailing_county_id"
                                                         id="mailing_county_id"
                                                         value="{{ old('mailing_county_id', $employer->mailing_county_id) }}">
+                                                        @if ($counties_mailing)
+                                                            @foreach ($counties_mailing as $obj)
+                                                                @if ($obj->id == $employer->mailing_county_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
 
                                                     </select>
                                                     @error('mailing_county_id')
@@ -417,11 +485,29 @@
                                                     @enderror
                                                 </div>
 
+
+
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCity') !!}</label>
+                                                    <label>{!! trans('employer.MailingCity') !!}<b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
                                                     <select class="form-control select2" name="mailing_city_id"
                                                         id="mailing_city_id"
                                                         value="{{ old('mailing_city_id', $employer->mailing_city_id) }}">
+                                                        @if ($cities_mailing)
+                                                            @foreach ($cities_mailing as $obj)
+                                                                @if ($obj->id == $employer->mailing_city_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
 
                                                     </select>
                                                     @error('mailing_city_id')
@@ -429,17 +515,37 @@
                                                     @enderror
                                                 </div>
 
+
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingZipCode') !!}</label>
+                                                    <label>{!! trans('employer.MailingZipCode') !!}<b style="color: #FF9696">(*This field
+                                                            is required
+                                                            )</b></label>
                                                     <select class="form-control select2" name="mailing_zip_code"
                                                         id="mailing_zip_code"
                                                         value="{{ old('mailing_zip_code', $employer->mailing_zip_code) }}">
+                                                        @if ($codes_zip_mailing)
+                                                            @foreach ($codes_zip_mailing as $obj)
+                                                                @if ($obj->czc_zipcode == $employer->mailing_zip_code)
+                                                                    <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                        {{ $obj->czc_zipcode }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->czc_zipcode }}">
+                                                                        {{ $obj->czc_zipcode }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
 
                                                     </select>
                                                     @error('mailing_zip_code')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+
+
+
 
                                                 <div class="form-group">
                                                     <input type="hidden" name="id" value="{{ $employer->id }}">
@@ -539,6 +645,7 @@
                                                         is required
                                                         )</b></label>
                                                 <input type="text" name="primary_contact_phone"
+                                                    data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                     value="{{ old('primary_contact_phone', $employer->primary_contact_phone) }}"
                                                     class="form-control">
                                                 @error('primary_contact_phone')
@@ -552,6 +659,7 @@
                                                         is required
                                                         )</b></label>
                                                 <input type="text" name="primary_contact_cellphone"
+                                                    data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                     value="{{ old('primary_contact_cellphone', $employer->primary_contact_cellphone) }}"
                                                     class="form-control">
                                                 @error('primary_contact_cellphone')
@@ -651,6 +759,7 @@
                                                             is required
                                                             )</b></label>
                                                     <input type="text" name="signatory_phone"
+                                                        data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                         value="{{ old('signatory_phone', $employer->signatory_phone) }}"
                                                         class="form-control">
                                                     @error('signatory_phone')
@@ -681,7 +790,7 @@
                                         <div class="col-xl-6 col-xxl-6">
                                             <br>
                                             <div class="form-group">
-                                                @if (old('is_main_worksite_location', $employer->is_main_worksite_location) === 1)
+                                                @if (old('is_main_worksite_location', $employer->is_main_worksite_location) == 1)
                                                     <input type="checkbox" name="is_main_worksite_location"
                                                         id="IsMainWorksiteLocation" checked="">
                                                 @else
@@ -690,6 +799,8 @@
                                                         {{ old('is_main_worksite_location') ? 'checked' : '' }}>
                                                 @endif
                                                 &nbsp;{!! trans('employer.SamePlaceBusiness') !!}
+
+
                                             </div>
                                             <br>
                                             <br>
@@ -700,16 +811,24 @@
                                                     <select class="form-control select2" name="main_worksite_state_id"
                                                         id="MainworksiteState">
                                                         <option value="">Select</option>
-                                                        @foreach ($states as $obj)
-                                                            @if ($obj->id == $employer->main_worksite_state_id)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @else
+                                                        @if ($work_sites_main)
+                                                            @foreach ($states as $obj)
+                                                                @if ($obj->id == $work_sites_main->state_id_address)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($states as $obj)
                                                                 <option value="{{ $obj->id }}">
                                                                     {{ $obj->name }}</option>
-                                                            @endif
-                                                        @endforeach
+                                                            @endforeach
+                                                        @endif
+
                                                     </select>
                                                     @error('main_worksite_state_id')
                                                         <div class="alert-danger">{{ $message }}</div>
@@ -719,9 +838,20 @@
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.MainWorksiteCity') !!}</label>
                                                     <select class="form-control select2" name="main_worksite_city_id"
-                                                        id="main_worksite_city_id"
-                                                        value="{{ old('main_worksite_city_id', $employer->main_worksite_city_id) }}">
-
+                                                        id="main_worksite_city_id">
+                                                        @if ($cities_work_site)
+                                                            @foreach ($cities_work_site as $obj)
+                                                                @if ($obj->id == $work_sites_main->city_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
                                                     </select>
                                                     @error('main_worksite_city_id')
                                                         <div class="alert-danger">{{ $message }}</div>
@@ -732,9 +862,14 @@
                                                     <label>{!! trans('employer.MainWorksiteStreetAddress') !!}<b style="color: #FF9696">(*This field
                                                             is required
                                                             )</b></label>
-                                                    <input type="text" name="main_worksite_location"
-                                                        value="{{ old('main_worksite_location', $employer->main_worksite_location) }}"
-                                                        class="form-control">
+                                                    @if ($work_sites_main)
+                                                        <input type="text" name="main_worksite_location"
+                                                            value="{{ $work_sites_main->street_address }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="main_worksite_location"
+                                                            class="form-control">
+                                                    @endif
                                                     @error('main_worksite_location')
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
@@ -772,8 +907,20 @@
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
                                                     <select class="form-control select2" name="main_worksite_county_id"
-                                                        id="main_worksite_county_id"
-                                                        value="{{ old('main_worksite_county_id', $employer->main_worksite_county_id) }}">
+                                                        id="main_worksite_county_id">
+                                                        @if ($counties_work_sites)
+                                                            @foreach ($counties_work_sites as $obj)
+                                                                @if ($obj->id == $work_sites_main->county_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
 
                                                     </select>
                                                     @error('main_worksite_county_id')
@@ -784,8 +931,22 @@
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
                                                     <select class="form-control select2" name="main_worksite_zip_code"
-                                                        id="main_worksite_zip_code"
-                                                        value="{{ old('main_worksite_zip_code', $employer->main_worksite_zip_code) }}">
+                                                        id="main_worksite_zip_code">
+
+
+                                                        @if ($codes_zip_work_site)
+                                                            @foreach ($codes_zip_work_site as $obj)
+                                                                @if ($obj->czc_zipcode == $work_sites_main->zip_code)
+                                                                    <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                        {{ $obj->czc_zipcode }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->czc_zipcode }}">
+                                                                        {{ $obj->czc_zipcode }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
 
                                                     </select>
                                                     @error('main_worksite_zip_code')
@@ -820,10 +981,96 @@
 
                                     </div>
                                 </form>
+                                @if ($work_sites_main)
+                                    <button type="button" class="btn btn-rounded btn-info btn-lg" data-toggle="modal"
+                                        data-target=".bd-example-modal-lg"><strong>Add
+                                            Worksite</strong><span class="btn-icon-right">
+                                            <i class="fa fa-plus color-info"></i></span>
+                                    </button>
 
+
+
+
+
+                                    @if ($worksites_additional)
+                                        <table id="example2" class="display" style="min-width: 845px">
+                                            <thead>
+                                                <tr>
+                                                    <th>State</th>
+                                                    <th>County</th>
+                                                    <th>City</th>
+                                                    <th>Zip Code</th>
+                                                    <th>Address</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($worksites_additional as $obj)
+                                                    <tr>
+                                                        @if ($obj->state_id_address)
+                                                            <td>{{ $obj->state->cs_state }}</td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+
+                                                        @if ($obj->county_id)
+                                                            <td>{{ $obj->county->name }}</td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+
+                                                        @if ($obj->city_id)
+                                                            <td>{{ $obj->city->name }}</td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+
+
+                                                        @if ($obj->zip_code_address)
+                                                            <td>{{ $obj->zip_code_address }}</td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+
+
+                                                        @if ($obj->street_address)
+                                                            <td>{{ $obj->street_address }}</td>
+                                                        @else
+                                                            <td></td>
+                                                        @endif
+
+
+
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                @endif
 
 
                             </div>
+
                             <!-- end tab 3 -->
 
                         </div>
@@ -853,6 +1100,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     <form method="POST" action="{{ url('employer_additional_location') }}">
                         @csrf
                         <div class="modal-header">
@@ -868,37 +1133,109 @@
                             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 
-                            <div class="form-group">
 
-                                <label>{!! trans('employer.State') !!}</label>
-                                <select class="form-control" name="state_id_address">
+                            <div class="form-group">
+                                <label>{!! trans('employer.WorksiteState') !!}</label>
+                                <select class="form-control select2" name="state_id_address" id="WorksiteState">
+                                    <option value="">Select</option>
                                     @foreach ($states as $obj)
-                                        <option value="{{ $obj->id }}">{{ $obj->name }}</option>
+                                        @if ($obj->id == $employer->state_id_address)
+                                            <option value="{{ $obj->id }}" selected>
+                                                {{ $obj->name }}
+                                            </option>
+                                        @else
+                                            <option value="{{ $obj->id }}">
+                                                {{ $obj->name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
+
                             </div>
 
-                            <div class="form-group">
-                                <label>{!! trans('employer.County') !!}</label>
-                                <input type="text" name="country_address" class="form-control">
-                            </div>
 
 
                             <div class="form-group">
-                                <label>{!! trans('employer.City') !!}</label>
-                                <input type="text" name="city_address" class="form-control">
+                                <label>{!! trans('employer.WorksiteCounty') !!}</label>
+                                <select class="form-control select2" name="county_id" id="county_id"
+                                    value="{{ old('county_id', $employer->county_id) }}">
+                                    @if ($counties_principal)
+                                        @foreach ($counties_principal as $obj)
+                                            @if ($obj->id == $employer->county_id)
+                                                <option value="{{ $obj->id }}" selected>
+                                                    {{ $obj->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $obj->id }}">
+                                                    {{ $obj->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
+
+                                </select>
+
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label>{!! trans('employer.WorksiteCity') !!}</label>
+                                <select class="form-control select2" name="city_id" id="city_id"
+                                    value="{{ old('city_id', $employer->city_id) }}">
+                                    @if ($cities_principal)
+                                        @foreach ($cities_principal as $obj)
+                                            @if ($obj->id == $employer->city_id)
+                                                <option value="{{ $obj->id }}" selected>
+                                                    {{ $obj->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $obj->id }}">
+                                                    {{ $obj->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
+                                </select>
+
                             </div>
 
 
                             <div class="form-group">
-                                <label>{!! trans('employer.ZipCode') !!}</label>
-                                <input type="text" name="zip_code_address" class="form-control">
+                                <label>{!! trans('employer.WorksiteZipCode') !!}</label>
+                                <select class="form-control select2" name="zip_code_address" id="zip_code_address"
+                                    value="{{ old('zip_code_address', $employer->zip_code_address) }}">
+                                    @if ($codes_zip_principal)
+                                        @foreach ($codes_zip_principal as $obj)
+                                            @if ($obj->czc_zipcode == $employer->zip_code_address)
+                                                <option value="{{ $obj->czc_zipcode }}" selected>
+                                                    {{ $obj->czc_zipcode }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $obj->czc_zipcode }}">
+                                                    {{ $obj->czc_zipcode }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+
+
+                                </select>
+
                             </div>
 
+
                             <div class="form-group">
-                                <label>{!! trans('employer.StreetAddress') !!}</label>
-                                <input type="text" name="street_address" class="form-control">
+                                <input type="hidden" name="id" value="{{ $employer->id }}">
+                                <label>{!! trans('employer.WorksiteStreetAddress') !!}</label>
+                                <input type="text" name="street_address"
+                                    value="{{ old('street_address', $employer->street_address) }}" class="form-control">
+                                @error('street_address')
+                                    <div class="alert-danger">{{ $message }}</div>
+                                @enderror
                             </div>
+
 
 
                         </div>
@@ -986,47 +1323,50 @@
             }
 
             $(document).ready(function() {
-                $("#PrimaryBusinessType").change();
-                $("#SameAsAbove").change();
+                $("#Industry").change();
+                //$("#SameAsAbove").change();
                 $("#signed_all_documents").change();
 
-                $("#PrincipalState").change();
-                $("#MailingState").change();
+                // $("#PrincipalState").change();
+                //$("#MailingState").change();
 
 
             });
 
-            // tab one
-            $("#PrimaryBusinessType").change(function() {
-                var PrimaryBusinessType = $(this).val();
-                var naics_code = <?php echo $employer->naics_id; ?>;
 
-                console.log("codigo: " + naics_code);
 
-                if (PrimaryBusinessType != 6) {
+
+            $("#Industry").change(function() {
+                var Industry = $(this).val();
+
+                var naics_id = '<?php echo $employer->naics_id; ?>';
+
+
+
+                if (Industry != 6) {
                     $('#DivNaicsCodCompany').show();
                     $('#DivNaicsNameCompany').hide();
 
-                    // alert("{{ url('get_naics_code') }}" + '/' + PrimaryBusinessType);
-
-                    $.get("{{ url('get_naics_code') }}" + '/' + PrimaryBusinessType, function(data) {
+                    $.get("{{ url('get_naics_code') }}" + '/' + Industry, function(data) {
                         //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
                         console.log(data);
                         var _select = ''
                         for (var i = 0; i < data.length; i++)
-                            if (data[i].id == naics_code) {
+                            if (data[i].id == naics_id) {
                                 _select += '<option value="' + data[i].id + '" selected >' + data[i]
-                                    .code +
+                                    .cn_code +
                                     ' ' + data[i]
-                                    .name +
+                                    .cn_description +
                                     '</option>';
                             }
                         else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].code +
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].cn_code +
                                 ' ' + data[i]
-                                .name +
+                                .cn_description +
                                 '</option>';
                         }
+
+
 
                         $("#NaicsCod").html(_select);
                     });
@@ -1035,476 +1375,6 @@
                     $('#DivNaicsNameCompany').show();
                 }
             });
-
-
-            // end tab one
-
-
-
-
-            // llenado de counties
-            $("#PrincipalState").change(function() {
-                var PrincipalState = $(this).val();
-                var principal_county_id = <?php echo $employer->principal_county_id; ?>;
-                var principal_city_id = <?php echo $employer->principal_city_id; ?>;
-                var principal_zip_code = <?php echo $employer->principal_zip_code; ?>;
-
-
-                if (PrincipalState > 0) {
-
-                    //alert("{{ url('get_counties') }}" + '/' + PrincipalState);
-
-                    $.get("{{ url('get_counties') }}" + '/' + PrincipalState, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == principal_county_id) {
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                                '</option>';
-                        }
-
-                        $("#principal_county_id").html(_select);
-                    });
-
-
-
-                }
-
-
-                // alert('principal_county_id=' + principal_county_id);
-                // alert('principal_city_id=' + principal_city_id);
-                // alert("{{ url('get_cities') }}" + '/' + principal_county_id);
-
-                if (principal_county_id > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + principal_county_id, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == principal_city_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' + ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                                '</option>';
-                        }
-
-                        $("#principal_city_id").html(_select);
-                    });
-                }
-
-
-                if (principal_city_id > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + principal_city_id, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].czc_zipcode == principal_zip_code) {
-                                _select += '<option value="' + data[i].czc_zipcode +
-                                    '" selected >' + data[i]
-                                    .czc_zipcode +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
-                                .czc_zipcode +
-                                '</option>';
-                        }
-
-
-
-                        $("#principal_zip_code").html(_select);
-                    });
-                }
-
-
-            });
-
-
-            // llenado de counties mailing
-            $("#MailingState").change(function() {
-                var MailingState = $(this).val();
-                var mailing_county_id = <?php echo $employer->mailing_county_id; ?>;
-                var mailing_city_id = <?php echo $employer->mailing_city_id; ?>;
-                var mailing_zip_code = <?php echo $employer->mailing_zip_code; ?>;
-
-                var mailing_state_id = <?php echo $employer->mailing_state_id; ?>;
-                alert('MailingState= ' + MailingState);
-                alert('mailing_county_id= ' + mailing_county_id);
-                alert("{{ url('get_counties_mailing') }}" + '/' + MailingState);
-
-                if (MailingState > 0) {
-                    $.get("{{ url('get_counties_mailing') }}" + '/' + MailingState, function(
-                        data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log('data counties mailing', data);
-
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == mailing_county_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i]
-                                .name +
-                                '</option>';
-                        }
-
-                        $("#mailing_county_id").html(_select);
-                    });
-                }
-
-
-
-                if (mailing_county_id > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + mailing_county_id, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == mailing_city_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i]
-                                .name +
-                                '</option>';
-                        }
-
-                        $("#mailing_city_id").html(_select);
-                    });
-                }
-
-
-                if (mailing_city_id > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + mailing_city_id, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].czc_zipcode == mailing_zip_code) {
-                                _select += '<option value="' + data[i].czc_zipcode +
-                                    '" selected >' + data[i]
-                                    .czc_zipcode +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' +
-                                data[i]
-                                .czc_zipcode +
-                                '</option>';
-                        }
-
-
-
-                        $("#mailing_zip_code").html(_select);
-                    });
-                }
-
-            });
-
-
-
-            // llenado de counties worksite
-            $("#MainworksiteState").change(function() {
-                var MainworksiteState = $(this).val();
-
-
-                var main_worksite_state_id = <?php echo $employer->main_worksite_state_id; ?>;
-                //alert(main_worksite_state_id);
-
-                if (MainworksiteState > 0) {
-                    $.get("{{ url('get_counties_worksite') }}" + '/' + MainworksiteState, function(
-                        data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == main_worksite_state_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                                '</option>';
-                        }
-
-                        $("#main_worksite_county_id").html(_select);
-                    });
-                }
-            });
-
-
-            // llenado de cities
-            $("#principal_county_id").change(function() {
-                var PrincipalCounty = $(this).val();
-
-                // alert("{{ url('get_cities') }}" + '/' + PrincipalCounty);
-
-                var principal_city_id = <?php echo $employer->principal_city_id; ?>;
-
-
-                if (PrincipalCounty > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + PrincipalCounty, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == principal_city_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                                '</option>';
-                        }
-
-                        $("#principal_city_id").html(_select);
-                    });
-                }
-            });
-
-
-            // llenado de cities mailing
-            $("#mailing_county_id").change(function() {
-                var MailingCounty = $(this).val();
-
-                // alert(mailingCounty);
-                // alert("{{ url('get_cities') }}" + '/' + mailingCounty);
-
-                var mailing_county_id = <?php echo $employer->mailing_county_id; ?>;
-                if (MailingCounty > 0) {
-                    $.get("{{ url('get_cities_mailing') }}" + '/' + MailingCounty, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == mailing_county_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                                '</option>';
-                        }
-
-                        $("#mailing_city_id").html(_select);
-                    });
-                }
-            });
-
-
-            // llenado de cities main_worksite
-            $("#main_worksite_county_id").change(function() {
-                var MainWorksiteCounty = $(this).val();
-
-                // alert(main_worksiteCounty);
-                // alert("{{ url('get_cities') }}" + '/' + main_worksiteCounty);
-
-                var main_worksite_county_id = <?php echo $employer->main_worksite_county_id; ?>;
-                if (MainWorksiteCounty > 0) {
-                    $.get("{{ url('get_cities_worksite') }}" + '/' + MainWorksiteCounty, function(
-                        data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].id == main_worksite_county_id) {
-
-
-                                _select += '<option value="' + data[i].id + '" selected >' +
-                                    ' ' +
-                                    data[i].name +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                                '</option>';
-                        }
-
-                        $("#main_worksite_city_id").html(_select);
-                    });
-                }
-            });
-
-
-
-            // llenado de codes zip
-            $("#principal_city_id").change(function() {
-                var PrincipalCity = $(this).val();
-
-                // alert(PrincipalCity);
-
-
-                // alert("{{ url('get_zipcodes') }}" + '/' + PrincipalCity);
-
-                var principal_zip_code = <?php echo $employer->principal_zip_code; ?>;
-                if (PrincipalCity > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + PrincipalCity, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].czc_zipcode == principal_zip_code) {
-                                _select += '<option value="' + data[i].czc_zipcode +
-                                    '" selected >' + data[i]
-                                    .czc_zipcode +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[
-                                    i]
-                                .czc_zipcode +
-                                '</option>';
-                        }
-
-
-
-                        $("#principal_zip_code").html(_select);
-                    });
-                }
-
-            });
-
-
-            // llenado de codes zip mailing
-            $("#mailing_city_id").change(function() {
-                var MailingCity = $(this).val();
-
-                // alert(MailingCity);
-
-
-                // alert("{{ url('get_zipcodes') }}" + '/' + MailingCity);
-
-                var mailing_zip_code = <?php echo $employer->mailing_zip_code; ?>;
-                if (MailingCity > 0) {
-                    $.get("{{ url('get_zipcodes_mailing') }}" + '/' + MailingCity, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].czc_zipcode == mailing_zip_code) {
-                                _select += '<option value="' + data[i].czc_zipcode +
-                                    '" selected >' + data[i]
-                                    .czc_zipcode +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[
-                                    i]
-                                .czc_zipcode +
-                                '</option>';
-                        }
-
-
-
-                        $("#mailing_zip_code").html(_select);
-                    });
-                }
-
-            });
-
-
-            // llenado de codes zip main_worksite
-            $("#main_worksite_city_id").change(function() {
-                var MainWorksiteCity = $(this).val();
-
-                // alert(main_worksiteCity);
-
-
-                // alert("{{ url('get_zipcodes') }}" + '/' + main_worksiteCity);
-
-                var main_worksite_zip_code = <?php echo $employer->main_worksite_zip_code; ?>;
-                if (MainWorksiteCity > 0) {
-                    $.get("{{ url('get_zipcodes_worksite') }}" + '/' + MainWorksiteCity, function(
-                        data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                        console.log(data);
-
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            if (data[i].czc_zipcode == main_worksite_zip_code) {
-                                _select += '<option value="' + data[i].czc_zipcode +
-                                    '" selected >' + data[i]
-                                    .czc_zipcode +
-                                    '</option>';
-                            }
-                        else {
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[
-                                    i]
-                                .czc_zipcode +
-                                '</option>';
-                        }
-
-
-
-                        $("#main_worksite_zip_code").html(_select);
-                    });
-                }
-
-            });
-
 
 
             $("#SameAsAbove").change(function() {
@@ -1516,6 +1386,274 @@
                 }
 
             });
+
+
+
+
+
+
+            // llenado de counties principal
+            $("#PrincipalState").change(function() {
+                var PrincipalState = $(this).val();
+                if (PrincipalState > 0) {
+
+                    $.get("{{ url('get_counties') }}" + '/' + PrincipalState, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+
+
+                        $("#principal_county_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de counties mailing
+            $("#MailingState").change(function() {
+                var MailingState = $(this).val();
+                if (MailingState > 0) {
+
+                    $.get("{{ url('get_counties') }}" + '/' + MailingState, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+
+
+                        $("#mailing_county_id").html(_select);
+                    });
+                }
+            });
+
+
+
+            // llenado de counties main_worksite
+            $("#MainworksiteState").change(function() {
+                var MailingState = $(this).val();
+
+                if (MailingState > 0) {
+
+                    $.get("{{ url('get_counties') }}" + '/' + MailingState, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+
+
+                        $("#main_worksite_county_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de counties worksite
+            $("#WorksiteState").change(function() {
+                var WorksiteState = $(this).val();
+                if (WorksiteState > 0) {
+
+                    $.get("{{ url('get_counties') }}" + '/' + WorksiteState, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+
+
+                        $("#county_id").html(_select);
+                    });
+                }
+            });
+
+
+
+
+
+
+
+
+
+            // llenado de cities principal
+            $("#principal_county_id").change(function() {
+                var PrincipalCounty = $(this).val();
+
+
+                if (PrincipalCounty > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + PrincipalCounty, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+                        $("#principal_city_id").html(_select);
+                    });
+                }
+            });
+
+
+
+            // llenado de cities mailing
+            $("#mailing_county_id").change(function() {
+                var MailingCounty = $(this).val();
+
+
+                if (MailingCounty > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + MailingCounty, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+                        $("#mailing_city_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de cities main_worksite
+            $("#main_worksite_county_id").change(function() {
+                var MainWorksiteCounty = $(this).val();
+
+
+                if (MainWorksiteCounty > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + MainWorksiteCounty, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+                        $("#main_worksite_city_id").html(_select);
+                    });
+                }
+            });
+
+
+            // llenado de cities principal
+            $("#county_id").change(function() {
+                var County = $(this).val();
+
+
+                if (County > 0) {
+                    $.get("{{ url('get_cities') }}" + '/' + County, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+                        $("#city_id").html(_select);
+                    });
+                }
+            });
+
+
+
+
+
+            // llenado de cities principal
+            $("#principal_city_id").change(function() {
+                var PrincipalCity = $(this).val();
+                if (PrincipalCity > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + PrincipalCity, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
+                            .czc_zipcode + '</option>';
+
+                        $("#principal_zip_code").html(_select);
+                    });
+                }
+
+            });
+
+
+            // llenado de cities mailing
+            $("#mailing_city_id").change(function() {
+                var MailingCity = $(this).val();
+                if (MailingCity > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + MailingCity, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
+                            .czc_zipcode + '</option>';
+
+                        $("#mailing_zip_code").html(_select);
+                    });
+                }
+
+            });
+
+
+
+            // llenado de cities main_worksite
+            $("#main_worksite_city_id").change(function() {
+                var MainWorksiteCity = $(this).val();
+                if (MainWorksiteCity > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + MainWorksiteCity, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
+                            .czc_zipcode + '</option>';
+
+                        $("#main_worksite_zip_code").html(_select);
+                    });
+                }
+
+            });
+
+
+            // llenado de zip codes principal
+            $("#city_id").change(function() {
+                var City = $(this).val();
+                if (City > 0) {
+                    $.get("{{ url('get_zipcodes') }}" + '/' + City, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+
+                        var _select = '<option value="">Select</option>'
+                        for (var i = 0; i < data.length; i++)
+
+                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
+                            .czc_zipcode + '</option>';
+
+                        $("#zip_code_address").html(_select);
+                    });
+                }
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             $("#signed_all_documents").change(function() {
 

@@ -162,12 +162,12 @@
                                                     <label>{!! trans('employer.PrimaryBusiness') !!}<b style="color: #FF9696">(*This field
                                                             is required
                                                             )</b></label>
-                                                    <select class="form-control" name="primary_business_type_id"
-                                                        value="{{ old('primary_business_type_id') }}"
-                                                        id="PrimaryBusinessType">
+                                                    <select class="form-control select2" name="industry_id"
+                                                        value="{{ old('industry_id') }}" id="Industry">
                                                         <option value="">Select</option>
-                                                        @foreach ($primary_business_types as $obj)
-                                                            <option value="{{ $obj->id }}">{{ $obj->name_english }}
+                                                        @foreach ($industries as $obj)
+                                                            <option value="{{ $obj->id }}">
+                                                                {{ $obj->id_code . ' ' . $obj->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -178,7 +178,7 @@
 
                                                 <div class="form-group" id="DivNaicsCodCompany">
                                                     <label>{!! trans('employer.NaicsCodCompany') !!}</label>
-                                                    <select class="form-control" name="naics_id"
+                                                    <select class="form-control select2" name="naics_id"
                                                         value="{{ old('naics_id') }}" id="NaicsCod">
 
                                                     </select>
@@ -304,33 +304,38 @@
             $('#DivYearsCompanyParticipated').hide();
             $('#DivNaicsCodCompany').hide();
 
+
+
+            $("#Industry").change(function() {
+                var Industry = $(this).val();
+
+                if (Industry != 6) {
+                    $('#DivNaicsCodCompany').show();
+                    $('#DivNaicsNameCompany').hide();
+
+                    $.get("{{ url('get_naics_code') }}" + '/' + Industry, function(data) {
+                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                        console.log(data);
+                        var _select = ''
+                        for (var i = 0; i < data.length; i++)
+                            _select += '<option value="' + data[i].id + '"  >' + data[i]
+                            .cn_code + " " + data[i]
+                            .cn_description +
+                            '</option>';
+                        $("#NaicsCod").html(_select);
+                    });
+                } else {
+                    $('#DivNaicsCodCompany').hide();
+                    $('#DivNaicsNameCompany').show();
+                }
+            });
+
+
         });
 
 
         // tab one
-        $("#PrimaryBusinessType").change(function() {
-            var PrimaryBusinessType = $(this).val();
 
-            if (PrimaryBusinessType != 6) {
-                $('#DivNaicsCodCompany').show();
-                $('#DivNaicsNameCompany').hide();
-
-                $.get("{{ url('get_naics_code') }}" + '/' + PrimaryBusinessType, function(data) {
-                    //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-                    console.log(data);
-                    var _select = ''
-                    for (var i = 0; i < data.length; i++)
-                        _select += '<option value="' + data[i].id + '"  >' + data[i].code +
-                        ' ' + data[i]
-                        .name +
-                        '</option>';
-                    $("#NaicsCod").html(_select);
-                });
-            } else {
-                $('#DivNaicsCodCompany').hide();
-                $('#DivNaicsNameCompany').show();
-            }
-        });
 
 
         $("#ParticipatedH-2B").change(function() {

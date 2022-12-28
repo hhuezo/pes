@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\catalogue\NaicsCode;
 use App\Models\catalogue\NormalBusinessDays;
-use App\Models\catalogue\primaryBusinessType;
+use App\Models\catalogue\Industry;
 use App\Models\catalogue\County;
 use App\Models\catalogue\City;
 use App\Models\catalogue\CodeZip;
@@ -44,6 +44,33 @@ class EmployerController extends Controller
     public function create()
     {
 
+/*
+        $data = NaicsCode::get();
+        $a = array();
+        foreach($data  as $obj)
+        {
+            if(substr($obj->cn_description,-1,200) == 't')
+            {
+                //echo substr($obj->cn_description,-1,200).'<br>';
+                array_push($a,$obj->id);
+            }
+        }
+
+        $data_update = NaicsCode::whereIn('id',$a)->get();
+        foreach($data_update as $obj)
+        {
+            $naics = NaicsCode::findOrFail($obj->id);
+            $naics->cn_description = substr($obj->cn_description, 0,-1);
+            $naics->update();
+        }
+        dd( $a);
+        */
+
+       /* NaicsCode::whereIn('id',$a)
+        ->update(['active' => 1]);
+        dd($data);*/
+
+
         //dd(auth()->user()->id);
         $user =  auth()->user();
         $employer = $user->user_has_employer->first();
@@ -52,16 +79,16 @@ class EmployerController extends Controller
             return redirect('employer/' . $employer->id . '/edit');
         }
         $user = auth()->user();
-        $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
+        $industries = Industry::get();
         $states =  CityZip::select('czc_state_fips as id','czc_state as name')
         ->groupBy('czc_state_fips','czc_state')
         ->get();
 
         //$worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
         $normal_business_days = NormalBusinessDays::get();
-        $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
+
         return view('employer.create', [
-            'primary_business_types' => $primary_business_types, 'states' => $states, 'user' => $user, 'normal_business_days' => $normal_business_days, 'user' => $user
+            'industries' => $industries, 'states' => $states, 'user' => $user, 'normal_business_days' => $normal_business_days, 'user' => $user
         ]);
     }
 
@@ -80,7 +107,7 @@ class EmployerController extends Controller
             'year_business_established.required' => 'year_business_established is required',
             'number_employees_full_time.required' => 'number_employees_full_time is required',
             'primary_business_phone.required' => 'primary_business_phone is required',
-            'primary_business_type_id.required' => 'primary_business_type_id is required',
+            'industry_id.required' => 'industry_id is required',
             'naics_id.required' => 'naics_id is required',
             'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
         ];
@@ -93,7 +120,7 @@ class EmployerController extends Controller
             'year_business_established' => 'required|min:4',
             'number_employees_full_time' => 'required|min:1',
             'primary_business_phone' => 'required|min:10',
-            'primary_business_type_id' => 'required|min:0',
+            'industry_id' => 'required|min:0',
             'naics_id' => 'required|min:0',
             'year_end_gross_company_income' => 'required',
           ], $messages);
@@ -122,7 +149,7 @@ class EmployerController extends Controller
             $employer->quantity_year_has_participate_h2b = $request->get('quantity_year_has_participate_h2b');
         }
 
-        $employer->primary_business_type_id = $request->get('primary_business_type_id');
+        $employer->catalog_industry_id = $request->get('industry_id');
         $employer->naics_id = $request->get('naics_id');
 
         if ($request->get('naics_code') == 6) {
@@ -144,7 +171,7 @@ class EmployerController extends Controller
 
     public function get_naics_code($id)
     {
-        return NaicsCode::where('primary_business_type_id', '=', $id)->get();
+        return NaicsCode::where('industry_id', '=', $id)->get();
     }
 
 
@@ -162,20 +189,98 @@ class EmployerController extends Controller
     {
 
 
+
         $employer = Employer::findOrFail($id);
-        $naics = NaicsCode::where('primary_business_type_id', '=', $employer->naicsCode->primary_business_type_id)->get();
+
+
+
+        $naics = NaicsCode::where('industry_id', '=', $employer->naicsCode->industry_id)->get();
+
         $states =  CityZip::select('czc_state_fips as id','czc_state as name')
         ->groupBy('czc_state_fips','czc_state')
         ->get();
-        $worksites = EmployerWorksite::where('employer_id', '=', $id)->get();
+
+        $worksites_main = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id','=','3')->first();
+        $worksites_additional = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id','=','4')->get();
+
+       // dd($worksites_additional);
         $normal_business_days = NormalBusinessDays::get();
-        $primary_business_types = primaryBusinessType::where('active', '=', 1)->get();
+        $industries = Industry::get();
+
+
+
+        if($employer->principal_state_id != null)
+        {
+            $counties_principal = County::where('state','=',$employer->principal_state_id)->get();
+            $county_principal = County::findOrFail($employer->principal_county_id);
+            $cities_principal = City::where('state','=',$county_principal->state)->where('county','=',$county_principal->name)->get();
+            $city_principal = City::findOrFail($employer->principal_city_id);
+            $codes_zip_principal = CodeZip::where('czc_state_fips','=',$city_principal->state)->where('czc_county','=',$city_principal->county)->where('czc_city','=',$city_principal->name)->get();
+
+
+            $counties_mailing = County::where('state','=',$employer->mailing_state_id)->get();
+            $county_mailing = County::findOrFail($employer->mailing_county_id);
+            $cities_mailing = City::where('state','=',$county_mailing->state)->where('county','=',$county_mailing->name)->get();
+            $city_mailing = City::findOrFail($employer->mailing_city_id);
+            $codes_zip_mailing = CodeZip::where('czc_state_fips','=',$city_mailing->state)->where('czc_county','=',$city_mailing->county)->where('czc_city','=',$city_mailing->name)->get();
+
+        }
+        else{
+            $counties_principal = null;
+            $county_principal = null;
+            $cities_principal = null;
+            $city_principal = null;
+            $codes_zip_principal = null;
+
+
+            $counties_mailing = null;
+            $county_mailing = null;
+            $cities_mailing = null;
+            $city_mailing = null;
+            $codes_zip_mailing = null;
+
+
+        }
+
+        $work_sites_main = EmployerWorksite::where('employer_id','=',$id)->where('address_type_id','=',3)->first();
+
+        $work_sites_additional = EmployerWorksite::where('employer_id','=',$id)->where('address_type_id','=',4)->get();
+
+
+
+
+        if($work_sites_main)
+        {
+            //dd("hola uno");
+            $counties_work_sites = County::where('state','=',$work_sites_main->state_id_address)->get();
+            $county_work_site = County::findOrFail($work_sites_main->county_id);
+            $cities_work_site = City::where('state','=',$work_sites_main->state_id_address)->where('county','=',$county_work_site->name)->get();
+            $city_work_site = City::findOrFail($work_sites_main->city_id);
+            $codes_zip_work_site = CodeZip::where('czc_state_fips','=',$work_sites_main->state_id_address)->where('czc_county','=',$county_work_site->name)->where('czc_city','=',$city_work_site->name)->get();
+        }
+        else{
+            //dd("hola dos");
+            $counties_work_sites = null;
+            $cities_work_site =  null;
+            $city_work_site = null;
+            $codes_zip_work_site = null;
+
+        }
+
+
+
         //$principal_states = State::get();
 
+        //dd($employer);
+
         return view('employer.edit', [
-            'employer' => $employer, 'states' => $states, 'worksites' => $worksites,
-            'normal_business_days' => $normal_business_days, 'primary_business_types' => $primary_business_types, 'naics' => $naics
+            'employer' => $employer, 'states' => $states, 'worksites_main' => $worksites_main, 'worksites_additional' => $worksites_additional,
+            'normal_business_days' => $normal_business_days, 'industries' => $industries, 'naics' => $naics,
+            'counties_principal' => $counties_principal, 'cities_principal' => $cities_principal,  'codes_zip_principal' => $codes_zip_principal,
+            'counties_mailing' => $counties_mailing, 'cities_mailing' => $cities_mailing,  'codes_zip_mailing' => $codes_zip_mailing,
+            'work_sites_main'=>$work_sites_main, 'work_sites_additional'=>$work_sites_additional, 'counties_work_sites'=>$counties_work_sites, 'cities_work_site'=>$cities_work_site, 'codes_zip_work_site'=>$codes_zip_work_site
         ]);
+
     }
 
 
@@ -199,7 +304,7 @@ class EmployerController extends Controller
         $counties = County::where('state','=',$id)->get();
 
         return response()->json(
-            $counties,
+            $counties_mailing,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -214,7 +319,7 @@ class EmployerController extends Controller
         $counties = County::where('state','=',$id)->get();
 
         return response()->json(
-            $counties,
+            $counties_worksite,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -255,7 +360,7 @@ class EmployerController extends Controller
         $cities = City::where('state','=',$county->state)->where('county','=',$county->name)->get();
 
         return response()->json(
-            $cities,
+            $cities_mailing,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -275,7 +380,7 @@ class EmployerController extends Controller
         $cities = City::where('state','=',$county->state)->where('county','=',$county->name)->get();
 
         return response()->json(
-            $cities,
+            $cities_worksite,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -319,7 +424,7 @@ class EmployerController extends Controller
         //dd($codes_zip);
 
         return response()->json(
-            $codes_zip,
+            $codes_zip_mailing,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -341,7 +446,7 @@ class EmployerController extends Controller
         //dd($codes_zip);
 
         return response()->json(
-            $codes_zip,
+            $codes_zip_worksite,
             200,
             ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
             JSON_UNESCAPED_UNICODE
@@ -359,7 +464,7 @@ class EmployerController extends Controller
             'year_business_established.required' => 'year_business_established is required',
             'number_employees_full_time.required' => 'number_employees_full_time is required',
             'primary_business_phone.required' => 'primary_business_phone is required',
-            'primary_business_type_id.required' => 'primary_business_type_id is required',
+            'industry_id.required' => 'industry_id is required',
             'naics_id.required' => 'naics_id is required',
             'year_end_gross_company_income.required' => 'year_end_gross_company_income is required',
         ];
@@ -372,7 +477,7 @@ class EmployerController extends Controller
             'year_business_established' => 'required|min:4',
             'number_employees_full_time' => 'required|min:1',
             'primary_business_phone' => 'required|min:10',
-            'primary_business_type_id' => 'required|min:0',
+            'industry_id' => 'required|min:0',
             'naics_id' => 'required|min:0',
             'year_end_gross_company_income' => 'required|min:4',
           ], $messages);
@@ -400,7 +505,7 @@ class EmployerController extends Controller
             $employer->quantity_year_has_participate_h2b = null;
         }
 
-        $employer->primary_business_type_id = $request->get('primary_business_type_id');
+        $employer->catalog_industry_id = $request->get('industry_id');
 
 
         if ($request->get('naics_code') != 6)
@@ -529,18 +634,48 @@ class EmployerController extends Controller
         $employer->principal_zip_code = $request->get('principal_zip_code');
 
 
+        //alert('uno');
+
+        // $employerWorkSite = new EmployerWorksite();
+        // $employerWorkSite->employer_id = $employer->id;
+        // $employerWorkSite->type_address_id = 1;
+        // $employerWorkSite->state_id = $request->get('principal_state_id');
+        // $employerWorkSite->county_id = $request->get('principal_county_id');
+        // $employerWorkSite->city_id = $request->get('principal_city_id');
+        // $employerWorkSite->zip_code = $request->get('principal_zip_code');
+        // $employerWorkSite->street_address = $request->get('principal_street_address');
+        // $employerWorkSite->save();
+
+        //alert('dos');
+
+
+
         if ($mailing_address_same_above == 0) {
             $employer->mailing_address_same_above = 0;
             $employer->mailing_street_address = $request->get('mailing_street_address');
-            $employer->mailing_city_id = $request->get('mailing_city_id');
             $employer->mailing_state_id = $request->get('mailing_state_id');
+            $employer->mailing_county_id = $request->get('mailing_county_id');
+            $employer->mailing_city_id = $request->get('mailing_city_id');
             $employer->mailing_zip_code = $request->get('mailing_zip_code');
+
+
+            // $employerWorkSite = new EmployerWorksite();
+            // $employerWorkSite->employer_id = $employer->id;
+            // $employerWorkSite->type_address_id = 2;
+            // $employerWorkSite->state_id = $request->get('mailing_state_id');
+            // $employerWorkSite->county_id = $request->get('mailing_county_id');
+            // $employerWorkSite->city_id = $request->get('mailing_city_id');
+            // $employerWorkSite->zip_code = $request->get('mailing_zip_code');
+            // $employerWorkSite->street_address = $request->get('mailing_street_address');
+            // $employerWorkSite->save();
+
         } else {
             $employer->mailing_address_same_above = 1;
-            $employer->mailing_street_address = null;
-            $employer->mailing_city_id = null;
-            $employer->mailing_state_id = null;
-            $employer->mailing_zip_code = null;
+            $employer->mailing_street_address = $request->get('principal_street_address');
+            $employer->mailing_state_id = $request->get('principal_state_id');
+            $employer->mailing_county_id = $request->get('principal_county_id');
+            $employer->mailing_city_id = $request->get('principal_city_id');
+            $employer->mailing_zip_code = $request->get('principal_zip_code');
         }
         Alert::info('', 'Record saved');
         session_start();
@@ -601,9 +736,9 @@ class EmployerController extends Controller
                     'primary_contact_cellphone.required' => 'primary_contact_cellphone is required',
 
                     'main_worksite_location.required' => 'main_worksite_location is required',
-                    'main_worksite_city.required' => 'main_worksite_city is required',
-                    'main_worksite_country.required' => 'main_worksite_country is required',
-                    'main_worksite_state.required' => 'main_worksite_state is required',
+                    'main_worksite_city_id.required' => 'main_worksite_city_id is required',
+                    'main_worksite_county_id.required' => 'main_worksite_county_id is required',
+                    'main_worksite_state_id.required' => 'main_worksite_state_id is required',
                     'main_worksite_zip_code.required' => 'main_worksite_zip_code is required',
 
                 ];
@@ -627,14 +762,12 @@ class EmployerController extends Controller
                     'primary_contact_cellphone' => 'required|min:10',
 
                     'main_worksite_location' => 'required|min:4',
-                    'main_worksite_city' => 'required|min:4',
-                    'main_worksite_country' => 'required|min:4',
-                    'main_worksite_state' => 'required|min:0',
+                    'main_worksite_city_id' => 'required|min:0',
+                    'main_worksite_county_id' => 'required|min:0',
+                    'main_worksite_state_id' => 'required|min:0',
                     'main_worksite_zip_code' => 'required|min:5',
 
                   ], $messages);
-
-
 
             }else{
 
@@ -725,25 +858,7 @@ class EmployerController extends Controller
             }
         }
 
-
-
-
-
-
-
-
         //dd($request);
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -766,19 +881,96 @@ class EmployerController extends Controller
             $employer->signatory_email = $request->get('signatory_email');
             $employer->signatory_phone = $request->get('signatory_phone');
         } else {
-            $employer->signatory_name = null;
-            $employer->signatory_last_name = null;
-            $employer->signatory_job_title = null;
-            $employer->signatory_email = null;
-            $employer->signatory_phone = null;
+
+            $employer->signatory_name = $request->get('primary_contact_name');
+            $employer->signatory_last_name = $request->get('primary_contact_last_name');
+            $employer->signatory_job_title = $request->get('primary_contact_job_title');
+            $employer->signatory_email = $request->get('primary_contact_email');
+            $employer->signatory_phone = $request->get('primary_contact_phone');
+
         }
 
-        $employer->main_worksite_location = $request->get('main_worksite_location');
-        $employer->main_worksite_city = $request->get('main_worksite_city');
-        $employer->main_worksite_country = $request->get('main_worksite_country');
-        $employer->main_worksite_state = $request->get('main_worksite_state');
-        $employer->main_worksite_zip_code = $request->get('main_worksite_zip_code');
 
+        if ($is_main_worksite_location == '0') {
+
+            $cuenta = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 3)->get()->count();
+
+
+            if ($cuenta > 0){
+                $id_ews = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 3)->get()->first()->id;
+                $employerWorkSite =  EmployerWorksite::findOrFail($id_ews);
+
+                $employerWorkSite->employer_id = $employer->id;
+                $employerWorkSite->address_type_id = 3; //main worksites
+                $employerWorkSite->state_id_address = $request->get('main_worksite_state_id');
+                $employerWorkSite->county_id = $request->get('main_worksite_county_id');
+                $employerWorkSite->city_id = $request->get('main_worksite_city_id');
+                $employerWorkSite->zip_code_address = $request->get('main_worksite_zip_code');
+                $employerWorkSite->street_address = $request->get('main_worksite_location');
+                $employerWorkSite->update();
+            }else{
+                $employerWorkSite = new EmployerWorksite();
+                $employerWorkSite->employer_id = $employer->id;
+                $employerWorkSite->address_type_id = 3; //main worksites
+                $employerWorkSite->state_id_address = $request->get('main_worksite_state_id');
+                $employerWorkSite->county_id = $request->get('main_worksite_county_id');
+                $employerWorkSite->city_id = $request->get('main_worksite_city_id');
+                $employerWorkSite->zip_code_address = $request->get('main_worksite_zip_code');
+                $employerWorkSite->street_address = $request->get('main_worksite_location');
+                $employerWorkSite->save();
+            }
+
+
+
+
+        }else{ //sam as principal address
+
+            $cuenta = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 3)->get()->count();
+
+
+
+
+            if ($cuenta > 0){
+                $id_ews = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 3)->get()->first()->id;
+                $employerWorkSite =  EmployerWorksite::findOrFail($id_ews);
+
+                $principal_state_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_state_id;
+                $principal_county_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_county_id;
+                $principal_city_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_city_id;
+                $principal_zip_code = Employer::where('id', '=', $employer->id)->get()->first()->principal_zip_code;
+                $principal_street_address = Employer::where('id', '=', $employer->id)->get()->first()->principal_street_address;
+
+                $employerWorkSite->employer_id = $employer->id;
+                $employerWorkSite->address_type_id = 3; //main worksites
+                $employerWorkSite->state_id_address = $principal_state_id;
+                $employerWorkSite->county_id = $principal_county_id;
+                $employerWorkSite->city_id = $principal_city_id;
+                $employerWorkSite->zip_code_address = $principal_zip_code;
+                $employerWorkSite->street_address = $principal_street_address;
+                $employerWorkSite->update();
+            }else{
+
+                $principal_state_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_state_id;
+                $principal_county_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_county_id;
+                $principal_city_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_city_id;
+                $principal_zip_code = Employer::where('id', '=', $employer->id)->get()->first()->principal_zip_code;
+                $principal_street_address = Employer::where('id', '=', $employer->id)->get()->first()->principal_street_address;
+
+                $employerWorkSite = new EmployerWorksite();
+                $employerWorkSite->employer_id = $employer->id;
+                $employerWorkSite->address_type_id = 3; //main worksites
+                $employerWorkSite->state_id_address = $principal_state_id;
+                $employerWorkSite->county_id = $principal_county_id;
+                $employerWorkSite->city_id = $principal_city_id;
+                $employerWorkSite->zip_code_address = $principal_zip_code;
+                $employerWorkSite->street_address = $principal_street_address;
+                $employerWorkSite->save();
+
+            }
+
+        }
+
+        $employer->is_main_worksite_location = $is_main_worksite_location;
 
         Alert::info('', 'Record saved');
         session(['action' => '2']);
@@ -870,4 +1062,32 @@ class EmployerController extends Controller
     {
         //
     }*/
+
+    public function employer_additional_location(Request $request)
+    {
+        //dd("hola");
+
+        $employer_id= $request->get('employer_id');
+        $state_id_address= $request->get('state_id_address');
+        $county_id= $request->get('county_id');
+        $city_id= $request->get('city_id');
+        $zip_code_address= $request->get('zip_code_address');
+        $street_address= $request->get('street_address');
+
+
+        $employerWorkSite = new EmployerWorksite();
+        $employerWorkSite->employer_id = $employer_id;
+        $employerWorkSite->address_type_id = 4; //additional worksites
+        $employerWorkSite->state_id_address = $state_id_address;
+        $employerWorkSite->county_id = $county_id;
+        $employerWorkSite->city_id = $city_id;
+        $employerWorkSite->zip_code_address = $zip_code_address;
+        $employerWorkSite->street_address = $street_address;
+        $employerWorkSite->save();
+
+        Alert::info('', 'Record saved');
+        session(['action' => '2']);
+        return redirect('employer/' . $employer_id . '/edit');
+    }
+
 }

@@ -18,13 +18,16 @@ class EmployerWorksite extends Model
 
     protected $fillable = [
         'employer_id',
-        'street_address',
-        'city_address',
-        'country_address',
+        'type_address_id',
         'state_id_address',
-        'zip_code_address'
-
+        'county_id',
+        'city_id',
+        'zip_code',
+        'street_address'
     ];
+
+
+
 
     protected $guarded = [];
 
@@ -33,4 +36,25 @@ class EmployerWorksite extends Model
     {
         return $this->belongsTo('App\Models\catalogue\State', 'state_id_address', 'id');
     }
+
+    public function county()
+    {
+        return $this->belongsTo('App\Models\catalogue\County', 'county_id', 'id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\Models\catalogue\City', 'city_id', 'id');
+    }
+
+    public function employer()
+    {
+        return $this->belongsTo('App\Models\Employer', 'employer_id', 'id');
+    }
+
+    public function typeAddress()
+    {
+        return $this->belongsTo('App\Models\TypeAddress', 'type_address_id', 'id');
+    }
+
 }
