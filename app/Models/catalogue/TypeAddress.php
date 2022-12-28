@@ -5,10 +5,10 @@ namespace App\Models\catalogue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class primaryBusinessType extends Model
+class TypeAddress extends Model
 {
     use HasFactory;
-    protected $table = 'catalog_primary_business_type';
+    protected $table = 'catalog_type_address';
 
     protected $primaryKey = 'id';
 
@@ -16,9 +16,7 @@ class primaryBusinessType extends Model
 
 
     protected $fillable = [
-        'name_english',
-        'name_spanish',
-        'active'
+        'name'
     ];
 
     protected $guarded = [];

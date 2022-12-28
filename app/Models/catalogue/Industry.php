@@ -5,10 +5,10 @@ namespace App\Models\catalogue;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class State extends Model
+class Industry extends Model
 {
     use HasFactory;
-    protected $table = 'catalog_states';
+    protected $table = 'catalog_industries';
 
     protected $primaryKey = 'id';
 

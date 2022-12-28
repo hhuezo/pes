@@ -24,6 +24,7 @@ return [
     'PrincipalZipCode' => 'Principal Zip Code',
     'MailingAddress' => 'Mailing Address',
     'SameAsAbove'  => 'Same as above',
+    'SameAsLeft'  => 'Same as left',
     'MailingCity' => 'Mailing City',
     'MailingState' => 'Mailing State',
     'MailingCounty' => 'Mailing County',
@@ -65,6 +66,14 @@ return [
     'MainWorksiteCounty' => 'Main Worksite COUNTY',
     'MainWorksiteState' => 'Main Worksite State',
     'MainWorksiteZipCode'=> 'Main Worksite Zip Code',
+
+    'WorksiteStreetAddress' => 'Worksite Street Address',
+    'WorksiteCity' => 'Worksite City',
+    'WorksiteCounty' => 'Worksite COUNTY',
+    'WorksiteState' => 'Worksite State',
+    'WorksiteZipCode'=> 'Worksite Zip Code',
+
+
     'AdditionalEmployerWorksite' => 'Is there additional EMPLOYER Worksite(s) where H-2B will work, within a normal commute? i.e. Satellite office/​another branch',
     'AdditionalEmployerWorksiteAddress' => 'Additional Employer Worksite Address(es) that are not within a normal commute can be entered in the Temporary Need section of this form.',
     'AdditionalEmployerworksiteLocation' => 'Additional EMPLOYER worksite location(s) within a NORMAL COMMUTE:',
