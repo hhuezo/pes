@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NaicsCode extends Model
 {
     use HasFactory;
-    protected $table = 'catalog_naics_code';
+    protected $table = 'catalog_naics';
 
     protected $primaryKey = 'id';
 
@@ -16,9 +16,9 @@ class NaicsCode extends Model
 
 
     protected $fillable = [
-        'code',
-        'name',
-        'primary_business_type_id'
+        'cn_code',
+        'cn_desciption',
+        'industry_id'
 
     ];
 
