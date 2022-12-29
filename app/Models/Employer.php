@@ -34,7 +34,7 @@ class Employer extends Model
         'year_end_net_company_income',
         'principal_country',
         'principal_state_id',
-        'principal_city',
+        'principal_city_id',
         'principal_street_address',
         'principal_zip_code',
         'mailing_address_same_above',
@@ -84,6 +84,16 @@ class Employer extends Model
     public function naicsCode()
     {
         return $this->belongsTo('App\Models\catalogue\NaicsCode', 'naics_id', 'id');
+    }
+
+    public function principal_state()
+    {
+        return $this->belongsTo('App\Models\catalogue\State', 'principal_state_id', 'id');
+    }
+
+    public function principal_city()
+    {
+        return $this->belongsTo('App\Models\catalogue\City', 'principal_city_id', 'id');
     }
 
     public function user_has_employer()

@@ -82,7 +82,7 @@ Route::resource('job_request', JobRequestController::class);
 
 Route::resource('job_request_detail', JobRequestDetailController::class);
 Route::post('job_request_detail/delete', [JobRequestDetailController::class, 'delete']);
-
+Route::get('job_request/form9141/{id}', [JobRequestController::class, 'form9141']);
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);

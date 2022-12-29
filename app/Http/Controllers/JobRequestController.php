@@ -200,6 +200,13 @@ class JobRequestController extends Controller
 
     }
 
+    public function form9141($id)
+    {
+        $job_request = JobRequest::with('employer')->findOrFail($id);
+        //dd($job_request);
+        return view('reports.form9141', ['job_request' => $job_request]);
+    }
+
     public function destroy($id)
     {
         //

@@ -1,4 +1,5 @@
 @extends ('dashboard2')
+
 @section('contenido')
     @if (session()->has('action'))
         @php($action = session('action'))
@@ -667,17 +668,67 @@
                                                 @enderror
                                             </div>
 
+
+
                                         </div>
 
+
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.State') !!}</label>
+                                                <select class="form-control select2" name="contact_state_id"
+                                                    id="contact_state_id">
+                                                    <option value="">Select</option>
+                                                    @foreach ($states as $obj)
+                                                        <option value="{{ $obj->id }}">{{ $obj->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.County') !!}</label>
+                                                <select class="form-control select2" name="contact_county_id"
+                                                    id="contact_county_id">
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.City') !!}</label>
+                                                <select class="form-control select2" name="contact_city_id"
+                                                    id="contact_city_id">
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.ZipCode') !!}</label>
+                                                <select class="form-control select2" name="contact_zip_code"
+                                                    id="contact_zip_code">
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.StreetAddress') !!}</b></label>
+                                                <input type="text" name="contact_street_address" class="form-control">
+
+                                            </div>
+
+
+                                        </div>
+
+
+                                        <div class="col-md-12">&nbsp;</div>
 
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryContactListed') !!}</label>
+                                                <label><strong>{!! trans('employer.PrimaryContactListed') !!}</strong></label>
                                                 <select class="form-control" name="signed_all_documents"
                                                     id="signed_all_documents">
-
-
 
                                                     @if (old('signed_all_documents', $employer->signed_all_documents) == 0)
                                                         <option value="0" selected>
@@ -699,13 +750,16 @@
                                                         </option>
                                                     @endif
 
-
-
-
                                                 </select>
                                             </div>
-                                            <div id="DivSignatory">
+                                        </div>
+                                        <div class="col-md-12">
+                                            &nbsp;
+                                        </div>
 
+
+                                        <div id="DivSignatory" class="col-md-12 row">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.SignatoryName') !!}<b style="color: #FF9696">(*This field
                                                             is required
@@ -741,7 +795,8 @@
                                                         <div class="alert-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-
+                                            </div>
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>{!! trans('employer.SignatoryEmail') !!}<b style="color: #FF9696">(*This field
                                                             is required
@@ -770,7 +825,7 @@
                                             </div>
 
                                         </div>
-
+                                        <div class="col-m-12">&nbsp;&nbsp;</div>
 
 
 
@@ -1099,25 +1154,6 @@
                 <div class="modal-body">
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     <form method="POST" action="{{ url('employer_additional_location') }}">
                         @csrf
                         <div class="modal-header">
@@ -1384,269 +1420,144 @@
                 } else {
                     $('#DivMailin').show();
                 }
-
             });
 
 
+            //principal
 
-
-
-
-            // llenado de counties principal
             $("#PrincipalState").change(function() {
-                var PrincipalState = $(this).val();
-                if (PrincipalState > 0) {
-
-                    $.get("{{ url('get_counties') }}" + '/' + PrincipalState, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-
-
-                        $("#principal_county_id").html(_select);
-                    });
-                }
+                var State = $(this).val();
+                load_counties(State, "principal_county_id");
             });
 
-
-            // llenado de counties mailing
-            $("#MailingState").change(function() {
-                var MailingState = $(this).val();
-                if (MailingState > 0) {
-
-                    $.get("{{ url('get_counties') }}" + '/' + MailingState, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-
-
-                        $("#mailing_county_id").html(_select);
-                    });
-                }
-            });
-
-
-
-            // llenado de counties main_worksite
-            $("#MainworksiteState").change(function() {
-                var MailingState = $(this).val();
-
-                if (MailingState > 0) {
-
-                    $.get("{{ url('get_counties') }}" + '/' + MailingState, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-
-
-                        $("#main_worksite_county_id").html(_select);
-                    });
-                }
-            });
-
-
-            // llenado de counties worksite
-            $("#WorksiteState").change(function() {
-                var WorksiteState = $(this).val();
-                if (WorksiteState > 0) {
-
-                    $.get("{{ url('get_counties') }}" + '/' + WorksiteState, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-
-
-                        $("#county_id").html(_select);
-                    });
-                }
-            });
-
-
-
-
-
-
-
-
-
-            // llenado de cities principal
             $("#principal_county_id").change(function() {
-                var PrincipalCounty = $(this).val();
-
-
-                if (PrincipalCounty > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + PrincipalCounty, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-                        $("#principal_city_id").html(_select);
-                    });
-                }
-            });
-
-
-
-            // llenado de cities mailing
-            $("#mailing_county_id").change(function() {
-                var MailingCounty = $(this).val();
-
-
-                if (MailingCounty > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + MailingCounty, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-                        $("#mailing_city_id").html(_select);
-                    });
-                }
-            });
-
-
-            // llenado de cities main_worksite
-            $("#main_worksite_county_id").change(function() {
-                var MainWorksiteCounty = $(this).val();
-
-
-                if (MainWorksiteCounty > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + MainWorksiteCounty, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
-                            '</option>';
-                        $("#main_worksite_city_id").html(_select);
-                    });
-                }
-            });
-
-
-            // llenado de cities principal
-            $("#county_id").change(function() {
                 var County = $(this).val();
+                load_cities(County, "principal_city_id");
+            });
+
+            $("#principal_city_id").change(function() {
+                var City = $(this).val();
+                load_zip_cods(City, "principal_zip_code");
+            });
 
 
-                if (County > 0) {
-                    $.get("{{ url('get_cities') }}" + '/' + County, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
 
+
+            //Mailing
+            $("#MailingState").change(function() {
+                var State = $(this).val();
+                load_counties(State, "mailing_county_id");
+            });
+
+
+            $("#mailing_county_id").change(function() {
+                var County = $(this).val();
+                load_cities(County, "mailing_city_id");
+            });
+
+            $("#mailing_city_id").change(function() {
+                var State = $(this).val();
+                load_zip_cods(State, "mailing_zip_code");
+            });
+
+
+
+            //contact
+            $("#contact_state_id").change(function() {
+                var State = $(this).val();
+                load_counties(State, "contact_county_id");
+            });
+
+            $("#contact_county_id").change(function() {
+                var State = $(this).val();
+                load_cities(State, "contact_city_id");
+            });
+
+            $("#contact_city_id").change(function() {
+                var State = $(this).val();
+                load_zip_cods(State, "contact_zip_code");
+            });
+
+
+            //main_worksite
+            $("#MainworksiteState").change(function() {
+                var State = $(this).val();
+                load_counties(State, "main_worksite_county_id");
+            });
+
+
+            $("#main_worksite_county_id").change(function() {
+                var State = $(this).val();
+                load_cities(State, "main_worksite_city_id");
+            });
+
+
+            $("#main_worksite_city_id").change(function() {
+                var State = $(this).val();
+                load_zip_cods(State, "main_worksite_zip_code");
+            });
+
+
+            //modal
+            $("#WorksiteState").change(function() {
+                var State = $(this).val();
+                load_counties(State, "county_id");
+            });
+
+            $("#county_id").change(function() {
+                var State = $(this).val();
+                load_cities(State, "city_id");
+            });
+
+            $("#city_id").change(function() {
+                var State = $(this).val();
+                load_zip_cods(State, "zip_code_address");
+            });
+
+
+
+            function load_counties(id, control) {
+                if (id > 0) {
+                    var selector = "#" + control;
+                    //console.log(selector);
+                    $.get("{{ url('get_counties') }}" + '/' + id, function(data) {
                         var _select = '<option value="">Select</option>'
                         for (var i = 0; i < data.length; i++)
                             _select += '<option value="' + data[i].id + '"  >' + data[i].name +
                             '</option>';
-                        $("#city_id").html(_select);
+                        $(selector).html(_select);
                     });
                 }
-            });
+            }
 
 
-
-
-
-            // llenado de cities principal
-            $("#principal_city_id").change(function() {
-                var PrincipalCity = $(this).val();
-                if (PrincipalCity > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + PrincipalCity, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
+            function load_cities(id, control) {
+                if (id > 0) {
+                    var selector = "#" + control;
+                    //console.log(selector);
+                    $.get("{{ url('get_cities') }}" + '/' + id, function(data) {
                         var _select = '<option value="">Select</option>'
                         for (var i = 0; i < data.length; i++)
-
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
-                            .czc_zipcode + '</option>';
-
-                        $("#principal_zip_code").html(_select);
+                            _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                            '</option>';
+                        $(selector).html(_select);
                     });
                 }
+            }
 
-            });
-
-
-            // llenado de cities mailing
-            $("#mailing_city_id").change(function() {
-                var MailingCity = $(this).val();
-                if (MailingCity > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + MailingCity, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
+            function load_zip_cods(id, control) {
+                if (id > 0) {
+                    var selector = "#" + control;
+                    //console.log(selector);
+                    $.get("{{ url('get_zipcodes') }}" + '/' + id, function(data) {
+                        var _select = ''
                         for (var i = 0; i < data.length; i++)
-
                             _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
                             .czc_zipcode + '</option>';
-
-                        $("#mailing_zip_code").html(_select);
+                        $(selector).html(_select);
                     });
                 }
-
-            });
-
-
-
-            // llenado de cities main_worksite
-            $("#main_worksite_city_id").change(function() {
-                var MainWorksiteCity = $(this).val();
-                if (MainWorksiteCity > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + MainWorksiteCity, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
-                            .czc_zipcode + '</option>';
-
-                        $("#main_worksite_zip_code").html(_select);
-                    });
-                }
-
-            });
-
-
-            // llenado de zip codes principal
-            $("#city_id").change(function() {
-                var City = $(this).val();
-                if (City > 0) {
-                    $.get("{{ url('get_zipcodes') }}" + '/' + City, function(data) {
-                        //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
-
-                        var _select = '<option value="">Select</option>'
-                        for (var i = 0; i < data.length; i++)
-
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
-                            .czc_zipcode + '</option>';
-
-                        $("#zip_code_address").html(_select);
-                    });
-                }
-
-            });
-
-
-
-
-
-
-
+            }
 
 
 
