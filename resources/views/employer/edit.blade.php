@@ -680,10 +680,23 @@
                                                 <select class="form-control select2" name="contact_state_id"
                                                     id="contact_state_id">
                                                     <option value="">Select</option>
-                                                    @foreach ($states as $obj)
-                                                        <option value="{{ $obj->id }}">{{ $obj->name }}
-                                                        </option>
-                                                    @endforeach
+                                                    @if ($work_sites_contact)
+                                                        @foreach ($states as $obj)
+                                                            @if ($obj->id == $work_sites_contact->state_id_address)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                        @else
+                                                        @foreach ($states as $obj)
+                                                        <option value="{{ $obj->id }}">
+                                                            {{ $obj->name }}</option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
 
@@ -692,6 +705,19 @@
                                                 <label>{!! trans('employer.County') !!}</label>
                                                 <select class="form-control select2" name="contact_county_id"
                                                     id="contact_county_id">
+                                                    @if ($counties_work_sites_contact)
+                                                        @foreach ($counties_work_sites_contact as $obj)
+                                                            @if ($obj->id == $work_sites_contact->county_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
 
@@ -700,6 +726,19 @@
                                                 <label>{!! trans('employer.City') !!}</label>
                                                 <select class="form-control select2" name="contact_city_id"
                                                     id="contact_city_id">
+                                                    @if ($cities_work_site_contact)
+                                                        @foreach ($cities_work_site_contact as $obj)
+                                                            @if ($obj->id == $work_sites_contact->city_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
 
@@ -707,13 +746,34 @@
                                                 <label>{!! trans('employer.ZipCode') !!}</label>
                                                 <select class="form-control select2" name="contact_zip_code"
                                                     id="contact_zip_code">
+                                                    @if ($codes_zip_work_site_contact)
+                                                        @foreach ($codes_zip_work_site_contact as $obj)
+                                                            @if ($obj->czc_zipcode == $work_sites_contact->zip_code_address)
+                                                                <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                    {{ $obj->czc_zipcode }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->czc_zipcode }}">
+                                                                    {{ $obj->czc_zipcode }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </select>
                                             </div>
 
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.StreetAddress') !!}</b></label>
-                                                <input type="text" name="contact_street_address" class="form-control">
+                                                @if ($work_sites_contact)
+                                                    <input type="text" name="contact_street_address"
+                                                        value="{{ $work_sites_contact->street_address }}"
+                                                        class="form-control">
+                                                @else
+                                                    <input type="text" name="contact_street_address"
+                                                        class="form-control">
+                                                @endif
+
 
                                             </div>
 
