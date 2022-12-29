@@ -16,7 +16,7 @@ class State extends Model
 
 
     protected $fillable = [
-        'name'
+        'cs_state'
     ];
 
     protected $guarded = [];

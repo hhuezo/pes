@@ -698,6 +698,7 @@ class EmployerController extends Controller
 
         $employer = Employer::findOrFail($request->get('id'));
         $employer->primary_contact_name = $request->get('primary_contact_name');
+        $employer->contact_middle_name = $request->get('contact_middle_name');
         $employer->primary_contact_last_name = $request->get('primary_contact_last_name');
         $employer->primary_contact_job_title = $request->get('primary_contact_job_title');
         $employer->primary_contact_email = $request->get('primary_contact_email');

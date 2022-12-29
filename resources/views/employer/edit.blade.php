@@ -605,6 +605,14 @@
                                                 @enderror
                                             </div>
 
+
+                                            <div class="form-group">
+                                                <label>{!! trans('employer.contact_middle_name') !!}</label>
+                                                <input type="text" name="contact_middle_name"
+                                                    value="{{ old('contact_middle_name', $employer->contact_middle_name) }}"
+                                                    class="form-control">
+                                            </div>
+
                                             <div class="form-group">
                                                 <label>{!! trans('employer.Last') !!}<b style="color: #FF9696">(*This field
                                                         is required
@@ -691,10 +699,10 @@
                                                                     {{ $obj->name }}</option>
                                                             @endif
                                                         @endforeach
-                                                        @else
+                                                    @else
                                                         @foreach ($states as $obj)
-                                                        <option value="{{ $obj->id }}">
-                                                            {{ $obj->name }}</option>
+                                                            <option value="{{ $obj->id }}">
+                                                                {{ $obj->name }}</option>
                                                         @endforeach
                                                     @endif
                                                 </select>
@@ -1229,20 +1237,13 @@
                             <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 
-
                             <div class="form-group">
                                 <label>{!! trans('employer.WorksiteState') !!}</label>
                                 <select class="form-control select2" name="state_id_address" id="WorksiteState">
                                     <option value="">Select</option>
                                     @foreach ($states as $obj)
-                                        @if ($obj->id == $employer->state_id_address)
-                                            <option value="{{ $obj->id }}" selected>
-                                                {{ $obj->name }}
-                                            </option>
-                                        @else
-                                            <option value="{{ $obj->id }}">
-                                                {{ $obj->name }}</option>
-                                        @endif
+                                        <option value="{{ $obj->id }}">
+                                            {{ $obj->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -1254,21 +1255,6 @@
                                 <label>{!! trans('employer.WorksiteCounty') !!}</label>
                                 <select class="form-control select2" name="county_id" id="county_id"
                                     value="{{ old('county_id', $employer->county_id) }}">
-                                    @if ($counties_principal)
-                                        @foreach ($counties_principal as $obj)
-                                            @if ($obj->id == $employer->county_id)
-                                                <option value="{{ $obj->id }}" selected>
-                                                    {{ $obj->name }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $obj->id }}">
-                                                    {{ $obj->name }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-
-
                                 </select>
 
                             </div>
@@ -1279,20 +1265,6 @@
                                 <label>{!! trans('employer.WorksiteCity') !!}</label>
                                 <select class="form-control select2" name="city_id" id="city_id"
                                     value="{{ old('city_id', $employer->city_id) }}">
-                                    @if ($cities_principal)
-                                        @foreach ($cities_principal as $obj)
-                                            @if ($obj->id == $employer->city_id)
-                                                <option value="{{ $obj->id }}" selected>
-                                                    {{ $obj->name }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $obj->id }}">
-                                                    {{ $obj->name }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-
                                 </select>
 
                             </div>
@@ -1302,21 +1274,6 @@
                                 <label>{!! trans('employer.WorksiteZipCode') !!}</label>
                                 <select class="form-control select2" name="zip_code_address" id="zip_code_address"
                                     value="{{ old('zip_code_address', $employer->zip_code_address) }}">
-                                    @if ($codes_zip_principal)
-                                        @foreach ($codes_zip_principal as $obj)
-                                            @if ($obj->czc_zipcode == $employer->zip_code_address)
-                                                <option value="{{ $obj->czc_zipcode }}" selected>
-                                                    {{ $obj->czc_zipcode }}
-                                                </option>
-                                            @else
-                                                <option value="{{ $obj->czc_zipcode }}">
-                                                    {{ $obj->czc_zipcode }}
-                                                </option>
-                                            @endif
-                                        @endforeach
-                                    @endif
-
-
                                 </select>
 
                             </div>
@@ -1325,11 +1282,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="id" value="{{ $employer->id }}">
                                 <label>{!! trans('employer.WorksiteStreetAddress') !!}</label>
-                                <input type="text" name="street_address"
-                                    value="{{ old('street_address', $employer->street_address) }}" class="form-control">
-                                @error('street_address')
-                                    <div class="alert-danger">{{ $message }}</div>
-                                @enderror
+                                <input type="text" name="street_address"  class="form-control">
                             </div>
 
 

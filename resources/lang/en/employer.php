@@ -33,6 +33,7 @@ return [
     'AddContactPerson' => 'Would you like to add an Additional Contact Person?',
     'EmployerContactInformation'  => 'EMPLOYER CONTACT INFORMATION',
     'PrimaryContact'  => 'Primary Contact',
+    'contact_middle_name'=>'Middle name',
     'Name'  => 'First',
     'Last'  => 'Last',
     'PrimaryContactJobTitle'  => 'Primary Contact Job Title',

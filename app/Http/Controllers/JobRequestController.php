@@ -6,6 +6,7 @@ use App\Models\catalogue\City;
 use App\Models\catalogue\JobTitle;
 use App\Models\catalogue\MedicalDeduction;
 use App\Models\catalogue\State;
+use App\Models\EmployerWorksite;
 use App\Models\JobDeduction;
 use App\Models\JobRequest;
 use App\Models\JobRequestDetail;
@@ -203,8 +204,8 @@ class JobRequestController extends Controller
     public function form9141($id)
     {
         $job_request = JobRequest::with('employer')->findOrFail($id);
-        //dd($job_request);
-        return view('reports.form9141', ['job_request' => $job_request]);
+        $contact_worksite = EmployerWorksite::where('employer_id','=',$job_request->employer_id)->where('address_type_id','=',5)->first();
+        return view('reports.form9141', ['job_request' => $job_request,'contact_worksite' => $contact_worksite]);
     }
 
     public function destroy($id)
