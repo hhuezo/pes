@@ -49,4 +49,14 @@ class JobRequestDetail extends Model
     {
         return $this->belongsTo('App\Models\catalogue\JobTitle', 'job_title_id', 'id');
     }
+
+    public function job_request()
+    {
+        return $this->belongsTo('App\Models\JobRequest', 'request_id', 'id');
+    }
+
+    public function degree_code()
+    {
+        return $this->belongsTo('App\Models\catalogue\DegreeCode', 'minimum_education_id', 'id');
+    }
 }
