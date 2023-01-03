@@ -87,6 +87,9 @@ class JobRequestController extends Controller
     public function edit($id)
     {
         $job_request = JobRequest::findOrFail($id);
+
+        //dd($job_request);
+
         $job_titles = JobTitle::get();
         $details = JobRequestDetail::where('request_id', '=', $id)->get();
         return view('job_request.edit', ['job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details]);
@@ -94,17 +97,20 @@ class JobRequestController extends Controller
 
     public function update(Request $request, $id)
     {
-        $job_application = JobRequest::findOrFail($id);
 
-        $imageBase64 = str_replace("data:image/png;base64", "", $request->get('sign'));
+        dd("hola 1");
 
-        $uniqid = $id . ".png";
-        $ruteOut =  (public_path("sign/") . $uniqid);
-        $imageBinary = base64_decode($imageBase64);
-        $bytes = file_put_contents($ruteOut, $imageBinary);
+        // $job_application = JobRequest::findOrFail($id);
 
-        $job_application->signature = $uniqid;
-        $job_application->update();
+        // $imageBase64 = str_replace("data:image/png;base64", "", $request->get('sign'));
+
+        // $uniqid = $id . ".png";
+        // $ruteOut =  (public_path("sign/") . $uniqid);
+        // $imageBinary = base64_decode($imageBase64);
+        // $bytes = file_put_contents($ruteOut, $imageBinary);
+
+        // $job_application->signature = $uniqid;
+        // $job_application->update();
         Alert::info('', 'Record saved');
         return redirect('job_request/' . $id . '/edit');
 
@@ -114,6 +120,10 @@ class JobRequestController extends Controller
     public function job_request_deductions(Request $request)
     {
 
+        dd("hola 2");
+
+
+/*
         $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
         if($deduction)
         {
@@ -198,6 +208,8 @@ class JobRequestController extends Controller
 
             $deduction->save();
         }
+        */
+
         return back();
 
     }

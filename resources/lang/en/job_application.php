@@ -19,6 +19,11 @@ return [
     'uniform' => 'Is a UNIFORM required?',
     'message3' => 'Employer must provide workers AT NO CHARGE all tools, supplies, and equipment required to perform the job (including uniform).',
     'additional_space' => 'Additional space for notes, if needed.',
+    'additional_notes_housing' => 'Additional space for notes on Housing Deduction, if needed.',
+    'additional_notes_medical' => 'Additional space for notes on Medical/Dental/Vision and OTHER insurance deduction, if needed.',
+    'additional_notes_daily_transportation' => 'Additional space for notes on Daily Transportation, if needed.',
+    'any_additional_notes_daily_transportation' => 'Additional space for notes on Daily Transportation, if needed.',
+
     'notes' => 'Notes',
     'uniform_pieces' => 'List all required uniform pieces',
 
@@ -62,8 +67,18 @@ return [
 
     'HousingTitle' => 'Housing / Utilities',
     'DeductionAmount' => 'Enter the DEDUCTION amount per person, per WEEK',
+
+    'DeductionAmountMedical' => 'Enter the DEDUCTION amount for MEDICAL, per PAYCHECK:*',
+    'DeductionAmountDental' => 'Enter the DEDUCTION amount for DENTAL, per PAYCHECK:*',
+    'DeductionAmountVision' => 'Enter the DEDUCTION amount for VISION, per PAYCHECK:*',
+    'DeductionAmountOther' => 'Enter OTHER insurance and DEDUCTION amount, per PAYCHECK:*',
+    'PlansPremium' => 'Can be a range based on available plans/premiums.',
+
     'HousingDeduction' => 'Does the HOUSING DEDUCTION include UTILITIES?',
+    'PleaseUtilities' => 'Please explain how UTILITIES are paid/​handled and the cost (per worker) for UTILITIES:',
     'RequiredHousing' => 'Is a DEPOSIT required for Housing?',
+    'DepositAmount' => 'Enter the DEPOSIT amount:*',
+    'IsDepositRefundable' => 'Is the DEPOSIT refundable?*',
 
 
     'MedicalTitle' => 'Medical/Dental/Vision or Other Insurance',
@@ -71,7 +86,6 @@ return [
     'Medical' => 'Medical',
     'Dental' => 'Dental',
     'Vision' => 'Vision',
-    'DeductionAmountMedical' => 'Enter the DEDUCTION amount for Medical/​Dental/​Vision, per PAYCHECK',
     'CanBeRange' => 'Can be a range based on available plans/premiums',
 
 
@@ -122,15 +136,19 @@ return [
 
 
 
+
     'USWorker' => 'U.S. Worker Recruitment Information',
-    'StateWorkforce' => 'State Workforce Agency Account Password',
+    'StateWorkforceUsername' => 'State Workforce Agency Account Username',
+    'StateWorkforcePassword' => 'State Workforce Agency Account Password',
     'TelephoneNumber' => 'Telephone number for U.S. worker to apply for the job opportunity',
-    'EmailWhereUS' => 'Email where U.S. workers can apply for the job opportunity',
-    'EmailWhereUSOpportunity' => 'Website where U.S. workers can apply for the job opportunity',
+    'EmailWhereUS' => ' Email where U.S. workers can apply for the job opportunity:',
+    'WebsiteWhereUS' => ' Website where U.S. workers can apply for the job opportunity:',
+
     'AdditionalInformation' => 'ADDITIONAL INFORMATION',
     'IfApplicable' => 'If applicable, please describe any recent CHANGES/​EVENTS that occured which impacted your overall business last season, or that may impact your business in the coming season',
     'ForExample' => 'For example, natural disaster or other significant event, expansion/renovation, acquisition/merger, etc.',
     'PleaseAdditionalInformation' => 'Please use this space to add any additional information.',
+
 
 
 
@@ -141,14 +159,8 @@ return [
     'EnterDeduction' => 'Enter the DEDUCTION amount, per MEAL',
     'AdditionalNotesMeals' => 'Additional space for notes on Meals, if needed.',
 
-
     'NoDeductionsTitle' => 'If housing is not provided, please be prepared to help workers locate appropriate and affordable housing.',
-
-
-
-
-
-
+    'SelectDeductions' => 'Select insurance DEDUCTIONS available: ',
 
 
 

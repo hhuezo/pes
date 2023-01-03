@@ -195,7 +195,7 @@
                                     <tbody>
                                         @foreach ($details as $obj)
                                             <tr>
-                                                <td>{{ $obj->title->name }}</td>
+                                                <td>{{ $obj->title->title }}</td>
                                                 <td>{{ $obj->number_workers }}</td>
                                                 <td>{{ $obj->ant_workday_total_hours }}</td>
                                                 <td align="center">
@@ -637,7 +637,9 @@
                         <div class="tab-pane fade" id="tab4">
 
                             <h3>JOB REQUIREMENTS / CONDITIONS OF EMPLOYMENT</h3>
-                            <p>Background checks, drug testing and/or other job requirements and conditions of employment must not favor either U.S. or H-2B workers, they must be applied on an equal basis for all employees.</p>
+                            <p>Background checks, drug testing and/or other job requirements and conditions of employment
+                                must not favor either U.S. or H-2B workers, they must be applied on an equal basis for all
+                                employees.</p>
                             <h5>All job requirements and conditions of employment must be disclosed in the Job Order. </h5>
                             <h5>{!! trans('job_application.BackgroundChecks') !!} </h5>
 
@@ -657,9 +659,9 @@
                                         &nbsp;&nbsp;
                                         {!! trans('job_application.No') !!}
                                         @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked >
+                                            <input type="radio" value="0" checked>
                                         @else
-                                            <input type="radio" value="0" >
+                                            <input type="radio" value="0">
                                         @endif
                                         <br>
                                         <label for="exampleInputEmail1">{!! trans('job_application.AppliesAllApplicants') !!}</label>
@@ -680,9 +682,9 @@
                                         &nbsp;&nbsp;
                                         {!! trans('job_application.No') !!}
                                         @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked >
+                                            <input type="radio" value="0" checked>
                                         @else
-                                            <input type="radio" value="0" >
+                                            <input type="radio" value="0">
                                         @endif
                                     </div>
 
@@ -724,9 +726,9 @@
                                         &nbsp;&nbsp;
                                         {!! trans('job_application.No') !!}
                                         @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked >
+                                            <input type="radio" value="0" checked>
                                         @else
-                                            <input type="radio" value="0" >
+                                            <input type="radio" value="0">
                                         @endif
                                     </div>
 
@@ -771,9 +773,9 @@
                                         &nbsp;&nbsp;
                                         {!! trans('job_application.No') !!}
                                         @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked >
+                                            <input type="radio" value="0" checked>
                                         @else
-                                            <input type="radio" value="0" >
+                                            <input type="radio" value="0">
                                         @endif
                                         <br>
                                         {!! trans('job_application.AppliesUS') !!}
@@ -797,11 +799,14 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1"><strong>{!! trans('job_application.PleaseTransportation') !!}</strong></label>
                                     <br>
-                                    <input type="radio">  &nbsp;&nbsp;Arrange and pay directly for transportation and subsistence (recommended)
+                                    <input type="radio"> &nbsp;&nbsp;Arrange and pay directly for transportation and
+                                    subsistence (recommended)
                                     <br>
-                                    <input type="radio">  &nbsp;&nbsp;Reimburse the worker for transportation and subsistence
+                                    <input type="radio"> &nbsp;&nbsp;Reimburse the worker for transportation and
+                                    subsistence
                                     <br>
-                                    <input type="radio">  &nbsp;&nbsp;Provide advance payment (to the worker) for transportation and subsistence
+                                    <input type="radio"> &nbsp;&nbsp;Provide advance payment (to the worker) for
+                                    transportation and subsistence
                                     <br>
                                 </div>
 
@@ -817,40 +822,45 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.StateWorkforce') !!}</label>
-                                        <input type="date" name="start_date" value="{{ $job_request->start_date }}"
+                                        <label for="exampleInputUsername1">{!! trans('job_application.StateWorkforceUsername') !!}</label>
+                                        <input type="text" name="swa_username"
+                                            value="{{ old('swa_username', $job_request->swa_username) }}" required
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.StateWorkforcePassword') !!}</label>
+                                        <input type="text" name="swa_password"
+                                            value="{{ old('swa_password', $job_request->swa_password) }}" required
+                                            class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">{!! trans('job_application.TelephoneNumber') !!}</label>
+                                        <input type="text" name="application_phone_number"
+                                            value="{{ old('application_phone_number', $job_request->application_phone_number) }}"
                                             required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
-                                        <input type="date" name="end_date" value="{{ $job_request->end_date }}"
+                                        <label for="exampleInputEmail1">{!! trans('job_application.EmailWhereUS') !!}</label>
+                                        <input type="text" name="application_email"
+                                            value="{{ old('application_email', $job_request->application_email) }}"
                                             required class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
-                                        <input type="date" name="start_date" value="{{ $job_request->start_date }}"
-                                            required class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
-                                        <input type="date" name="end_date" value="{{ $job_request->end_date }}"
-                                            required class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
-                                        <input type="date" name="start_date" value="{{ $job_request->start_date }}"
+                                        <label for="exampleInputUsername1">{!! trans('job_application.WebsiteWhereUS') !!}</label>
+                                        <input type="text" name="application_website"
+                                            value="{{ old('application_website', $job_request->application_website) }}"
                                             required class="form-control">
                                     </div>
                                 </div>
@@ -860,6 +870,44 @@
 
 
                             </div>
+
+
+
+
+
+
+                            <div class="col-xl-12 col-xxl-12 row">
+                                <div class="col-sm-12">&nbsp;</div>
+                                <div class="col-sm-12">
+                                    <h3>{!! trans('job_application.AdditionalInformation') !!}</h3>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputUsername1">{!! trans('job_application.IfApplicable') !!}</label>
+                                        <input type="text" name="last_season_impact"
+                                            value="{{ old('last_season_impact', $job_request->last_season_impact) }}"
+                                            required class="form-control">
+                                        <label for="exampleInputUsername2">{!! trans('job_application.ForExample') !!}</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.AdditionalInformation') !!}</label>
+                                        <input type="text" name="additional_information"
+                                            value="{{ old('additional_information', $job_request->additional_information) }}"
+                                            required class="form-control">
+                                        <label for="exampleInputEmail2">{!! trans('job_application.PleaseAdditionalInformation') !!}</label>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12">&nbsp;</div>
+
+
+
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -15,17 +15,46 @@
                             required class="form-control">
                     </div>
 
+                    <div id="showPleaseUtilities">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">{!! trans('job_application.PleaseUtilities') !!}</label>
+                            <input type="number" min="1" step="0.01" name="explain_housing_utilities"
+                                required class="form-control">
+                        </div>
+                    </div>
+
+
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.RequiredHousing') !!}</label>
                         <br>
                         &nbsp;&nbsp; &nbsp;&nbsp;
                         {!! trans('job_application.Yes') !!}
-                        <input type="radio" name="is_deposit_required" value="1">
+                        <input type="radio" name="is_deposit_required" value="1" onClick="showDeposit()">
                         &nbsp;&nbsp;
                         {!! trans('job_application.No') !!}
-                        <input type="radio" name="is_deposit_required" checked value="1">
+                        <input type="radio" name="is_deposit_required" checked value="1" onClick="hideDeposit()">
                         &nbsp;&nbsp;
                         <br>
+                    </div>
+                    <div id="showIsDepositRequired">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">{!! trans('job_application.DepositAmount') !!}</label>
+                            <input type="number" min="1" step="0.01"
+                                name="deduction_housing_amount_person_week" required class="form-control">
+                        </div>
+
+                        <label for="exampleInputEmail1">{!! trans('job_application.IsDepositRefundable') !!}</label>
+                        <br>
+                        &nbsp;&nbsp; &nbsp;&nbsp;
+                        {!! trans('job_application.Yes') !!}
+                        <input type="radio" name="housing_utilities" value="1">
+                        &nbsp;&nbsp;
+                        {!! trans('job_application.No') !!}
+                        <input type="radio" name="housing_utilities" checked value="1">
+                        &nbsp;&nbsp;
+                        <br>
+
+
                     </div>
                 </div>
 
@@ -35,16 +64,16 @@
                         <br>
                         &nbsp;&nbsp; &nbsp;&nbsp;
                         {!! trans('job_application.Yes') !!}
-                        <input type="radio" name="housing_utilities" value="1">
+                        <input type="radio" name="housing_utilities" value="1" onClick="hideUtilities()">
                         &nbsp;&nbsp;
                         {!! trans('job_application.No') !!}
-                        <input type="radio" name="housing_utilities" checked value="1">
+                        <input type="radio" name="housing_utilities" checked value="1" onClick="showUtilities()">
                         &nbsp;&nbsp;
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
                         <input type="text" name="housing_notes" class="form-control">
-                        <label for="exampleInputEmail1">{!! trans('job_application.additional_space') !!}</label>
+                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_housing') !!}</label>
                     </div>
                 </div>
             </div>
@@ -53,34 +82,54 @@
 
     @if ($Medical == 1)
         <div class="col-sm-12">
+            <div>
+                <h4>
+                    <b>
+                        {!! trans('job_application.NoDeductionsTitle') !!}
+                    </b>
+                </h4>
+            </div>
+            <br>
+            <br>
+
+            <h4>
+                <b>
+                    {!! trans('job_application.MedicalTitle') !!}
+                </b>
+            </h4>
             <div class="card-header">
-                <h4 class="card-title">{!! trans('job_application.MedicalTitle') !!}</h4>
+
+                <h4 class="card-title">{!! trans('job_application.SelectDeductions') !!}</h4>
             </div>
             <div class="row">
 
                 <div class="col-md-3">
                     <div class="form-group">
-                       <input type="checkbox" id="ChkMedical" onchange="get_div_deductions_medical();">&nbsp;&nbsp; <label for="exampleInputEmail1">Medical</label>
+                        <input type="checkbox" id="ChkMedical" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <label for="exampleInputEmail1">Medical</label>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
-                       <input type="checkbox" id="ChkDental" onchange="get_div_deductions_medical();">&nbsp;&nbsp; <label for="exampleInputEmail1">Dental</label>
-                    </div>
-                </div>
-
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                       <input type="checkbox" id="ChkVision" onchange="get_div_deductions_medical();">&nbsp;&nbsp; <label for="exampleInputEmail1">Vision</label>
+                        <input type="checkbox" id="ChkDental" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <label for="exampleInputEmail1">Dental</label>
                     </div>
                 </div>
 
 
                 <div class="col-md-3">
                     <div class="form-group">
-                       <input type="checkbox" id="ChkOther" onchange="get_div_deductions_medical();">&nbsp;&nbsp; <label for="exampleInputEmail1">Other</label>
+                        <input type="checkbox" id="ChkVision" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <label for="exampleInputEmail1">Vision</label>
+                    </div>
+                </div>
+
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="checkbox" id="ChkOther" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <label for="exampleInputEmail1">Other</label>
                     </div>
                 </div>
             </div>
@@ -96,6 +145,13 @@
     @endif
 
     @if ($DailyTransportation == 1)
+        <div>
+            <h4>
+                <b>
+                    {!! trans('job_application.NoDeductionsTitle') !!}
+                </b>
+            </h4>
+        </div>
         <div class="col-sm-12">
             <div class="card-header">
                 <h4 class="card-title">{!! trans('job_application.DailyTransportationTitle') !!}</h4>
@@ -104,7 +160,8 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.DeductionPerWeek') !!}</label>
-                        <input type="number" step="0.01" name="deduction_daily_amount_person_week" required class="form-control">
+                        <input type="number" step="0.01" name="deduction_daily_amount_person_week" required
+                            class="form-control">
                     </div>
 
                 </div>
@@ -113,6 +170,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
                         <input type="text" name="daily_notes" class="form-control">
+                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_daily_transportation') !!}</label>
                     </div>
 
                 </div>
@@ -121,6 +179,13 @@
     @endif
 
     @if ($Other == 1)
+        <div>
+            <h4>
+                <b>
+                    {!! trans('job_application.NoDeductionsTitle') !!}
+                </b>
+            </h4>
+        </div>
         <div class="col-sm-12">
             <div class="card-header">
                 <h4 class="card-title">{!! trans('job_application.OtherTitle') !!} <br>({!! trans('job_application.listAdditionalDeduction') !!})</h4>
@@ -130,6 +195,7 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.OtherTitle') !!}</label>
                         <input type="text" name="other_deductions" required class="form-control">
+
                     </div>
 
                 </div>
@@ -140,8 +206,19 @@
     @if ($Meals == 1)
         <div class="col-sm-12">
             <div class="card-header">
+                <div>
+                    <h4>
+                        <b>
+                            {!! trans('job_application.NoDeductionsTitle') !!}
+                        </b>
+                    </h4>
+                </div>
+            </div>
+
+            <div>
                 <h4 class="card-title">{!! trans('job_application.MealsTitle') !!}</h4>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -179,7 +256,8 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.EnterDeduction') !!}</label>
-                        <input type="number" step="0.01" min="0.01" name="deduction_amount_per_meal" required class="form-control">
+                        <input type="number" step="0.01" min="0.01" name="deduction_amount_per_meal"
+                            required class="form-control">
                     </div>
                 </div>
 
@@ -190,8 +268,12 @@
 
 
     @if ($NoDeductions == 1)
-        <div class="col-sm-12">
-            <h4 class="card-title">{!! trans('job_application.NoDeductionsTitle') !!}</h4>
+        <div>
+            <h4>
+                <b>
+                    {!! trans('job_application.NoDeductionsTitle') !!}
+                </b>
+            </h4>
         </div>
     @endif
 
@@ -206,3 +288,43 @@
         </div>
     @endif
 </form>
+
+<script type="text/javascript">
+    document.getElementById('showIsDepositRequired').hidden = true;
+
+    function hideUtilities() {
+        //alert('ocultar');
+        // var element = document.getElementById("showPleaseUtilities");
+        // element.style.display = "none";
+
+        document.getElementById('showPleaseUtilities').hidden = true;
+
+
+    }
+
+    function showUtilities() {
+        //alert('mostrar');
+        // var element = document.getElementById("showPleaseUtilities");
+        // element.style.display = "show";
+        document.getElementById('showPleaseUtilities').hidden = false;
+    }
+
+
+
+    function hideDeposit() {
+        //alert('ocultar');
+        // var element = document.getElementById("showPleaseUtilities");
+        // element.style.display = "none";
+
+        document.getElementById('showIsDepositRequired').hidden = true;
+
+
+    }
+
+    function showDeposit() {
+        //alert('mostrar');
+        // var element = document.getElementById("showPleaseUtilities");
+        // element.style.display = "show";
+        document.getElementById('showIsDepositRequired').hidden = false;
+    }
+</script>
