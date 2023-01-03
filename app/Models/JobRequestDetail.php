@@ -38,7 +38,8 @@ class JobRequestDetail extends Model
         'ant_workday_sat_hour',
         'ant_workday_total_hours',
         'primary_shift_time',
-        'are_there_additional_shift_times'
+        'are_there_additional_shift_times',
+        'occupation_experience_id'
 
     ];
 
@@ -55,8 +56,19 @@ class JobRequestDetail extends Model
         return $this->belongsTo('App\Models\JobRequest', 'request_id', 'id');
     }
 
+    public function occupation_experience()
+    {
+        return $this->belongsTo('App\Models\catalogue\JobTitle', 'occupation_experience_id', 'id');
+    }
+
     public function degree_code()
     {
         return $this->belongsTo('App\Models\catalogue\DegreeCode', 'minimum_education_id', 'id');
     }
+
+    public function request_special_skills()
+    {
+        return $this->hasMany('App\SpecialSkillJobRequest');
+    }
+
 }

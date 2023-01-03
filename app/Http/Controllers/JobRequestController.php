@@ -10,6 +10,7 @@ use App\Models\EmployerWorksite;
 use App\Models\JobDeduction;
 use App\Models\JobRequest;
 use App\Models\JobRequestDetail;
+use App\Models\SpecialSkillJobRequest;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
@@ -206,7 +207,16 @@ class JobRequestController extends Controller
         $job_request = JobRequest::with('employer')->findOrFail($id);
         $request_details = JobRequestDetail::where('request_id','=',$id)->get();
         $contact_worksite = EmployerWorksite::where('employer_id','=',$job_request->employer_id)->where('address_type_id','=',5)->first();
-        return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite]);
+
+        $array_details = [];
+
+        foreach($request_details as $obj)
+        {
+            array_push($array_details,$obj->id);
+        }
+
+        $special_skills = SpecialSkillJobRequest::whereIn('request_detail_id',$array_details)->get();
+        return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite,'special_skills' => $special_skills]);
     }
 
     public function destroy($id)

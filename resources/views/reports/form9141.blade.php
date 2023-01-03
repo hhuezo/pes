@@ -400,7 +400,7 @@
 
         <tr>
             <td colspan="2">a. If “Yes” in question 3, specify the number of months of
-                training required <strong>{{ $detail->months_of_experience_required }}</strong>
+                training required <strong>{{  $detail->months_of_training_required }}</strong>
             </td>
             <td colspan="2">b. Indicate the field(s)/name(s) of training required §
                 (May list more than one related field and more than one type)
@@ -427,9 +427,9 @@
         </tr>
         <tr>
             <td colspan="2">a. If “Yes” in question 4, specify the number of months of
-                experience required</td>
+                experience required <strong>{{$detail->months_of_experience_required}}</strong> </td>
             <td colspan="2">
-                b. Indicate the occupation required §
+                b. Indicate the occupation required  <strong>{{  $detail->occupation_experience->title }}</strong>
             </td>
         </tr>
         <tr>
@@ -455,18 +455,13 @@
         <tr>
             <td colspan="4">a. If “Yes,” check all that apply and specify the requirement(s):</td>
         </tr>
+        @foreach ($special_skills as $obj)
+
         <tr>
-            <td colspan="4"><input type="checkbox"> (i) License/Certification:</td>
+            <td colspan="4"><input type="checkbox"> {{$obj->special_skill->name}} : <strong>{{$obj->detail}}</strong></td>
         </tr>
-        <tr>
-            <td colspan="4"><input type="checkbox"> (ii) Foreign Language:</td>
-        </tr>
-        <tr>
-            <td colspan="4"><input type="checkbox"> (iii) Residency/Fellowship:</td>
-        </tr>
-        <tr>
-            <td colspan="4"><input type="checkbox"> (iv) Other Special Skills or Requirements:</td>
-        </tr>
+
+        @endforeach
 
     </table>
 @endforeach
