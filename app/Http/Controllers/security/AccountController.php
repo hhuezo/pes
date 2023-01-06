@@ -27,6 +27,7 @@ class AccountController extends Controller
             $obj->role = $role->name;
         }
 
+
         $role = Role::findOrFail(5);
         $recluters = $role->user_has_role;
 

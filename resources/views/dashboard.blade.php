@@ -49,15 +49,23 @@
             font-weight: bold;
         }
 
+        body {
+            color: #6b6c6d;
+
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 1rem;
+            color: #6b6c6d;
+        }
+
         /* .nav-link , .card-title, .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link{
             color: #2763FF;
             font-weight: bold;
         }
 
-        body {
-            color: #2763FF;
 
-        }
         .form-control, .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper
         .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper
         .dataTables_paginate{
@@ -284,16 +292,19 @@
                     <li> <a href="{{ url('case_manager') }}" aria-expanded="false"><i
                                 class="fa fa-newspaper-o"></i><span class="nav-text">Case managers</span></a></li>
 
+                    @can('create job application')
+                        <li> <a href="{{ url('job_request') }}" aria-expanded="false"><i
+                                    class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
+                    @endcan
+                    <!--
                     <li> <a href="# " aria-expanded="false"><i class="fa fa-bell-o"></i><span
                                 class="nav-text">Pending tasks</span></a></li>
 
-                    <li> <a href="{{ url('job_request') }}" aria-expanded="false"><i
-                                class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
 
 
 
 
-                    <!-- <li class="nav-label first">Main Menu</li>
+                     <li class="nav-label first">Main Menu</li>
                     <!-- <li><a href="index.html"><i class="icon icon-single-04"></i><span class="nav-text">Dashboard</span></a>
                     </li> -->
                     <!-- <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i

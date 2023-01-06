@@ -202,12 +202,77 @@
                                                     &nbsp;&nbsp;
                                                     <i class="fa fa-trash fa-lg"
                                                         onclick="modal_delete({{ $obj->id }})"></i>
+                                                        &nbsp;&nbsp;
+                                                        <a href="{{ url('job_request_detail') }}/{{ $obj->id }}/edit" class="on-default edit-row">
+                                                            <i class="fa fa-pencil fa-lg"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach
 
                                     </tbody>
                                 </table>
+                            </div>
+
+
+
+
+                            <div class="col-lg-12">
+
+                                <!-- Default accordion -->
+                                <div id="accordion-one" class="accordion">
+
+                                    <div class="accordion__item">
+                                        <div class="accordion__header collapsed" data-toggle="collapse"
+                                            data-target="#default_collapseTwo">
+                                            <span class="accordion__header--text">Add Position</span>
+                                            <span class="accordion__header--indicator"></span>
+                                        </div>
+
+
+
+
+                                        <a href="{{url('job_request_detail/create')}}/{{$job_request->id}}"><br><button class="btn btn-success">Nuevo</button></a>
+                                        <div id="default_collapseTwo" class="collapse accordion__body"
+                                            data-parent="#accordion-one">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
 
 
@@ -928,14 +993,19 @@
                 show_multiple_employment_period();
                 show_div_uniform();
 
-                show_div_explain_benefits();
-                show_div_requeriments();
+
+
+
+
 
 
 
 
 
             });
+
+
+
 
             function show_multiple_employment_period() {
                 if (document.getElementById('need_h2b_workers_yes').checked == true) {
@@ -955,21 +1025,18 @@
 
 
 
-            function show_div_explain_benefits() {
-                if (document.getElementById('is_there_benefits').checked == true) {
-                    $('#div_explain_benefits').show();
-                } else {
-                    $('#div_explain_benefits').hide();
-                }
-            }
 
-            function show_div_requeriments() {
-                if (document.getElementById('are_there_any_requeriments').checked == true) {
-                    $('#div_requeriments').show();
-                } else {
-                    $('#div_requeriments').hide();
-                }
-            }
+
+
+
+
+
+
+
+
+
+
+
         </script>
 
 
@@ -981,39 +1048,7 @@
                 $('#modal-delete').modal('show');
             }
 
-            function total_horas() {
-                var horas = 0;
 
-                if (document.getElementById('ant_workday_sun_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_sun_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_mon_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_mon_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_tue_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_tue_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_wed_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_wed_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_thu_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_thu_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_fri_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_fri_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_sat_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_sat_hour').value);
-                }
-
-                document.getElementById('ant_workday_total_hours').value = horas;
-            }
         </script>
 
         <script>

@@ -47,7 +47,12 @@
                                             <td></td>
                                         @endif
 
-                                        <td>{{ $obj->countries->name }}</td>
+                                        @if ($obj->country_id)
+                                            <td>{{ $obj->countries->cc_country }}</td>
+                                        @else
+                                            <td></td>
+                                        @endif
+
                                         <td align="center">
                                             <a href="{{ url('user') }}/{{ $obj->id }}/edit"
                                                 class="on-default edit-row">
@@ -73,7 +78,11 @@
                                             <td></td>
                                         @endif
 
-                                        <td>{{ $obj->countries->name }}</td>
+                                        @if ($obj->country_id)
+                                            <td>{{ $obj->countries->cc_country }}</td>
+                                        @else
+                                            <td></td>
+                                        @endif
                                         <td align="center">
                                             <a href="{{ url('user') }}/{{ $obj->id }}/edit"
                                                 class="on-default edit-row">
@@ -137,7 +146,7 @@
                                     <label for="exampleInputEmail1">Country</label>
                                     <select name="country" class="form-control select2">
                                         @foreach ($countries as $obj)
-                                            <option value="{{ $obj->id }}">{{ $obj->name }}</option>
+                                            <option value="{{ $obj->id }}">{{ $obj->cc_country }}</option>
                                         @endforeach
                                     </select>
                                 </div>

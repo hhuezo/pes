@@ -19,6 +19,7 @@ class SpecialSkillJobRequest extends Model
         'request_detail_id ',
         'special_skill_id',
         'detail',
+        'is_alternate_skill',
 
     ];
 

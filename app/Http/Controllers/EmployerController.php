@@ -844,7 +844,7 @@ class EmployerController extends Controller
         $employerWorkSite->save();
 
         Alert::info('', 'Record saved');
-        session(['action' => '2']);
+        session(['action' => '4']);
         return redirect('employer/' . $employer_id . '/edit');
     }
 }

@@ -101,4 +101,40 @@ return [
     'reminder' => '<strong>Recordatorio:</strong> este es el número total de horas OFRECIDAS en una semana laboral típica. Se considera tiempo completo de 35 a 40 horas por semana.',
     'time_this_position' => 'Ingrese el tiempo de turno PRIMARIO para esta posición (descanso(s) incluido(s))',
     'shift_times_position' => '¿Hay turnos adicionales para este puesto?',
+
+
+    'Education' => 'Educación: Se requiere un diploma/título mínimo de EE. UU.',
+    'diploma_degree' => 'Si "Otro título" en la pregunta 1, especifique el diploma/título de EE. UU. requerido',
+    'study_required' => 'Indique la(s) especialización(es) y/o campo(s) de estudio requeridos (puede incluir más de una especialización relacionada y más de un campo)',
+    'second_diploma' => '¿El empleador requiere un segundo diploma/título de los EE. UU.?',
+    'indicate_second_diploma' => 'Si la respuesta es "Sí" en la pregunta 2, indique el segundo diploma/título de EE. UU. y la(s) especialización(es) y/o campo(s) de estudio requeridos ',
+    'opportunity_required' => '¿Se requiere capacitación para la oportunidad de trabajo? *',
+    'specify_number_months' => 'Si la respuesta es “Sí” en la pregunta 3, especifique el número de meses de capacitación requeridos',
+    'training_required' => ' Indique el(los) campo(s)/nombre(s) de la capacitación requerida (puede enumerar más de un campo relacionado y más de un tipo) ',
+    'experience_required' => 'Se requiere experiencia laboral',
+    'months_experience' => 'Si la respuesta es “Sí” en la pregunta 4, especifique el número de meses de experiencia requeridos',
+    'indicate_occupation_required' => 'Indique la ocupación requerida',
+    'other_requirements' => 'Habilidades especiales u otros requisitos: ¿Exige el empleador algún requisito específico o de otro tipo?',
+    'specify_requirement' => 'Si la respuesta es "Sí", marque todo lo que corresponda y especifique los requisitos',
+
+
+
+
+    'positionsupervise' => '¿Supervisa este puesto el trabajo de otros empleados?',
+    'title_occupation'=> 'Si la respuesta es "Sí", indique el(los) código(s) SOC y el(los) título(s) SOC de la(s) ocupación(es) de los empleados a supervisar',
+
+
+    'specify_alternative_requirements' => 'C. Si bien un empleador puede especificar requisitos alternativos, no se evaluará la equivalencia sustancial de los requisitos alternativos a los requisitos mínimos. (No aplica para H-2B)',
+    'alternate_education' => '1. ¿Se aceptan conjuntos alternativos de Educación, Capacitación y/o Experiencia?',
+    'ifc1' => 'Si c.1 es “Sí”, c.2, c.3 y c. 4 deben ser completados.',
+    'alternate_level_education' => '2. Especifique el nivel alternativo de educación: Diploma/título de EE. UU. aceptado',
+    'alternate_diploma_degree' => 'a. Si "Otro título" en la pregunta 2, especifique el diploma/título de EE. UU. aceptado',
+    'alternate_study_required' => 'b. Indique la(s) especialización(es) y/o campo(s) de estudio aceptado  (Puede enumerar más de una especialización relacionada y más de un campo)',
+    'alternate_training' => '3. ¿Se acepta capacitación alternativa para la oportunidad de trabajo?',
+    'alternate_specify_number_months' => 'a. Si la respuesta es "Sí" en la pregunta 3, especifique la cantidad de meses de capacitación alternativa aceptados',
+    'alternate_training_required' => 'b. Indique el(los) campo(s)/nombre(s) de la capacitación aceptada (puede enumerar más de un campo relacionado y más de un tipo)',
+    'alternate_experience_required' => '4. ¿Se acepta la experiencia laboral alternativa?',
+    'alternate_months_experience' => 'a. Si la respuesta es "Sí" en la pregunta 4, especifique el número de meses de experiencia alternativa aceptados',
+    'alternate_other_requirements' => '5. Habilidades especiales u otros requisitos: ¿Exige el empleador algún requisito específico o de otro tipo?',
+    'alternate_specify_requirement' => 'a. Si la respuesta es "Sí", marque todo lo que corresponda y especifique los requisitos ',
 ];

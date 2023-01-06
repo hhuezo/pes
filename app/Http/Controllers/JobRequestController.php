@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\catalogue\City;
+use App\Models\catalogue\DegreeCode;
 use App\Models\catalogue\JobTitle;
 use App\Models\catalogue\MedicalDeduction;
 use App\Models\catalogue\State;
@@ -92,7 +93,8 @@ class JobRequestController extends Controller
 
         $job_titles = JobTitle::get();
         $details = JobRequestDetail::where('request_id', '=', $id)->get();
-        return view('job_request.edit', ['job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details]);
+        $degree_codes = DegreeCode::get();
+        return view('job_request.edit', ['job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details, 'degree_codes' => $degree_codes]);
     }
 
     public function update(Request $request, $id)
@@ -230,6 +232,9 @@ class JobRequestController extends Controller
         $special_skills = SpecialSkillJobRequest::whereIn('request_detail_id',$array_details)->get();
         return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite,'special_skills' => $special_skills]);
     }
+
+
+
 
     public function destroy($id)
     {

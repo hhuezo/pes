@@ -81,8 +81,17 @@ Route::get('job_request/get_div_deductions_medical', [JobRequestController::clas
 Route::resource('job_request', JobRequestController::class);
 
 Route::resource('job_request_detail', JobRequestDetailController::class);
+Route::get('job_request_detail/create/{id}', [JobRequestDetailController::class,'create_detail']);
 Route::post('job_request_detail/delete', [JobRequestDetailController::class, 'delete']);
-Route::get('job_request/form9141/{id}', [JobRequestController::class, 'form9141']);
+Route::post('job_request_detail/job_requirements', [JobRequestDetailController::class, 'job_requirements']);
+Route::post('job_request_detail/job_offer_supervise', [JobRequestDetailController::class, 'job_offer_supervise']);
+Route::post('job_request_detail/job_requirements_alternative', [JobRequestDetailController::class, 'job_requirements_alternative']);
+
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);
+
+
+
+
+Route::get('job_request/form9141/{id}', [JobRequestController::class, 'form9141']);

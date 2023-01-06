@@ -188,6 +188,9 @@ return [
     'location_listed_above' => 'Is this position for the MAIN Worksite Location listed above?',
     'job_title' => 'Job Title',
     'Number_of_Workers' => 'Number of Workers',
+    'JobDuties' => 'Job Duties',
+    'JobDutiesDescription' => 'Description of the specific services or labor to be performed. * (All job duties must be disclosed. A description of the job duties
+    MUST begin in this space. One separate addendum will be accepted to fully compete the response.)',
 
     'workers_paid_position' => 'How are workers paid in this position?',
     'PayRate' => 'Current Pay Rate Offered',
@@ -215,4 +218,46 @@ return [
     'reminder' => '<strong>Reminder:</strong> this is the total number of hours OFFERED in a typical workweek. Full-time is considered 35-40 hours per week. ',
     'time_this_position' => 'Enter the PRIMARY shift time for this position (included break(s))',
     'shift_times_position' => 'Are there additional shift times for this position?',
+
+
+
+
+
+    'Education' => 'Education: Minimum U.S. diploma/degree required',
+    'diploma_degree' => 'If “Other degree” in question 1, specify the U.S. diploma/degree required',
+    'study_required' => 'Indicate the major(s) and/or field(s) of study required (May list more than one related major and more than one field) ',
+    'second_diploma' => ' Does the employer require a second U.S. diploma/degree?',
+    'indicate_second_diploma' => 'If “Yes” in question 2, indicate the second U.S. diploma/degree and the major(s) and/or field(s) of study required ',
+    'opportunity_required' => 'Is training for the job opportunity required? *',
+    'specify_number_months' => 'If “Yes” in question 3, specify the number of months of training required',
+    'training_required' => ' Indicate the field(s)/name(s) of training required (May list more than one related field and more than one type) ',
+    'experience_required' => 'Is employment experience required',
+    'months_experience' => ' If “Yes” in question 4, specify the number of months of experience required',
+    'indicate_occupation_required' => 'Indicate the occupation required',
+    'other_requirements' => 'Special Skills or Other Requirements: Does the employer require any specific or other requirements?',
+    'specify_requirement' => 'If “Yes,” check all that apply and specify the requirement(s)',
+
+
+
+    'position_supervise' => 'Does this position supervise the work of other employees?',
+    'title_occupation'=> 'If “Yes,” please indicate the SOC code(s) and SOC title(s) of the occupation(s) of the employees to be supervised:',
+
+
+
+
+    'specify_alternative_requirements' => 'C. While an employer may specify alternative requirements, the substantial equivalency of the alternative requirements to minimum requirements will not be evaluated. (Not applicable for H-2B)',
+    'alternate_education' => '1. Are alternate sets of Education, Training, and/or Experience accepted?',
+    'ifc1' => 'If c.1 is “Yes,” c.2, c.3, and c. 4 must be completed.',
+    'alternate_level_education' => '2. Specify the alternate level of education: U.S. diploma/degree accepted',
+    'alternate_diploma_degree' => 'a. If “Other degree” in question 2, specify the U.S. diploma/degree accepted',
+    'alternate_study_required' => 'b. Indicate the major(s) and/or field(s) of study accepted § (May list more than one related major and more than one field) ',
+    'alternate_training' => '3. Is alternate training for the job opportunity accepted?',
+    'alternate_specify_number_months' => 'a. If “Yes” in question 3, specify the number of months of alternate training accepted',
+    'alternate_training_required' => 'b. Indicate the field(s)/name(s) of training accepted (May list more than one related field and more than one type) ',
+    'alternate_experience_required' => '4. Is alternate employment experience accepted?',
+    'alternate_months_experience' => 'a. If “Yes” in question 4, specify the number of months of alternate experience accepted',
+    'alternate_other_requirements' => '5. Special Skills or Other Requirements: Does the employer require any specific or other requirements?',
+    'alternate_specify_requirement' => 'a. If “Yes,” check all that apply and specify the requirement(s) ',
+
+
 ];
