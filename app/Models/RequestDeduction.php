@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class JobRequest extends Model
+class RequestDeduction extends Model
 {
     use HasFactory;
-    protected $table = 'request';
+
+    protected $table = 'request_deduction';
 
     protected $primaryKey = 'id';
 
@@ -45,14 +46,8 @@ class JobRequest extends Model
         'meals_notes',
         'request_id',
         'date_added'
-
     ];
 
     protected $guarded = [];
 
-
-    public function employer()
-    {
-        return $this->belongsTo('App\Models\Employer', 'employer_id', 'id');
-    }
 }

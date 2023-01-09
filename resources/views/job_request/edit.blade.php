@@ -586,52 +586,7 @@
                         </div>
                         <div class="tab-pane fade" id="tab3">
 
-                            <div class="col-xl-12 col-xxl-12 row">
-                                <div class="col-sm-12">&nbsp;</div>
-                                <div class="col-md-12">
-                                    <h3>{!! trans('job_application.tab3_title') !!}</h3>
-                                    <p>{!! trans('job_application.tab3_title2') !!}</p>
-                                    <h5>{!! trans('job_application.tab3_title3') !!}</h5>
-                                    <div class="form-group">
-                                        <input type="hidden" id="request_id" value="{{ $job_request->id }}">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.select_deductions') !!}</label>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <input type="checkbox" id="Housing" name="Housing"
-                                                    onclick="get_div_tab3();"> <label
-                                                    for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label><br>
-                                                <input type="checkbox" id="Medical" name="Medical"
-                                                    onclick="get_div_tab3();"> <label
-                                                    for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label><br>
-                                                <input type="checkbox" id="DailyTransportation"name="DailyTransportation"
-                                                    onclick="get_div_tab3();"> <label
-                                                    for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
-                                            </div>
 
-                                            <div class="col-md-6">
-                                                <input type="checkbox" id="Other" name="Other"
-                                                    onclick="get_div_tab3();"> <label
-                                                    for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label><br>
-                                                <input type="checkbox" id="Meals" name="Meals"
-                                                    onclick="get_div_tab3();"> <label
-                                                    for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label><br>
-                                                <input type="checkbox" id="NoDeductions" name="NoDeductions"
-                                                    onclick="get_div_tab3();"> <label
-                                                    for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
-                                            </div>
-
-                                            <div class="col-sm-12">&nbsp;</div>
-                                            <div class="col-sm-12">&nbsp;</div>
-
-                                            <div id="content" class="col-sm-12 row">
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
 
                         </div>
                         <div class="tab-pane fade" id="tab4">
@@ -812,6 +767,9 @@
 
                             </div>
                             <p>{!! trans('job_application.message6') !!}</p>
+
+
+
                         </div>
 
                         <div class="tab-pane fade  show active" id="tab5">
@@ -915,198 +873,777 @@
         </div>
 
 
+        <form method="POST" action="{{ url('job_request_deductions') }}">
+            <div class="col-xl-12 col-xxl-12 row">
+                <div class="col-sm-12">&nbsp;</div>
+                <div class="col-md-12">
+                    <h3>{!! trans('job_application.tab3_title') !!}</h3>
+                    <p>{!! trans('job_application.tab3_title2') !!}</p>
+                    <h5>{!! trans('job_application.tab3_title3') !!}</h5>
+                    <div class="form-group">
+                        <input type="hidden" id="request_id" value="{{ $job_request->id }}">
+                        <label for="exampleInputUsername1">{!! trans('job_application.select_deductions') !!}</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="checkbox" id="Housing" name="Housing" onclick="validHousing();"> <label
+                                    for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label><br>
+                                <input type="checkbox" id="Medical" name="Medical" onclick="validMedical();"> <label
+                                    for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label><br>
+                                <input type="checkbox" id="DailyTransportation"name="DailyTransportation"
+                                    onclick="validDaily();"> <label
+                                    for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
+                            </div>
+
+                            <div class="col-md-6">
+                                <input type="checkbox" id="Other" name="Other" onclick="validOther();"> <label
+                                    for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label><br>
+                                <input type="checkbox" id="Meals" name="Meals" onclick="validMeals();"> <label
+                                    for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label><br>
+                                <input type="checkbox" id="NoDeductions" name="NoDeductions"
+                                    onclick="validNoDeductions();"> <label
+                                    for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
+                            </div>
+
+                            <div class="col-sm-12">&nbsp;</div>
+                            <div class="col-sm-12">&nbsp;</div>
+
+                            <div id="content" class="col-sm-12 row">
+
+                            </div>
 
 
 
 
-        @include('sweetalert::alert')
+                        </div>
+                    </div>
+
+                </div>
+            </div>
 
 
-        <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                show_multiple_employment_period();
-                show_div_uniform();
+            @csrf
+            {{-- divHousing --}}
+            <div id="divHousing">
+                <div class="col-sm-12">
+                    <div class="card-header">
+                        <h4 class="card-title">{!! trans('job_application.HousingTitle') !!}</h4>
 
-                show_div_explain_benefits();
-                show_div_requeriments();
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmount') !!}</label>
+                                <input type="number" min="1" step="0.01"
+                                    name="deduction_housing_amount_person_week"
+                                    value="{{ old('deduction_housing_amount_person_week') }}" class="form-control">
+                            </div>
+
+                            <div id="showPleaseUtilities">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">{!! trans('job_application.PleaseUtilities') !!}</label>
+                                    <input type="text" name="explain_housing_utilities"
+                                        value="{{ old('explain_housing_utilities') }}" class="form-control">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.RequiredHousing') !!}</label>
+                                <br>
+                                &nbsp;&nbsp; &nbsp;&nbsp;
+                                {!! trans('job_application.Yes') !!}
+                                <input type="radio" name="is_deposit_required" id="is_deposit_required" value="1"
+                                    onClick="validIsDeposit()">
+                                &nbsp;&nbsp;
+                                {!! trans('job_application.No') !!}
+                                <input type="radio" name="is_deposit_required" id="is_deposit_required" checked
+                                    value="1" onClick="validIsDeposit()">
+                                &nbsp;&nbsp;
+                                <br>
+                            </div>
+                            <div id="showIsDepositRequired">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">{!! trans('job_application.DepositAmount') !!}</label>
+                                    <input type="number" min="1" step="0.01" name="deposit_amount"
+                                        class="form-control">
+                                </div>
+
+                                <label for="exampleInputEmail1">{!! trans('job_application.IsDepositRefundable') !!}</label>
+                                <br>
+                                &nbsp;&nbsp; &nbsp;&nbsp;
+                                {!! trans('job_application.Yes') !!}
+                                <input type="radio" name="is_deposit_refundable" value="1">
+                                &nbsp;&nbsp;
+                                {!! trans('job_application.No') !!}
+                                <input type="radio" name="is_deposit_refundable" checked value="1">
+                                &nbsp;&nbsp;
+                                <br>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.HousingDeduction') !!}</label>
+                                <br>
+                                &nbsp;&nbsp; &nbsp;&nbsp;
+                                {!! trans('job_application.Yes') !!}
+                                <input type="radio" name="housing_utilities" id="housing_utilities" value="1"
+                                    onClick="validUtilities()">
+                                &nbsp;&nbsp;
+                                {!! trans('job_application.No') !!}
+                                <input type="radio" name="housing_utilities" id="housing_utilities" checked
+                                    value="1" onClick="validUtilities()">
+                                &nbsp;&nbsp;
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                <input type="text" name="housing_notes" value="{{ old('housing_notes') }}"
+                                    class="form-control">
+                                <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_housing') !!}</label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            {{-- divMedical --}}
+            <div id="divMedical">
+                <div class="col-sm-12">
+                    <div>
+                        <h4>
+                            <b>
+                                {!! trans('job_application.NoDeductionsTitle') !!}
+                            </b>
+                        </h4>
+                    </div>
+                    <br>
+                    <br>
+
+                    <h4>
+                        <b>
+                            {!! trans('job_application.MedicalTitle') !!}
+                        </b>
+                    </h4>
+                    <div class="card-header">
+
+                        <h4 class="card-title">{!! trans('job_application.SelectDeductions') !!}</h4>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="checkbox" id="ChkMedical" onchange="validDeductionMedical();">&nbsp;&nbsp;
+                                <label for="exampleInputEmail1">Medical</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="checkbox" id="ChkDental" onchange="validDeductionDental();">&nbsp;&nbsp;
+                                <label for="exampleInputEmail1">Dental</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="checkbox" id="ChkVision" onchange="validDeductionVision();">&nbsp;&nbsp;
+                                <label for="exampleInputEmail1">Vision</label>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="checkbox" id="ChkOther" onchange="validDeductionOther();">&nbsp;&nbsp;
+                                <label for="exampleInputEmail1">Other</label>
+                            </div>
+                        </div>
+                    </div>
 
 
 
 
 
-            });
 
-            function show_multiple_employment_period() {
-                if (document.getElementById('need_h2b_workers_yes').checked == true) {
-                    $('#div_multiple_employment_period').show();
-                } else {
-                    $('#div_multiple_employment_period').hide();
-                }
+                    <div id="divDeductionMedical">
+                        <div class="col-sm-12">
+                            <div class="card-header">
+                                <h4 class="card-title"></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountMedical') !!}</label>
+                                        <input type="number" step="0.01" name="deduction_medical_paycheck"
+                                            class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                        <input type="text" name="deduction_medical_note" class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="divDeductionDental">
+                        <div class="col-sm-12">
+                            <div class="card-header">
+                                <h4 class="card-title"></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountDental') !!}</label>
+                                        <input type="number" step="0.01" name="deduction_dental_paycheck"
+                                            class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                        <input type="text" name="deduction_dental_note" class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="divDeductionVision">
+                        <div class="col-sm-12">
+                            <div class="card-header">
+                                <h4 class="card-title"></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountVision') !!}</label>
+                                        <input type="number" step="0.01" name="deduction_vision_paycheck"
+                                            class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                        <input type="text" name="deduction_vision_note" class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div id="divDeductionOther">
+                        <div class="col-sm-12">
+                            <div class="card-header">
+                                <h4 class="card-title"></h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountOther') !!}</label>
+                                        <input type="number" step="0.01" name="deduction_other_paycheck"
+                                            class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                        <input type="text" name="deduction_other_note" class="form-control">
+                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+
+                <div class="col-sm-12" id="div_deductions">
+                </div>
+
+            </div>
+
+
+
+            {{-- divDaily --}}
+            <div id="divDaily">
+                <div>
+                    <h4>
+                        <b>
+                            {!! trans('job_application.NoDeductionsTitle') !!}
+                        </b>
+                    </h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="card-header">
+                        <h4 class="card-title">{!! trans('job_application.DailyTransportationTitle') !!}</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.DeductionPerWeek') !!}</label>
+                                <input type="number" step="0.01" name="deduction_daily_amount_person_week"
+                                    class="form-control">
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                <input type="text" name="daily_notes" class="form-control">
+                                <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_daily_transportation') !!}</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="divOther">
+                <div>
+                    <h4>
+                        <b>
+                            {!! trans('job_application.NoDeductionsTitle') !!}
+                        </b>
+                    </h4>
+                </div>
+                <div class="col-sm-12">
+                    <div class="card-header">
+                        <h4 class="card-title">{!! trans('job_application.OtherTitle') !!} <br>({!! trans('job_application.listAdditionalDeduction') !!})</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.OtherTitle') !!}</label>
+                                <input type="text" name="other_deductions" class="form-control">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="divMeals">
+                <div class="col-sm-12">
+                    <div class="card-header">
+                        <div>
+                            <h4>
+                                <b>
+                                    {!! trans('job_application.NoDeductionsTitle') !!}
+                                </b>
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="card-title">{!! trans('job_application.MealsTitle') !!}</h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.MealsPerShift') !!}</label>
+                                <input type="number" min="1" name="how_many_meals_provided"
+                                    class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.EnterCost') !!}</label>
+                                <input type="number" step="0.01" min="0.01" name="cost_per_meal"
+                                    class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                <input type="text" name="meals_notes" class="form-control">
+                                <label for="exampleInputEmail1">{!! trans('job_application.AdditionalNotesMeals') !!}</label>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.ThereCost') !!}</label>
+                                <br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                {!! trans('job_application.Yes') !!}
+                                <input type="radio" name="is_there_costo_per_meal" value="1">
+                                &nbsp;&nbsp;
+                                {!! trans('job_application.No') !!}
+                                <input type="radio" name="is_there_costo_per_meal" checked value="1">
+                                &nbsp;&nbsp;
+                                <br>
+                                <br>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">{!! trans('job_application.EnterDeduction') !!}</label>
+                                <input type="number" step="0.01" min="0.01" name="deduction_amount_per_meal"
+                                    class="form-control">
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="divNoDeductions">
+                <div>
+                    <h4>
+                        <b>
+                            {!! trans('job_application.NoDeductionsTitle') !!}
+                        </b>
+                    </h4>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12 form-group">
+                <button type="submit" class="btn btn-primary float-right">Next</button>
+            </div>
+
+        </form>
+    </div>
+
+    @include('sweetalert::alert')
+
+
+    <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            show_multiple_employment_period();
+            show_div_uniform();
+
+            show_div_explain_benefits();
+            show_div_requeriments();
+
+
+            validHousing();
+            validMedical();
+            validDaily();
+            validOther();
+            validMeals();
+            validNoDeductions();
+            validIsDeposit();
+            validUtilities();
+
+            validDeductionMedical();
+            validDeductionDental();
+            validDeductionVision();
+            validDeductionOther();
+
+
+
+        });
+
+        function show_multiple_employment_period() {
+            if (document.getElementById('need_h2b_workers_yes').checked == true) {
+                $('#div_multiple_employment_period').show();
+            } else {
+                $('#div_multiple_employment_period').hide();
+            }
+        }
+
+        function show_div_uniform() {
+            if (document.getElementById('is_uniform_required').checked == true) {
+                $('#div_uniform').show();
+            } else {
+                $('#div_uniform').hide();
+            }
+        }
+
+
+
+        function show_div_explain_benefits() {
+            if (document.getElementById('is_there_benefits').checked == true) {
+                $('#div_explain_benefits').show();
+            } else {
+                $('#div_explain_benefits').hide();
+            }
+        }
+
+        function show_div_requeriments() {
+            if (document.getElementById('are_there_any_requeriments').checked == true) {
+                $('#div_requeriments').show();
+            } else {
+                $('#div_requeriments').hide();
+            }
+        }
+    </script>
+
+
+
+
+    <script>
+        function modal_delete(id) {
+            document.getElementById('id_detail').value = id;
+            $('#modal-delete').modal('show');
+        }
+
+        function total_horas() {
+            var horas = 0;
+
+            if (document.getElementById('ant_workday_sun_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_sun_hour').value);
             }
 
-            function show_div_uniform() {
-                if (document.getElementById('is_uniform_required').checked == true) {
-                    $('#div_uniform').show();
-                } else {
-                    $('#div_uniform').hide();
-                }
+            if (document.getElementById('ant_workday_mon_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_mon_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_tue_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_tue_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_wed_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_wed_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_thu_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_thu_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_fri_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_fri_hour').value);
+            }
+
+            if (document.getElementById('ant_workday_sat_hour').value != "") {
+                horas += parseInt(document.getElementById('ant_workday_sat_hour').value);
+            }
+
+            document.getElementById('ant_workday_total_hours').value = horas;
+        }
+    </script>
+
+    <script>
+        function get_div_deductions_medical() {
+            var ChkMedical = 0;
+            var ChkDental = 0;
+            var ChkVision = 0;
+            var ChkOther = 0;
+
+            if (document.getElementById('ChkMedical').checked == true) {
+                var ChkMedical = 1;
+            }
+            if (document.getElementById('ChkDental').checked == true) {
+                var ChkDental = 1;
+            }
+            if (document.getElementById('ChkVision').checked == true) {
+                var ChkVision = 1;
+            }
+            if (document.getElementById('ChkOther').checked == true) {
+                var ChkOther = 1;
             }
 
 
-
-            function show_div_explain_benefits() {
-                if (document.getElementById('is_there_benefits').checked == true) {
-                    $('#div_explain_benefits').show();
-                } else {
-                    $('#div_explain_benefits').hide();
+            var parametros = {
+                "ChkMedical": ChkMedical,
+                "ChkDental": ChkDental,
+                "ChkVision": ChkVision,
+                "ChkOther": ChkOther,
+            };
+            $.ajax({
+                type: "get",
+                url: "{{ url('job_request/get_div_deductions_medical') }}",
+                data: parametros,
+                success: function(data) {
+                    console.log(data);
+                    $('#div_deductions').html(data);
                 }
+            })
+
+
+        }
+
+        function get_div_tab3() {
+            var Housing = 0;
+            var Medical = 0;
+            var DailyTransportation = 0;
+            var Other = 0;
+            var Meals = 0;
+            var NoDeductions = 0;
+
+            if (document.getElementById('Housing').checked == true) {
+                var Housing = 1;
             }
 
-            function show_div_requeriments() {
-                if (document.getElementById('are_there_any_requeriments').checked == true) {
-                    $('#div_requeriments').show();
-                } else {
-                    $('#div_requeriments').hide();
-                }
-            }
-        </script>
-
-
-
-
-        <script>
-            function modal_delete(id) {
-                document.getElementById('id_detail').value = id;
-                $('#modal-delete').modal('show');
+            if (document.getElementById('Medical').checked == true) {
+                var Medical = 1;
             }
 
-            function total_horas() {
-                var horas = 0;
-
-                if (document.getElementById('ant_workday_sun_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_sun_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_mon_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_mon_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_tue_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_tue_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_wed_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_wed_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_thu_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_thu_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_fri_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_fri_hour').value);
-                }
-
-                if (document.getElementById('ant_workday_sat_hour').value != "") {
-                    horas += parseInt(document.getElementById('ant_workday_sat_hour').value);
-                }
-
-                document.getElementById('ant_workday_total_hours').value = horas;
-            }
-        </script>
-
-        <script>
-            function get_div_deductions_medical() {
-                var ChkMedical = 0;
-                var ChkDental = 0;
-                var ChkVision = 0;
-                var ChkOther = 0;
-
-                if (document.getElementById('ChkMedical').checked == true) {
-                    var ChkMedical = 1;
-                }
-                if (document.getElementById('ChkDental').checked == true) {
-                    var ChkDental = 1;
-                }
-                if (document.getElementById('ChkVision').checked == true) {
-                    var ChkVision = 1;
-                }
-                if (document.getElementById('ChkOther').checked == true) {
-                    var ChkOther = 1;
-                }
-
-
-                var parametros = {
-                    "ChkMedical": ChkMedical,
-                    "ChkDental": ChkDental,
-                    "ChkVision": ChkVision,
-                    "ChkOther": ChkOther,
-                };
-                $.ajax({
-                    type: "get",
-                    url: "{{ url('job_request/get_div_deductions_medical') }}",
-                    data: parametros,
-                    success: function(data) {
-                        console.log(data);
-                        $('#div_deductions').html(data);
-                    }
-                })
-
-
+            if (document.getElementById('DailyTransportation').checked == true) {
+                var DailyTransportation = 1;
             }
 
-            function get_div_tab3() {
-                var Housing = 0;
-                var Medical = 0;
-                var DailyTransportation = 0;
-                var Other = 0;
-                var Meals = 0;
-                var NoDeductions = 0;
-
-                if (document.getElementById('Housing').checked == true) {
-                    var Housing = 1;
-                }
-
-                if (document.getElementById('Medical').checked == true) {
-                    var Medical = 1;
-                }
-
-                if (document.getElementById('DailyTransportation').checked == true) {
-                    var DailyTransportation = 1;
-                }
-
-                if (document.getElementById('Other').checked == true) {
-                    var Other = 1;
-                }
-
-                if (document.getElementById('Meals').checked == true) {
-                    var Meals = 1;
-                }
-
-                if (document.getElementById('NoDeductions').checked == true) {
-                    var NoDeductions = 1;
-                }
-
-
-                var parametros = {
-                    "Housing": Housing,
-                    "Medical": Medical,
-                    "DailyTransportation": DailyTransportation,
-                    "Other": Other,
-                    "Meals": Meals,
-                    "NoDeductions": NoDeductions,
-                    'request_id': document.getElementById('request_id').value,
-                };
-                $.ajax({
-                    type: "get",
-                    url: "{{ url('job_request/get_div_deductions') }}",
-                    data: parametros,
-                    success: function(data) {
-                        console.log(data);
-                        $('#content').html(data);
-                    }
-                })
+            if (document.getElementById('Other').checked == true) {
+                var Other = 1;
             }
-        </script>
-    @endsection
+
+            if (document.getElementById('Meals').checked == true) {
+                var Meals = 1;
+            }
+
+            if (document.getElementById('NoDeductions').checked == true) {
+                var NoDeductions = 1;
+            }
+
+
+            var parametros = {
+                "Housing": Housing,
+                "Medical": Medical,
+                "DailyTransportation": DailyTransportation,
+                "Other": Other,
+                "Meals": Meals,
+                "NoDeductions": NoDeductions,
+                'request_id': document.getElementById('request_id').value,
+            };
+            $.ajax({
+                type: "get",
+                url: "{{ url('job_request/get_div_deductions') }}",
+                data: parametros,
+                success: function(data) {
+                    console.log(data);
+                    $('#content').html(data);
+                }
+            })
+        }
+
+
+        function validHousing() {
+            if (document.getElementById('Housing').checked == true)
+                document.getElementById('divHousing').hidden = false;
+            else
+                document.getElementById('divHousing').hidden = true;
+        }
+
+
+        function validMedical() {
+            if (document.getElementById('Medical').checked == true)
+                document.getElementById('divMedical').hidden = false;
+            else
+                document.getElementById('divMedical').hidden = true;
+        }
+
+
+
+        function validDaily() {
+            if (document.getElementById('DailyTransportation').checked == true)
+                document.getElementById('divDaily').hidden = false;
+            else
+                document.getElementById('divDaily').hidden = true;
+        }
+
+
+
+        function validOther() {
+            if (document.getElementById('Other').checked == true)
+                document.getElementById('divOther').hidden = false;
+            else
+                document.getElementById('divOther').hidden = true;
+        }
+
+
+        function validMeals() {
+            if (document.getElementById('Meals').checked == true)
+                document.getElementById('divMeals').hidden = false;
+            else
+                document.getElementById('divMeals').hidden = true;
+        }
+
+
+        function validNoDeductions() {
+            if (document.getElementById('NoDeductions').checked == true)
+                document.getElementById('divNoDeductions').hidden = false;
+            else
+                document.getElementById('divNoDeductions').hidden = true;
+        }
+
+
+        function validIsDeposit() {
+            if (document.getElementById('is_deposit_required').checked == true)
+                document.getElementById('showIsDepositRequired').hidden = false;
+            else
+                document.getElementById('showIsDepositRequired').hidden = true;
+        }
+
+
+        function validUtilities() {
+            if (document.getElementById('housing_utilities').checked == true)
+                document.getElementById('showPleaseUtilities').hidden = false;
+            else
+                document.getElementById('showPleaseUtilities').hidden = true;
+        }
+
+
+        function validDeductionMedical() {
+
+            if (document.getElementById('ChkMedical').checked == true) {
+                document.getElementById('divDeductionMedical').hidden = false;
+            } else {
+                document.getElementById('divDeductionMedical').hidden = true;
+            }
+
+        }
+
+        function validDeductionDental() {
+            if (document.getElementById('ChkDental').checked == true)
+                document.getElementById('divDeductionDental').hidden = false;
+            else
+                document.getElementById('divDeductionDental').hidden = true;
+        }
+
+        function validDeductionVision() {
+            if (document.getElementById('ChkVision').checked == true)
+                document.getElementById('divDeductionVision').hidden = false;
+            else
+                document.getElementById('divDeductionVision').hidden = true;
+        }
+
+        function validDeductionOther() {
+            if (document.getElementById('ChkOther').checked == true)
+                document.getElementById('divDeductionOther').hidden = false;
+            else
+                document.getElementById('divDeductionOther').hidden = true;
+        }
+    </script>
+@endsection
