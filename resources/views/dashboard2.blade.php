@@ -85,7 +85,7 @@
     </style>
 
 <style>
-    .header {
+    .header22 {
         display: none;
     }
 
