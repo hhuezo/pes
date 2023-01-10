@@ -391,7 +391,8 @@ class JobRequestDetailController extends Controller
 
         $detail->update();
         Alert::success('Ok', 'Record saved');
-        return back();
+        return redirect('job_request/' .  $detail->request_id . '/edit');
+        //return back();
     }
 
     public function job_offer_supervise(Request $request)
