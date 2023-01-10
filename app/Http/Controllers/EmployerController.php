@@ -153,6 +153,12 @@ class EmployerController extends Controller
         $employer->catalog_industry_id = $request->get('industry_id');
         $employer->naics_id = $request->get('naics_id');
 
+        if($request->get('naics_id'))
+        {
+            $naics_cod = NaicsCode::findOrFail($request->get('naics_id'));
+            $employer->naics_code = $naics_cod ->cn_code;
+        }
+
         if ($request->get('naics_code') == 6) {
             $employer->naics_code = $request->get('naics_code');
         }
@@ -404,11 +410,19 @@ class EmployerController extends Controller
         $employer->catalog_industry_id = $request->get('industry_id');
 
 
+
+
         if ($request->get('naics_code') != 6) {
             $employer->naics_id = $request->get('naics_id');
         } else  if ($request->get('naics_code') == 6) {
             $employer->naics_code = $request->get('naics_code');
         }
+        if($request->get('naics_id'))
+        {
+            $naics_cod = NaicsCode::findOrFail($request->get('naics_id'));
+            $employer->naics_code = $naics_cod ->cn_code;
+        }
+
 
         $employer->year_end_gross_company_income = $request->get('year_end_gross_company_income');
         $employer->year_end_net_company_income = $request->get('year_end_net_company_income');
