@@ -91,6 +91,8 @@
 
 
 
+
+
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
 
@@ -113,10 +115,18 @@
                                     <a class="nav-link" data-toggle="tab" href="#supervise">Supervise</a>
                                 </li>
                                 <li class="nav-item">
+                                    @if(is_null($detail->has_to_supervise_others))
+                                    <a class="nav-link" data-toggle="tab">Job requirements</a>
+                                    @else
                                     <a class="nav-link" data-toggle="tab" href="#requirements">Job requirements</a>
+                                    @endif
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#message">Alternative job requirements</a>
+                                    @if(is_null($detail->minimum_education_id))
+                                    <a class="nav-link" data-toggle="tab" >Alternative job requirements</a>
+                                     @else
+                                      <a class="nav-link" data-toggle="tab" href="#message">Alternative job requirements</a>
+                                    @endif
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -667,6 +677,8 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="requirements">
+
+
                                     <div class="col-md-12">&nbsp;</div>
                                     <div class="col-md-12 row">
                                         <div class="col-md-2">&nbsp;</div>
