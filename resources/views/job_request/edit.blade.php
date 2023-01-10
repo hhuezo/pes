@@ -2,6 +2,15 @@
 @section('contenido')
     <link rel="stylesheet" href="{{ asset('job_application/style.css') }}">
 
+    {{ $deduction->housing_utilities }}
+
+    @if ($deduction->housing_utilities == 0)
+        <style>
+            .divHousing {
+                display: none;
+            }
+        </style>
+    @endif
 
     <div class="row">
 
@@ -588,6 +597,746 @@
 
 
 
+
+
+
+
+                            <form method="POST" action="{{ url('job_request_deductions') }}">
+                                <div class="col-xl-12 col-xxl-12 row">
+                                    <div class="col-sm-12">&nbsp;</div>
+                                    <div class="col-md-12">
+                                        <h3>{!! trans('job_application.tab3_title') !!}</h3>
+                                        <p>{!! trans('job_application.tab3_title2') !!}</p>
+                                        <h5>{!! trans('job_application.tab3_title3') !!}</h5>
+                                        <div class="form-group">
+                                            <input type="hidden" id="request_id" name="request_id"
+                                                value="{{ $job_request->id }}">
+                                            <label for="exampleInputUsername1">{!! trans('job_application.select_deductions') !!}</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    @if ($deduction->housing_utilities == 1)
+                                                        <input type="checkbox" id="Housing" name="Housing" checked
+                                                            onclick="validHousing();">
+                                                        <label for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label>
+                                                    @endif
+                                                    @if ($deduction->housing_utilities == 0)
+                                                        <input type="checkbox" id="Housing" name="Housing"
+                                                            onclick="validHousing();">
+                                                        <label for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label>
+                                                    @endif
+
+
+                                                    <br>
+                                                    @if ($deduction->medical == 1)
+                                                        <input type="checkbox" id="Medical" name="Medical" checked
+                                                            onclick="validMedical();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label>
+                                                    @endif
+                                                    @if ($deduction->medical == 0)
+                                                        <input type="checkbox" id="Medical" name="Medical"
+                                                            onclick="validMedical();">
+                                                        <label for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label>
+                                                    @endif
+
+
+                                                    <br>
+                                                    @if ($deduction->daily_transportation == 1)
+                                                        <input type="checkbox"
+                                                            id="DailyTransportation"name="DailyTransportation" checked
+                                                            onclick="validDaily();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
+                                                    @endif
+                                                    @if ($deduction->daily_transportation == 0)
+                                                        <input type="checkbox"
+                                                            id="DailyTransportation"name="DailyTransportation"
+                                                            onclick="validDaily();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
+                                                    @endif
+
+
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    @if ($deduction->other == 1)
+                                                        <input type="checkbox" id="Other" name="Other" checked
+                                                            onclick="validOther();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label>
+                                                    @endif
+                                                    @if ($deduction->other == 0)
+                                                        <input type="checkbox" id="Other" name="Other"
+                                                            onclick="validOther();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label>
+                                                    @endif
+
+                                                    <br>
+                                                    @if ($deduction->meals == 1)
+                                                        <input type="checkbox" id="Meals" name="Meals" checked
+                                                            onclick="validMeals();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label>
+                                                    @endif
+                                                    @if ($deduction->meals == 0)
+                                                        <input type="checkbox" id="Meals" name="Meals"
+                                                            onclick="validMeals();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label>
+                                                    @endif
+
+                                                    <br>
+                                                    @if ($deduction->no_deduction == 1)
+                                                        <input type="checkbox" id="NoDeductions" name="NoDeductions"
+                                                            checked onclick="validNoDeductions();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
+                                                    @endif
+                                                    @if ($deduction->no_deduction == 0)
+                                                        <input type="checkbox" id="NoDeductions" name="NoDeductions"
+                                                            onclick="validNoDeductions();"> <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
+                                                    @endif
+
+
+                                                </div>
+
+                                                <div class="col-sm-12">&nbsp;</div>
+                                                <div class="col-sm-12">&nbsp;</div>
+
+                                                <div id="content" class="col-sm-12 row">
+
+                                                </div>
+
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                @csrf
+                                {{-- divHousing --}}
+                                <div id="divHousing">
+                                    <div class="col-sm-12">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{!! trans('job_application.HousingTitle') !!}</h4>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmount') !!}</label>
+                                                    <input type="number" min="1" step="0.01"
+                                                        name="deduction_housing_amount_person_week"
+                                                        value="{{ old('deduction_housing_amount_person_week', $deduction->deduction_housing_amount_person_week) }}"
+                                                        class="form-control">
+                                                </div>
+
+                                                <div id="showPleaseUtilities">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">{!! trans('job_application.PleaseUtilities') !!}</label>
+                                                        <input type="text" name="explain_housing_utilities"
+                                                            value="{{ old('explain_housing_utilities', $deduction->explain_housing_utilities) }}"
+                                                            class="form-control">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.RequiredHousing') !!}</label>
+                                                    <br>
+                                                    &nbsp;&nbsp; &nbsp;&nbsp;
+                                                    {!! trans('job_application.Yes') !!}
+
+                                                    @if ($deduction->is_deposit_required == 1)
+                                                        <input type="radio" name="is_deposit_required"
+                                                            id="is_deposit_required" checked value="1"
+                                                            onClick="validIsDeposit()">
+                                                    @else
+                                                        <input type="radio" name="is_deposit_required"
+                                                            id="is_deposit_required" value="1"
+                                                            onClick="validIsDeposit()">
+                                                    @endif
+
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.No') !!}
+
+                                                    @if ($deduction->is_deposit_required == 0)
+                                                        <input type="radio" name="is_deposit_required"
+                                                            id="is_deposit_required" checked value="0"
+                                                            onClick="validIsDeposit()">
+                                                    @else
+                                                        <input type="radio" name="is_deposit_required"
+                                                            id="is_deposit_required" value="0"
+                                                            onClick="validIsDeposit()">
+                                                    @endif
+
+
+
+                                                    &nbsp;&nbsp;
+                                                    <br>
+                                                </div>
+                                                <div id="showIsDepositRequired">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">{!! trans('job_application.DepositAmount') !!}</label>
+                                                        <input type="number" step="0.01" name="deposit_amount"
+                                                            @if ($deduction->deposit_amount) value="{{ old('deposit_amount', $deduction->deposit_amount) }}" @endif
+                                                            class="form-control">
+                                                    </div>
+
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.IsDepositRefundable') !!}</label>
+                                                    <br>
+                                                    &nbsp;&nbsp; &nbsp;&nbsp;
+                                                    {!! trans('job_application.Yes') !!}
+
+                                                    @if ($deduction->is_deposit_refundable == 1)
+                                                        <input type="radio" name="is_deposit_refundable"
+                                                            id="is_deposit_refundable" checked value="1">
+                                                    @else
+                                                        <input type="radio" name="is_deposit_refundable"
+                                                            id="is_deposit_refundable" value="1">
+                                                    @endif
+
+
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.No') !!}
+                                                    @if ($deduction->is_deposit_refundable == 0)
+                                                        <input type="radio" name="is_deposit_refundable"
+                                                            id="is_deposit_refundable" checked value="0">
+                                                    @else
+                                                        <input type="radio" name="is_deposit_refundable"
+                                                            id="is_deposit_refundable" value="0">
+                                                    @endif
+                                                    &nbsp;&nbsp;
+                                                    <br>
+
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.HousingDeduction') !!}</label>
+                                                    <br>
+                                                    &nbsp;&nbsp; &nbsp;&nbsp;
+                                                    {!! trans('job_application.Yes') !!}
+                                                    <input type="radio" name="housing_utilities" id="housing_utilities"
+                                                        @if ($deduction->housing_utilities == 1) checked @else '' @endif
+                                                        onClick="validUtilities()">
+
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.No') !!}
+                                                    <input type="radio" name="housing_utilities" id="housing_utilities"
+                                                        @if ($deduction->housing_utilities == 0) checked @else '' @endif
+                                                        onClick="validUtilities()">
+                                                    &nbsp;&nbsp;
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                    <input type="text" name="housing_notes"
+                                                        value="{{ old('housing_notes', $deduction->housing_notes) }}"
+                                                        class="form-control">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_housing') !!}</label>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+
+                                {{-- divMedical --}}
+                                <div id="divMedical">
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <h4>
+                                                <b>
+                                                    {!! trans('job_application.NoDeductionsTitle') !!}
+                                                </b>
+                                            </h4>
+                                        </div>
+                                        <br>
+                                        <br>
+
+                                        <h4>
+                                            <b>
+                                                {!! trans('job_application.MedicalTitle') !!}
+                                            </b>
+                                        </h4>
+                                        <div class="card-header">
+
+                                            <h4 class="card-title">{!! trans('job_application.SelectDeductions') !!}</h4>
+                                        </div>
+                                        <div class="row">
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    @if ($deduction->deduction_medical_paycheck == 1)
+                                                        <input type="checkbox" id="ChkMedical" name="ChkMedical" checked
+                                                            onchange="validDeductionMedical();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Medical</label>
+                                                    @endif
+                                                    @if ($deduction->deduction_medical_paycheck == 0)
+                                                        <input type="checkbox" id="ChkMedical" name="ChkMedical"
+                                                            onchange="validDeductionMedical();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Medical</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    @if ($deduction->deduction_dental_paycheck == 1)
+                                                        <input type="checkbox" id="ChkDental" name="ChkDental" checked
+                                                            onchange="validDeductionDental();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Dental</label>
+                                                    @endif
+                                                    @if ($deduction->deduction_dental_paycheck == 0)
+                                                        <input type="checkbox" id="ChkDental" name="ChkDental"
+                                                            onchange="validDeductionDental();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Dental</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    @if ($deduction->deduction_vision_paycheck == 1)
+                                                        <input type="checkbox" id="ChkVision" name="ChkVision" checked
+                                                            onchange="validDeductionVision();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Vision</label>
+                                                    @endif
+                                                    @if ($deduction->deduction_vision_paycheck == 0)
+                                                        <input type="checkbox" id="ChkVision" name="ChkVision"
+                                                            onchange="validDeductionVision();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Vision</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    @if ($deduction->deduction_other_paycheck == 1)
+                                                        <input type="checkbox" id="ChkOther" name="ChkOther" checked
+                                                            onchange="validDeductionOther();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Other</label>
+                                                    @endif
+                                                    @if ($deduction->deduction_other_paycheck == 0)
+                                                        <input type="checkbox" id="ChkOther" name="ChkOther"
+                                                            onchange="validDeductionOther();">&nbsp;&nbsp;
+                                                        <label for="exampleInputEmail1">Other</label>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+                                        <div id="divDeductionMedical">
+                                            <div class="col-sm-12">
+                                                <div class="card-header">
+                                                    <h4 class="card-title"></h4>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.DeductionAmountMedical') !!}</label>
+                                                            @if ($deduction_medical)
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_medical_paycheck"
+                                                                    value="{{ old('deduction_medical_paycheck', $deduction_medical->deduction_ammount) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_medical_paycheck"
+                                                                    class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                            @if ($deduction_medical)
+                                                                <input type="text" name="deduction_medical_note"
+                                                                    value="{{ old('deduction_medical_note', $deduction_medical->comments) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="text" name="deduction_medical_note"
+                                                                    class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="divDeductionDental">
+                                            <div class="col-sm-12">
+                                                <div class="card-header">
+                                                    <h4 class="card-title"></h4>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.DeductionAmountDental') !!}</label>
+                                                            @if ($deduction_dental)
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_dental_paycheck"
+                                                                    value="{{ old('deduction_dental_paycheck', $deduction_dental->deduction_ammount) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_dental_paycheck" class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                            @if ($deduction_dental)
+                                                                <input type="text" name="deduction_dental_note"
+                                                                    value="{{ old('deduction_dental_note', $deduction_dental->comments) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="text" name="deduction_dental_note"
+                                                                    class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="divDeductionVision">
+                                            <div class="col-sm-12">
+                                                <div class="card-header">
+                                                    <h4 class="card-title"></h4>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.DeductionAmountVision') !!}</label>
+                                                            @if ($deduction_vision)
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_vision_paycheck"
+                                                                    value="{{ old('deduction_vision_paycheck', $deduction_vision->deduction_ammount) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_vision_paycheck" class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                            @if ($deduction_vision)
+                                                                <input type="text" name="deduction_vision_note"
+                                                                    value="{{ old('deduction_vision_note', $deduction_vision->comments) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="text" name="deduction_vision_note"
+                                                                    class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div id="divDeductionOther">
+                                            <div class="col-sm-12">
+                                                <div class="card-header">
+                                                    <h4 class="card-title"></h4>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.DeductionAmountOther') !!}</label>
+                                                            @if ($deduction_other)
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_other_paycheck"
+                                                                    value="{{ old('deduction_other_paycheck', $deduction_other->deduction_ammount) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="number" step="0.01"
+                                                                    name="deduction_other_paycheck" class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                            @if ($deduction_other)
+                                                                <input type="text" name="deduction_other_note"
+                                                                    value="{{ old('deduction_other_note', $deduction_other->comments) }}"
+                                                                    class="form-control">
+                                                            @else
+                                                                <input type="text" name="deduction_other_note"
+                                                                    class="form-control">
+                                                            @endif
+
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                    </div>
+
+                                    <div class="col-sm-12" id="div_deductions">
+                                    </div>
+
+                                </div>
+
+
+
+                                {{-- divDaily --}}
+                                <div id="divDaily">
+                                    <div>
+                                        <h4>
+                                            <b>
+                                                {!! trans('job_application.NoDeductionsTitle') !!}
+                                            </b>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{!! trans('job_application.DailyTransportationTitle') !!}</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.DeductionPerWeek') !!}</label>
+                                                    <input type="number" step="0.01"
+                                                        name="deduction_daily_amount_person_week"
+                                                        value="{{ old('deduction_daily_amount_person_week', $deduction->deduction_daily_amount_person_week) }}"
+                                                        class="form-control">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                    <input type="text" name="daily_notes"
+                                                        value="{{ old('daily_notes', $deduction->daily_notes) }}"
+                                                        class="form-control">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_daily_transportation') !!}</label>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="divOther">
+                                    <div>
+                                        <h4>
+                                            <b>
+                                                {!! trans('job_application.NoDeductionsTitle') !!}
+                                            </b>
+                                        </h4>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{!! trans('job_application.OtherTitle') !!}
+                                                <br>({!! trans('job_application.listAdditionalDeduction') !!})</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.OtherTitle') !!}</label>
+                                                    <input type="text" name="other_deductions"
+                                                        value="{{ old('other_deductions', $deduction->other_deductions) }}"
+                                                        class="form-control">
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="divMeals">
+                                    <div class="col-sm-12">
+                                        <div class="card-header">
+                                            <div>
+                                                <h4>
+                                                    <b>
+                                                        {!! trans('job_application.NoDeductionsTitle') !!}
+                                                    </b>
+                                                </h4>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <h4 class="card-title">{!! trans('job_application.MealsTitle') !!}</h4>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.MealsPerShift') !!}</label>
+                                                    <input type="number" min="1" name="how_many_meals_provided"
+                                                        value="{{ old('how_many_meals_provided', $deduction->how_many_meals_provided) }}"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.EnterCost') !!}</label>
+                                                    <input type="number" step="0.01" min="0.01"
+                                                        name="cost_per_meal"
+                                                        value="{{ old('cost_per_meal', $deduction->cost_per_meal) }}"
+                                                        class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
+                                                    <input type="text" name="meals_notes"
+                                                        value="{{ old('meals_notes', $deduction->meals_notes) }}"
+                                                        class="form-control">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.AdditionalNotesMeals') !!}</label>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.ThereCost') !!}</label>
+                                                    <br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                                    {!! trans('job_application.Yes') !!}
+                                                    @if ($deduction->is_there_cost_per_meal == 1)
+                                                        <input type="radio" name="is_there_costo_per_meal"
+                                                            id="is_there_costo_per_meal" value="1" checked>
+                                                    @else
+                                                        <input type="radio" name="is_there_costo_per_meal"
+                                                            id="is_there_costo_per_meal" value="1">
+                                                    @endif
+
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.No') !!}
+                                                    @if ($deduction->is_there_cost_per_meal == 0)
+                                                        <input type="radio" name="is_there_costo_per_meal"
+                                                            id="is_there_costo_per_meal" value="0" checked>
+                                                    @else
+                                                        <input type="radio" name="is_there_costo_per_meal"
+                                                            id="is_there_costo_per_meal" value="0">
+                                                    @endif
+
+                                                    &nbsp;&nbsp;
+                                                    <br>
+                                                    <br>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.EnterDeduction') !!}</label>
+                                                    <input type="number" step="0.01" min="0.01"
+                                                        name="deduction_amount_per_meal"
+                                                        value="{{ old('deduction_amount_per_meal', $deduction->deduction_amount_per_meal) }}"
+                                                        class="form-control">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div id="divNoDeductions">
+                                    <div>
+                                        <h4>
+                                            <b>
+                                                {!! trans('job_application.NoDeductionsTitle') !!}
+                                            </b>
+                                        </h4>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-sm-12 form-group">
+                                    <button type="submit" class="btn btn-primary float-right">Next</button>
+                                </div>
+
+                            </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         </div>
                         <div class="tab-pane fade" id="tab4">
 
@@ -873,476 +1622,6 @@
         </div>
 
 
-        <form method="POST" action="{{ url('job_request_deductions') }}">
-            <div class="col-xl-12 col-xxl-12 row">
-                <div class="col-sm-12">&nbsp;</div>
-                <div class="col-md-12">
-                    <h3>{!! trans('job_application.tab3_title') !!}</h3>
-                    <p>{!! trans('job_application.tab3_title2') !!}</p>
-                    <h5>{!! trans('job_application.tab3_title3') !!}</h5>
-                    <div class="form-group">
-                        <input type="hidden" id="request_id" value="{{ $job_request->id }}">
-                        <label for="exampleInputUsername1">{!! trans('job_application.select_deductions') !!}</label>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <input type="checkbox" id="Housing" name="Housing" onclick="validHousing();"> <label
-                                    for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label><br>
-                                <input type="checkbox" id="Medical" name="Medical" onclick="validMedical();"> <label
-                                    for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label><br>
-                                <input type="checkbox" id="DailyTransportation"name="DailyTransportation"
-                                    onclick="validDaily();"> <label
-                                    for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
-                            </div>
-
-                            <div class="col-md-6">
-                                <input type="checkbox" id="Other" name="Other" onclick="validOther();"> <label
-                                    for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label><br>
-                                <input type="checkbox" id="Meals" name="Meals" onclick="validMeals();"> <label
-                                    for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label><br>
-                                <input type="checkbox" id="NoDeductions" name="NoDeductions"
-                                    onclick="validNoDeductions();"> <label
-                                    for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
-                            </div>
-
-                            <div class="col-sm-12">&nbsp;</div>
-                            <div class="col-sm-12">&nbsp;</div>
-
-                            <div id="content" class="col-sm-12 row">
-
-                            </div>
-
-
-
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-            @csrf
-            {{-- divHousing --}}
-            <div id="divHousing">
-                <div class="col-sm-12">
-                    <div class="card-header">
-                        <h4 class="card-title">{!! trans('job_application.HousingTitle') !!}</h4>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmount') !!}</label>
-                                <input type="number" min="1" step="0.01"
-                                    name="deduction_housing_amount_person_week"
-                                    value="{{ old('deduction_housing_amount_person_week') }}" class="form-control">
-                            </div>
-
-                            <div id="showPleaseUtilities">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.PleaseUtilities') !!}</label>
-                                    <input type="text" name="explain_housing_utilities"
-                                        value="{{ old('explain_housing_utilities') }}" class="form-control">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.RequiredHousing') !!}</label>
-                                <br>
-                                &nbsp;&nbsp; &nbsp;&nbsp;
-                                {!! trans('job_application.Yes') !!}
-                                <input type="radio" name="is_deposit_required" id="is_deposit_required" value="1"
-                                    onClick="validIsDeposit()">
-                                &nbsp;&nbsp;
-                                {!! trans('job_application.No') !!}
-                                <input type="radio" name="is_deposit_required" id="is_deposit_required" checked
-                                    value="1" onClick="validIsDeposit()">
-                                &nbsp;&nbsp;
-                                <br>
-                            </div>
-                            <div id="showIsDepositRequired">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">{!! trans('job_application.DepositAmount') !!}</label>
-                                    <input type="number" min="1" step="0.01" name="deposit_amount"
-                                        class="form-control">
-                                </div>
-
-                                <label for="exampleInputEmail1">{!! trans('job_application.IsDepositRefundable') !!}</label>
-                                <br>
-                                &nbsp;&nbsp; &nbsp;&nbsp;
-                                {!! trans('job_application.Yes') !!}
-                                <input type="radio" name="is_deposit_refundable" value="1">
-                                &nbsp;&nbsp;
-                                {!! trans('job_application.No') !!}
-                                <input type="radio" name="is_deposit_refundable" checked value="1">
-                                &nbsp;&nbsp;
-                                <br>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.HousingDeduction') !!}</label>
-                                <br>
-                                &nbsp;&nbsp; &nbsp;&nbsp;
-                                {!! trans('job_application.Yes') !!}
-                                <input type="radio" name="housing_utilities" id="housing_utilities" value="1"
-                                    onClick="validUtilities()">
-                                &nbsp;&nbsp;
-                                {!! trans('job_application.No') !!}
-                                <input type="radio" name="housing_utilities" id="housing_utilities" checked
-                                    value="1" onClick="validUtilities()">
-                                &nbsp;&nbsp;
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                <input type="text" name="housing_notes" value="{{ old('housing_notes') }}"
-                                    class="form-control">
-                                <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_housing') !!}</label>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-            </div>
-
-
-
-            {{-- divMedical --}}
-            <div id="divMedical">
-                <div class="col-sm-12">
-                    <div>
-                        <h4>
-                            <b>
-                                {!! trans('job_application.NoDeductionsTitle') !!}
-                            </b>
-                        </h4>
-                    </div>
-                    <br>
-                    <br>
-
-                    <h4>
-                        <b>
-                            {!! trans('job_application.MedicalTitle') !!}
-                        </b>
-                    </h4>
-                    <div class="card-header">
-
-                        <h4 class="card-title">{!! trans('job_application.SelectDeductions') !!}</h4>
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <input type="checkbox" id="ChkMedical" onchange="validDeductionMedical();">&nbsp;&nbsp;
-                                <label for="exampleInputEmail1">Medical</label>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <input type="checkbox" id="ChkDental" onchange="validDeductionDental();">&nbsp;&nbsp;
-                                <label for="exampleInputEmail1">Dental</label>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <input type="checkbox" id="ChkVision" onchange="validDeductionVision();">&nbsp;&nbsp;
-                                <label for="exampleInputEmail1">Vision</label>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <input type="checkbox" id="ChkOther" onchange="validDeductionOther();">&nbsp;&nbsp;
-                                <label for="exampleInputEmail1">Other</label>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-
-                    <div id="divDeductionMedical">
-                        <div class="col-sm-12">
-                            <div class="card-header">
-                                <h4 class="card-title"></h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountMedical') !!}</label>
-                                        <input type="number" step="0.01" name="deduction_medical_paycheck"
-                                            class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                        <input type="text" name="deduction_medical_note" class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="divDeductionDental">
-                        <div class="col-sm-12">
-                            <div class="card-header">
-                                <h4 class="card-title"></h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountDental') !!}</label>
-                                        <input type="number" step="0.01" name="deduction_dental_paycheck"
-                                            class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                        <input type="text" name="deduction_dental_note" class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="divDeductionVision">
-                        <div class="col-sm-12">
-                            <div class="card-header">
-                                <h4 class="card-title"></h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountVision') !!}</label>
-                                        <input type="number" step="0.01" name="deduction_vision_paycheck"
-                                            class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                        <input type="text" name="deduction_vision_note" class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="divDeductionOther">
-                        <div class="col-sm-12">
-                            <div class="card-header">
-                                <h4 class="card-title"></h4>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountOther') !!}</label>
-                                        <input type="number" step="0.01" name="deduction_other_paycheck"
-                                            class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                        <input type="text" name="deduction_other_note" class="form-control">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-
-                <div class="col-sm-12" id="div_deductions">
-                </div>
-
-            </div>
-
-
-
-            {{-- divDaily --}}
-            <div id="divDaily">
-                <div>
-                    <h4>
-                        <b>
-                            {!! trans('job_application.NoDeductionsTitle') !!}
-                        </b>
-                    </h4>
-                </div>
-                <div class="col-sm-12">
-                    <div class="card-header">
-                        <h4 class="card-title">{!! trans('job_application.DailyTransportationTitle') !!}</h4>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.DeductionPerWeek') !!}</label>
-                                <input type="number" step="0.01" name="deduction_daily_amount_person_week"
-                                    class="form-control">
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                <input type="text" name="daily_notes" class="form-control">
-                                <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_daily_transportation') !!}</label>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="divOther">
-                <div>
-                    <h4>
-                        <b>
-                            {!! trans('job_application.NoDeductionsTitle') !!}
-                        </b>
-                    </h4>
-                </div>
-                <div class="col-sm-12">
-                    <div class="card-header">
-                        <h4 class="card-title">{!! trans('job_application.OtherTitle') !!} <br>({!! trans('job_application.listAdditionalDeduction') !!})</h4>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.OtherTitle') !!}</label>
-                                <input type="text" name="other_deductions" class="form-control">
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="divMeals">
-                <div class="col-sm-12">
-                    <div class="card-header">
-                        <div>
-                            <h4>
-                                <b>
-                                    {!! trans('job_application.NoDeductionsTitle') !!}
-                                </b>
-                            </h4>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="card-title">{!! trans('job_application.MealsTitle') !!}</h4>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.MealsPerShift') !!}</label>
-                                <input type="number" min="1" name="how_many_meals_provided"
-                                    class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.EnterCost') !!}</label>
-                                <input type="number" step="0.01" min="0.01" name="cost_per_meal"
-                                    class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                <input type="text" name="meals_notes" class="form-control">
-                                <label for="exampleInputEmail1">{!! trans('job_application.AdditionalNotesMeals') !!}</label>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.ThereCost') !!}</label>
-                                <br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                {!! trans('job_application.Yes') !!}
-                                <input type="radio" name="is_there_costo_per_meal" value="1">
-                                &nbsp;&nbsp;
-                                {!! trans('job_application.No') !!}
-                                <input type="radio" name="is_there_costo_per_meal" checked value="1">
-                                &nbsp;&nbsp;
-                                <br>
-                                <br>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">{!! trans('job_application.EnterDeduction') !!}</label>
-                                <input type="number" step="0.01" min="0.01" name="deduction_amount_per_meal"
-                                    class="form-control">
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="divNoDeductions">
-                <div>
-                    <h4>
-                        <b>
-                            {!! trans('job_application.NoDeductionsTitle') !!}
-                        </b>
-                    </h4>
-                </div>
-            </div>
-
-
-            <div class="col-sm-12 form-group">
-                <button type="submit" class="btn btn-primary float-right">Next</button>
-            </div>
-
-        </form>
     </div>
 
     @include('sweetalert::alert')
@@ -1550,10 +1829,12 @@
 
 
         function validHousing() {
+
             if (document.getElementById('Housing').checked == true)
                 document.getElementById('divHousing').hidden = false;
             else
                 document.getElementById('divHousing').hidden = true;
+
         }
 
 
