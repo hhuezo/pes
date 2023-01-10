@@ -32,14 +32,15 @@ class Employer extends Model
         'naics_code',
         'year_end_gross_company_income',
         'year_end_net_company_income',
-        'principal_country',
+        'principal_county_id',
         'principal_state_id',
         'principal_city_id',
         'principal_street_address',
         'principal_zip_code',
         'mailing_address_same_above',
         'mailing_address',
-        'mailing_city',
+        'mailing_city_id',
+        'mailing_county_id',
         'mailing_state_id',
         'mailing_zip_code',
         'primary_contact_name',
@@ -91,7 +92,7 @@ class Employer extends Model
         return $this->belongsTo('App\Models\catalogue\State', 'principal_state_id', 'id');
     }
 
-    public function principal_city()
+    public function principal_city2()
     {
         return $this->belongsTo('App\Models\catalogue\City', 'principal_city_id', 'id');
     }
@@ -99,6 +100,30 @@ class Employer extends Model
     public function user_has_employer()
     {
         return $this->belongsToMany('App\Models\User','users_has_employers','employer_id');
+    }
+
+
+    public function principal_county()
+    {
+        return $this->belongsTo('App\Models\catalogue\CityZip', 'principal_county_id', 'id');
+    }
+
+
+    public function principal_city()
+    {
+        return $this->belongsTo('App\Models\catalogue\CityZip', 'principal_city_id', 'id');
+    }
+
+
+    public function mailling_county()
+    {
+        return $this->belongsTo('App\Models\catalogue\CityZip', 'mailing_county_id', 'id');
+    }
+
+
+    public function mailling_city()
+    {
+        return $this->belongsTo('App\Models\catalogue\CityZip', 'mailing_city_id', 'id');
     }
 
 }

@@ -7,6 +7,23 @@
         @php($action = 1)
     @endif
 
+    @if ($employer->signed_all_documents == 1)
+        <style>
+            .DivSignatory {
+                display: none;
+            }
+        </style>
+    @endif
+
+
+    @if ($employer->is_main_worksite_location == 1)
+        <style>
+            .DivSamePlaceBusiness1 {
+                display: none;
+            }
+        </style>
+    @endif
+
 
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
     <div class="row">
@@ -315,11 +332,10 @@
                                                         is required
                                                         )</b></label>
                                                 <select class="form-control select2" name="principal_county_id"
-                                                    id="principal_county_id"
-                                                    value="{{ old('principal_county_id', $employer->principal_county_id) }}">
+                                                    id="principal_county_id">
                                                     @if ($counties_principal)
                                                         @foreach ($counties_principal as $obj)
-                                                            @if ($obj->id == $employer->principal_county_id)
+                                                            @if ($obj->name == $employer->principal_county->czc_county)
                                                                 <option value="{{ $obj->id }}" selected>
                                                                     {{ $obj->name }}
                                                                 </option>
@@ -349,7 +365,7 @@
                                                     value="{{ old('principal_city_id', $employer->principal_city_id) }}">
                                                     @if ($cities_principal)
                                                         @foreach ($cities_principal as $obj)
-                                                            @if ($obj->id == $employer->principal_city_id)
+                                                            @if ($obj->name == $employer->principal_city->czc_city)
                                                                 <option value="{{ $obj->id }}" selected>
                                                                     {{ $obj->name }}
                                                                 </option>
@@ -373,16 +389,15 @@
                                                         is required
                                                         )</b></label>
                                                 <select class="form-control select2" name="principal_zip_code"
-                                                    id="principal_zip_code"
-                                                    value="{{ old('principal_zip_code', $employer->principal_zip_code) }}">
+                                                    id="principal_zip_code">
                                                     @if ($codes_zip_principal)
                                                         @foreach ($codes_zip_principal as $obj)
                                                             @if ($obj->czc_zipcode == $employer->principal_zip_code)
-                                                                <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                <option value="{{ $obj->id }}" selected>
                                                                     {{ $obj->czc_zipcode }}
                                                                 </option>
                                                             @else
-                                                                <option value="{{ $obj->czc_zipcode }}">
+                                                                <option value="{{ $obj->id }}">
                                                                     {{ $obj->czc_zipcode }}
                                                                 </option>
                                                             @endif
@@ -434,7 +449,8 @@
                                             <div id="DivMailin">
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingState') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.MailingState') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <select class="form-control select2" name="mailing_state_id"
@@ -459,15 +475,15 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCountry') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.MailingCountry') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <select class="form-control select2" name="mailing_county_id"
-                                                        id="mailing_county_id"
-                                                        value="{{ old('mailing_county_id', $employer->mailing_county_id) }}">
+                                                        id="mailing_county_id">
                                                         @if ($counties_mailing)
                                                             @foreach ($counties_mailing as $obj)
-                                                                @if ($obj->id == $employer->mailing_county_id)
+                                                                @if ($obj->name == $employer->mailling_county->czc_county)
                                                                     <option value="{{ $obj->id }}" selected>
                                                                         {{ $obj->name }}
                                                                     </option>
@@ -489,15 +505,15 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCity') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.MailingCity') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <select class="form-control select2" name="mailing_city_id"
-                                                        id="mailing_city_id"
-                                                        value="{{ old('mailing_city_id', $employer->mailing_city_id) }}">
+                                                        id="mailing_city_id">
                                                         @if ($cities_mailing)
                                                             @foreach ($cities_mailing as $obj)
-                                                                @if ($obj->id == $employer->mailing_city_id)
+                                                                @if ($obj->name == $employer->mailling_city->czc_city)
                                                                     <option value="{{ $obj->id }}" selected>
                                                                         {{ $obj->name }}
                                                                     </option>
@@ -518,7 +534,8 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingZipCode') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.MailingZipCode') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <select class="form-control select2" name="mailing_zip_code"
@@ -527,11 +544,11 @@
                                                         @if ($codes_zip_mailing)
                                                             @foreach ($codes_zip_mailing as $obj)
                                                                 @if ($obj->czc_zipcode == $employer->mailing_zip_code)
-                                                                    <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                    <option value="{{ $obj->id }}" selected>
                                                                         {{ $obj->czc_zipcode }}
                                                                     </option>
                                                                 @else
-                                                                    <option value="{{ $obj->czc_zipcode }}">
+                                                                    <option value="{{ $obj->id }}">
                                                                         {{ $obj->czc_zipcode }}
                                                                     </option>
                                                                 @endif
@@ -550,7 +567,8 @@
 
                                                 <div class="form-group">
                                                     <input type="hidden" name="id" value="{{ $employer->id }}">
-                                                    <label>{!! trans('employer.MailingAddress') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.MailingAddress') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <input type="text" name="mailing_street_address"
@@ -757,11 +775,11 @@
                                                     @if ($codes_zip_work_site_contact)
                                                         @foreach ($codes_zip_work_site_contact as $obj)
                                                             @if ($obj->czc_zipcode == $work_sites_contact->zip_code_address)
-                                                                <option value="{{ $obj->czc_zipcode }}" selected>
+                                                                <option value="{{ $obj->id }}" selected>
                                                                     {{ $obj->czc_zipcode }}
                                                                 </option>
                                                             @else
-                                                                <option value="{{ $obj->czc_zipcode }}">
+                                                                <option value="{{ $obj->id }}">
                                                                     {{ $obj->czc_zipcode }}
                                                                 </option>
                                                             @endif
@@ -826,10 +844,11 @@
                                         </div>
 
 
-                                        <div id="DivSignatory" class="col-md-12 row">
+                                        <div id="DivSignatory" class="col-md-12 row DivSignatory">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryName') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.SignatoryName') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <input type="text" name="signatory_name"
@@ -841,7 +860,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryLastName') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.SignatoryLastName') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <input type="text" name="signatory_last_name"
@@ -853,7 +873,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryJobTitle') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.SignatoryJobTitle') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <input type="text" name="signatory_job_title"
@@ -866,7 +887,8 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryEmail') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.SignatoryEmail') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <input type="mail" name="signatory_email"
@@ -878,7 +900,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryPhone') !!}<b style="color: #FF9696">(*This field
+                                                    <label>{!! trans('employer.SignatoryPhone') !!}<b style="color: #FF9696">(*This
+                                                            field
                                                             is required
                                                             )</b></label>
                                                     <input type="text" name="signatory_phone"
@@ -925,205 +948,165 @@
 
 
                                             </div>
-                                            <br>
-                                            <br>
-                                            <div id="DivSamePlaceBusiness1">
 
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteState') !!}</label>
-                                                    <select class="form-control select2" name="main_worksite_state_id"
-                                                        id="MainworksiteState">
-                                                        <option value="">Select</option>
-                                                        @if ($work_sites_main)
-                                                            @foreach ($states as $obj)
-                                                                @if ($obj->id == $work_sites_main->state_id_address)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
+                                        </div>
+                                        <div class="col-xl-12 col-xxl-12">
+                                            &nbsp;
+                                        </div>
+
+
+
+                                        <div id="DivSamePlaceBusiness1" class="col-md-12 DivSamePlaceBusiness1">
+                                            <div class="row">
+                                                <div class="col-xl-6 col-xxl-6">
+
+                                                    <div class="form-group">
+                                                        <label>{!! trans('employer.MainWorksiteState') !!}</label>
+                                                        <select class="form-control select2" name="main_worksite_state_id"
+                                                            id="MainworksiteState">
+                                                            <option value="">Select</option>
+                                                            @if ($work_sites_main)
+                                                                @foreach ($states as $obj)
+                                                                    @if ($obj->id == $work_sites_main->state_id_address)
+                                                                        <option value="{{ $obj->id }}" selected>
+                                                                            {{ $obj->name }}
+                                                                        </option>
+                                                                    @else
+                                                                        <option value="{{ $obj->id }}">
+                                                                            {{ $obj->name }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @else
+                                                                @foreach ($states as $obj)
                                                                     <option value="{{ $obj->id }}">
                                                                         {{ $obj->name }}</option>
-                                                                @endif
-                                                            @endforeach
+                                                                @endforeach
+                                                            @endif
+
+                                                        </select>
+                                                        @error('main_worksite_state_id')
+                                                            <div class="alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
+                                                        <select class="form-control select2"
+                                                            name="main_worksite_county_id" id="main_worksite_county_id">
+                                                            @if ($counties_work_sites)
+                                                                @foreach ($counties_work_sites as $obj)
+                                                                    @if ($obj->name == $work_sites_main->county->czc_county)
+                                                                        <option value="{{ $obj->id }}" selected>
+                                                                            {{ $obj->name }}
+                                                                        </option>
+                                                                    @else
+                                                                        <option value="{{ $obj->id }}">
+                                                                            {{ $obj->name }}
+                                                                        </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+
+                                                        </select>
+                                                        @error('main_worksite_county_id')
+                                                            <div class="alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label>{!! trans('employer.MainWorksiteCity') !!}</label>
+                                                        <select class="form-control select2" name="main_worksite_city_id"
+                                                            id="main_worksite_city_id">
+                                                            @if ($cities_work_site)
+                                                                @foreach ($cities_work_site as $obj)
+                                                                    @if ($obj->name == $work_sites_main->city->czc_city)
+                                                                        <option value="{{ $obj->id }}" selected>
+                                                                            {{ $obj->name }}
+                                                                        </option>
+                                                                    @else
+                                                                        <option value="{{ $obj->id }}">
+                                                                            {{ $obj->name }}
+                                                                        </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                        @error('main_worksite_city_id')
+                                                            <div class="alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+
+
+                                                </div>
+
+                                                <div class="col-xl-6 col-xxl-6">
+
+                                                    <div class="form-group">
+                                                        <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
+                                                        <select class="form-control select2" name="main_worksite_zip_code"
+                                                            id="main_worksite_zip_code">
+
+
+                                                            @if ($codes_zip_work_site)
+                                                                @foreach ($codes_zip_work_site as $obj)
+                                                                    @if ($obj->czc_zipcode == $work_sites_main->zip_code_address)
+                                                                        <option value="{{ $obj->id }}" selected>
+                                                                            {{ $obj->czc_zipcode }}
+                                                                        </option>
+                                                                    @else
+                                                                        <option value="{{ $obj->id }}">
+                                                                            {{ $obj->czc_zipcode }}
+                                                                        </option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+
+                                                        </select>
+                                                        @error('main_worksite_zip_code')
+                                                            <div class="alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label>{!! trans('employer.MainWorksiteStreetAddress') !!}<b style="color: #FF9696">(*This
+                                                                field
+                                                                is required
+                                                                )</b></label>
+                                                        @if ($work_sites_main)
+                                                            <input type="text" name="main_worksite_location"
+                                                                value="{{ $work_sites_main->street_address }}"
+                                                                class="form-control">
                                                         @else
-                                                            @foreach ($states as $obj)
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}</option>
-                                                            @endforeach
+                                                            <input type="text" name="main_worksite_location"
+                                                                class="form-control">
                                                         @endif
+                                                        @error('main_worksite_location')
+                                                            <div class="alert-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
 
-                                                    </select>
-                                                    @error('main_worksite_state_id')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
+
                                                 </div>
-
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
-                                                    <select class="form-control select2" name="main_worksite_county_id"
-                                                        id="main_worksite_county_id">
-                                                        @if ($counties_work_sites)
-                                                            @foreach ($counties_work_sites as $obj)
-                                                                @if ($obj->id == $work_sites_main->county_id)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-
-                                                    </select>
-                                                    @error('main_worksite_county_id')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteCity') !!}</label>
-                                                    <select class="form-control select2" name="main_worksite_city_id"
-                                                        id="main_worksite_city_id">
-                                                        @if ($cities_work_site)
-                                                            @foreach ($cities_work_site as $obj)
-                                                                @if ($obj->id == $work_sites_main->city_id)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
-                                                    @error('main_worksite_city_id')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
 
                                             </div>
-
-
-
 
 
                                         </div>
-
-
-                                        <div class="col-xl-6 col-xxl-6">
-                                            <br>
-                                            <div class="form-group">
-
-                                            </div>
-                                            <br>
-                                            <br>
-                                            <div id="DivSamePlaceBusiness2">
-                                                <div class="form-group">
-
-                                                </div>
-
-
-
-                                                <div class="form-group">
-
-
-
-                                                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
-                                                    <select class="form-control select2" name="main_worksite_zip_code"
-                                                        id="main_worksite_zip_code">
-
-
-                                                        @if ($codes_zip_work_site)
-                                                            @foreach ($codes_zip_work_site as $obj)
-                                                                @if ($obj->czc_zipcode == $work_sites_main->zip_code)
-                                                                    <option value="{{ $obj->czc_zipcode }}" selected>
-                                                                        {{ $obj->czc_zipcode }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->czc_zipcode }}">
-                                                                        {{ $obj->czc_zipcode }}
-                                                                    </option>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-
-                                                    </select>
-                                                    @error('main_worksite_zip_code')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
-
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('employer.MainWorksiteStreetAddress') !!}<b style="color: #FF9696">(*This field
-                                                            is required
-                                                            )</b></label>
-                                                    @if ($work_sites_main)
-                                                        <input type="text" name="main_worksite_location"
-                                                            value="{{ $work_sites_main->street_address }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="main_worksite_location"
-                                                            class="form-control">
-                                                    @endif
-                                                    @error('main_worksite_location')
-                                                        <div class="alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                                         <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                            <button type="submit"
+                                                class="btn btn-primary float-right">Submit</button>
                                         </div>
 
-
-
-
                                     </div>
+
                                 </form>
+
                                 @if ($work_sites_main)
                                     <button type="button" class="btn btn-rounded btn-info btn-lg" data-toggle="modal"
                                         data-target=".bd-example-modal-lg"><strong>Add
@@ -1156,23 +1139,21 @@
                                                         @endif
 
                                                         @if ($obj->county_id)
-                                                            <td>{{ $obj->county->name }}</td>
+                                                            <td>{{ $obj->county->czc_county }}aa</td>
                                                         @else
                                                             <td></td>
                                                         @endif
 
                                                         @if ($obj->city_id)
-                                                            <td>{{ $obj->city->name }}</td>
+                                                            <td>{{ $obj->city->czc_city }}</td>
                                                         @else
                                                             <td></td>
                                                         @endif
 
 
-                                                        @if ($obj->zip_code_address)
-                                                            <td>{{ $obj->zip_code_address }}</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
+
+                                                        <td>{{ $obj->zip_code_address }}</td>
+
 
 
                                                         @if ($obj->street_address)
@@ -1192,39 +1173,29 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                 @endif
+
+
+
 
 
                             </div>
 
-                            <!-- end tab 3 -->
+
 
                         </div>
+
+                        <!-- end tab 3 -->
+
                     </div>
-
-
-
-
                 </div>
+
+
+
+
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -1581,7 +1552,7 @@
                     $.get("{{ url('get_zipcodes') }}" + '/' + id, function(data) {
                         var _select = ''
                         for (var i = 0; i < data.length; i++)
-                            _select += '<option value="' + data[i].czc_zipcode + '"  >' + data[i]
+                            _select += '<option value="' + data[i].id + '"  >' + data[i]
                             .czc_zipcode + '</option>';
                         $(selector).html(_select);
                     });
