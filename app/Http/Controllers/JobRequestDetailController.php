@@ -418,6 +418,8 @@ class JobRequestDetailController extends Controller
 
     public function delete(Request $request)
     {
+        JobOfferSupervise::where('request_detail_id','=',$request->get('id'))->delete();
+        SpecialSkillJobRequest::where('request_detail_id','=',$request->get('id'))->delete();
         $detail = JobRequestDetail::findOrFail($request->get('id'));
         $detail->delete();
         Alert::error('', 'Record delete');
