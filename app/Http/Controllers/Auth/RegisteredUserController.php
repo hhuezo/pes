@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\catalogue\primaryBusinessType;
-use App\Models\catalogue\CityZip;
+use App\Models\catalogue\Industry;
 use App\Models\Employer;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -28,11 +28,13 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-       /* $primary_business_types =  primaryBusinessType::where('active', '=', 1)->get(); //czc_state
+        /* $primary_business_types =  primaryBusinessType::where('active', '=', 1)->get(); //czc_state
         $states =  CityZip::select('czc_state_fips as id','czc_state as name')
         ->groupBy('czc_state_fips','czc_state')
         ->get();*/
-        return view('auth.register');
+
+        $industries = Industry::get();
+        return view('auth.register', ['industries' => $industries]);
     }
 
     public function validate_email($id)
@@ -142,12 +144,22 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        //create employer
+        $employer = new Employer();
+        $employer->primary_contact_name = $request->get('primary_contact_name');
+        $employer->primary_contact_last_name = $request->get('primary_contact_last_name');
+        $employer->contact_middle_name = $request->get('contact_middle_name');
+        $employer->primary_contact_job_title = $request->get('primary_contact_job_title');
+        $employer->primary_contact_email = $request->get('email');
+        $employer->primary_business_phone = $request->get('primary_business_phone');
+        $employer->company_website = $request->get('company_website');
+        $employer->catalog_industry_id = $request->get('catalog_industry_id');
+        $employer->legal_business_name = $request->get('name');
+        $employer->save();
 
-
-         return redirect('employer/create');
+        $employer->user_has_employer()->attach(auth()->user()->id);
+        return redirect('employer/create');
 
         //return redirect(RouteServiceProvider::HOME);
     }
-
-
 }

@@ -193,8 +193,14 @@ class EmployerController extends Controller
         $employer = Employer::findOrFail($id);
 
 
+        if($employer->catalog_industry_id)
+        {
+            $naics = NaicsCode::where('industry_id', '=', $employer->catalog_industry_id)->get();
+        }
+        else{
+            $naics = null;
+        }
 
-        $naics = NaicsCode::where('industry_id', '=', $employer->naicsCode->industry_id)->get();
 
         $states =  CityZip::select('czc_state_fips as id', 'czc_state as name')
             ->groupBy('czc_state_fips', 'czc_state')

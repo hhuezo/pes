@@ -1298,7 +1298,7 @@
                             <div class="form-group">
                                 <input type="hidden" name="id" value="{{ $employer->id }}">
                                 <label>{!! trans('employer.WorksiteStreetAddress') !!}</label>
-                                <input type="text" name="street_address"  class="form-control">
+                                <input type="text" name="street_address" class="form-control">
                             </div>
 
 
