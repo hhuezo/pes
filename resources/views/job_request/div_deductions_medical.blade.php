@@ -7,8 +7,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountMedical') !!}</label>
-                    <input type="number" step="0.01" name="deduction_daily_amount_person_week" required
-                        class="form-control">
+                    <input type="number" step="0.01" name="deduction_medical_paycheck" required class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
                 </div>
 
@@ -17,7 +16,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                    <input type="text" name="daily_notes" class="form-control">
+                    <input type="text" name="deduction_medical_note" class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
                 </div>
 
@@ -35,8 +34,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountDental') !!}</label>
-                    <input type="number" step="0.01" name="deduction_daily_amount_person_week" required
-                        class="form-control">
+                    <input type="number" step="0.01" name="deduction_dental_paycheck" required class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
                 </div>
 
@@ -45,7 +43,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                    <input type="text" name="daily_notes" class="form-control">
+                    <input type="text" name="deduction_dental_note" class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
                 </div>
 
@@ -64,8 +62,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountVision') !!}</label>
-                    <input type="number" step="0.01" name="deduction_daily_amount_person_week" required
-                        class="form-control">
+                    <input type="number" step="0.01" name="deduction_vision_paycheck" required class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
                 </div>
 
@@ -74,7 +71,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                    <input type="text" name="daily_notes" class="form-control">
+                    <input type="text" name="deduction_vision_note" class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
                 </div>
 
@@ -93,8 +90,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmountOther') !!}</label>
-                    <input type="number" step="0.01" name="deduction_daily_amount_person_week" required
-                        class="form-control">
+                    <input type="number" step="0.01" name="deduction_other_paycheck" required class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.PlansPremium') !!}</label>
                 </div>
 
@@ -103,7 +99,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                    <input type="text" name="daily_notes" class="form-control">
+                    <input type="text" name="deduction_other_note" class="form-control">
                     <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_medical') !!}</label>
                 </div>
 

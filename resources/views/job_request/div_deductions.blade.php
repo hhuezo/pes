@@ -12,14 +12,14 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmount') !!}</label>
                         <input type="number" min="1" step="0.01" name="deduction_housing_amount_person_week"
-                            required class="form-control">
+                            value="{{ old('deduction_housing_amount_person_week') }}" required class="form-control">
                     </div>
 
                     <div id="showPleaseUtilities">
                         <div class="form-group">
                             <label for="exampleInputEmail1">{!! trans('job_application.PleaseUtilities') !!}</label>
                             <input type="number" min="1" step="0.01" name="explain_housing_utilities"
-                                required class="form-control">
+                                value="{{ old('explain_housing_utilities') }}" required class="form-control">
                         </div>
                     </div>
 
@@ -39,18 +39,18 @@
                     <div id="showIsDepositRequired">
                         <div class="form-group">
                             <label for="exampleInputEmail1">{!! trans('job_application.DepositAmount') !!}</label>
-                            <input type="number" min="1" step="0.01"
-                                name="deduction_housing_amount_person_week" required class="form-control">
+                            <input type="number" min="1" step="0.01" name="deposit_amount"
+                                class="form-control">
                         </div>
 
                         <label for="exampleInputEmail1">{!! trans('job_application.IsDepositRefundable') !!}</label>
                         <br>
                         &nbsp;&nbsp; &nbsp;&nbsp;
                         {!! trans('job_application.Yes') !!}
-                        <input type="radio" name="housing_utilities" value="1">
+                        <input type="radio" name="is_deposit_refundable" value="1">
                         &nbsp;&nbsp;
                         {!! trans('job_application.No') !!}
-                        <input type="radio" name="housing_utilities" checked value="1">
+                        <input type="radio" name="is_deposit_refundable" checked value="1">
                         &nbsp;&nbsp;
                         <br>
 
@@ -72,7 +72,8 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                        <input type="text" name="housing_notes" class="form-control">
+                        <input type="text" name="housing_notes" value="{{ old('housing_notes') }}"
+                            class="form-control">
                         <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_housing') !!}</label>
                     </div>
                 </div>
@@ -105,14 +106,14 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <input type="checkbox" id="ChkMedical" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <input type="checkbox" id="ChkMedical" onchange="validDeductionMedical();">&nbsp;&nbsp;
                         <label for="exampleInputEmail1">Medical</label>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <input type="checkbox" id="ChkDental" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <input type="checkbox" id="ChkDental" onchange="validDeductionDental();">&nbsp;&nbsp;
                         <label for="exampleInputEmail1">Dental</label>
                     </div>
                 </div>
@@ -120,7 +121,7 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <input type="checkbox" id="ChkVision" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <input type="checkbox" id="ChkVision" onchange="validDeductionVision();">&nbsp;&nbsp;
                         <label for="exampleInputEmail1">Vision</label>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
 
                 <div class="col-md-3">
                     <div class="form-group">
-                        <input type="checkbox" id="ChkOther" onchange="get_div_deductions_medical();">&nbsp;&nbsp;
+                        <input type="checkbox" id="ChkOther" onchange="validDeductionOther();">&nbsp;&nbsp;
                         <label for="exampleInputEmail1">Other</label>
                     </div>
                 </div>
