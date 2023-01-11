@@ -674,7 +674,8 @@ $degree_codes = DegreeCode::get();
         }
 
         $special_skills = SpecialSkillJobRequest::whereIn('request_detail_id',$array_details)->get();
-        return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite,'special_skills' => $special_skills]);
+        $degree_codes = DegreeCode::get();
+        return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite,'special_skills' => $special_skills,'degree_codes'=>$degree_codes]);
     }
 
 
