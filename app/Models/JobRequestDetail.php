@@ -39,7 +39,8 @@ class JobRequestDetail extends Model
         'ant_workday_total_hours',
         'primary_shift_time',
         'are_there_additional_shift_times',
-        'occupation_experience_id'
+        'occupation_experience_id',
+        'employer_worksite_id'
 
     ];
 
@@ -69,6 +70,11 @@ class JobRequestDetail extends Model
     public function request_special_skills()
     {
         return $this->hasMany('App\SpecialSkillJobRequest');
+    }
+
+    public function employer_worksite()
+    {
+        return $this->belongsTo('App\Models\EmployerWorksite', 'employer_worksite_id', 'id');
     }
 
 }

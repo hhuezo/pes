@@ -88,7 +88,13 @@
         </style>
     @endif
 
-
+    @if ($detail->is_travel_required != 1)
+        <style>
+            .div_geographic_location {
+                display: none;
+            }
+        </style>
+    @endif
 
 
 
@@ -115,17 +121,18 @@
                                     <a class="nav-link" data-toggle="tab" href="#supervise">Supervise</a>
                                 </li>
                                 <li class="nav-item">
-                                    @if(is_null($detail->has_to_supervise_others))
-                                    <a class="nav-link" data-toggle="tab">Job requirements</a>
+                                    @if (is_null($detail->has_to_supervise_others))
+                                        <a class="nav-link" data-toggle="tab">Job requirements</a>
                                     @else
-                                    <a class="nav-link" data-toggle="tab" href="#requirements">Job requirements</a>
+                                        <a class="nav-link" data-toggle="tab" href="#requirements">Job requirements</a>
                                     @endif
                                 </li>
                                 <li class="nav-item">
-                                    @if(is_null($detail->minimum_education_id))
-                                    <a class="nav-link" data-toggle="tab" >Alternative job requirements</a>
-                                     @else
-                                      <a class="nav-link" data-toggle="tab" href="#message">Alternative job requirements</a>
+                                    @if (is_null($detail->minimum_education_id))
+                                        <a class="nav-link" data-toggle="tab">Alternative job requirements</a>
+                                    @else
+                                        <a class="nav-link" data-toggle="tab" href="#message">Alternative job
+                                            requirements</a>
                                     @endif
                                 </li>
                             </ul>
@@ -163,6 +170,101 @@
                                                     <input type="number" name="number_workers"
                                                         value="{{ $detail->number_workers }}" class="form-control"
                                                         min="1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.PlaceEmploymentInformation') !!}</label>
+                                                    <select name="employer_worksite_id" class="form-control select2">
+                                                        @foreach ($worksites as $obj)
+                                                            @if ($obj->id == $detail->employer_worksite_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->id }} {{ $obj->street_address }},
+                                                                    {{ $obj->city->czc_city }},
+                                                                    {{ $obj->county->czc_county }}
+                                                                    , {{ $obj->state->cs_state }}</option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">{{ $obj->id }}
+                                                                    {{ $obj->street_address }},
+                                                                    {{ $obj->city->czc_city }},
+                                                                    {{ $obj->county->czc_county }}
+                                                                    , {{ $obj->state->cs_state }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.will_work_be_performed') !!}</label>
+                                                    <br>
+                                                    {!! trans('employer.Yes') !!}
+
+                                                    @if ($detail->is_located_multiple_pwd_msa == 1)
+                                                        <input type="radio" value="1" checked
+                                                            name="is_located_multiple_pwd_msa">
+                                                    @else
+                                                        <input type="radio" value="1"
+                                                            name="is_located_multiple_pwd_msa">
+                                                    @endif
+
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('employer.No') !!}
+
+                                                     @if ($detail->is_located_multiple_pwd_msa == 0)
+                                                        <input type="radio" value="0" checked
+                                                            name="is_located_multiple_pwd_msa">
+                                                    @else
+                                                        <input type="radio" value="0"
+                                                            name="is_located_multiple_pwd_msa">
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.JobTitleOfficial') !!}</label>
+                                                    <input type="text" value="{{ $detail->official_job_title }}"
+                                                        name="official_job_title" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                &nbsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.WillTravel') !!}</label><br>
+                                                    {!! trans('job_application.Yes') !!}
+                                                    @if ($detail->is_travel_required == 1)
+                                                        <input type="radio" value="1" checked
+                                                            name="is_travel_required"
+                                                            onclick="show_div_geographic_location(1);">
+                                                    @else
+                                                        <input type="radio" value="1" name="is_travel_required"
+                                                            onclick="show_div_geographic_location(1);">
+                                                    @endif
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.No') !!}
+                                                    @if ($detail->is_travel_required == 0)
+                                                        <input type="radio" value="0" checked
+                                                            name="is_travel_required"
+                                                            onclick="show_div_geographic_location(0);">
+                                                    @else
+                                                        <input type="radio" value="0" name="is_travel_required"
+                                                            onclick="show_div_geographic_location(0);">
+                                                    @endif
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 div_geographic_location" id="div_geographic_location">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.provide_geographic_location') !!}</label>
+                                                    <input type="text" name="geographic_location_frecuency"
+                                                        value="{{ $detail->geographic_location_frecuency }}"
+                                                        class="form-control">
                                                 </div>
                                             </div>
 
@@ -223,8 +325,9 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.PayRate') !!}</label>
-                                                    <input type="number" name="pay_rate" value="{{ $detail->pay_rate }}"
-                                                        class="form-control" step="0.01" min="1" required>
+                                                    <input type="number" name="pay_rate"
+                                                        value="{{ $detail->pay_rate }}" class="form-control"
+                                                        step="0.01" min="1" required>
                                                 </div>
                                             </div>
 
@@ -234,7 +337,8 @@
                                                     <br>
                                                     {!! trans('employer.Yes') !!}
                                                     @if ($detail->use_tip_credit == 1)
-                                                        <input type="radio" value="1" checked name="use_tip_credit">
+                                                        <input type="radio" value="1" checked
+                                                            name="use_tip_credit">
                                                     @else
                                                         <input type="radio" value="1" name="use_tip_credit">
                                                     @endif
@@ -243,7 +347,8 @@
                                                     &nbsp;&nbsp;
                                                     {!! trans('employer.No') !!}
                                                     @if ($detail->use_tip_credit == 0)
-                                                        <input type="radio" value="0" checked name="use_tip_credit">
+                                                        <input type="radio" value="0" checked
+                                                            name="use_tip_credit">
                                                     @else
                                                         <input type="radio" value="0" name="use_tip_credit">
                                                     @endif
@@ -1373,6 +1478,14 @@
             }
         }
 
+
+        function show_div_geographic_location(id) {
+            if (id == 1) {
+                $('#div_geographic_location').show();
+            } else {
+                $('#div_geographic_location').hide();
+            }
+        }
 
         function total_horas() {
             var horas = 0;

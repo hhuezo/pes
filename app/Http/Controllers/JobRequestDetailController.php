@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\catalogue\DegreeCode;
 use App\Models\catalogue\JobTitle;
 use App\Models\catalogue\SpecialSkill;
+use App\Models\EmployerWorksite;
 use App\Models\JobOfferSupervise;
 use App\Models\JobRequest;
 use App\Models\JobRequestDetail;
@@ -26,39 +27,34 @@ class JobRequestDetailController extends Controller
         $job_request = JobRequest::findOrFail($id);
         $job_titles = JobTitle::get();
         $degree_codes = DegreeCode::get();
-        return view('job_request_detail.create', ['job_request' => $job_request, 'job_titles' => $job_titles, 'degree_codes' => $degree_codes]);
+        $worksites = EmployerWorksite::where('employer_id', '=', $job_request->employer_id)->get();
+        return view('job_request_detail.create', [
+            'job_request' => $job_request, 'job_titles' => $job_titles, 'degree_codes' => $degree_codes,
+            'worksites' => $worksites
+        ]);
     }
 
 
     public function store(Request $request)
     {
-        /*if ($request->get('job_app_id') == 0) {
-            $employer = Employer::where('users_id', '=', auth()->user()->id)->first();
-
-            $job = new JobRequest();
-            $job->employer_id = $employer->id;
-            $job->start_date = $request->get('start_date_modal');
-            $job->end_date = $request->get('end_date_modal');
-            $job->need_h2b_workers = $request->get('need_h2b_workers_modal');
-
-            $job->explain_multiple_employment = $request->get('explain_multiple_employment_modal');
-
-            $job->save();
-        }*/
-
-
-        /*  $detail =  new JobRequestDetail();
-        if ($request->get('job_app_id') == 0) {
-            $detail->job_app_id = $job->id;
-        } else {
-            $detail->job_app_id = $request->get('job_app_id');
-        }*/
-
 
         $detail =  new JobRequestDetail();
         $detail->request_id = $request->get('job_request_id');
         $detail->job_title_id = $request->get('job_title');
         $detail->number_workers = $request->get('number_workers');
+
+        $detail->employer_worksite_id = $request->get('employer_worksite_id');
+        $detail->official_job_title = $request->get('official_job_title');
+        $detail->is_travel_required = $request->get('is_travel_required');
+        if ($detail->is_travel_required == 1) {
+            $detail->geographic_location_frecuency = $request->get('geographic_location_frecuency');
+        } else {
+            $detail->geographic_location_frecuency = null;
+        }
+
+        $detail->is_located_multiple_pwd_msa = $request->get('is_located_multiple_pwd_msa');
+
+
         $detail->desc_job_duties = $request->get('desc_job_duties');
         if ($request->get('it_has_cba') == null) {
             $detail->it_has_cba = 0;
@@ -92,12 +88,6 @@ class JobRequestDetailController extends Controller
     }
 
 
-    public function show($id)
-    {
-        //
-    }
-
-
     public function edit($id)
     {
         $detail =  JobRequestDetail::findOrFail($id);
@@ -126,12 +116,13 @@ class JobRequestDetailController extends Controller
         $special_skills_alternative = SpecialSkillJobRequest::where('request_detail_id', '=', $id)->where('is_alternate_skill', '=', 1)->get();
         $skills = SpecialSkill::get();
 
-
+        $worksites = EmployerWorksite::where('employer_id', '=', $job_request->employer_id)->get();
 
 
         return view('job_request_detail.edit', [
             'job_request' => $job_request, 'job_titles' => $job_titles, 'degree_codes' => $degree_codes, 'detail' => $detail,
-            'special_skills' => $special_skills, 'special_skills_alternative' => $special_skills_alternative, 'skills' => $skills, 'job_offerts' => $job_offerts
+            'special_skills' => $special_skills, 'special_skills_alternative' => $special_skills_alternative, 'skills' => $skills,
+            'job_offerts' => $job_offerts, 'worksites' => $worksites
         ]);
     }
 
@@ -141,6 +132,18 @@ class JobRequestDetailController extends Controller
         //$detail->request_id = $request->get('job_request_id');
         $detail->job_title_id = $request->get('job_title');
         $detail->number_workers = $request->get('number_workers');
+
+        $detail->employer_worksite_id = $request->get('employer_worksite_id');
+        $detail->official_job_title = $request->get('official_job_title');
+        $detail->is_travel_required = $request->get('is_travel_required');
+        if ($detail->is_travel_required == 1) {
+            $detail->geographic_location_frecuency = $request->get('geographic_location_frecuency');
+        } else {
+            $detail->geographic_location_frecuency = null;
+        }
+
+        $detail->is_located_multiple_pwd_msa = $request->get('is_located_multiple_pwd_msa');
+
         $detail->desc_job_duties = $request->get('desc_job_duties');
         if ($request->get('it_has_cba') == null) {
             $detail->it_has_cba = 0;
@@ -418,8 +421,8 @@ class JobRequestDetailController extends Controller
 
     public function delete(Request $request)
     {
-        JobOfferSupervise::where('request_detail_id','=',$request->get('id'))->delete();
-        SpecialSkillJobRequest::where('request_detail_id','=',$request->get('id'))->delete();
+        JobOfferSupervise::where('request_detail_id', '=', $request->get('id'))->delete();
+        SpecialSkillJobRequest::where('request_detail_id', '=', $request->get('id'))->delete();
         $detail = JobRequestDetail::findOrFail($request->get('id'));
         $detail->delete();
         Alert::error('', 'Record delete');

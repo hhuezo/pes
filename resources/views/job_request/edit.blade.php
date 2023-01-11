@@ -205,7 +205,7 @@
                                     <tbody>
                                         @foreach ($details as $obj)
                                             <tr>
-                                                <td>{{ $obj->title->title }}</td>
+                                                <td>{{ $obj->id }} {{ $obj->title->title }}</td>
                                                 <td>{{ $obj->number_workers }}</td>
                                                 <td>{{ $obj->ant_workday_total_hours }}</td>
                                                 <td align="center">

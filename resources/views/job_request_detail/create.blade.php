@@ -59,6 +59,59 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.PlaceEmploymentInformation') !!}</label>
+                                                    <select name="employer_worksite_id" class="form-control select2">
+                                                        @foreach ($worksites as $obj)
+                                                            <option value="{{$obj->id}}">{{$obj->street_address}}, {{$obj->city->czc_city}}, {{$obj->county->czc_county}}
+                                                                , {{$obj->state->cs_state}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.will_work_be_performed') !!}</label>
+                                                    <br>
+                                                    {!! trans('employer.Yes') !!}
+
+                                                    <input type="radio" value="1"  name="is_located_multiple_pwd_msa">
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('employer.No') !!}
+                                                    <input type="radio" value="0" checked name="is_located_multiple_pwd_msa">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.JobTitleOfficial') !!}</label>
+                                                    <input type="text" name="official_job_title" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                &nbsp;
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.WillTravel') !!}</label><br>
+                                                    {!! trans('job_application.Yes') !!}
+                                                    <input type="radio" value="1" onclick="show_div_geographic_location(1);" name="is_travel_required">
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.No') !!}
+                                                    <input type="radio" value="0"  onclick="show_div_geographic_location(0);" checked name="is_travel_required">
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6" style="display: none;" id="div_geographic_location">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.provide_geographic_location') !!}</label>
+                                                    <input type="text" name="geographic_location_frecuency" class="form-control">
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.JobDuties') !!}</label>
@@ -365,6 +418,14 @@
                 $('#div_requeriments').show();
             } else {
                 $('#div_requeriments').hide();
+            }
+        }
+
+        function show_div_geographic_location(id) {
+            if (id == 1) {
+                $('#div_geographic_location').show();
+            } else {
+                $('#div_geographic_location').hide();
             }
         }
 

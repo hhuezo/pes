@@ -191,6 +191,12 @@ return [
     'JobDuties' => 'Job Duties',
     'JobDutiesDescription' => 'Description of the specific services or labor to be performed. * (All job duties must be disclosed. A description of the job duties
     MUST begin in this space. One separate addendum will be accepted to fully compete the response.)',
+    'PlaceEmploymentInformation'=>'Place of Employment Information',
+    'will_work_be_performed'=>'Will work be performed in any Bureau of Labor Statistics Area (Metropolitan or Non-Metropolitan Statistical Areas) other than the Bureau of Labor Statistics Area of the address listed above, or, in the case of Bureau of Labor Statistics areas with multiple county-level prevailing wage rates, in a county other than the county of the address listed above? * (If “Yes,” a completed Appendix A is required)',
+
+    'JobTitleOfficial'=>'Job title of the official the employee will report to for this job opportunity (if applicable)',
+    'WillTravel'=>'Will travel be required in order to perform the job duties? *',
+    'provide_geographic_location' => ' If “Yes,” provide geographic location and frequency of the travel.',
 
     'workers_paid_position' => 'How are workers paid in this position?',
     'PayRate' => 'Current Pay Rate Offered',

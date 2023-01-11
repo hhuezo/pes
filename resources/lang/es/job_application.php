@@ -74,6 +74,17 @@ return [
     'location_listed_above' => '¿Este puesto es para la ubicación PRINCIPAL del lugar de trabajo mencionada anteriormente?',
     'job_title' => 'Nombre',
     'Number_of_Workers' => 'Numero de trabajadores',
+    'JobDuties' => 'Deberes de trabajo',
+    'JobDutiesDescription' => 'Descripción de los servicios específicos o mano de obra a realizar. * (Todos los deberes del trabajo deben ser divulgados. Una descripción de los deberes del trabajo
+    DEBE comenzar en este espacio. Se aceptará un apéndice por separado para completar la respuesta).',
+    'PlaceEmploymentInformation'=>'Información del lugar de empleo',
+    'JobTitleOfficial'=>'Título del puesto del funcionario al que se reportará el empleado para esta oportunidad de trabajo (si corresponde)',
+    'WillTravel'=>'¿Será necesario viajar para realizar las tareas laborales? *',
+    'provide_geographic_location' => 'Si la respuesta es "Sí", proporcione la ubicación geográfica y la frecuencia del viaje.',
+
+
+
+
     'workers_paid_position' => '¿Cómo se les paga a los trabajadores en este puesto?',
     'PayRate' => 'Tasa de pago actual ofrecida',
     'tip_credit' => '¿Está planeando usar el crédito de propinas?',
