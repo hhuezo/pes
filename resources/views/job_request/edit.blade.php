@@ -8,15 +8,16 @@
         @php($tab_request = 1)
     @endif
 
-    {{ $tab_request }}
-
-    @if ($deduction->housing_utilities == 0)
-        <style>
-            .divHousing {
-                display: none;
-            }
-        </style>
+    @if ($deduction)
+        @if ($deduction->housing_utilities == 0)
+            <style>
+                .divHousing {
+                    display: none;
+                }
+            </style>
+        @endif
     @endif
+
 
     <div class="row">
 
@@ -36,17 +37,21 @@
                             <a class="nav-link" data-toggle="tab" href="#tab2">POSITION(S) NEEDED</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab3">DEDUCTIONS FROM THE WORKER'S PAYCHECK
+                            <a class="nav-link" data-toggle="tab" href="#tab3">DEDUCTIONS PAYCHECK
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab4">JOB REQUIREMENTS / CONDITIONS OF EMPLOYMENT
+                            <a class="nav-link" data-toggle="tab" href="#tab4">JOB REQUIREMENTS AND CONDITIONS
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab5">ATTORNEY OR AGENT INFORMATION (IF
-                                APPLICABLE)
+                            <a class="nav-link" data-toggle="tab" href="#tab5">ATTORNEY OR AGENT INFORMATION
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab6">SIGN
                             </a>
                         </li>
                     </ul>
@@ -301,39 +306,63 @@
                                             <label for="exampleInputUsername1">{!! trans('job_application.select_deductions') !!}</label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    @if ($deduction->housing_utilities == 1)
-                                                        <input type="checkbox" id="Housing" name="Housing" checked
-                                                            onclick="validHousing();">
-                                                        <label for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label>
-                                                    @endif
-                                                    @if ($deduction->housing_utilities == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->housing_utilities == 1)
+                                                            <input type="checkbox" id="Housing" name="Housing" checked
+                                                                onclick="validHousing();">
+                                                            <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label>
+                                                        @endif
+                                                        @if ($deduction->housing_utilities == 0)
+                                                            <input type="checkbox" id="Housing" name="Housing"
+                                                                onclick="validHousing();">
+                                                            <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="Housing" name="Housing"
                                                             onclick="validHousing();">
                                                         <label for="exampleInputUsername1">{!! trans('job_application.Housing') !!}</label>
                                                     @endif
 
 
+
                                                     <br>
-                                                    @if ($deduction->medical == 1)
-                                                        <input type="checkbox" id="Medical" name="Medical" checked
-                                                            onclick="validMedical();"> <label
-                                                            for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label>
-                                                    @endif
-                                                    @if ($deduction->medical == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->medical == 1)
+                                                            <input type="checkbox" id="Medical" name="Medical" checked
+                                                                onclick="validMedical();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label>
+                                                        @endif
+                                                        @if ($deduction->medical == 0)
+                                                            <input type="checkbox" id="Medical" name="Medical"
+                                                                onclick="validMedical();">
+                                                            <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="Medical" name="Medical"
                                                             onclick="validMedical();">
                                                         <label for="exampleInputUsername1">{!! trans('job_application.Medical') !!}</label>
                                                     @endif
 
 
+
                                                     <br>
-                                                    @if ($deduction->daily_transportation == 1)
-                                                        <input type="checkbox"
-                                                            id="DailyTransportation"name="DailyTransportation" checked
-                                                            onclick="validDaily();"> <label
-                                                            for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
-                                                    @endif
-                                                    @if ($deduction->daily_transportation == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->daily_transportation == 1)
+                                                            <input type="checkbox"
+                                                                id="DailyTransportation"name="DailyTransportation" checked
+                                                                onclick="validDaily();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
+                                                        @endif
+                                                        @if ($deduction->daily_transportation == 0)
+                                                            <input type="checkbox"
+                                                                id="DailyTransportation"name="DailyTransportation"
+                                                                onclick="validDaily();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.DailyTransportation') !!}</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox"
                                                             id="DailyTransportation"name="DailyTransportation"
                                                             onclick="validDaily();"> <label
@@ -341,43 +370,65 @@
                                                     @endif
 
 
+
                                                 </div>
 
                                                 <div class="col-md-6">
-                                                    @if ($deduction->other == 1)
-                                                        <input type="checkbox" id="Other" name="Other" checked
-                                                            onclick="validOther();"> <label
-                                                            for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label>
-                                                    @endif
-                                                    @if ($deduction->other == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->other == 1)
+                                                            <input type="checkbox" id="Other" name="Other" checked
+                                                                onclick="validOther();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label>
+                                                        @endif
+                                                        @if ($deduction->other == 0)
+                                                            <input type="checkbox" id="Other" name="Other"
+                                                                onclick="validOther();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="Other" name="Other"
                                                             onclick="validOther();"> <label
                                                             for="exampleInputUsername1">{!! trans('job_application.Other') !!}</label>
                                                     @endif
 
+
                                                     <br>
-                                                    @if ($deduction->meals == 1)
-                                                        <input type="checkbox" id="Meals" name="Meals" checked
-                                                            onclick="validMeals();"> <label
-                                                            for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label>
-                                                    @endif
-                                                    @if ($deduction->meals == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->meals == 1)
+                                                            <input type="checkbox" id="Meals" name="Meals" checked
+                                                                onclick="validMeals();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label>
+                                                        @endif
+                                                        @if ($deduction->meals == 0)
+                                                            <input type="checkbox" id="Meals" name="Meals"
+                                                                onclick="validMeals();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="Meals" name="Meals"
                                                             onclick="validMeals();"> <label
                                                             for="exampleInputUsername1">{!! trans('job_application.Meals') !!}</label>
                                                     @endif
 
+
                                                     <br>
-                                                    @if ($deduction->no_deduction == 1)
-                                                        <input type="checkbox" id="NoDeductions" name="NoDeductions"
-                                                            checked onclick="validNoDeductions();"> <label
-                                                            for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
-                                                    @endif
-                                                    @if ($deduction->no_deduction == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->no_deduction == 1)
+                                                            <input type="checkbox" id="NoDeductions" name="NoDeductions"
+                                                                checked onclick="validNoDeductions();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
+                                                        @endif
+                                                        @if ($deduction->no_deduction == 0)
+                                                            <input type="checkbox" id="NoDeductions" name="NoDeductions"
+                                                                onclick="validNoDeductions();"> <label
+                                                                for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="NoDeductions" name="NoDeductions"
                                                             onclick="validNoDeductions();"> <label
                                                             for="exampleInputUsername1">{!! trans('job_application.NoDeductions') !!}</label>
                                                     @endif
+
 
 
                                                 </div>
@@ -411,18 +462,34 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.DeductionAmount') !!}</label>
-                                                    <input type="number" min="1" step="0.01"
-                                                        name="deduction_housing_amount_person_week"
-                                                        value="{{ old('deduction_housing_amount_person_week', $deduction->deduction_housing_amount_person_week) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="number" min="1" step="0.01"
+                                                            name="deduction_housing_amount_person_week"
+                                                            value="{{ old('deduction_housing_amount_person_week', $deduction->deduction_housing_amount_person_week) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="number" min="1" step="0.01"
+                                                            name="deduction_housing_amount_person_week"
+                                                            value="{{ old('deduction_housing_amount_person_week') }}"
+                                                            class="form-control">
+                                                    @endif
+
                                                 </div>
 
                                                 <div id="showPleaseUtilities">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">{!! trans('job_application.PleaseUtilities') !!}</label>
-                                                        <input type="text" name="explain_housing_utilities"
-                                                            value="{{ old('explain_housing_utilities', $deduction->explain_housing_utilities) }}"
-                                                            class="form-control">
+                                                        @if ($deduction)
+                                                            <input type="text" name="explain_housing_utilities"
+                                                                value="{{ old('explain_housing_utilities', $deduction->explain_housing_utilities) }}"
+                                                                class="form-control">
+                                                        @else
+                                                            <input type="text" name="explain_housing_utilities"
+                                                                value="{{ old('explain_housing_utilities') }}"
+                                                                class="form-control">
+                                                        @endif
+
+
                                                     </div>
                                                 </div>
 
@@ -433,28 +500,39 @@
                                                     &nbsp;&nbsp; &nbsp;&nbsp;
                                                     {!! trans('job_application.Yes') !!}
 
-                                                    @if ($deduction->is_deposit_required == 1)
-                                                        <input type="radio" name="is_deposit_required"
-                                                            id="is_deposit_required" checked value="1"
-                                                            onClick="validIsDeposit()">
+                                                    @if ($deduction)
+                                                        @if ($deduction->is_deposit_required == 1)
+                                                            <input type="radio" name="is_deposit_required"
+                                                                id="is_deposit_required" checked value="1"
+                                                                onClick="validIsDeposit()">
+                                                        @else
+                                                            <input type="radio" name="is_deposit_required"
+                                                                id="is_deposit_required" value="1"
+                                                                onClick="validIsDeposit()">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="is_deposit_required"
-                                                            id="is_deposit_required" value="1"
-                                                            onClick="validIsDeposit()">
+                                                            id="is_deposit_required" onClick="validIsDeposit()">
                                                     @endif
+
 
 
                                                     &nbsp;&nbsp;
                                                     {!! trans('job_application.No') !!}
 
-                                                    @if ($deduction->is_deposit_required == 0)
-                                                        <input type="radio" name="is_deposit_required"
-                                                            id="is_deposit_required" checked value="0"
-                                                            onClick="validIsDeposit()">
+                                                    @if ($deduction)
+                                                        @if ($deduction->is_deposit_required == 0)
+                                                            <input type="radio" name="is_deposit_required"
+                                                                id="is_deposit_required" checked value="0"
+                                                                onClick="validIsDeposit()">
+                                                        @else
+                                                            <input type="radio" name="is_deposit_required"
+                                                                id="is_deposit_required" value="0"
+                                                                onClick="validIsDeposit()">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="is_deposit_required"
-                                                            id="is_deposit_required" value="0"
-                                                            onClick="validIsDeposit()">
+                                                            id="is_deposit_required" onClick="validIsDeposit()">
                                                     @endif
 
 
@@ -465,9 +543,15 @@
                                                 <div id="showIsDepositRequired">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">{!! trans('job_application.DepositAmount') !!}</label>
-                                                        <input type="number" step="0.01" name="deposit_amount"
-                                                            @if ($deduction->deposit_amount) value="{{ old('deposit_amount', $deduction->deposit_amount) }}" @endif
-                                                            class="form-control">
+                                                        @if ($deduction)
+                                                            <input type="number" step="0.01" name="deposit_amount"
+                                                                @if ($deduction->deposit_amount) value="{{ old('deposit_amount', $deduction->deposit_amount) }}" @endif
+                                                                class="form-control">
+                                                        @else
+                                                            <input type="number" step="0.01" name="deposit_amount"
+                                                                value="{{ old('deposit_amount') }}" class="form-control">
+                                                        @endif
+
                                                     </div>
 
                                                     <label for="exampleInputEmail1">{!! trans('job_application.IsDepositRefundable') !!}</label>
@@ -475,24 +559,34 @@
                                                     &nbsp;&nbsp; &nbsp;&nbsp;
                                                     {!! trans('job_application.Yes') !!}
 
-                                                    @if ($deduction->is_deposit_refundable == 1)
-                                                        <input type="radio" name="is_deposit_refundable"
-                                                            id="is_deposit_refundable" checked value="1">
+                                                    @if ($deduction)
+                                                        @if ($deduction->is_deposit_refundable == 1)
+                                                            <input type="radio" name="is_deposit_refundable"
+                                                                id="is_deposit_refundable" checked value="1">
+                                                        @else
+                                                            <input type="radio" name="is_deposit_refundable"
+                                                                id="is_deposit_refundable" value="1">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="is_deposit_refundable"
-                                                            id="is_deposit_refundable" value="1">
+                                                            id="is_deposit_refundable">
                                                     @endif
 
 
 
                                                     &nbsp;&nbsp;
                                                     {!! trans('job_application.No') !!}
-                                                    @if ($deduction->is_deposit_refundable == 0)
-                                                        <input type="radio" name="is_deposit_refundable"
-                                                            id="is_deposit_refundable" checked value="0">
+                                                    @if ($deduction)
+                                                        @if ($deduction->is_deposit_refundable == 0)
+                                                            <input type="radio" name="is_deposit_refundable"
+                                                                id="is_deposit_refundable" checked value="0">
+                                                        @else
+                                                            <input type="radio" name="is_deposit_refundable"
+                                                                id="is_deposit_refundable" value="0">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="is_deposit_refundable"
-                                                            id="is_deposit_refundable" value="0">
+                                                            id="is_deposit_refundable">
                                                     @endif
                                                     &nbsp;&nbsp;
                                                     <br>
@@ -508,14 +602,19 @@
                                                     &nbsp;&nbsp; &nbsp;&nbsp;
                                                     {!! trans('job_application.Yes') !!}
 
-                                                    @if ($deduction->housing_includes_utilities == 1)
-                                                        <input type="radio" name="housing_utilities"
-                                                            id="housing_utilities" value="1" checked
-                                                            onClick="validUtilities()">
+                                                    @if ($deduction)
+                                                        @if ($deduction->housing_includes_utilities == 1)
+                                                            <input type="radio" name="housing_utilities"
+                                                                id="housing_utilities" value="1" checked
+                                                                onClick="validUtilities()">
+                                                        @else
+                                                            <input type="radio" name="housing_utilities"
+                                                                id="housing_utilities" value="1"
+                                                                onClick="validUtilities()">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="housing_utilities"
-                                                            id="housing_utilities" value="1"
-                                                            onClick="validUtilities()">
+                                                            id="housing_utilities" onClick="validUtilities()">
                                                     @endif
 
 
@@ -523,22 +622,34 @@
                                                     &nbsp;&nbsp;
                                                     {!! trans('job_application.No') !!}
 
-                                                    @if ($deduction->housing_includes_utilities == 0)
-                                                        <input type="radio" name="housing_utilities"
-                                                            id="housing_utilities" value="0" checked
-                                                            onClick="validUtilities()">
+                                                    @if ($deduction)
+                                                        @if ($deduction->housing_includes_utilities == 0)
+                                                            <input type="radio" name="housing_utilities"
+                                                                id="housing_utilities" value="0" checked
+                                                                onClick="validUtilities()">
+                                                        @else
+                                                            <input type="radio" name="housing_utilities"
+                                                                id="housing_utilities" value="0"
+                                                                onClick="validUtilities()">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="housing_utilities"
-                                                            id="housing_utilities" value="0"
-                                                            onClick="validUtilities()">
+                                                            id="housing_utilities" onClick="validUtilities()">
                                                     @endif
 
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                                    <input type="text" name="housing_notes"
-                                                        value="{{ old('housing_notes', $deduction->housing_notes) }}"
-                                                        class="form-control">
+
+                                                    @if ($deduction)
+                                                        <input type="text" name="housing_notes"
+                                                            value="{{ old('housing_notes', $deduction->housing_notes) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="housing_notes"
+                                                            value="{{ old('housing_notes') }}" class="form-control">
+                                                    @endif
+
                                                     <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_housing') !!}</label>
                                                 </div>
                                             </div>
@@ -577,12 +688,18 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    @if ($deduction->deduction_medical_paycheck == 1)
-                                                        <input type="checkbox" id="ChkMedical" name="ChkMedical" checked
-                                                            onchange="validDeductionMedical();">&nbsp;&nbsp;
-                                                        <label for="exampleInputEmail1">Medical</label>
-                                                    @endif
-                                                    @if ($deduction->deduction_medical_paycheck == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->deduction_medical_paycheck == 1)
+                                                            <input type="checkbox" id="ChkMedical" name="ChkMedical"
+                                                                checked onchange="validDeductionMedical();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Medical</label>
+                                                        @endif
+                                                        @if ($deduction->deduction_medical_paycheck == 0)
+                                                            <input type="checkbox" id="ChkMedical" name="ChkMedical"
+                                                                onchange="validDeductionMedical();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Medical</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="ChkMedical" name="ChkMedical"
                                                             onchange="validDeductionMedical();">&nbsp;&nbsp;
                                                         <label for="exampleInputEmail1">Medical</label>
@@ -592,12 +709,18 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    @if ($deduction->deduction_dental_paycheck == 1)
-                                                        <input type="checkbox" id="ChkDental" name="ChkDental" checked
-                                                            onchange="validDeductionDental();">&nbsp;&nbsp;
-                                                        <label for="exampleInputEmail1">Dental</label>
-                                                    @endif
-                                                    @if ($deduction->deduction_dental_paycheck == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->deduction_dental_paycheck == 1)
+                                                            <input type="checkbox" id="ChkDental" name="ChkDental"
+                                                                checked onchange="validDeductionDental();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Dental</label>
+                                                        @endif
+                                                        @if ($deduction->deduction_dental_paycheck == 0)
+                                                            <input type="checkbox" id="ChkDental" name="ChkDental"
+                                                                onchange="validDeductionDental();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Dental</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="ChkDental" name="ChkDental"
                                                             onchange="validDeductionDental();">&nbsp;&nbsp;
                                                         <label for="exampleInputEmail1">Dental</label>
@@ -608,12 +731,18 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    @if ($deduction->deduction_vision_paycheck == 1)
-                                                        <input type="checkbox" id="ChkVision" name="ChkVision" checked
-                                                            onchange="validDeductionVision();">&nbsp;&nbsp;
-                                                        <label for="exampleInputEmail1">Vision</label>
-                                                    @endif
-                                                    @if ($deduction->deduction_vision_paycheck == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->deduction_vision_paycheck == 1)
+                                                            <input type="checkbox" id="ChkVision" name="ChkVision"
+                                                                checked onchange="validDeductionVision();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Vision</label>
+                                                        @endif
+                                                        @if ($deduction->deduction_vision_paycheck == 0)
+                                                            <input type="checkbox" id="ChkVision" name="ChkVision"
+                                                                onchange="validDeductionVision();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Vision</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="ChkVision" name="ChkVision"
                                                             onchange="validDeductionVision();">&nbsp;&nbsp;
                                                         <label for="exampleInputEmail1">Vision</label>
@@ -624,12 +753,18 @@
 
                                             <div class="col-md-3">
                                                 <div class="form-group">
-                                                    @if ($deduction->deduction_other_paycheck == 1)
-                                                        <input type="checkbox" id="ChkOther" name="ChkOther" checked
-                                                            onchange="validDeductionOther();">&nbsp;&nbsp;
-                                                        <label for="exampleInputEmail1">Other</label>
-                                                    @endif
-                                                    @if ($deduction->deduction_other_paycheck == 0)
+                                                    @if ($deduction)
+                                                        @if ($deduction->deduction_other_paycheck == 1)
+                                                            <input type="checkbox" id="ChkOther" name="ChkOther" checked
+                                                                onchange="validDeductionOther();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Other</label>
+                                                        @endif
+                                                        @if ($deduction->deduction_other_paycheck == 0)
+                                                            <input type="checkbox" id="ChkOther" name="ChkOther"
+                                                                onchange="validDeductionOther();">&nbsp;&nbsp;
+                                                            <label for="exampleInputEmail1">Other</label>
+                                                        @endif
+                                                    @else
                                                         <input type="checkbox" id="ChkOther" name="ChkOther"
                                                             onchange="validDeductionOther();">&nbsp;&nbsp;
                                                         <label for="exampleInputEmail1">Other</label>
@@ -869,10 +1004,17 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.DeductionPerWeek') !!}</label>
-                                                    <input type="number" step="0.01"
-                                                        name="deduction_daily_amount_person_week"
-                                                        value="{{ old('deduction_daily_amount_person_week', $deduction->deduction_daily_amount_person_week) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="number" step="0.01"
+                                                            name="deduction_daily_amount_person_week"
+                                                            value="{{ old('deduction_daily_amount_person_week', $deduction->deduction_daily_amount_person_week) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="number" step="0.01"
+                                                            name="deduction_daily_amount_person_week"
+                                                            value="{{ old('deduction_daily_amount_person_week') }}"
+                                                            class="form-control">
+                                                    @endif
                                                 </div>
 
                                             </div>
@@ -880,9 +1022,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                                    <input type="text" name="daily_notes"
-                                                        value="{{ old('daily_notes', $deduction->daily_notes) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="text" name="daily_notes"
+                                                            value="{{ old('daily_notes', $deduction->daily_notes) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="daily_notes"
+                                                            value="{{ old('daily_notes') }}" class="form-control">
+                                                    @endif
                                                     <label for="exampleInputEmail1">{!! trans('job_application.additional_notes_daily_transportation') !!}</label>
                                                 </div>
 
@@ -910,9 +1057,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.OtherTitle') !!}</label>
-                                                    <input type="text" name="other_deductions"
-                                                        value="{{ old('other_deductions', $deduction->other_deductions) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="text" name="other_deductions"
+                                                            value="{{ old('other_deductions', $deduction->other_deductions) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="other_deductions"
+                                                            value="{{ old('other_deductions') }}" class="form-control">
+                                                    @endif
 
                                                 </div>
 
@@ -942,23 +1094,42 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.MealsPerShift') !!}</label>
-                                                    <input type="number" min="1" name="how_many_meals_provided"
-                                                        value="{{ old('how_many_meals_provided', $deduction->how_many_meals_provided) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="number" min="1"
+                                                            name="how_many_meals_provided"
+                                                            value="{{ old('how_many_meals_provided', $deduction->how_many_meals_provided) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="number" min="1"
+                                                            name="how_many_meals_provided"
+                                                            value="{{ old('how_many_meals_provided') }}"
+                                                            class="form-control">
+                                                    @endif
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.EnterCost') !!}</label>
-                                                    <input type="number" step="0.01" min="0.01"
-                                                        name="cost_per_meal"
-                                                        value="{{ old('cost_per_meal', $deduction->cost_per_meal) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="number" step="0.01" min="0.01"
+                                                            name="cost_per_meal"
+                                                            value="{{ old('cost_per_meal', $deduction->cost_per_meal) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="number" step="0.01" min="0.01"
+                                                            name="cost_per_meal" value="{{ old('cost_per_meal') }}"
+                                                            class="form-control">
+                                                    @endif
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                                    <input type="text" name="meals_notes"
-                                                        value="{{ old('meals_notes', $deduction->meals_notes) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="text" name="meals_notes"
+                                                            value="{{ old('meals_notes', $deduction->meals_notes) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="meals_notes"
+                                                            value="{{ old('meals_notes') }}" class="form-control">
+                                                    @endif
                                                     <label for="exampleInputEmail1">{!! trans('job_application.AdditionalNotesMeals') !!}</label>
                                                 </div>
 
@@ -970,23 +1141,33 @@
                                                     <br>
                                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                                     {!! trans('job_application.Yes') !!}
-                                                    @if ($deduction->is_there_cost_per_meal == 1)
-                                                        <input type="radio" name="is_there_costo_per_meal"
-                                                            id="is_there_costo_per_meal" value="1" checked>
+                                                    @if ($deduction)
+                                                        @if ($deduction->is_there_cost_per_meal == 1)
+                                                            <input type="radio" name="is_there_costo_per_meal"
+                                                                id="is_there_costo_per_meal" value="1" checked>
+                                                        @else
+                                                            <input type="radio" name="is_there_costo_per_meal"
+                                                                id="is_there_costo_per_meal" value="1">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="is_there_costo_per_meal"
-                                                            id="is_there_costo_per_meal" value="1">
+                                                            id="is_there_costo_per_meal">
                                                     @endif
 
 
                                                     &nbsp;&nbsp;
                                                     {!! trans('job_application.No') !!}
-                                                    @if ($deduction->is_there_cost_per_meal == 0)
-                                                        <input type="radio" name="is_there_costo_per_meal"
-                                                            id="is_there_costo_per_meal" value="0" checked>
+                                                    @if ($deduction)
+                                                        @if ($deduction->is_there_cost_per_meal == 0)
+                                                            <input type="radio" name="is_there_costo_per_meal"
+                                                                id="is_there_costo_per_meal" value="0" checked>
+                                                        @else
+                                                            <input type="radio" name="is_there_costo_per_meal"
+                                                                id="is_there_costo_per_meal" value="0">
+                                                        @endif
                                                     @else
                                                         <input type="radio" name="is_there_costo_per_meal"
-                                                            id="is_there_costo_per_meal" value="0">
+                                                            id="is_there_costo_per_meal">
                                                     @endif
 
                                                     &nbsp;&nbsp;
@@ -995,10 +1176,17 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.EnterDeduction') !!}</label>
-                                                    <input type="number" step="0.01" min="0.01"
-                                                        name="deduction_amount_per_meal"
-                                                        value="{{ old('deduction_amount_per_meal', $deduction->deduction_amount_per_meal) }}"
-                                                        class="form-control">
+                                                    @if ($deduction)
+                                                        <input type="number" step="0.01" min="0.01"
+                                                            name="deduction_amount_per_meal"
+                                                            value="{{ old('deduction_amount_per_meal', $deduction->deduction_amount_per_meal) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="number" step="0.01" min="0.01"
+                                                            name="deduction_amount_per_meal"
+                                                            value="{{ old('deduction_amount_per_meal') }}"
+                                                            class="form-control">
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -1480,30 +1668,46 @@
                                     <div class="form-group">
                                         <label for="exampleInputEmail1"><strong>{!! trans('job_application.PleaseTransportation') !!}</strong></label>
                                         <br>
-                                        <input type="radio" name="arrange_and_pay" id="arrange_and_pay"
-                                            @if ($employer_transportation->arrange_and_pay == 1) checked
+                                        @if ($employer_transportation)
+                                            <input type="radio" name="arrange_and_pay" id="arrange_and_pay"
+                                                @if ($employer_transportation->arrange_and_pay == 1) checked
+                                    @else
+                                        '' @endif
+                                                onclick="validArrangePay()">
                                         @else
-                                            '' @endif
-                                            onclick="validArrangePay()">
+                                            <input type="radio" name="arrange_and_pay" id="arrange_and_pay"
+                                                onclick="validArrangePay()">
+                                        @endif
                                         &nbsp;&nbsp;Arrange and pay directly
                                         for
                                         transportation and
                                         subsistence (recommended)
                                         <br>
-                                        <input type="radio" name="reimburse" id="reimburse"
-                                            @if ($employer_transportation->reimburse == 1) checked
+                                        @if ($employer_transportation)
+                                            <input type="radio" name="reimburse" id="reimburse"
+                                                @if ($employer_transportation->reimburse == 1) checked
+                                    @else
+                                        '' @endif
+                                                onclick="validReimburse()">
                                         @else
-                                            '' @endif
-                                            onclick="validReimburse()"> &nbsp;&nbsp;Reimburse the
+                                            <input type="radio" name="reimburse" id="reimburse"
+                                                onclick="validReimburse()">
+                                        @endif
+                                        &nbsp;&nbsp;Reimburse the
                                         worker for
                                         transportation and
                                         subsistence
                                         <br>
-                                        <input type="radio" name="provide_advance" id="provide_advance"
-                                            @if ($employer_transportation->provide_advance == 1) checked
+                                        @if ($employer_transportation)
+                                            <input type="radio" name="provide_advance" id="provide_advance"
+                                                @if ($employer_transportation->provide_advance == 1) checked
+                                    @else
+                                        '' @endif
+                                                onclick="validProvideAdvance()">
                                         @else
-                                            '' @endif
-                                            onclick="validProvideAdvance()">
+                                            <input type="radio" name="provide_advance" id="provide_advance"
+                                                onclick="validProvideAdvance()">
+                                        @endif
                                         &nbsp;&nbsp;Provide advance payment
                                         (to the
                                         worker) for
@@ -1520,21 +1724,31 @@
                                             <label for="exampleInputEmail1">{!! trans('job_application.ArrangeInboundTransportation') !!}</label>
                                             <br>
                                             &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
-                                            <input type="radio" name="pes_arramge_inbound_transportation"
-                                                id="pes_arramge_inbound_transportation"
-                                                @if ($employer_transportation->pes_arramge_inbound_transportation == 1) checked
-                                                @else
-                                                    '' @endif
-                                                value="1">
+                                            @if ($employer_transportation)
+                                                <input type="radio" name="pes_arramge_inbound_transportation"
+                                                    id="pes_arramge_inbound_transportation"
+                                                    @if ($employer_transportation->pes_arramge_inbound_transportation == 1) checked
+                                            @else
+                                                '' @endif
+                                                    value="1">
+                                            @else
+                                                <input type="radio" name="pes_arramge_inbound_transportation"
+                                                    id="pes_arramge_inbound_transportation">
+                                            @endif
 
                                             &nbsp;&nbsp;
                                             {!! trans('job_application.No') !!}
-                                            <input type="radio" name="pes_arramge_inbound_transportation"
-                                                id="pes_arramge_inbound_transportation"
-                                                @if ($employer_transportation->pes_arramge_inbound_transportation == 0) checked
-                                                @else
-                                                    '' @endif
-                                                value="0">
+                                            @if ($employer_transportation)
+                                                <input type="radio" name="pes_arramge_inbound_transportation"
+                                                    id="pes_arramge_inbound_transportation"
+                                                    @if ($employer_transportation->pes_arramge_inbound_transportation == 0) checked
+                                            @else
+                                                '' @endif
+                                                    value="0">
+                                            @else
+                                                <input type="radio" name="pes_arramge_inbound_transportation"
+                                                    id="pes_arramge_inbound_transportation">
+                                            @endif
 
                                         </div>
                                     </div>
@@ -1577,10 +1791,15 @@
                                                         id="er_type_of_representation_id">
                                                         <option value="">Select</option>
                                                         @foreach ($types_representation as $obj)
-                                                            @if ($obj->id == $employer_representative->er_type_of_representation_id)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}
-                                                                </option>
+                                                            @if ($employer_representative)
+                                                                @if ($obj->id == $employer_representative->er_type_of_representation_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}</option>
+                                                                @endif
                                                             @else
                                                                 <option value="{{ $obj->id }}">
                                                                     {{ $obj->name }}</option>
@@ -1596,27 +1815,42 @@
                                             <div class="col-xl-4 col-xxl-4">
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.FirstName') !!}</label>
-                                                    <input type="text" name="er_first_name"
-                                                        value="{{ old('er_first_name', $employer_representative->er_first_name) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_first_name"
+                                                            value="{{ old('er_first_name', $employer_representative->er_first_name) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_first_name"
+                                                            value="{{ old('er_first_name') }}" class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-xxl-4">
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.MiddleName') !!}</label>
-                                                    <input type="text" name="er_middle_name"
-                                                        value="{{ old('er_middle_name', $employer_representative->er_middle_name) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_middle_name"
+                                                            value="{{ old('er_middle_name', $employer_representative->er_middle_name) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_middle_name"
+                                                            value="{{ old('er_middle_name') }}" class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
                                             <div class="col-xl-4 col-xxl-4">
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.AttorneyAgentLastName') !!}</label>
-                                                    <input type="text" name="er_last_name"
-                                                        value="{{ old('er_last_name', $employer_representative->er_last_name) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_last_name"
+                                                            value="{{ old('er_last_name', $employer_representative->er_last_name) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_last_name"
+                                                            value="{{ old('er_last_name') }}" class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -1639,16 +1873,27 @@
                                                     <select class="form-control select2" name="er_state_id"
                                                         id="er_state_id">
                                                         <option value="">Select</option>
-                                                        @foreach ($states as $obj)
-                                                            @if ($obj->id == $employer_representative->er_state_id)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @else
+
+                                                        @if ($employer_representative)
+                                                            @foreach ($states as $obj)
+                                                                @if ($obj->id == $employer_representative->er_state_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($states as $obj)
                                                                 <option value="{{ $obj->id }}">
                                                                     {{ $obj->name }}</option>
-                                                            @endif
-                                                        @endforeach
+                                                            @endforeach
+                                                        @endif
+
+
+
                                                     </select>
 
                                                 </div>
@@ -1658,17 +1903,22 @@
                                                     <select class="form-control select2" name="er_county_id"
                                                         id="er_county_id">
 
-                                                        @foreach ($counties as $obj)
-                                                            @if ($employer_representative->county->czc_county == $obj->name)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @else
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
+
+                                                        @if ($employer_representative)
+                                                            @foreach ($counties as $obj)
+                                                                @if ($employer_representative->county->czc_county == $obj->name)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
+
 
 
                                                     </select>
@@ -1679,17 +1929,23 @@
                                                     <label>{!! trans('job_application.City') !!}</label>
                                                     <select class="form-control select2" name="er_city_id"
                                                         id="er_city_id">
-                                                        @foreach ($cities as $obj)
-                                                            @if ($employer_representative->city->czc_city == $obj->name)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @else
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
+
+                                                        @if ($employer_representative)
+                                                            @foreach ($cities as $obj)
+                                                                @if ($employer_representative->city->czc_city == $obj->name)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
+
+
 
                                                     </select>
                                                 </div>
@@ -1698,27 +1954,39 @@
                                                     <label>{!! trans('job_application.PostalCode') !!}</label>
                                                     <select class="form-control select2" name="er_zip_addr1"
                                                         id="er_zip_addr1">
-                                                        @foreach ($codes_zip as $obj)
-                                                            @if ($employer_representative->er_zip_addr1 == $obj->czc_zipcode)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->czc_zipcode }}
-                                                                </option>
-                                                            @else
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->czc_zipcode }}
-                                                                </option>
-                                                            @endif
-                                                        @endforeach
+
+
+                                                        @if ($employer_representative)
+                                                            @foreach ($codes_zip as $obj)
+                                                                @if ($employer_representative->er_zip_addr1 == $obj->czc_zipcode)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->czc_zipcode }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->czc_zipcode }}
+                                                                    </option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+
+
 
                                                     </select>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="hidden" name="id" value="{{ $job_request->id }}">
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $job_request->id }}">
                                                     <label>{!! trans('job_application.Address') !!}</label>
-                                                    <input type="text" name="er_address_1"
-                                                        value="{{ old('er_address_1', $employer_representative->er_address_1) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_address_1"
+                                                            value="{{ old('er_address_1', $employer_representative->er_address_1) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_address_1"
+                                                            value="{{ old('er_address_1') }}" class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -1734,25 +2002,43 @@
 
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.LawBusinessEmailAddress') !!}</label>
-                                                    <input type="text" name="er_lawfirm_email"
-                                                        value="{{ old('er_lawfirm_email', $employer_representative->er_lawfirm_email) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_lawfirm_email"
+                                                            value="{{ old('er_lawfirm_email', $employer_representative->er_lawfirm_email) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_lawfirm_email"
+                                                            value="{{ old('er_lawfirm_email') }}" class="form-control">
+                                                    @endif
 
                                                 </div>
 
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.LawBusinessName') !!}</label>
-                                                    <input type="text" name="er_lawfirm_business_name"
-                                                        value="{{ old('er_lawfirm_business_name', $employer_representative->er_lawfirm_business_name) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_lawfirm_business_name"
+                                                            value="{{ old('er_lawfirm_business_name', $employer_representative->er_lawfirm_business_name) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_lawfirm_business_name"
+                                                            value="{{ old('er_lawfirm_business_name') }}"
+                                                            class="form-control">
+                                                    @endif
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="hidden" name="id" value="{{ $job_request->id }}">
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $job_request->id }}">
                                                     <label>{!! trans('job_application.LawBusinessFEIN') !!}</label>
-                                                    <input type="text" name="er_lawfirm_fein_number"
-                                                        value="{{ old('er_lawfirm_fein_number', $employer_representative->er_lawfirm_fein_number) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_lawfirm_fein_number"
+                                                            value="{{ old('er_lawfirm_fein_number', $employer_representative->er_lawfirm_fein_number) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_lawfirm_fein_number"
+                                                            value="{{ old('er_lawfirm_fein_number') }}"
+                                                            class="form-control">
+                                                    @endif
 
                                                 </div>
 
@@ -1760,9 +2046,15 @@
                                                     <input type="hidden" name="id"
                                                         value="{{ $job_request->id }}">
                                                     <label>{!! trans('job_application.StateBarNumber') !!}</label>
-                                                    <input type="text" name="er_state_bar_number"
-                                                        value="{{ old('er_state_bar_number', $employer_representative->er_state_bar_number) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_state_bar_number"
+                                                            value="{{ old('er_state_bar_number', $employer_representative->er_state_bar_number) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_state_bar_number"
+                                                            value="{{ old('er_state_bar_number') }}"
+                                                            class="form-control">
+                                                    @endif
 
                                                 </div>
 
@@ -1773,16 +2065,25 @@
                                                     <select class="form-control select2"
                                                         name="er_state_good_standing_id" id="er_state_good_standing_id">
                                                         <option value="">Select</option>
-                                                        @foreach ($states as $obj)
-                                                            @if ($obj->id == $employer_representative->er_state_good_standing_id)
-                                                                <option value="{{ $obj->id }}" selected>
-                                                                    {{ $obj->name }}
-                                                                </option>
-                                                            @else
+                                                        @if ($employer_representative)
+                                                            @foreach ($states as $obj)
+                                                                @if ($obj->id == $employer_representative->er_state_good_standing_id)
+                                                                    <option value="{{ $obj->id }}" selected>
+                                                                        {{ $obj->name }}
+                                                                    </option>
+                                                                @else
+                                                                    <option value="{{ $obj->id }}">
+                                                                        {{ $obj->name }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            @foreach ($states as $obj)
                                                                 <option value="{{ $obj->id }}">
                                                                     {{ $obj->name }}</option>
-                                                            @endif
-                                                        @endforeach
+                                                            @endforeach
+                                                        @endif
+
+
                                                     </select>
 
                                                 </div>
@@ -1797,10 +2098,17 @@
                                             <div class="col-xl-4 col-xxl-4">
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.TelephoneNumber') !!}</label>
-                                                    <input type="text" name="er_telephone_number"
-                                                        data-inputmask="'mask': ['(999)999-9999']" data-mask
-                                                        value="{{ old('er_telephone_number', $employer_representative->er_telephone_number) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_telephone_number"
+                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                            value="{{ old('er_telephone_number', $employer_representative->er_telephone_number) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_telephone_number"
+                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                            value="{{ old('er_telephone_number') }}"
+                                                            class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -1808,10 +2116,17 @@
                                                 <div class="form-group">
                                                     <br>
                                                     <label>{!! trans('job_application.Extension') !!}</label>
-                                                    <input type="text" name="er_telephone_number_ext"
-                                                        value="{{ old('er_telephone_number_ext', $employer_representative->er_telephone_number_ext) }}"
-                                                        data-inputmask="'mask': ['(999)999-9999']" data-mask
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_telephone_number_ext"
+                                                            value="{{ old('er_telephone_number_ext', $employer_representative->er_telephone_number_ext) }}"
+                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_telephone_number_ext"
+                                                            value="{{ old('er_telephone_number_ext') }}"
+                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                            class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -1821,9 +2136,15 @@
                                                     <input type="hidden" name="id"
                                                         value="{{ $job_request->id }}">
                                                     <label>{!! trans('job_application.NameHighestCourt') !!}</label>
-                                                    <input type="text" name="er_highest_state_court_name"
-                                                        value="{{ old('er_highest_state_court_name', $employer_representative->er_highest_state_court_name) }}"
-                                                        class="form-control">
+                                                    @if ($employer_representative)
+                                                        <input type="text" name="er_highest_state_court_name"
+                                                            value="{{ old('er_highest_state_court_name', $employer_representative->er_highest_state_court_name) }}"
+                                                            class="form-control">
+                                                    @else
+                                                        <input type="text" name="er_highest_state_court_name"
+                                                            value="{{ old('er_highest_state_court_name') }}"
+                                                            class="form-control">
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -1834,6 +2155,35 @@
                                         </div>
                                     </form>
                                 </div>
+
+
+                                <div class="col-sm-12">&nbsp;</div>
+
+
+
+                            </div>
+
+
+
+
+
+
+
+
+
+                        </div>
+
+                        <div class="tab-pane fade  show active" id="tab6">
+
+
+
+
+                            <div class="col-xl-12 col-xxl-12 row">
+                                <div class="col-sm-12">&nbsp;</div>
+                                <div class="col-sm-12">
+                                    <h3>SIGN</h3>
+                                </div>
+
 
 
                                 <div class="col-sm-12">&nbsp;</div>

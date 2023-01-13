@@ -108,16 +108,35 @@ class JobRequestController extends Controller
 
         //dd($deduction);
 
-        $deduction_medical = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '1')->first();
-        $deduction_dental = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '2')->first();
-        $deduction_vision = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '3')->first();
-        $deduction_other = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '4')->first();
+        if ($deduction) {
+            $deduction_medical = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '1')->first();
+            $deduction_dental = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '2')->first();
+            $deduction_vision = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '3')->first();
+            $deduction_other = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '4')->first();
+
+        } else {
+            $deduction_medical = null;
+            $deduction_dental = null;
+            $deduction_vision = null;
+            $deduction_other = null;
+        }
+
+
+
 
         $bgcheck_reg = BackgroundCheck::where('request_id','=',$job_request->id)->where('employer_id','=',$job_request->employer_id)->first();
 
         $employer_transportation = EmployerTransportation::where('request_id','=',$job_request->id)->where('employer_id','=',$job_request->employer_id)->first();
 
-        $employer_representative = EmployerRepresentative::where('employer_id','=',$job_request->employer_id)->first();
+        if($job_request->employer_representative_id)
+        {
+            $employer_representative = EmployerRepresentative::findOrFail($job_request->employer_representative_id);
+        }
+        else{
+            $employer_representative = null;
+        }
+
+
 
 
         //dd($employer_representative);
@@ -165,6 +184,8 @@ class JobRequestController extends Controller
         //dd($deduction_medical);
         //dd($deduction);
         //dd($job_request);
+
+        //dd($counties);
 
         $job_titles = JobTitle::get();
         $details = JobRequestDetail::where('request_id', '=', $id)->get();
