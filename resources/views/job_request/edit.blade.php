@@ -2,7 +2,13 @@
 @section('contenido')
     <link rel="stylesheet" href="{{ asset('job_application/style.css') }}">
 
+    @if (session()->has('tab_request'))
+        @php($tab_request = session('tab_request'))
+    @else
+        @php($tab_request = 1)
+    @endif
 
+    {{ $tab_request }}
 
     @if ($deduction->housing_utilities == 0)
         <style>
@@ -282,6 +288,7 @@
 
 
                             <form method="POST" action="{{ url('job_request_deductions') }}">
+                                @csrf
                                 <div class="col-xl-12 col-xxl-12 row">
                                     <div class="col-sm-12">&nbsp;</div>
                                     <div class="col-md-12">
@@ -392,7 +399,7 @@
                                 </div>
 
 
-                                @csrf
+
                                 {{-- divHousing --}}
                                 <div id="divHousing">
                                     <div class="col-sm-12">
@@ -1858,6 +1865,34 @@
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+
+
+            var tab_request = '<?php echo $tab_request; ?>';
+            //alert(tab_request);
+            switch (tab_request) {
+                case '1':
+                    $('.nav-tabs a[href="#tab1"]').tab('show');
+                    break;
+                case '2':
+                    $('.nav-tabs a[href="#tab2"]').tab('show');
+                    break;
+                case '3':
+                    $('.nav-tabs a[href="#tab3"]').tab('show');
+                    break;
+                case '4':
+                    $('.nav-tabs a[href="#tab4"]').tab('show');
+                    break;
+                case '5':
+                    $('.nav-tabs a[href="#tab5"]').tab('show');
+                    break;
+                case '6':
+                    $('.nav-tabs a[href="#tab6"]').tab('show');
+                    break;
+                case '7':
+                    $('.nav-tabs a[href="#tab7"]').tab('show');
+                    break;
+            }
+
 
             show_multiple_employment_period();
             show_div_uniform();

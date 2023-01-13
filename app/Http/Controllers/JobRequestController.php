@@ -76,6 +76,9 @@ class JobRequestController extends Controller
         $job->created_at = $time;
         $job->save();
 
+        session_start();
+        session(['tab_request' => '2']);
+
         Alert::success('Ok', 'Record saved');
         return redirect('job_request/' . $job->id . '/edit');
     }
@@ -178,8 +181,29 @@ class JobRequestController extends Controller
     {
 
 
-        // $job_application = JobRequest::findOrFail($id);
+         $job = JobRequest::findOrFail($id);
 
+       // $job->employer_id = $employer->id;
+        $job->start_date = $request->get('start_date');
+        $job->end_date = $request->get('end_date');
+        $job->need_h2b_workers = $request->get('need_h2b_workers');
+        if ($request->get('need_h2b_workers') == 1)
+            $job->explain_multiple_employment = $request->get('explain_multiple_employment');
+        else {
+            $job->explain_multiple_employment = "";
+        }
+        $job->paid  = $request->get('workers_paid');
+        $job->is_uniform_required  = $request->get('is_uniform_required');
+        if ($request->get('is_uniform_required') == 1)
+            $job->uniform_pieces_required = $request->get('uniform_pieces_required');
+        else {
+            $job->uniform_pieces_required = "";
+        }
+        $job->job_notes = $request->get('job_notes');
+        $job->update();
+
+        session_start();
+        session(['tab_request' => '2']);
         // $imageBase64 = str_replace("data:image/png;base64", "", $request->get('sign'));
 
         // $uniqid = $id . ".png";
@@ -427,10 +451,14 @@ class JobRequestController extends Controller
                 }
 
 
-                //dd($job_request->id);
+                session_start();
+                session(['tab_request' => '4']);
+
+                //dd(session('tab_request'));
 
                 Alert::success('Ok', 'Record saved');
-                return redirect('job_request/' . $job_request->id . '/edit');
+                return redirect('job_request/' . $request->get('request_id') . '/edit');
+
             } else {
                 //CREANDO NUEVAS DEDUCCIONES
 
@@ -631,6 +659,10 @@ class JobRequestController extends Controller
             //     $deduction->other_deductions = null;
             // }
 
+
+            session_start();
+            session(['tab_request' => '4']);
+
             Alert::success('Ok', 'Record saved');
             return redirect('job_request/' . $request->get('job_request_id') . '/edit');
         } else {
@@ -681,6 +713,11 @@ class JobRequestController extends Controller
             $deduction->no_deduction = 0;
 
             $deduction->save();
+
+            session_start();
+            session(['tab_request' => '4']);
+
+            //dd(session('tab_request'));
 
             Alert::success('Ok', 'Record saved');
             return redirect('job_request/' . $request->get('request_id') . '/edit');
@@ -897,7 +934,8 @@ class JobRequestController extends Controller
         }
 
 
-
+        session_start();
+        session(['tab_request' => '5']);
 
 
 
@@ -976,6 +1014,10 @@ class JobRequestController extends Controller
             $job_request->employer_representative_id = $er->id;
             $job_request->update();
         }
+
+
+        session_start();
+        session(['tab_request' => '1']);
 
 
         Alert::info('', 'Record saved');
