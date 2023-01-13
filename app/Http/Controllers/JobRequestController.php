@@ -660,6 +660,7 @@ class JobRequestController extends Controller
                         $deduction->save();
                     }
                 }
+
             }
 
 
@@ -685,7 +686,7 @@ class JobRequestController extends Controller
             session(['tab_request' => '4']);
 
             Alert::success('Ok', 'Record saved');
-            return redirect('job_request/' . $request->get('job_request_id') . '/edit');
+            return redirect('job_request/' . $request->get('request_id') . '/edit');
         } else {
             //dd("No he seleccionado ningun cheque");
 
