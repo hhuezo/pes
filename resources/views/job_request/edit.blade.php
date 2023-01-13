@@ -51,7 +51,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab6">SIGN
+                            <a class="nav-link" data-toggle="tab" href="#tab6">
                             </a>
                         </li>
                     </ul>
@@ -2173,34 +2173,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade  show active" id="tab6">
 
-
-
-
-                            <div class="col-xl-12 col-xxl-12 row">
-                                <div class="col-sm-12">&nbsp;</div>
-                                <div class="col-sm-12">
-                                    <h3>SIGN</h3>
-                                </div>
-
-
-
-                                <div class="col-sm-12">&nbsp;</div>
-
-
-
-                            </div>
-
-
-
-
-
-
-
-
-
-                        </div>
                     </div>
                 </div>
             </div>
