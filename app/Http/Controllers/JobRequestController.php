@@ -914,9 +914,11 @@ class JobRequestController extends Controller
         $employer = $user->user_has_employer->first();
 
 
+        //dd($job_request);
 
         $cuenta_er = EmployerRepresentative::where('employer_id','=',$employer->id)->get()->count();
 
+        $job_request = JobRequest::findOrFail($request->get('request_id'));
 
         if ($cuenta_er > 0) {
             $er_id = EmployerRepresentative::where('employer_id','=',$employer->id)->first()->id;
@@ -944,6 +946,10 @@ class JobRequestController extends Controller
             $er_upd->er_highest_state_court_name = $request->get('er_highest_state_court_name');
             $er_upd->er_state_bar_number = $request->get('er_state_bar_number');
             $er_upd->save();
+
+            $job_request->employer_representative_id = $er_upd->id;
+            $job_request->update();
+
         }else{
             $er = new EmployerRepresentative();
             $er->employer_id = $employer->id;
@@ -966,6 +972,9 @@ class JobRequestController extends Controller
             $er->er_highest_state_court_name = $request->get('er_highest_state_court_name');
             $er->er_state_bar_number = $request->get('er_state_bar_number');
             $er->save();
+
+            $job_request->employer_representative_id = $er->id;
+            $job_request->update();
         }
 
 

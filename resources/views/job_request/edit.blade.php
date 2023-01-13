@@ -1563,6 +1563,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>{!! trans('job_application.TypeRepresentation') !!}</label>
+                                                    <input type="hidden" name="request_id"
+                                                        value="{{ $job_request->id }}">
                                                     <select class="form-control select2"
                                                         name="er_type_of_representation_id"
                                                         id="er_type_of_representation_id">
@@ -1748,7 +1750,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="hidden" name="id" value="{{ $job_request->id }}">
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $job_request->id }}">
                                                     <label>{!! trans('job_application.StateBarNumber') !!}</label>
                                                     <input type="text" name="er_state_bar_number"
                                                         value="{{ old('er_state_bar_number', $employer_representative->er_state_bar_number) }}"
