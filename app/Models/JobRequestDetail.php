@@ -16,7 +16,7 @@ class JobRequestDetail extends Model
 
 
     protected $fillable = [
-        'job_app_id',
+        'request_id',
         'job_title_id',
         'number_workers',
         'it_has_cba',

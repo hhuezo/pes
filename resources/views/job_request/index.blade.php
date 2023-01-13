@@ -43,10 +43,12 @@
                                     <a href="{{ url('job_request') }}/{{ $obj->id }}/edit"
                                         class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
-
                                         &nbsp;&nbsp;
-                                        <a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" class="on-default edit-row">
+                                        <a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" target="_blank"
+                                            class="on-default edit-row">
                                             <i class="fa fa-print fa-lg"></i></a>
+
+
                                 </td>
                             </tr>
                         @endforeach

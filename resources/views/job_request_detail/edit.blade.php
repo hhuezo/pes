@@ -213,7 +213,7 @@
                                                     &nbsp;&nbsp;
                                                     {!! trans('employer.No') !!}
 
-                                                     @if ($detail->is_located_multiple_pwd_msa == 0)
+                                                    @if ($detail->is_located_multiple_pwd_msa == 0)
                                                         <input type="radio" value="0" checked
                                                             name="is_located_multiple_pwd_msa">
                                                     @else
@@ -657,12 +657,19 @@
 
 
 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save
-                                                    changes</button>
+                                            <div class="col-md-12">
+                                                <center>
+                                                    <a
+                                                        href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                        <button type="button" class="btn btn-danger">Back</button>
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                                    <button type="submit" class="btn btn-primary">Save
+                                                        changes</button>
+                                                    <center>
+
                                             </div>
+
 
                                         </div>
 
@@ -738,12 +745,29 @@
                                                 </div>
 
 
-                                                <div class="modal-footer">
+
+                                                <div class="col-md-12">
+                                                    <center>
+                                                        <a
+                                                            href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                            <button type="button" class="btn btn-danger">Back</button>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <button type="submit" class="btn btn-primary">Save
+                                                            changes</button>
+                                                        <center>
+
+                                                </div>
+
+
+
+                                               <!-- <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save
                                                         changes</button>
-                                                </div>
+                                                </div>-->
+
 
                                             </form>
 
@@ -1059,12 +1083,25 @@
                                                 </div>
 
 
-                                                <div class="modal-footer">
+                                                <div class="col-md-12">
+                                                    <center>
+                                                        <a
+                                                            href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                            <button type="button" class="btn btn-danger">Back</button>
+                                                        </a>
+                                                        &nbsp;&nbsp;
+                                                        <button type="submit" class="btn btn-primary">Save
+                                                            changes</button>
+                                                        <center>
+
+                                                </div>
+
+                                               <!-- <div class="modal-footer">
                                                     <button type="button" class="btn btn-danger"
                                                         data-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary">Save
                                                         changes</button>
-                                                </div>
+                                                </div>-->
 
 
                                             </form>
@@ -1339,12 +1376,25 @@
                                                         </div>
 
 
-                                                        <div class="modal-footer">
+                                                        <div class="col-md-12">
+                                                            <center>
+                                                                <a
+                                                                    href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                                    <button type="button" class="btn btn-danger">Back</button>
+                                                                </a>
+                                                                &nbsp;&nbsp;
+                                                                <button type="submit" class="btn btn-primary">Save
+                                                                    changes</button>
+                                                                <center>
+
+                                                        </div>
+
+                                                        <!--<div class="modal-footer">
                                                             <button type="button" class="btn btn-danger"
                                                                 data-dismiss="modal">Close</button>
                                                             <button type="submit" class="btn btn-primary">Save
                                                                 changes</button>
-                                                        </div>
+                                                        </div>-->
                                                     </div>
 
 

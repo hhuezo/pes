@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\catalogue\City;
 use App\Models\catalogue\DegreeCode;
 use App\Models\catalogue\JobTitle;
 use App\Models\catalogue\MedicalDeduction;
 use App\Models\catalogue\State;
-use App\Models\EmployerWorksite;
 use App\Models\JobDeduction;
 use App\Models\JobRequest;
 use App\Models\JobRequestDetail;
-use App\Models\SpecialSkillJobRequest;
+use App\Models\EmployerWorksite;
 use App\Models\MedicalDeductionRequest;
+use App\Models\SpecialSkillJobRequest;
 
 
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class JobRequestController extends Controller
 {
@@ -76,29 +76,33 @@ class JobRequestController extends Controller
 
     public function get_div_deductions(Request $request)
     {
-        return view('job_request.div_deductions', ["Housing"=>$request->get('Housing'),"Medical"=>$request->get('Medical'),"DailyTransportation"=>$request->get('DailyTransportation'),
-        "Other"=>$request->get('Other'),"Meals"=>$request->get('Meals'),"NoDeductions"=>$request->get('NoDeductions'),"request_id"=>$request->get('request_id'),
-        "medical_deductions" => MedicalDeduction::get()]);
+        return view('job_request.div_deductions', [
+            "Housing" => $request->get('Housing'), "Medical" => $request->get('Medical'), "DailyTransportation" => $request->get('DailyTransportation'),
+            "Other" => $request->get('Other'), "Meals" => $request->get('Meals'), "NoDeductions" => $request->get('NoDeductions'), "request_id" => $request->get('request_id'),
+            "medical_deductions" => MedicalDeduction::get()
+        ]);
     }
 
     public function get_div_deductions_medical(Request $request)
     {
-        return view('job_request.div_deductions_medical', ["ChkMedical"=>$request->get('ChkMedical'),"ChkDental"=>$request->get('ChkDental'),
-        "ChkVision"=>$request->get('ChkVision'),"ChkOther"=>$request->get('ChkOther')]);
+        return view('job_request.div_deductions_medical', [
+            "ChkMedical" => $request->get('ChkMedical'), "ChkDental" => $request->get('ChkDental'),
+            "ChkVision" => $request->get('ChkVision'), "ChkOther" => $request->get('ChkOther')
+        ]);
     }
 
 
     public function edit($id)
     {
         $job_request = JobRequest::findOrFail($id);
-        $deduction = JobDeduction::where('request_id','=',$job_request->id)->first();
+        $deduction = JobDeduction::where('request_id', '=', $job_request->id)->first();
 
         //dd($deduction);
 
-        $deduction_medical = MedicalDeductionRequest::where('request_deduction_id','=',$deduction->id)->where('catalog_medical_deduction_id','=','1')->first();
-        $deduction_dental = MedicalDeductionRequest::where('request_deduction_id','=',$deduction->id)->where('catalog_medical_deduction_id','=','2')->first();
-        $deduction_vision = MedicalDeductionRequest::where('request_deduction_id','=',$deduction->id)->where('catalog_medical_deduction_id','=','3')->first();
-        $deduction_other = MedicalDeductionRequest::where('request_deduction_id','=',$deduction->id)->where('catalog_medical_deduction_id','=','4')->first();
+        $deduction_medical = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '1')->first();
+        $deduction_dental = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '2')->first();
+        $deduction_vision = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '3')->first();
+        $deduction_other = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '4')->first();
 
         //dd($deduction_medical);
         //dd($deduction);
@@ -106,11 +110,12 @@ class JobRequestController extends Controller
 
         $job_titles = JobTitle::get();
         $details = JobRequestDetail::where('request_id', '=', $id)->get();
-$degree_codes = DegreeCode::get();
-        return view('job_request.edit', ['job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details, 'degree_codes' => $degree_codes,
-                    'deduction' => $deduction, 'deduction_medical' => $deduction_medical, 'deduction_dental' => $deduction_dental, 'deduction_vision' => $deduction_vision,
-                    'deduction_other' => $deduction_other]);
-
+        $degree_codes = DegreeCode::get();
+        return view('job_request.edit', [
+            'job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details, 'degree_codes' => $degree_codes,
+            'deduction' => $deduction, 'deduction_medical' => $deduction_medical, 'deduction_dental' => $deduction_dental, 'deduction_vision' => $deduction_vision,
+            'deduction_other' => $deduction_other
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -130,7 +135,6 @@ $degree_codes = DegreeCode::get();
         // $job_application->update();
         Alert::info('', 'Record saved');
         return redirect('job_request/' . $id . '/edit');
-
     }
 
 
@@ -141,7 +145,7 @@ $degree_codes = DegreeCode::get();
         //dd($request->get('request_id'));
         //dd("hola dos");
 
-        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
 
         //dd($deduction);
 
@@ -155,12 +159,11 @@ $degree_codes = DegreeCode::get();
         //dd("fdfdf");
         //dd($request->get('Housing'));
 
-        if($request->get('Housing')=='on' || $request->get('Medical')=='on' || $request->get('DailyTransportation')=='on' || $request->get('Other')=='on' || $request->get('Meals')=='on' || $request->get('NoDeductions')=='on'){
+        if ($request->get('Housing') == 'on' || $request->get('Medical') == 'on' || $request->get('DailyTransportation') == 'on' || $request->get('Other') == 'on' || $request->get('Meals') == 'on' || $request->get('NoDeductions') == 'on') {
 
             //dd($deduction);
 
-            if($deduction)
-            {
+            if ($deduction) {
                 //EDITANDO DEDUCCIONES
 
 
@@ -172,8 +175,7 @@ $degree_codes = DegreeCode::get();
                 //dd($request->get('Housing'));
 
                 //Housing
-                if($request->get('Housing')=='on')
-                {
+                if ($request->get('Housing') == 'on') {
                     $deduction->deduction_housing_amount_person_week = $request->get('deduction_housing_amount_person_week');
                     $deduction->housing_utilities = 1;
                     $deduction->explain_housing_utilities = $request->get('explain_housing_utilities');
@@ -182,7 +184,7 @@ $degree_codes = DegreeCode::get();
                         $deduction->is_deposit_required = 1;
                         $deduction->deposit_amount = $request->get('deposit_amount');
                         $deduction->is_deposit_refundable = $request->get('is_deposit_refundable');
-                    }else{
+                    } else {
 
                         $deduction->is_deposit_required = 0;
                         $deduction->deposit_amount = null;
@@ -191,8 +193,7 @@ $degree_codes = DegreeCode::get();
 
                     $deduction->housing_notes = $request->get('housing_notes');
                     $deduction->housing_includes_utilities = $request->get('housing_utilities');
-                }
-                else{
+                } else {
                     $deduction->deduction_housing_amount_person_week = null;
                     $deduction->housing_utilities = 0;
                     $deduction->explain_housing_utilities = null;
@@ -208,22 +209,20 @@ $degree_codes = DegreeCode::get();
 
 
                 //Medical
-                if($request->get('Medical')=='on')
-                {
+                if ($request->get('Medical') == 'on') {
                     $deduction->medical = 1;
-                }else{
+                } else {
                     $deduction->medical = 0;
                 }
 
 
 
                 //DailyTransportation
-                if($request->get('DailyTransportation')=='on')
-                {
+                if ($request->get('DailyTransportation') == 'on') {
                     $deduction->daily_transportation = 1;
                     $deduction->deduction_daily_amount_person_week = $request->get('deduction_daily_amount_person_week');
                     $deduction->daily_notes = $request->get('daily_notes');
-                }else{
+                } else {
                     $deduction->daily_transportation = 0;
                     $deduction->deduction_daily_amount_person_week = null;
                     $deduction->daily_notes = null;
@@ -231,11 +230,10 @@ $degree_codes = DegreeCode::get();
 
 
                 //Other Deductions
-                if($request->get('Other')=='on')
-                {
+                if ($request->get('Other') == 'on') {
                     $deduction->other = 1;
                     $deduction->other_deductions = $request->get('other_deductions');
-                }else{
+                } else {
                     $deduction->other = 0;
                     $deduction->other_deductions = null;
                 }
@@ -243,8 +241,7 @@ $degree_codes = DegreeCode::get();
 
 
                 //Meals
-                if($request->get('Meals')=='on')
-                {
+                if ($request->get('Meals') == 'on') {
                     $deduction->meals = 1;
                     $deduction->how_many_meals_provided = $request->get('how_many_meals_provided');
                     $deduction->cost_per_meal = $request->get('cost_per_meal');
@@ -252,7 +249,7 @@ $degree_codes = DegreeCode::get();
                     $deduction->is_there_cost_per_meal = $request->get('is_there_costo_per_meal');
 
                     $deduction->deduction_amount_per_meal = $request->get('deduction_amount_per_meal');
-                }else{
+                } else {
                     $deduction->meals = 0;
                     $deduction->how_many_meals_provided = null;
                     $deduction->cost_per_meal = null;
@@ -264,10 +261,9 @@ $degree_codes = DegreeCode::get();
                 //dd($request->get('NoDeductions'));
 
                 //No Deductions
-                if($request->get('NoDeductions')=='on')
-                {
+                if ($request->get('NoDeductions') == 'on') {
                     $deduction->no_deduction = 1;
-                }else{
+                } else {
                     $deduction->no_deduction = 0;
                 }
 
@@ -282,15 +278,14 @@ $degree_codes = DegreeCode::get();
 
 
                 //Medical
-                if($request->get('Medical')=='on')
-                {
+                if ($request->get('Medical') == 'on') {
 
                     //dd($job_request->employer_id);
                     //$medical_ded_req = MedicalDeductionRequest::findOrFail($request->get('request_id'));
 
-                    $medical_ded_req = MedicalDeductionRequest::where('employer_id','=',$job_request->employer_id)->get();
+                    $medical_ded_req = MedicalDeductionRequest::where('employer_id', '=', $job_request->employer_id)->get();
 
-                    foreach($medical_ded_req as $mdr){
+                    foreach ($medical_ded_req as $mdr) {
                         $mdr_del = MedicalDeductionRequest::findOrFail($mdr->id);
                         $mdr_del->delete();
                     }
@@ -302,7 +297,7 @@ $degree_codes = DegreeCode::get();
 
                     //dd("existe deductions");
 
-                    if ($request->get('ChkMedical')=='on'){
+                    if ($request->get('ChkMedical') == 'on') {
                         $deduction->deduction_medical_paycheck = 1;
 
 
@@ -313,12 +308,12 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_medical_paycheck');
                         $mdr->save();
-                    }else{
+                    } else {
                         $deduction->deduction_medical_paycheck = 0;
                     }
 
 
-                    if ($request->get('ChkDental')=='on'){
+                    if ($request->get('ChkDental') == 'on') {
                         $deduction->deduction_dental_paycheck = 1;
 
                         $mdr = new MedicalDeductionRequest();
@@ -328,12 +323,12 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_dental_paycheck');
                         $mdr->save();
-                    }else{
+                    } else {
                         $deduction->deduction_dental_paycheck = 0;
                     }
 
 
-                    if ($request->get('ChkVision')=='on'){
+                    if ($request->get('ChkVision') == 'on') {
                         $deduction->deduction_vision_paycheck = 1;
 
                         $mdr = new MedicalDeductionRequest();
@@ -343,12 +338,12 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_vision_paycheck');
                         $mdr->save();
-                    }else{
+                    } else {
                         $deduction->deduction_vision_paycheck = 0;
                     }
 
 
-                    if ($request->get('ChkOther')=='on'){
+                    if ($request->get('ChkOther') == 'on') {
                         $deduction->deduction_other_paycheck = 1;
 
                         $mdr = new MedicalDeductionRequest();
@@ -358,17 +353,16 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_other_paycheck');
                         $mdr->save();
-                    }else{
+                    } else {
                         $deduction->deduction_other_paycheck = 0;
                     }
 
                     $deduction->save();
-
-                }else{
+                } else {
                     $deduction->medical = 0;
-                    $medical_ded_req = MedicalDeductionRequest::where('employer_id','=',$job_request->employer_id)->get();
+                    $medical_ded_req = MedicalDeductionRequest::where('employer_id', '=', $job_request->employer_id)->get();
 
-                    foreach($medical_ded_req as $mdr){
+                    foreach ($medical_ded_req as $mdr) {
                         $mdr_del = MedicalDeductionRequest::findOrFail($mdr->id);
                         $mdr_del->delete();
                     }
@@ -378,15 +372,8 @@ $degree_codes = DegreeCode::get();
                 //dd($job_request->id);
 
                 Alert::success('Ok', 'Record saved');
-                return redirect('job_request/' .$job_request->id. '/edit');
-
-
-
-
-
-
-            }
-            else{
+                return redirect('job_request/' . $job_request->id . '/edit');
+            } else {
                 //CREANDO NUEVAS DEDUCCIONES
 
                 //dd("hola dos");
@@ -399,8 +386,7 @@ $degree_codes = DegreeCode::get();
 
                 //dd("hola tres");
                 //dd($request->get('Housing'));
-                if($request->get('Housing')=='on')
-                {
+                if ($request->get('Housing') == 'on') {
                     $deduction->deduction_housing_amount_person_week = $request->get('deduction_housing_amount_person_week');
                     $deduction->housing_utilities = $request->get('housing_utilities');
                     $deduction->explain_housing_utilities = $request->get('explain_housing_utilities');
@@ -410,7 +396,7 @@ $degree_codes = DegreeCode::get();
                         $deduction->is_deposit_required = 1;
                         $deduction->deposit_amount = $request->get('deposit_amount');
                         $deduction->is_deposit_refundable = $request->get('is_deposit_refundable');
-                    }else{
+                    } else {
                         $deduction->is_deposit_required = 0;
                         $deduction->deposit_amount = null;
                         $deduction->is_deposit_refundable = null;
@@ -418,8 +404,7 @@ $degree_codes = DegreeCode::get();
 
                     $deduction->housing_notes = $request->get('housing_notes');
                     $deduction->housing_includes_utilities = $request->get('housing_utilities');
-                }
-                else{
+                } else {
                     $deduction->deduction_housing_amount_person_week = null;
                     $deduction->housing_utilities = 0;
                     $deduction->explain_housing_utilities = null;
@@ -432,39 +417,35 @@ $degree_codes = DegreeCode::get();
 
 
                 //Medical
-                if($request->get('Medical')=='on')
-                {
+                if ($request->get('Medical') == 'on') {
                     $deduction->medical = 1;
-                }else{
+                } else {
                     $deduction->medical = 0;
                 }
 
 
                 //DailyTransportation
-                if($request->get('DailyTransportation')=='on')
-                {
+                if ($request->get('DailyTransportation') == 'on') {
                     $deduction->daily_transportation = 1;
                     $deduction->deduction_daily_amount_person_week = $request->get('deduction_daily_amount_person_week');
                     $deduction->daily_notes = $request->get('daily_notes');
-                }else{
+                } else {
                     $deduction->daily_transportation = 0;
                     $deduction->deduction_daily_amount_person_week = null;
                     $deduction->daily_notes = null;
                 }
 
                 //Other Deductions
-                if($request->get('Other')=='on')
-                {
+                if ($request->get('Other') == 'on') {
                     $deduction->other = 1;
                     $deduction->other_deductions = $request->get('other_deductions');
-                }else{
+                } else {
                     $deduction->other = 0;
                     $deduction->other_deductions = null;
                 }
 
                 //Meals
-                if($request->get('Meals')=='on')
-                {
+                if ($request->get('Meals') == 'on') {
                     $deduction->meals = 1;
                     $deduction->how_many_meals_provided = $request->get('how_many_meals_provided');
                     $deduction->cost_per_meal = $request->get('cost_per_meal');
@@ -472,7 +453,7 @@ $degree_codes = DegreeCode::get();
                     $deduction->is_there_cost_per_meal = $request->get('is_there_costo_per_meal');
 
                     $deduction->deduction_amount_per_meal = $request->get('deduction_amount_per_meal');
-                }else{
+                } else {
                     $deduction->meals = 0;
                     $deduction->how_many_meals_provided = null;
                     $deduction->cost_per_meal = null;
@@ -483,10 +464,9 @@ $degree_codes = DegreeCode::get();
 
 
                 //No Deductions
-                if($request->get('NoDeductions')=='on')
-                {
+                if ($request->get('NoDeductions') == 'on') {
                     $deduction->no_deduction = 1;
-                }else{
+                } else {
                     $deduction->no_deduction = 0;
                 }
 
@@ -496,10 +476,9 @@ $degree_codes = DegreeCode::get();
 
 
                 //Medical
-                if($request->get('Medical')=='on')
-                {
-                    if ($request->get('ChkMedical')=='on'){
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                if ($request->get('Medical') == 'on') {
+                    if ($request->get('ChkMedical') == 'on') {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_medical_paycheck = 1;
                         $deduction->save();
 
@@ -510,15 +489,15 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_medical_paycheck');
                         $mdr->save();
-                    }else{
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    } else {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_medical_paycheck = 0;
                         $deduction->save();
                     }
 
 
-                    if ($request->get('ChkDental')=='on'){
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    if ($request->get('ChkDental') == 'on') {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_dental_paycheck = 1;
                         $deduction->save();
 
@@ -530,15 +509,15 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_dental_paycheck');
                         $mdr->save();
-                    }else{
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    } else {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_dental_paycheck = 0;
                         $deduction->save();
                     }
 
 
-                    if ($request->get('ChkVision')=='on'){
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    if ($request->get('ChkVision') == 'on') {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_vision_paycheck = 1;
                         $deduction->save();
 
@@ -549,15 +528,15 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_vision_paycheck');
                         $mdr->save();
-                    }else{
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    } else {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_vision_paycheck = 0;
                         $deduction->save();
                     }
 
 
-                    if ($request->get('ChkOther')=='on'){
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    if ($request->get('ChkOther') == 'on') {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_other_paycheck = 1;
                         $deduction->save();
 
@@ -568,100 +547,137 @@ $degree_codes = DegreeCode::get();
                         $mdr->employer_id = $job_request->employer_id;
                         $mdr->deduction_ammount = $request->get('deduction_other_paycheck');
                         $mdr->save();
-                    }else{
-                        $deduction = JobDeduction::where('request_id','=',$request->get('request_id'))->first();
+                    } else {
+                        $deduction = JobDeduction::where('request_id', '=', $request->get('request_id'))->first();
                         $deduction->deduction_other_paycheck = 0;
                         $deduction->save();
                     }
-
                 }
-
-                }
-
-
-
-
-                //     $deduction->daily_notes = $request->get('daily_notes');
-                // }
-                // else{
-                //     $deduction->deduction_daily_amount_person_week = null;
-                //     $deduction->daily_notes = null;
-                // }
-
-                // if($request->get('other_deductions'))
-                // {
-                //     $deduction->other_deductions = $request->get('other_deductions');
-                // }
-                // else{
-                //     $deduction->other_deductions = null;
-                // }
-
-                Alert::success('Ok', 'Record saved');
-                return redirect('job_request/' . $request->get('job_request_id'). '/edit');
-
-
-            }else{
-                //dd("No he seleccionado ningun cheque");
-
-                $deduction->deduction_housing_amount_person_week = null;
-                $deduction->housing_utilities = 0;
-                $deduction->explain_housing_utilities = null;
-                $deduction->is_deposit_required = null;
-                $deduction->deposit_amount = null;
-                $deduction->is_deposit_refundable = null;
-                $deduction->housing_notes = null;
-                $deduction->housing_includes_utilities = null;
-
-
-
-                $job_request = JobRequest::findOrFail($request->get('request_id'));
-
-                $deduction->medical = 0;
-                $medical_ded_req = MedicalDeductionRequest::where('employer_id','=',$job_request->employer_id)->get();
-
-                foreach($medical_ded_req as $mdr){
-                    $mdr_del = MedicalDeductionRequest::findOrFail($mdr->id);
-                    $mdr_del->delete();
-                }
-
-                $deduction->deduction_medical_paycheck = 0;
-                $deduction->deduction_dental_paycheck = 0;
-                $deduction->deduction_vision_paycheck = 0;
-                $deduction->deduction_other_paycheck = 0;
-
-
-
-                $deduction->daily_transportation = 0;
-                $deduction->deduction_daily_amount_person_week = null;
-                $deduction->daily_notes = null;
-
-                $deduction->other = 0;
-                $deduction->other_deductions = null;
-
-                $deduction->meals = 0;
-                $deduction->how_many_meals_provided = null;
-                $deduction->cost_per_meal = null;
-                $deduction->meals_notes = null;
-                $deduction->is_there_cost_per_meal = null;
-                $deduction->deduction_amount_per_meal = null;
-
-                $deduction->no_deduction = 0;
-
-                $deduction->save();
-
-                Alert::success('Ok', 'Record saved');
-                return redirect('job_request/' . $request->get('request_id') . '/edit');
-
-
             }
 
 
 
 
+            //     $deduction->daily_notes = $request->get('daily_notes');
+            // }
+            // else{
+            //     $deduction->deduction_daily_amount_person_week = null;
+            //     $deduction->daily_notes = null;
+            // }
+
+            // if($request->get('other_deductions'))
+            // {
+            //     $deduction->other_deductions = $request->get('other_deductions');
+            // }
+            // else{
+            //     $deduction->other_deductions = null;
+            // }
+
+            Alert::success('Ok', 'Record saved');
+            return redirect('job_request/' . $request->get('job_request_id') . '/edit');
+        } else {
+            //dd("No he seleccionado ningun cheque");
+
+            $deduction->deduction_housing_amount_person_week = null;
+            $deduction->housing_utilities = 0;
+            $deduction->explain_housing_utilities = null;
+            $deduction->is_deposit_required = null;
+            $deduction->deposit_amount = null;
+            $deduction->is_deposit_refundable = null;
+            $deduction->housing_notes = null;
+            $deduction->housing_includes_utilities = null;
+
+
+
+            $job_request = JobRequest::findOrFail($request->get('request_id'));
+
+            $deduction->medical = 0;
+            $medical_ded_req = MedicalDeductionRequest::where('employer_id', '=', $job_request->employer_id)->get();
+
+            foreach ($medical_ded_req as $mdr) {
+                $mdr_del = MedicalDeductionRequest::findOrFail($mdr->id);
+                $mdr_del->delete();
+            }
+
+            $deduction->deduction_medical_paycheck = 0;
+            $deduction->deduction_dental_paycheck = 0;
+            $deduction->deduction_vision_paycheck = 0;
+            $deduction->deduction_other_paycheck = 0;
+
+
+
+            $deduction->daily_transportation = 0;
+            $deduction->deduction_daily_amount_person_week = null;
+            $deduction->daily_notes = null;
+
+            $deduction->other = 0;
+            $deduction->other_deductions = null;
+
+            $deduction->meals = 0;
+            $deduction->how_many_meals_provided = null;
+            $deduction->cost_per_meal = null;
+            $deduction->meals_notes = null;
+            $deduction->is_there_cost_per_meal = null;
+            $deduction->deduction_amount_per_meal = null;
+
+            $deduction->no_deduction = 0;
+
+            $deduction->save();
+
+            Alert::success('Ok', 'Record saved');
+            return redirect('job_request/' . $request->get('request_id') . '/edit');
+        }
     }
 
     public function form9141($id)
     {
+
+       /* $detail = JobRequestDetail::findOrFail($id);
+        $job_request = JobRequest::with('employer')->findOrFail($detail->request_id);
+        $contact_worksite = EmployerWorksite::where('employer_id', '=', $job_request->employer_id)->where('address_type_id', '=', 5)->first();
+
+        if ($contact_worksite) {
+            $contact_worksite_city = $contact_worksite->city->czc_city;
+            $contact_worksite_state = $contact_worksite->state->cs_state;
+            $contact_worksite_zip_code = $contact_worksite->zip_code_address;
+            $contact_worksite_country = $contact_worksite->zip_code_address;
+        } else {
+            $contact_worksite_city = "";
+            $contact_worksite_state = "";
+            $contact_worksite_zip_code = "";
+        }
+
+        $fields = '{
+            "Visa type":"normal","Enter contact\'s last (family) name": "' . $detail->job_request->employer->primary_contact_last_name . '",
+            "Enter first (given) name": "' . $detail->job_request->employer->primary_contact_name . '",
+            "Enter middle name if applicable": "' . $detail->job_request->employer->contact_middle_name . '",
+            "Enter contact\'s job title": "' . $detail->job_request->employer->primary_contact_job_title . '",
+            "Enter address line 1": "' . $detail->job_request->employer->primary_contact_job_title . '",
+            "Enter city": "' . $contact_worksite_city . '",
+            "Enter state": "' . $contact_worksite_state . '",
+            "Enter postal code": "' . $contact_worksite_zip_code . '",
+            "Enter country": "USA"
+        '. '}';
+
+       // echo $fields;
+
+
+
+
+        $response = Http::asForm()->post('http://192.168.10.201:8081/PdfService-0.0.1/', [
+            'pdfName' => 'formarruinado.pdf',
+            'fields' => $fields
+        ]);
+
+        return view('reports.form91412', ["base64"=>$response]);*/
+
+        /*  //data:image/jpeg;base64,
+
+        $this->base64_to_jpeg('data:image/jpeg;base64,'.$img,'form4191.png');
+
+        echo($response);
+
+        dd($response);*/
         $job_request = JobRequest::with('employer')->findOrFail($id);
         $request_details = JobRequestDetail::where('request_id','=',$id)->get();
         $contact_worksite = EmployerWorksite::where('employer_id','=',$job_request->employer_id)->where('address_type_id','=',5)->first();
@@ -676,9 +692,27 @@ $degree_codes = DegreeCode::get();
         $special_skills = SpecialSkillJobRequest::whereIn('request_detail_id',$array_details)->get();
         $degree_codes = DegreeCode::get();
         return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite,'special_skills' => $special_skills,'degree_codes'=>$degree_codes]);
+
     }
 
 
+    function base64_to_jpeg($base64_string, $output_file) {
+        // open the output file for writing
+        $ifp = fopen( $output_file, 'wb' );
+
+        // split the string on commas
+        // $data[ 0 ] == "data:image/png;base64"
+        // $data[ 1 ] == <actual base64 string>
+        $data = explode( ',', $base64_string );
+
+        // we could add validation here with ensuring count( $data ) > 1
+        fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+        // clean up the file resource
+        fclose( $ifp );
+
+        return $output_file;
+    }
 
 
     public function destroy($id)

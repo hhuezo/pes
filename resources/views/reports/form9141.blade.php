@@ -11,6 +11,19 @@
 	font-family: "Times New Roman", Times, serif;
 	 font-size: 12px;
 }
+
+@media all {
+   div.saltopagina{
+      display: none;
+   }
+}
+
+@media print{
+   div.saltopagina{
+      display:block;
+      page-break-before:always;
+   }
+}
 </style>
 
 @foreach ($request_details as $detail)
@@ -764,5 +777,12 @@
         </tr>
     </table>
     <p>
+        <div class="saltopagina"></div>
 @endforeach
 </p>
+<script type="text/javascript">
+    window.onload = function () {
+        window.print();
+        //window.close();
+    }
+</script>
