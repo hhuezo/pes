@@ -76,6 +76,9 @@ Route::post('employer/activate', [EmployerController::class, 'activate']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 
 Route::post('job_request_deductions', [JobRequestController::class,'job_request_deductions']);
+Route::post('job_request_requirements', [JobRequestController::class,'job_request_requirements']);
+Route::post('job_request_representative', [JobRequestController::class,'job_request_representative']);
+
 Route::get('job_request/get_div_deductions', [JobRequestController::class,'get_div_deductions']);
 Route::get('job_request/get_div_deductions_medical', [JobRequestController::class,'get_div_deductions_medical']);
 Route::resource('job_request', JobRequestController::class);

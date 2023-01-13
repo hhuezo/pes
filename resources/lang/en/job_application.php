@@ -106,6 +106,7 @@ return [
     'CheckCriminalHistory' => 'Does the Background Check include CRIMINAL history?',
     'BackgroundChecksConducted' => 'Background Checks are conducted:',
     'SelectApply' => 'Select all that apply.',
+    'OtherPleaseDescribe' => 'Other, please describe:*',
     'DrugTesting' => 'Is Drug Testing required on applicants?',
     'JobRequirements' => 'Are there any other Job Requirements or Conditions of Employment?',
     'AppliesUS' => 'Applies to U.S and H-2B applicants',
@@ -121,6 +122,10 @@ return [
     'Transportation&Daily' => 'TRANSPORTATION & DAILY SUBSISTENCE',
     'InboundTransportation' => 'Inbound Transportation',
     'PleaseTransportation' => 'Please choose the INBOUND transportation option you plan to use',
+
+    'ArrangeInboundTransportation' => 'Would you like PES to arrange inbound transportation?',
+    'EmployerWillBeInvoiced' => 'If YES, employer will be invoiced for the cost of transportation.',
+
     'InboundTransportation' => 'Inbound Transportation',
     'message6' => 'Employer must provide or reimburse workers for INBOUND transportation and daily subsistence (from the place of recruitment to the place of employment) if the worker completes 50% of the total employment period.
     <br>
@@ -136,8 +141,32 @@ return [
 
 
 
-
     'USWorker' => 'U.S. Worker Recruitment Information',
+    'AttorneyAgentInformation' => 'ATTORNEY OR AGENT INFORMATION (IF APPLICABLE)',
+    'TypeRepresentation' => 'Type of Representation',
+
+    'AttorneyAgentLastName' => 'Attorney or Agent’s Last (family) Name',
+    'FirstName' => 'First (given) Name',
+    'MiddleName' => 'Middle Name(s)',
+
+    'State' => 'State',
+    'Country' => 'County',
+    'City' => 'City',
+    'PostalCode' => 'Postal Code',
+    'Address' => 'Address',
+
+
+
+    'TelephoneNumber' => 'Telephone Number',
+    'Extension' => 'Telephone Number (Extension)',
+    'LawBusinessEmailAddress' => 'Law Firm/Business Email Address',
+    'LawBusinessName' => 'Law Firm/Business Name',
+    'LawBusinessFEIN' => 'Law Firm/Business FEIN',
+
+    'StateBarNumber' => 'State Bar Number(s)',
+    'StateHighestCourt' => 'State of highest court where attorney is in good standing',
+    'NameHighestCourt' => 'Name of the highest state court where attorney is in good standing',
+
     'StateWorkforceUsername' => 'State Workforce Agency Account Username',
     'StateWorkforcePassword' => 'State Workforce Agency Account Password',
     'TelephoneNumber' => 'Telephone number for U.S. worker to apply for the job opportunity',
