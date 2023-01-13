@@ -18,7 +18,7 @@ class EmployerWorksite extends Model
 
     protected $fillable = [
         'employer_id',
-        'type_address_id',
+        'address_type_id',
         'state_id_address',
         'county_id',
         'city_id',

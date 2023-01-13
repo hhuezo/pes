@@ -703,7 +703,7 @@
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.State') !!}</label>
-                                                <select class="form-control select2" name="contact_state_id"
+                                                <select class="form-control select2" name="contact_state_id" required
                                                     id="contact_state_id">
                                                     <option value="">Select</option>
                                                     @if ($work_sites_contact)
@@ -729,7 +729,7 @@
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.County') !!}</label>
-                                                <select class="form-control select2" name="contact_county_id"
+                                                <select class="form-control select2" name="contact_county_id" required
                                                     id="contact_county_id">
                                                     @if ($counties_work_sites_contact)
                                                         @foreach ($counties_work_sites_contact as $obj)
@@ -750,7 +750,7 @@
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.City') !!}</label>
-                                                <select class="form-control select2" name="contact_city_id"
+                                                <select class="form-control select2" name="contact_city_id" required
                                                     id="contact_city_id">
                                                     @if ($cities_work_site_contact)
                                                         @foreach ($cities_work_site_contact as $obj)
@@ -770,7 +770,7 @@
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.ZipCode') !!}</label>
-                                                <select class="form-control select2" name="contact_zip_code"
+                                                <select class="form-control select2" name="contact_zip_code" required
                                                     id="contact_zip_code">
                                                     @if ($codes_zip_work_site_contact)
                                                         @foreach ($codes_zip_work_site_contact as $obj)
@@ -792,7 +792,7 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.StreetAddress') !!}</b></label>
                                                 @if ($work_sites_contact)
-                                                    <input type="text" name="contact_street_address"
+                                                    <input type="text" name="contact_street_address" required
                                                         value="{{ $work_sites_contact->street_address }}"
                                                         class="form-control">
                                                 @else
@@ -963,7 +963,7 @@
                                                     <div class="form-group">
                                                         <label>{!! trans('employer.MainWorksiteState') !!}</label>
                                                         <select class="form-control select2" name="main_worksite_state_id"
-                                                            id="MainworksiteState">
+                                                            id="MainworksiteState" required>
                                                             <option value="">Select</option>
                                                             @if ($work_sites_main)
                                                                 @foreach ($states as $obj)
@@ -992,7 +992,7 @@
                                                     <div class="form-group">
                                                         <label>{!! trans('employer.MainWorksiteCounty') !!}</label>
                                                         <select class="form-control select2"
-                                                            name="main_worksite_county_id" id="main_worksite_county_id">
+                                                            name="main_worksite_county_id" id="main_worksite_county_id" required>
                                                             @if ($counties_work_sites)
                                                                 @foreach ($counties_work_sites as $obj)
                                                                     @if ($obj->name == $work_sites_main->county->czc_county)
@@ -1017,7 +1017,7 @@
                                                     <div class="form-group">
                                                         <label>{!! trans('employer.MainWorksiteCity') !!}</label>
                                                         <select class="form-control select2" name="main_worksite_city_id"
-                                                            id="main_worksite_city_id">
+                                                            id="main_worksite_city_id" required>
                                                             @if ($cities_work_site)
                                                                 @foreach ($cities_work_site as $obj)
                                                                     @if ($obj->name == $work_sites_main->city->czc_city)
@@ -1046,7 +1046,7 @@
                                                     <div class="form-group">
                                                         <label>{!! trans('employer.MainWorksiteZipCode') !!}</label>
                                                         <select class="form-control select2" name="main_worksite_zip_code"
-                                                            id="main_worksite_zip_code">
+                                                            id="main_worksite_zip_code" required>
 
 
                                                             @if ($codes_zip_work_site)

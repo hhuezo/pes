@@ -834,8 +834,18 @@ class EmployerController extends Controller
         $employer->is_main_worksite_location = $is_main_worksite_location;
 
 
-        $id_ews = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 5)->get()->first()->id;
-        $employerWorkSite =  EmployerWorksite::findOrFail($id_ews);
+
+
+        $id_ews = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 5)->get()->first();
+
+        if( $id_ews )
+        {
+            $employerWorkSite =  EmployerWorksite::findOrFail($id_ews->id);
+        }
+        else{
+            $employerWorkSite =  null;
+        }
+
 
         if( $employerWorkSite)
         {
