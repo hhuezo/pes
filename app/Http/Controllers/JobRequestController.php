@@ -6,12 +6,18 @@ use App\Models\catalogue\DegreeCode;
 use App\Models\catalogue\JobTitle;
 use App\Models\catalogue\MedicalDeduction;
 use App\Models\catalogue\State;
+use App\Models\catalogue\TypeRepresentation;
+use App\Models\catalogue\CityZip;
+
+use App\Models\EmployerWorksite;
 use App\Models\JobDeduction;
 use App\Models\JobRequest;
 use App\Models\JobRequestDetail;
-use App\Models\EmployerWorksite;
 use App\Models\MedicalDeductionRequest;
 use App\Models\SpecialSkillJobRequest;
+use App\Models\BackgroundCheck;
+use App\Models\EmployerTransportation;
+use App\Models\EmployerRepresentative;
 
 
 use Illuminate\Http\Request;
@@ -104,6 +110,55 @@ class JobRequestController extends Controller
         $deduction_vision = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '3')->first();
         $deduction_other = MedicalDeductionRequest::where('request_deduction_id', '=', $deduction->id)->where('catalog_medical_deduction_id', '=', '4')->first();
 
+        $bgcheck_reg = BackgroundCheck::where('request_id','=',$job_request->id)->where('employer_id','=',$job_request->employer_id)->first();
+
+        $employer_transportation = EmployerTransportation::where('request_id','=',$job_request->id)->where('employer_id','=',$job_request->employer_id)->first();
+
+        $employer_representative = EmployerRepresentative::where('employer_id','=',$job_request->employer_id)->first();
+
+
+        //dd($employer_representative);
+
+        $types_representation = TypeRepresentation::where('status','=','ACT')->get();
+
+
+
+        $states = State::select('id', 'cs_state as name')->get();
+
+        if ($employer_representative) {
+            $ZipCode = CityZip::findOrFail($employer_representative->er_county_id);
+            $counties = CityZip::where('czc_state', '=', $ZipCode->czc_state)->select('id', 'czc_county as name')->groupBy('czc_county')->get();
+            $cities = CityZip::select('id', 'czc_city as name')->where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->groupBy('czc_city')->get();
+            $codes_zip = CityZip::where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->where('czc_city', '=', $ZipCode->czc_city)->groupBy('czc_zipcode')->get();
+
+        }
+        else{
+            $counties = null;
+            $cities = null;
+            $codes_zip = null;
+
+        }
+
+        //dd($codes_zip);
+
+       /* if ($employer->principal_state_id != null) {
+
+            $ZipCode = CityZip::findOrFail($employer->principal_county_id);
+            $counties_mailing = CityZip::where('czc_state', '=', $ZipCode->czc_state)->select('id', 'czc_county as name')->groupBy('czc_county')->get();
+            $cities_mailing = CityZip::select('id', 'czc_city as name')->where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->groupBy('czc_city')->get();
+            $codes_zip_mailing = CityZip::where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->where('czc_city', '=', $ZipCode->czc_city)->groupBy('czc_zipcode')->get();
+
+        } else {
+            $counties_mailing = null;
+            $cities_mailing = null;
+            $codes_zip_mailing = null;
+        }*/
+
+        //dd($employer);
+
+
+        //dd($bgcheck_reg);
+
         //dd($deduction_medical);
         //dd($deduction);
         //dd($job_request);
@@ -111,11 +166,12 @@ class JobRequestController extends Controller
         $job_titles = JobTitle::get();
         $details = JobRequestDetail::where('request_id', '=', $id)->get();
         $degree_codes = DegreeCode::get();
-        return view('job_request.edit', [
-            'job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details, 'degree_codes' => $degree_codes,
-            'deduction' => $deduction, 'deduction_medical' => $deduction_medical, 'deduction_dental' => $deduction_dental, 'deduction_vision' => $deduction_vision,
-            'deduction_other' => $deduction_other
-        ]);
+        return view('job_request.edit', ['job_request' => $job_request, 'job_titles' => $job_titles, 'details' => $details, 'degree_codes' => $degree_codes,
+                    'deduction' => $deduction, 'deduction_medical' => $deduction_medical, 'deduction_dental' => $deduction_dental, 'deduction_vision' => $deduction_vision,
+                    'deduction_other' => $deduction_other, 'bgcheck_reg' => $bgcheck_reg, 'employer_transportation' => $employer_transportation, 'types_representation' => $types_representation,
+                    'states' => $states, 'counties' => $counties, 'cities' => $cities,
+                    'codes_zip' => $codes_zip, 'employer_representative' => $employer_representative]);
+
     }
 
     public function update(Request $request, $id)
@@ -136,6 +192,8 @@ class JobRequestController extends Controller
         Alert::info('', 'Record saved');
         return redirect('job_request/' . $id . '/edit');
     }
+
+
 
 
     public function job_request_deductions(Request $request)
@@ -627,6 +685,292 @@ class JobRequestController extends Controller
             Alert::success('Ok', 'Record saved');
             return redirect('job_request/' . $request->get('request_id') . '/edit');
         }
+    }
+
+
+    public function job_request_requirements(Request $request){
+
+        //dd($request);
+
+        $user =  auth()->user();
+        $employer = $user->user_has_employer->first();
+
+        //dd($request->get('is_included_criminal_history'));
+
+
+        //dd($is_background_check_pre_employement, $is_background_check_post_employement, $is_background_check_other);
+
+        if ($request->get('is_background_check_pre_employement')== 'on'){
+            $is_background_check_pre_employement = 1;
+        }else{
+            $is_background_check_pre_employement = 0;
+        }
+
+        if ($request->get('is_background_check_post_employement')== 'on'){
+            $is_background_check_post_employement = 1;
+        }else{
+            $is_background_check_post_employement = 0;
+        }
+
+
+        if ($request->get('is_background_check_other')== 'on'){
+            $is_background_check_other = 1;
+            $others_description=$request->get('others_description');
+        }else{
+            $is_background_check_other = 0;
+            $others_description=null;
+        }
+
+        if ($request->get('is_drug_testing_other')== 'on'){
+            $is_drug_testing_other = 1;
+            $testing_other_description=$request->get('testing_other_description');
+        }else{
+            $is_drug_testing_other = 0;
+            $testing_other_description=null;
+        }
+
+
+
+
+        if ($request->get('is_drug_testing_pre_employment')== 'on'){
+            $is_drug_testing_pre_employment = 1;
+        }else{
+            $is_drug_testing_pre_employment = 0;
+        }
+
+
+
+        if ($request->get('is_drug_testing_post_employment')== 'on'){
+            $is_drug_testing_post_employment = 1;
+        }else{
+            $is_drug_testing_post_employment = 0;
+        }
+
+        if ($request->get('is_drug_testing_post_injury')== 'on'){
+            $is_drug_testing_post_injury = 1;
+        }else{
+            $is_drug_testing_post_injury = 0;
+        }
+
+        if ($request->get('is_drug_testing_other')== 'on'){
+            $is_drug_testing_other = 1;
+        }else{
+            $is_drug_testing_other = 0;
+        }
+
+
+
+
+        $bgcheck_reg = BackgroundCheck::where('request_id','=',$request->get('request_id'))->where('employer_id','=',$employer->id)->first();
+
+        if($bgcheck_reg){
+            $bgcheck_id = BackgroundCheck::where('request_id','=',$request->get('request_id'))->where('employer_id','=',$employer->id)->first()->id;
+
+            $bgcheck_upd = BackgroundCheck::findOrFail($bgcheck_id);
+
+
+
+            if ($request->get('is_background_check_required')==1){
+                $bgcheck_upd->is_background_check_required=1;
+                $bgcheck_upd->is_included_criminal_history=$request->get('is_included_criminal_history');
+                $bgcheck_upd->is_background_check_pre_employement=$is_background_check_pre_employement;
+                $bgcheck_upd->is_background_check_post_employement=$is_background_check_post_employement;
+                $bgcheck_upd->is_background_check_other=$is_background_check_other;
+                $bgcheck_upd->others_description=$others_description;
+            }else{
+                $bgcheck_upd->is_background_check_required=0;
+                $bgcheck_upd->is_included_criminal_history=0;
+                $bgcheck_upd->is_background_check_pre_employement=0;
+                $bgcheck_upd->is_background_check_post_employement=0;
+                $bgcheck_upd->is_background_check_other=0;
+                $bgcheck_upd->others_description=null;
+            }
+
+
+
+            if ($request->get('is_drug_testing_required') == 1) {
+                $bgcheck_upd->is_drug_testing_required=1;
+                $bgcheck_upd->is_drug_testing_pre_employment=$is_drug_testing_pre_employment;
+                $bgcheck_upd->is_drug_testing_post_employment=$is_drug_testing_post_employment;
+                $bgcheck_upd->is_drug_testing_post_injury=$is_drug_testing_post_injury;
+                $bgcheck_upd->is_drug_testing_other=$is_drug_testing_other;
+                $bgcheck_upd->testing_other_description=$testing_other_description;
+            } else {
+                $bgcheck_upd->is_drug_testing_required=0;
+                $bgcheck_upd->is_drug_testing_pre_employment=0;
+                $bgcheck_upd->is_drug_testing_post_employment=0;
+                $bgcheck_upd->is_drug_testing_post_injury=0;
+                $bgcheck_upd->is_drug_testing_other=0;
+                $bgcheck_upd->testing_other_description=null;
+            }
+
+
+            if ($request->get('are_there_other_requirements')==1) {
+                $bgcheck_upd->are_there_other_requirements=1;
+                $bgcheck_upd->other_requirements_description=$request->get('other_requirements_description');
+            } else {
+                $bgcheck_upd->are_there_other_requirements=0;
+                $bgcheck_upd->other_requirements_description=null;
+            }
+
+            $bgcheck_upd->request_id=$request->get('request_id');
+
+            $bgcheck_upd->update();
+
+        }else{
+            $bgcheck = new BackgroundCheck();
+            $bgcheck->employer_id=$employer->id;
+            $bgcheck->is_background_check_required=$request->get('is_background_check_required');
+            $bgcheck->is_included_criminal_history=$request->get('is_included_criminal_history');
+            $bgcheck->is_background_check_pre_employement=$is_background_check_pre_employement;
+            $bgcheck->is_background_check_post_employement=$is_background_check_post_employement;
+            $bgcheck->is_background_check_other=$is_background_check_other;
+            $bgcheck->others_description=$others_description;
+            $bgcheck->is_drug_testing_required=$request->get('is_drug_testing_required');
+            $bgcheck->is_drug_testing_pre_employment=$is_drug_testing_pre_employment;
+            $bgcheck->is_drug_testing_post_employment=$is_drug_testing_post_employment;
+            $bgcheck->is_drug_testing_post_injury=$is_drug_testing_post_injury;
+            $bgcheck->is_drug_testing_other=$is_drug_testing_other;
+            $bgcheck->testing_other_description=$testing_other_description;
+            $bgcheck->are_there_other_requirements=$request->get('are_there_other_requirements');
+            $bgcheck->other_requirements_description=$request->get('other_requirements_description');
+            $bgcheck->request_id=$request->get('request_id');
+            $bgcheck->save();
+
+        }
+
+
+        // dd($request->get('arrange_and_pay'));
+        //dd($request->get('reimburse'));
+        // dd($request->get('provide_advance'));
+
+        if ($request->get('arrange_and_pay')=='on') {
+            $arrange_and_pay = 1;
+            $reimburse=0;
+            $provide_advance=0;
+            $pes_arramge_inbound_transportation = $request->get('pes_arramge_inbound_transportation');
+        }
+
+
+        if ($request->get('reimburse')=='on') {
+            $arrange_and_pay = 0;
+            $reimburse=1;
+            $provide_advance=0;
+            $pes_arramge_inbound_transportation = null;
+        }
+
+        if ($request->get('provide_advance')=='on') {
+            $arrange_and_pay = 0;
+            $reimburse=0;
+            $provide_advance=1;
+            $pes_arramge_inbound_transportation = null;
+        }
+
+
+        //dd($arrange_and_pay, $reimburse, $provide_advance, $pes_arramge_inbound_transportation);
+
+
+
+        $cuenta_et = EmployerTransportation::where('request_id','=',$request->get('request_id'))->where('employer_id','=',$employer->id)->get()->count();
+
+
+        if ($cuenta_et > 0) {
+            $et_id = EmployerTransportation::where('request_id','=',$request->get('request_id'))->where('employer_id','=',$employer->id)->first()->id;
+
+            $et_upd = EmployerTransportation::findOrFail($et_id);
+            $et_upd->employer_id=$employer->id;
+            $et_upd->request_id=$request->get('request_id');
+            $et_upd->arrange_and_pay=$arrange_and_pay;
+            $et_upd->reimburse=$reimburse;
+            $et_upd->provide_advance=$provide_advance;
+            $et_upd->pes_arramge_inbound_transportation=$pes_arramge_inbound_transportation;
+            $et_upd->save();
+        }else{
+            $et = new EmployerTransportation();
+            $et->employer_id=$employer->id;
+            $et->request_id=$request->get('request_id');
+            $et->arrange_and_pay=$arrange_and_pay;
+            $et->reimburse=$reimburse;
+            $et->provide_advance=$provide_advance;
+            $et->pes_arramge_inbound_transportation=$pes_arramge_inbound_transportation;
+            $et->save();
+        }
+
+
+
+
+
+
+        Alert::info('', 'Record saved');
+        return redirect('job_request/' . $request->get('request_id') . '/edit');
+
+    }
+
+
+    public function job_request_representative(Request $request){
+
+        //dd($request);
+        $user =  auth()->user();
+        $employer = $user->user_has_employer->first();
+
+
+
+        $cuenta_er = EmployerRepresentative::where('employer_id','=',$employer->id)->get()->count();
+
+
+        if ($cuenta_er > 0) {
+            $er_id = EmployerRepresentative::where('employer_id','=',$employer->id)->first()->id;
+
+            $ZipCode = CityZip::findOrFail($request->get('er_zip_addr1'));
+
+            $er_upd = EmployerRepresentative::findOrFail($er_id);
+            $er_upd->employer_id = $employer->id;
+            $er_upd->er_last_name = $request->get('er_last_name');
+            $er_upd->er_first_name = $request->get('er_first_name');
+            $er_upd->er_middle_name = $request->get('er_middle_name');
+            $er_upd->er_address_1 = $request->get('er_address_1');
+            $er_upd->er_county_id = $ZipCode->id;
+            $er_upd->er_city_id =  $ZipCode->id;
+            $er_upd->er_state_id = $request->get('er_state_id');
+            $er_upd->er_zip_addr1 =  $ZipCode->czc_zipcode;
+            $er_upd->er_country_id = $request->get('er_country_id');
+            $er_upd->er_telephone_number = $request->get('er_telephone_number');
+            $er_upd->er_lawfirm_email = $request->get('er_lawfirm_email');
+            $er_upd->er_telephone_number_ext = $request->get('er_telephone_number_ext');
+            $er_upd->er_lawfirm_business_name = $request->get('er_lawfirm_business_name');
+            $er_upd->er_lawfirm_fein_number = $request->get('er_lawfirm_fein_number');
+            $er_upd->er_type_of_representation_id = $request->get('er_type_of_representation_id');
+            $er_upd->er_state_good_standing_id = $request->get('er_state_good_standing_id');
+            $er_upd->er_highest_state_court_name = $request->get('er_highest_state_court_name');
+            $er_upd->er_state_bar_number = $request->get('er_state_bar_number');
+            $er_upd->save();
+        }else{
+            $er = new EmployerRepresentative();
+            $er->employer_id = $employer->id;
+            $er->er_last_name = $request->get('er_last_name');
+            $er->er_first_name = $request->get('er_first_name');
+            $er->er_middle_name = $request->get('er_middle_name');
+            $er->er_address_1 = $request->get('er_address_1');
+            $er->er_county_id = $request->get('er_county_id');
+            $er->er_city_id = $request->get('er_city_id');
+            $er->er_state_id = $request->get('er_state_id');
+            $er->er_zip_addr1 = $request->get('er_zip_addr1');
+            $er->er_country_id = $request->get('er_country_id');
+            $er->er_telephone_number = $request->get('er_telephone_number');
+            $er->er_lawfirm_email = $request->get('er_lawfirm_email');
+            $er->er_telephone_number_ext = $request->get('er_telephone_number_ext');
+            $er->er_lawfirm_business_name = $request->get('er_lawfirm_business_name');
+            $er->er_lawfirm_fein_number = $request->get('er_lawfirm_fein_number');
+            $er->er_type_of_representation_id = $request->get('er_type_of_representation_id');
+            $er->er_state_good_standing_id = $request->get('er_state_good_standing_id');
+            $er->er_highest_state_court_name = $request->get('er_highest_state_court_name');
+            $er->er_state_bar_number = $request->get('er_state_bar_number');
+            $er->save();
+        }
+
+
+        Alert::info('', 'Record saved');
+        return redirect('job_request/' . $job_request->id . '/edit');
     }
 
     public function form9141($id)

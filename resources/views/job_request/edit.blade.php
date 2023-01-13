@@ -2,7 +2,7 @@
 @section('contenido')
     <link rel="stylesheet" href="{{ asset('job_application/style.css') }}">
 
-    {{ $deduction->housing_utilities }}
+
 
     @if ($deduction->housing_utilities == 0)
         <style>
@@ -17,27 +17,31 @@
 
         <div class="card col-md-12">
             <div class="card-header">
-                <h4 class="card-title">Default Tab</h4>
+                <h4 class="card-title">MY REQUIREMENTS</h4>
             </div>
             <div class="card-body">
                 <!-- Nav tabs -->
                 <div class="default-tab">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#tab1">Home</a>
+                            <a class="nav-link active" data-toggle="tab" href="#tab1"> TEMPORARY NEED INFORMATION </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab2">Profile</a>
+                            <a class="nav-link" data-toggle="tab" href="#tab2">POSITION(S) NEEDED</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab3">Contact</a>
+                            <a class="nav-link" data-toggle="tab" href="#tab3">DEDUCTIONS FROM THE WORKER'S PAYCHECK
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab4">Message</a>
+                            <a class="nav-link" data-toggle="tab" href="#tab4">JOB REQUIREMENTS / CONDITIONS OF EMPLOYMENT
+                            </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab5">tab5</a>
+                            <a class="nav-link" data-toggle="tab" href="#tab5">ATTORNEY OR AGENT INFORMATION (IF
+                                APPLICABLE)
+                            </a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -46,6 +50,8 @@
                                 @method('PUT')
                                 @csrf
 
+                                <br>
+                                <h3>TEMPORARY NEED INFORMATION</h3>
 
                                 <div class="col-xl-12 col-xxl-12 row">
                                     <div class="col-sm-12">&nbsp;</div>
@@ -186,6 +192,8 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="tab2">
+                            <br>
+                            <h3>POSITION(S) NEEDED</h3>
                             <div class="col-md-12">&nbsp;</div>
                             <div class="col-sm-12 form-group">
                                 <a href="{{ url('job_request_detail/create') }}/{{ $job_request->id }}">
@@ -1027,238 +1035,796 @@
 
                         </div>
                         <div class="tab-pane fade" id="tab4">
+                            <form method="POST" action="{{ url('job_request_requirements') }}">
+                                <input type="hidden" id="request_id" name="request_id" value="{{ $job_request->id }}">
+                                @csrf
+                                <br>
+                                <h3>JOB REQUIREMENTS / CONDITIONS OF EMPLOYMENT</h3>
+                                <p>Background checks, drug testing and/or other job requirements and conditions of
+                                    employment
+                                    must not favor either U.S. or H-2B workers, they must be applied on an equal basis for
+                                    all
+                                    employees.</p>
+                                <h5>All job requirements and conditions of employment must be disclosed in the Job Order.
+                                </h5>
+                                <h5>{!! trans('job_application.BackgroundChecks') !!} </h5>
 
-                            <h3>JOB REQUIREMENTS / CONDITIONS OF EMPLOYMENT</h3>
-                            <p>Background checks, drug testing and/or other job requirements and conditions of employment
-                                must not favor either U.S. or H-2B workers, they must be applied on an equal basis for all
-                                employees.</p>
-                            <h5>All job requirements and conditions of employment must be disclosed in the Job Order. </h5>
-                            <h5>{!! trans('job_application.BackgroundChecks') !!} </h5>
+                                <div class="col-xl-12 col-xxl-12">
+                                    <div class="col-sm-12">&nbsp;</div>
 
-                            <div class="col-xl-12 col-xxl-12">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{!! trans('job_application.IsBackgroundChecks') !!}</label>
+                                            <br>
+                                            &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                            @if ($bgcheck_reg)
+                                                @if ($bgcheck_reg->is_background_check_required == 1)
+                                                    <input type="radio" name="is_background_check_required"
+                                                        id="is_background_check_required" value="1" checked
+                                                        onClick="validCriminal()">
+                                                @else
+                                                    <input type="radio" name="is_background_check_required"
+                                                        id="is_background_check_required" value="1"
+                                                        onClick="validCriminal()">
+                                                @endif
+                                            @else
+                                                <input type="radio" name="is_background_check_required"
+                                                    id="is_background_check_required" value="1"
+                                                    onClick="validCriminal()">
+                                            @endif
+
+
+                                            &nbsp;&nbsp;
+                                            {!! trans('job_application.No') !!}
+                                            @if ($bgcheck_reg)
+                                                @if ($bgcheck_reg->is_background_check_required == 0)
+                                                    <input type="radio" name="is_background_check_required"
+                                                        id="is_background_check_required" value="0" checked
+                                                        onClick="validCriminal()">
+                                                @else
+                                                    <input type="radio" name="is_background_check_required"
+                                                        id="is_background_check_required" value="0"
+                                                        onClick="validCriminal()">
+                                                @endif
+                                            @else
+                                                <input type="radio" name="is_background_check_required"
+                                                    id="is_background_check_required" value="0"
+                                                    onClick="validCriminal()">
+                                            @endif
+
+                                            <br>
+                                            <label for="exampleInputEmail1">{!! trans('job_application.AppliesAllApplicants') !!}</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <div id="divCriminal">
+                                                <label for="exampleInputEmail1">{!! trans('job_application.CheckCriminalHistory') !!}</label>
+                                                <br>
+                                                &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                                @if ($bgcheck_reg)
+                                                    @if ($bgcheck_reg->is_included_criminal_history == 1)
+                                                        <input type="radio" name="is_included_criminal_history"
+                                                            id="is_included_criminal_history" value="1" checked>
+                                                    @else
+                                                        <input type="radio" name="is_included_criminal_history"
+                                                            id="is_included_criminal_history" value="1">
+                                                    @endif
+                                                @else
+                                                    <input type="radio" name="is_included_criminal_history"
+                                                        id="is_included_criminal_history" value="1">
+                                                @endif
+
+                                                &nbsp;&nbsp;
+                                                {!! trans('job_application.No') !!}
+                                                @if ($bgcheck_reg)
+                                                    @if ($bgcheck_reg->is_included_criminal_history == 0)
+                                                        <input type="radio" name="is_included_criminal_history"
+                                                            id="is_included_criminal_history" value="0" checked>
+                                                    @else
+                                                        <input type="radio" name="is_included_criminal_history"
+                                                            id="is_included_criminal_history" value="0">
+                                                    @endif
+                                                @else
+                                                    <input type="radio" name="is_included_criminal_history"
+                                                        id="is_included_criminal_history" value="0">
+                                                @endif
+
+
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.BackgroundChecksConducted') !!}</label>
+                                                    <br>
+                                                    &nbsp;&nbsp;
+                                                    @if ($bgcheck_reg)
+                                                        @if ($bgcheck_reg->is_background_check_pre_employement == 1)
+                                                            <input type="checkbox"
+                                                                id="is_background_check_pre_employement"
+                                                                name="is_background_check_pre_employement"
+                                                                checked>&nbsp;&nbsp;
+                                                        @endif
+                                                        @if ($bgcheck_reg->is_background_check_pre_employement == 0)
+                                                            <input type="checkbox"
+                                                                id="is_background_check_pre_employement"
+                                                                name="is_background_check_pre_employement">&nbsp;&nbsp;
+                                                        @endif
+                                                    @else
+                                                        <input type="checkbox" id="is_background_check_pre_employement"
+                                                            name="is_background_check_pre_employement">&nbsp;&nbsp;
+                                                    @endif
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.Pre-employment') !!}
+
+                                                    &nbsp;&nbsp;
+                                                    @if ($bgcheck_reg)
+                                                        @if ($bgcheck_reg->is_background_check_post_employement == 1)
+                                                            <input type="checkbox"
+                                                                id="is_background_check_post_employement"
+                                                                name="is_background_check_post_employement"
+                                                                checked>&nbsp;&nbsp;
+                                                        @endif
+                                                        @if ($bgcheck_reg->is_background_check_post_employement == 0)
+                                                            <input type="checkbox"
+                                                                id="is_background_check_post_employement"
+                                                                name="is_background_check_post_employement">&nbsp;&nbsp;
+                                                        @endif
+                                                    @else
+                                                        <input type="checkbox" id="is_background_check_post_employement"
+                                                            name="is_background_check_post_employement">&nbsp;&nbsp;
+                                                    @endif
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.Post-employment') !!}
+
+                                                    &nbsp;&nbsp;
+                                                    @if ($bgcheck_reg)
+                                                        @if ($bgcheck_reg->is_background_check_other == 1)
+                                                            <input type="checkbox" id="is_background_check_other"
+                                                                name="is_background_check_other"
+                                                                onclick="validOtherDescription()" checked>&nbsp;&nbsp;
+                                                        @endif
+                                                        @if ($bgcheck_reg->is_background_check_other == 0)
+                                                            <input type="checkbox" id="is_background_check_other"
+                                                                name="is_background_check_other"
+                                                                onclick="validOtherDescription()">&nbsp;&nbsp;
+                                                        @endif
+                                                    @else
+                                                        <input type="checkbox" id="is_background_check_other"
+                                                            name="is_background_check_other"
+                                                            onclick="validOtherDescription()">&nbsp;&nbsp;
+                                                    @endif
+
+                                                    &nbsp;&nbsp;
+                                                    {!! trans('job_application.Other') !!}
+
+                                                    <br>
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.SelectApply') !!}</label>
+                                                </div>
+
+                                                <div id="divOtherDescription">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.OtherPleaseDescribe') !!}</label>
+                                                        @if ($bgcheck_reg)
+                                                            <input type="text" name="others_description"
+                                                                value="{{ old('others_description', $bgcheck_reg->others_description) }}"
+                                                                class="form-control">
+                                                        @else
+                                                            <input type="text" name="others_description"
+                                                                value="{{ old('others_description') }}"
+                                                                class="form-control">
+                                                        @endif
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{!! trans('job_application.DrugTesting') !!}</label>
+                                            <br>
+                                            &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                            @if ($bgcheck_reg)
+                                                @if ($bgcheck_reg->is_drug_testing_required == 1)
+                                                    <input type="radio" name="is_drug_testing_required"
+                                                        onclick="validDrugTesting()" id="is_drug_testing_required"
+                                                        value="1" checked>
+                                                @else
+                                                    <input type="radio" name="is_drug_testing_required"
+                                                        onclick="validDrugTesting()" id="is_drug_testing_required"
+                                                        value="1">
+                                                @endif
+                                            @else
+                                                <input type="radio" name="is_drug_testing_required"
+                                                    onclick="validDrugTesting()" id="is_drug_testing_required"
+                                                    value="1">
+                                            @endif
+
+                                            &nbsp;&nbsp;
+                                            {!! trans('job_application.No') !!}
+                                            @if ($bgcheck_reg)
+                                                @if ($bgcheck_reg->is_drug_testing_required == 0)
+                                                    <input type="radio" name="is_drug_testing_required"
+                                                        onclick="validDrugTesting()" id="is_drug_testing_required"
+                                                        value="0" checked>
+                                                @else
+                                                    <input type="radio" name="is_drug_testing_required"
+                                                        onclick="validDrugTesting()" id="is_drug_testing_required"
+                                                        value="0">
+                                                @endif
+                                            @else
+                                                <input type="radio" name="is_drug_testing_required"
+                                                    onclick="validDrugTesting()" id="is_drug_testing_required"
+                                                    value="0">
+                                            @endif
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+
+                                            <div id="divDrugTesting">
+                                                <label for="exampleInputEmail1">{!! trans('job_application.DrugTestingConducted') !!}</label>
+                                                <br>
+                                                &nbsp;&nbsp;
+                                                @if ($bgcheck_reg)
+                                                    @if ($bgcheck_reg->is_drug_testing_pre_employment == 1)
+                                                        <input type="checkbox" id="is_drug_testing_pre_employment"
+                                                            name="is_drug_testing_pre_employment" checked>&nbsp;&nbsp;
+                                                    @endif
+                                                    @if ($bgcheck_reg->is_drug_testing_pre_employment == 0)
+                                                        <input type="checkbox" id="is_drug_testing_pre_employment"
+                                                            name="is_drug_testing_pre_employment">&nbsp;&nbsp;
+                                                    @endif
+                                                @else
+                                                    <input type="checkbox" id="is_drug_testing_pre_employment"
+                                                        name="is_drug_testing_pre_employment">&nbsp;&nbsp;
+                                                @endif
+
+                                                &nbsp;&nbsp;
+                                                {!! trans('job_application.Pre-employment') !!}
+
+                                                &nbsp;&nbsp;
+                                                @if ($bgcheck_reg)
+                                                    @if ($bgcheck_reg->is_drug_testing_post_employment == 1)
+                                                        <input type="checkbox" id="is_drug_testing_post_employment"
+                                                            name="is_drug_testing_post_employment" checked>&nbsp;&nbsp;
+                                                    @endif
+                                                    @if ($bgcheck_reg->is_drug_testing_post_employment == 0)
+                                                        <input type="checkbox" id="is_drug_testing_post_employment"
+                                                            name="is_drug_testing_post_employment">&nbsp;&nbsp;
+                                                    @endif
+                                                @else
+                                                    <input type="checkbox" id="is_drug_testing_post_employment"
+                                                        name="is_drug_testing_post_employment">&nbsp;&nbsp;
+                                                @endif
+
+                                                &nbsp;&nbsp;
+                                                {!! trans('job_application.Post-employment') !!}
+
+                                                &nbsp;&nbsp;
+                                                @if ($bgcheck_reg)
+                                                    @if ($bgcheck_reg->is_drug_testing_post_injury == 1)
+                                                        <input type="checkbox" id="is_drug_testing_post_injury"
+                                                            name="is_drug_testing_post_injury" checked>&nbsp;&nbsp;
+                                                    @endif
+                                                    @if ($bgcheck_reg->is_drug_testing_post_injury == 0)
+                                                        <input type="checkbox" id="is_drug_testing_post_injury"
+                                                            name="is_drug_testing_post_injury">&nbsp;&nbsp;
+                                                    @endif
+                                                @else
+                                                    <input type="checkbox" id="is_drug_testing_post_injury"
+                                                        name="is_drug_testing_post_injury">&nbsp;&nbsp;
+                                                @endif
+
+                                                &nbsp;&nbsp;
+                                                {!! trans('job_application.PostInjury') !!}
+
+
+                                                &nbsp;&nbsp;
+                                                @if ($bgcheck_reg)
+                                                    @if ($bgcheck_reg->is_drug_testing_other == 1)
+                                                        <input type="checkbox" id="is_drug_testing_other"
+                                                            name="is_drug_testing_other"
+                                                            onclick="validTestingOtherDescription()" checked>&nbsp;&nbsp;
+                                                    @endif
+                                                    @if ($bgcheck_reg->is_drug_testing_other == 0)
+                                                        <input type="checkbox" id="is_drug_testing_other"
+                                                            name="is_drug_testing_other"
+                                                            onclick="validTestingOtherDescription()">&nbsp;&nbsp;
+                                                    @endif
+                                                @else
+                                                    <input type="checkbox" id="is_drug_testing_other"
+                                                        name="is_drug_testing_other"
+                                                        onclick="validTestingOtherDescription()">&nbsp;&nbsp;
+                                                @endif
+                                                &nbsp;&nbsp;
+                                                {!! trans('job_application.Other') !!}
+                                                <br>
+                                                <label for="exampleInputEmail1">{!! trans('job_application.SelectApply') !!}</label>
+
+                                                <div id="divTestingOtherDescription">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="exampleInputUsername1">{!! trans('job_application.OtherPleaseDescribe') !!}</label>
+                                                        @if ($bgcheck_reg)
+                                                            <input type="text" name="testing_other_description"
+                                                                value="{{ old('testing_other_description', $bgcheck_reg->testing_other_description) }}"
+                                                                class="form-control">
+                                                        @else
+                                                            <input type="text" name="testing_other_description"
+                                                                value="{{ old('testing_other_description') }}"
+                                                                class="form-control">
+                                                        @endif
+
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{!! trans('job_application.JobRequirements') !!}</label>
+                                            <br>
+                                            &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                            @if ($bgcheck_reg)
+                                                @if ($bgcheck_reg->are_there_other_requirements == 1)
+                                                    <input type="radio" name="are_there_other_requirements"
+                                                        onclick="validRequirementsDescription()"
+                                                        id="are_there_other_requirements" value="1" checked>
+                                                @else
+                                                    <input type="radio" name="are_there_other_requirements"
+                                                        onclick="validRequirementsDescription()"
+                                                        id="are_there_other_requirements" value="1">
+                                                @endif
+                                            @else
+                                                <input type="radio" name="are_there_other_requirements"
+                                                    onclick="validRequirementsDescription()"
+                                                    id="are_there_other_requirements" value="1">
+                                            @endif
+
+                                            &nbsp;&nbsp;
+                                            {!! trans('job_application.No') !!}
+                                            @if ($bgcheck_reg)
+                                                @if ($bgcheck_reg->are_there_other_requirements == 0)
+                                                    <input type="radio" name="are_there_other_requirements"
+                                                        onclick="validRequirementsDescription()"
+                                                        id="are_there_other_requirements" value="0" checked>
+                                                @else
+                                                    <input type="radio" name="are_there_other_requirements"
+                                                        onclick="validRequirementsDescription()"
+                                                        id="are_there_other_requirements" value="0">
+                                                @endif
+                                            @else
+                                                <input type="radio" name="are_there_other_requirements"
+                                                    onclick="validRequirementsDescription()"
+                                                    id="are_there_other_requirements" value="0">
+                                            @endif
+
+                                            <br>
+                                            {!! trans('job_application.AppliesUS') !!}
+                                        </div>
+
+                                        <div id="divRequirementsDescription">
+                                            <div class="form-group">
+                                                <label for="exampleInputUsername1">{!! trans('job_application.OtherPleaseDescribe') !!}</label>
+
+                                                @if ($bgcheck_reg)
+                                                    <input type="text" name="other_requirements_description"
+                                                        value="{{ old('other_requirements_description', $bgcheck_reg->other_requirements_description) }}"
+                                                        class="form-control">
+                                                @else
+                                                    <input type="text" name="other_requirements_description"
+                                                        value="{{ old('other_requirements_description') }}"
+                                                        class="form-control">
+                                                @endif
+
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+
                                 <div class="col-sm-12">&nbsp;</div>
 
-                                <div class="col-md-6">
+                                <h3>{!! trans('job_application.Transportation&Daily') !!}</h3>
+                                <h5>{!! trans('job_application.InboundTransportation') !!}</h5>
+                                <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.IsBackgroundChecks') !!}</label>
+                                        <label for="exampleInputEmail1"><strong>{!! trans('job_application.PleaseTransportation') !!}</strong></label>
                                         <br>
-                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
-                                        @if ($job_request->is_uniform_required == 1)
-                                            <input type="radio" value="1" checked name="is_uniform_required">
+                                        <input type="radio" name="arrange_and_pay" id="arrange_and_pay"
+                                            @if ($employer_transportation->arrange_and_pay == 1) checked
                                         @else
-                                            <input type="radio" value="1" name="is_uniform_required">
-                                        @endif
-                                        &nbsp;&nbsp;
-                                        {!! trans('job_application.No') !!}
-                                        @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked>
+                                            '' @endif
+                                            onclick="validArrangePay()">
+                                        &nbsp;&nbsp;Arrange and pay directly
+                                        for
+                                        transportation and
+                                        subsistence (recommended)
+                                        <br>
+                                        <input type="radio" name="reimburse" id="reimburse"
+                                            @if ($employer_transportation->reimburse == 1) checked
                                         @else
-                                            <input type="radio" value="0">
-                                        @endif
+                                            '' @endif
+                                            onclick="validReimburse()"> &nbsp;&nbsp;Reimburse the
+                                        worker for
+                                        transportation and
+                                        subsistence
                                         <br>
-                                        <label for="exampleInputEmail1">{!! trans('job_application.AppliesAllApplicants') !!}</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.CheckCriminalHistory') !!}</label>
-                                        <br>
-                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
-                                        @if ($job_request->is_uniform_required == 1)
-                                            <input type="radio" value="1" checked name="is_uniform_required">
+                                        <input type="radio" name="provide_advance" id="provide_advance"
+                                            @if ($employer_transportation->provide_advance == 1) checked
                                         @else
-                                            <input type="radio" value="1" name="is_uniform_required">
-                                        @endif
-                                        &nbsp;&nbsp;
-                                        {!! trans('job_application.No') !!}
-                                        @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked>
-                                        @else
-                                            <input type="radio" value="0">
-                                        @endif
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.BackgroundChecksConducted') !!}</label>
+                                            '' @endif
+                                            onclick="validProvideAdvance()">
+                                        &nbsp;&nbsp;Provide advance payment
+                                        (to the
+                                        worker) for
+                                        transportation and subsistence
                                         <br>
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.Pre-employment') !!}
-
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.Post-employment') !!}
-
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.Other') !!}
-
-                                        <br>
-                                        <label for="exampleInputEmail1">{!! trans('job_application.SelectApply') !!}</label>
                                     </div>
 
                                 </div>
 
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.DrugTesting') !!}</label>
-                                        <br>
-                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
-                                        @if ($job_request->is_uniform_required == 1)
-                                            <input type="radio" value="1" checked name="is_uniform_required">
-                                        @else
-                                            <input type="radio" value="1" name="is_uniform_required">
-                                        @endif
-                                        &nbsp;&nbsp;
-                                        {!! trans('job_application.No') !!}
-                                        @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked>
-                                        @else
-                                            <input type="radio" value="0">
-                                        @endif
+                                <div class="col-md-12">
+                                    <div id="divArrangePay">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{!! trans('job_application.ArrangeInboundTransportation') !!}</label>
+                                            <br>
+                                            &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
+                                            <input type="radio" name="pes_arramge_inbound_transportation"
+                                                id="pes_arramge_inbound_transportation"
+                                                @if ($employer_transportation->pes_arramge_inbound_transportation == 1) checked
+                                                @else
+                                                    '' @endif
+                                                value="1">
+
+                                            &nbsp;&nbsp;
+                                            {!! trans('job_application.No') !!}
+                                            <input type="radio" name="pes_arramge_inbound_transportation"
+                                                id="pes_arramge_inbound_transportation"
+                                                @if ($employer_transportation->pes_arramge_inbound_transportation == 0) checked
+                                                @else
+                                                    '' @endif
+                                                value="0">
+
+                                        </div>
                                     </div>
 
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.DrugTestingConducted') !!}</label>
-                                        <br>
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.Pre-employment') !!}
-
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.Post-employment') !!}
-
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.PostInjury') !!}
-
-
-                                        &nbsp;&nbsp;
-                                        <input type="checkbox">&nbsp;&nbsp;
-                                        {!! trans('job_application.Other') !!}
-                                        <br>
-                                        <label for="exampleInputEmail1">{!! trans('job_application.SelectApply') !!}</label>
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.JobRequirements') !!}</label>
-                                        <br>
-                                        &nbsp;&nbsp;&nbsp;{!! trans('job_application.Yes') !!}
-                                        @if ($job_request->is_uniform_required == 1)
-                                            <input type="radio" value="1" checked name="is_uniform_required">
-                                        @else
-                                            <input type="radio" value="1" name="is_uniform_required">
-                                        @endif
-                                        &nbsp;&nbsp;
-                                        {!! trans('job_application.No') !!}
-                                        @if ($job_request->is_uniform_required == 0)
-                                            <input type="radio" value="0" checked>
-                                        @else
-                                            <input type="radio" value="0">
-                                        @endif
-                                        <br>
-                                        {!! trans('job_application.AppliesUS') !!}
-                                    </div>
 
                                 </div>
 
 
-                            </div>
+                                <p>{!! trans('job_application.message6') !!}</p>
 
 
-
-
-
-
-                            <div class="col-sm-12">&nbsp;</div>
-
-                            <h3>{!! trans('job_application.Transportation&Daily') !!}</h3>
-                            <h5>{!! trans('job_application.InboundTransportation') !!}</h5>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1"><strong>{!! trans('job_application.PleaseTransportation') !!}</strong></label>
-                                    <br>
-                                    <input type="radio"> &nbsp;&nbsp;Arrange and pay directly for transportation and
-                                    subsistence (recommended)
-                                    <br>
-                                    <input type="radio"> &nbsp;&nbsp;Reimburse the worker for transportation and
-                                    subsistence
-                                    <br>
-                                    <input type="radio"> &nbsp;&nbsp;Provide advance payment (to the worker) for
-                                    transportation and subsistence
-                                    <br>
+                                <div class="col-sm-12 form-group">
+                                    <button type="submit" class="btn btn-primary float-right">Next</button>
                                 </div>
-
-                            </div>
-                            <p>{!! trans('job_application.message6') !!}</p>
-
-
-
+                            </form>
                         </div>
 
                         <div class="tab-pane fade  show active" id="tab5">
+
+
+
+
                             <div class="col-xl-12 col-xxl-12 row">
                                 <div class="col-sm-12">&nbsp;</div>
                                 <div class="col-sm-12">
-                                    <h3>{!! trans('job_application.USWorker') !!}</h3>
+                                    <h3>{!! trans('job_application.AttorneyAgentInformation') !!}</h3>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.StateWorkforceUsername') !!}</label>
-                                        <input type="text" name="swa_username"
-                                            value="{{ old('swa_username', $job_request->swa_username) }}" required
-                                            class="form-control">
-                                    </div>
+                                <div class="col-md-12">
+                                    <form action="{{ url('job_request_representative') }}" method="POST">
+                                        @csrf
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.TypeRepresentation') !!}</label>
+                                                    <select class="form-control select2"
+                                                        name="er_type_of_representation_id"
+                                                        id="er_type_of_representation_id">
+                                                        <option value="">Select</option>
+                                                        @foreach ($types_representation as $obj)
+                                                            @if ($obj->id == $employer_representative->er_type_of_representation_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xl-4 col-xxl-4">
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.FirstName') !!}</label>
+                                                    <input type="text" name="er_first_name"
+                                                        value="{{ old('er_first_name', $employer_representative->er_first_name) }}"
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-xxl-4">
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.MiddleName') !!}</label>
+                                                    <input type="text" name="er_middle_name"
+                                                        value="{{ old('er_middle_name', $employer_representative->er_middle_name) }}"
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-xxl-4">
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.AttorneyAgentLastName') !!}</label>
+                                                    <input type="text" name="er_last_name"
+                                                        value="{{ old('er_last_name', $employer_representative->er_last_name) }}"
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row">
+
+                                            <div class="col-xl-12 col-xxl-12">&nbsp;</div>
+                                            <div class="col-xl-6 col-xxl-6">
+
+
+
+
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.State') !!}</label>
+                                                    <input type="hidden" name="country_id" value="1">
+                                                    <select class="form-control select2" name="er_state_id"
+                                                        id="er_state_id">
+                                                        <option value="">Select</option>
+                                                        @foreach ($states as $obj)
+                                                            @if ($obj->id == $employer_representative->er_state_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.Country') !!}</label>
+                                                    <select class="form-control select2" name="er_county_id"
+                                                        id="er_county_id">
+
+                                                        @foreach ($counties as $obj)
+                                                            @if ($employer_representative->county->czc_county == $obj->name)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+
+
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.City') !!}</label>
+                                                    <select class="form-control select2" name="er_city_id"
+                                                        id="er_city_id">
+                                                        @foreach ($cities as $obj)
+                                                            @if ($employer_representative->city->czc_city == $obj->name)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.PostalCode') !!}</label>
+                                                    <select class="form-control select2" name="er_zip_addr1"
+                                                        id="er_zip_addr1">
+                                                        @foreach ($codes_zip as $obj)
+                                                            @if ($employer_representative->er_zip_addr1 == $obj->czc_zipcode)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->czc_zipcode }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->czc_zipcode }}
+                                                                </option>
+                                                            @endif
+                                                        @endforeach
+
+                                                    </select>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id" value="{{ $job_request->id }}">
+                                                    <label>{!! trans('job_application.Address') !!}</label>
+                                                    <input type="text" name="er_address_1"
+                                                        value="{{ old('er_address_1', $employer_representative->er_address_1) }}"
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xl-6 col-xxl-6">
+
+
+
+
+
+
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.LawBusinessEmailAddress') !!}</label>
+                                                    <input type="text" name="er_lawfirm_email"
+                                                        value="{{ old('er_lawfirm_email', $employer_representative->er_lawfirm_email) }}"
+                                                        class="form-control">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.LawBusinessName') !!}</label>
+                                                    <input type="text" name="er_lawfirm_business_name"
+                                                        value="{{ old('er_lawfirm_business_name', $employer_representative->er_lawfirm_business_name) }}"
+                                                        class="form-control">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id" value="{{ $job_request->id }}">
+                                                    <label>{!! trans('job_application.LawBusinessFEIN') !!}</label>
+                                                    <input type="text" name="er_lawfirm_fein_number"
+                                                        value="{{ old('er_lawfirm_fein_number', $employer_representative->er_lawfirm_fein_number) }}"
+                                                        class="form-control">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id" value="{{ $job_request->id }}">
+                                                    <label>{!! trans('job_application.StateBarNumber') !!}</label>
+                                                    <input type="text" name="er_state_bar_number"
+                                                        value="{{ old('er_state_bar_number', $employer_representative->er_state_bar_number) }}"
+                                                        class="form-control">
+
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $job_request->id }}">
+                                                    <label>{!! trans('job_application.StateHighestCourt') !!}</label>
+                                                    <select class="form-control select2"
+                                                        name="er_state_good_standing_id" id="er_state_good_standing_id">
+                                                        <option value="">Select</option>
+                                                        @foreach ($states as $obj)
+                                                            @if ($obj->id == $employer_representative->er_state_good_standing_id)
+                                                                <option value="{{ $obj->id }}" selected>
+                                                                    {{ $obj->name }}
+                                                                </option>
+                                                            @else
+                                                                <option value="{{ $obj->id }}">
+                                                                    {{ $obj->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-xl-4 col-xxl-4">
+                                                <div class="form-group">
+                                                    <label>{!! trans('job_application.TelephoneNumber') !!}</label>
+                                                    <input type="text" name="er_telephone_number"
+                                                        data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                        value="{{ old('er_telephone_number', $employer_representative->er_telephone_number) }}"
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-xxl-4">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <label>{!! trans('job_application.Extension') !!}</label>
+                                                    <input type="text" name="er_telephone_number_ext"
+                                                        value="{{ old('er_telephone_number_ext', $employer_representative->er_telephone_number_ext) }}"
+                                                        data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4 col-xxl-4">
+
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $job_request->id }}">
+                                                    <label>{!! trans('job_application.NameHighestCourt') !!}</label>
+                                                    <input type="text" name="er_highest_state_court_name"
+                                                        value="{{ old('er_highest_state_court_name', $employer_representative->er_highest_state_court_name) }}"
+                                                        class="form-control">
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                        </div>
+                                    </form>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.StateWorkforcePassword') !!}</label>
-                                        <input type="text" name="swa_password"
-                                            value="{{ old('swa_password', $job_request->swa_password) }}" required
-                                            class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.TelephoneNumber') !!}</label>
-                                        <input type="text" name="application_phone_number"
-                                            value="{{ old('application_phone_number', $job_request->application_phone_number) }}"
-                                            required class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.EmailWhereUS') !!}</label>
-                                        <input type="text" name="application_email"
-                                            value="{{ old('application_email', $job_request->application_email) }}"
-                                            required class="form-control">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.WebsiteWhereUS') !!}</label>
-                                        <input type="text" name="application_website"
-                                            value="{{ old('application_website', $job_request->application_website) }}"
-                                            required class="form-control">
-                                    </div>
-                                </div>
 
                                 <div class="col-sm-12">&nbsp;</div>
 
@@ -1271,37 +1837,8 @@
 
 
 
-                            <div class="col-xl-12 col-xxl-12 row">
-                                <div class="col-sm-12">&nbsp;</div>
-                                <div class="col-sm-12">
-                                    <h3>{!! trans('job_application.AdditionalInformation') !!}</h3>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputUsername1">{!! trans('job_application.IfApplicable') !!}</label>
-                                        <input type="text" name="last_season_impact"
-                                            value="{{ old('last_season_impact', $job_request->last_season_impact) }}"
-                                            required class="form-control">
-                                        <label for="exampleInputUsername2">{!! trans('job_application.ForExample') !!}</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">{!! trans('job_application.AdditionalInformation') !!}</label>
-                                        <input type="text" name="additional_information"
-                                            value="{{ old('additional_information', $job_request->additional_information) }}"
-                                            required class="form-control">
-                                        <label for="exampleInputEmail2">{!! trans('job_application.PleaseAdditionalInformation') !!}</label>
-                                    </div>
-                                </div>
 
 
-                                <div class="col-sm-12">&nbsp;</div>
-
-
-
-                            </div>
 
                         </div>
                     </div>
@@ -1339,6 +1876,32 @@
             validDeductionDental();
             validDeductionVision();
             validDeductionOther();
+
+            validCriminal();
+            validOtherDescription();
+            validTestingOtherDescription();
+            validRequirementsDescription();
+            validDrugTesting();
+
+            validArrangePay();
+            validReimburse();
+            validProvideAdvance();
+
+
+            $("#er_state_id").change(function() {
+                var State = $(this).val();
+                load_counties(State, "er_county_id");
+            });
+
+            $("#er_county_id").change(function() {
+                var State = $(this).val();
+                load_cities(State, "er_city_id");
+            });
+
+            $("#er_city_id").change(function() {
+                var City = $(this).val();
+                load_zip_cods(City, "er_zip_addr1");
+            });
 
 
         });
@@ -1612,6 +2175,133 @@
                 document.getElementById('divDeductionOther').hidden = false;
             else
                 document.getElementById('divDeductionOther').hidden = true;
+        }
+
+
+
+        function validCriminal() {
+            if (document.getElementById('is_background_check_required').checked == true)
+                document.getElementById('divCriminal').hidden = false;
+            else
+                document.getElementById('divCriminal').hidden = true;
+        }
+
+        function validDrugTesting() {
+            if (document.getElementById('is_drug_testing_required').checked == true)
+                document.getElementById('divDrugTesting').hidden = false;
+            else
+                document.getElementById('divDrugTesting').hidden = true;
+        }
+
+
+
+        function validOtherDescription() {
+            if (document.getElementById('is_background_check_other').checked == true)
+                document.getElementById('divOtherDescription').hidden = false;
+            else
+                document.getElementById('divOtherDescription').hidden = true;
+        }
+
+        function validTestingOtherDescription() {
+            if (document.getElementById('is_drug_testing_other').checked == true)
+                document.getElementById('divTestingOtherDescription').hidden = false;
+            else
+                document.getElementById('divTestingOtherDescription').hidden = true;
+        }
+
+        function validRequirementsDescription() {
+            if (document.getElementById('are_there_other_requirements').checked == true)
+                document.getElementById('divRequirementsDescription').hidden = false;
+            else
+                document.getElementById('divRequirementsDescription').hidden = true;
+        }
+
+
+        function validArrangePay() {
+            if (document.getElementById('arrange_and_pay').checked == true) {
+                document.getElementById('reimburse').checked = false;
+                document.getElementById('provide_advance').checked = false;
+                document.getElementById('divArrangePay').hidden = false;
+
+                // document.getElementById('arrange_and_pay').value = 1;
+                // document.getElementById('reimburse').value = 0;
+                // document.getElementById('provide_advance').value = 0;
+            }
+        }
+
+        function validReimburse() {
+            if (document.getElementById('reimburse').checked == true) {
+                document.getElementById('arrange_and_pay').checked = false;
+                document.getElementById('provide_advance').checked = false;
+                document.getElementById('divArrangePay').hidden = true;
+
+                // document.getElementById('arrange_and_pay').value = 0;
+                // document.getElementById('reimburse').value = 1;
+                // document.getElementById('provide_advance').value = 0;
+            }
+        }
+
+        function validProvideAdvance() {
+            if (document.getElementById('provide_advance').checked == true) {
+                document.getElementById('reimburse').checked = false;
+                document.getElementById('arrange_and_pay').checked = false;
+                document.getElementById('divArrangePay').hidden = true;
+
+                // document.getElementById('arrange_and_pay').value = 0;
+                // document.getElementById('reimburse').value = 0;
+                // document.getElementById('provide_advance').value = 1;
+            }
+        }
+
+
+
+
+
+
+
+
+
+        function load_counties(id, control) {
+            if (id > 0) {
+                var selector = "#" + control;
+                //console.log(selector);
+                $.get("{{ url('get_counties') }}" + '/' + id, function(data) {
+                    var _select = '<option value="">Select</option>'
+                    for (var i = 0; i < data.length; i++)
+                        _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                        '</option>';
+                    $(selector).html(_select);
+                });
+            }
+        }
+
+
+        function load_cities(id, control) {
+            if (id > 0) {
+                var selector = "#" + control;
+                //console.log(selector);
+                $.get("{{ url('get_cities') }}" + '/' + id, function(data) {
+                    var _select = '<option value="">Select</option>'
+                    for (var i = 0; i < data.length; i++)
+                        _select += '<option value="' + data[i].id + '"  >' + data[i].name +
+                        '</option>';
+                    $(selector).html(_select);
+                });
+            }
+        }
+
+        function load_zip_cods(id, control) {
+            if (id > 0) {
+                var selector = "#" + control;
+                //console.log(selector);
+                $.get("{{ url('get_zipcodes') }}" + '/' + id, function(data) {
+                    var _select = ''
+                    for (var i = 0; i < data.length; i++)
+                        _select += '<option value="' + data[i].id + '"  >' + data[i]
+                        .czc_zipcode + '</option>';
+                    $(selector).html(_select);
+                });
+            }
         }
     </script>
 @endsection
