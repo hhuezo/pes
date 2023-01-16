@@ -793,6 +793,9 @@ class EmployerController extends Controller
 
 
             if ($cuenta > 0) {
+
+                //dd("uno");
+
                 $id_ews = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 3)->get()->first()->id;
                 $employerWorkSite =  EmployerWorksite::findOrFail($id_ews);
 
@@ -803,15 +806,29 @@ class EmployerController extends Controller
                 $principal_zip_code = Employer::where('id', '=', $employer->id)->get()->first()->principal_zip_code;
                 $principal_street_address = Employer::where('id', '=', $employer->id)->get()->first()->principal_street_address;
 
+
+                if($request->get('is_main_worksite_location') == 'on')
+                {
+                    $ZipCode = CityZip::where('czc_zipcode','=',$employer->principal_zip_code)->first();
+                }
+                else{
+                    $ZipCode = CityZip::findOrFail($request->get('main_worksite_zip_code'));
+                }
+
+                //dd($employer->principal_zip_code);
+
+
                 $employerWorkSite->employer_id = $employer->id;
                 $employerWorkSite->address_type_id = 3; //main worksites
                 $employerWorkSite->state_id_address = $principal_state_id;
-                $employerWorkSite->county_id = $principal_county_id;
-                $employerWorkSite->city_id = $principal_city_id;
-                $employerWorkSite->zip_code_address = $principal_zip_code;
+                $employerWorkSite->county_id = $ZipCode->id;
+                $employerWorkSite->city_id = $ZipCode->id;
+                $employerWorkSite->zip_code_address = $ZipCode->czc_zipcode;
                 $employerWorkSite->street_address = $principal_street_address;
                 $employerWorkSite->update();
             } else {
+
+                //dd("dos");
 
                 $principal_state_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_state_id;
                 $principal_county_id = Employer::where('id', '=', $employer->id)->get()->first()->principal_county_id;

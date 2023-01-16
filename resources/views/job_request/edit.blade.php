@@ -1792,385 +1792,369 @@
                                     <h3>{!! trans('job_application.AttorneyAgentInformation') !!}</h3>
                                 </div>
                                 <div class="col-md-12">
-                                    <form action="{{ url('job_request_representative') }}" method="POST">
-                                        @csrf
 
+
+
+                                    <form method="POST" action="{{ url('job_request_representative') }}">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>{!! trans('job_application.TypeRepresentation') !!}</label>
+                                                    <label>{!! trans('job_application.Lawyers') !!}</label>
                                                     <input type="hidden" name="request_id"
                                                         value="{{ $job_request->id }}">
                                                     <select class="form-control select2"
-                                                        name="er_type_of_representation_id"
-                                                        id="er_type_of_representation_id">
+                                                        name="employer_representative_id"
+                                                        id="employer_representative_id">
                                                         <option value="">Select</option>
-                                                        @foreach ($types_representation as $obj)
-                                                            @if ($employer_representative)
-                                                                @if ($obj->id == $employer_representative->er_type_of_representation_id)
+                                                        @foreach ($employers_representative as $obj)
+                                                            @if ($employers_representative)
+                                                                @if ($obj->id == $job_request->employer_representative_id)
                                                                     <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
+                                                                        {{ $obj->er_last_name . ' ' . $obj->er_first_name . ' ' . $obj->er_middle_name }}
                                                                     </option>
                                                                 @else
                                                                     <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}</option>
+                                                                        {{ $obj->er_last_name . ' ' . $obj->er_first_name . ' ' . $obj->er_middle_name }}
+                                                                    </option>
                                                                 @endif
                                                             @else
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}</option>
+                                                                <option value="0">
+                                                                    Seleccione</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
 
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-xl-4 col-xxl-4">
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.FirstName') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_first_name"
-                                                            value="{{ old('er_first_name', $employer_representative->er_first_name) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_first_name"
-                                                            value="{{ old('er_first_name') }}" class="form-control">
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-xxl-4">
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.MiddleName') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_middle_name"
-                                                            value="{{ old('er_middle_name', $employer_representative->er_middle_name) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_middle_name"
-                                                            value="{{ old('er_middle_name') }}" class="form-control">
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-xxl-4">
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.AttorneyAgentLastName') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_last_name"
-                                                            value="{{ old('er_last_name', $employer_representative->er_last_name) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_last_name"
-                                                            value="{{ old('er_last_name') }}" class="form-control">
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="row">
-
-                                            <div class="col-xl-12 col-xxl-12">&nbsp;</div>
-                                            <div class="col-xl-6 col-xxl-6">
-
-
-
-
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.State') !!}</label>
-                                                    <input type="hidden" name="country_id" value="1">
-                                                    <select class="form-control select2" name="er_state_id"
-                                                        id="er_state_id">
-                                                        <option value="">Select</option>
-
-                                                        @if ($employer_representative)
-                                                            @foreach ($states as $obj)
-                                                                @if ($obj->id == $employer_representative->er_state_id)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        @else
-                                                            @foreach ($states as $obj)
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}</option>
-                                                            @endforeach
-                                                        @endif
-
-
-
-                                                    </select>
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.Country') !!}</label>
-                                                    <select class="form-control select2" name="er_county_id"
-                                                        id="er_county_id">
-
-
-                                                        @if ($employer_representative)
-                                                            @foreach ($counties as $obj)
-                                                                @if ($employer_representative->county->czc_county == $obj->name)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-
-
-
-
-                                                    </select>
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.City') !!}</label>
-                                                    <select class="form-control select2" name="er_city_id"
-                                                        id="er_city_id">
-
-                                                        @if ($employer_representative)
-                                                            @foreach ($cities as $obj)
-                                                                @if ($employer_representative->city->czc_city == $obj->name)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-
-
-
-
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.PostalCode') !!}</label>
-                                                    <select class="form-control select2" name="er_zip_addr1"
-                                                        id="er_zip_addr1">
-
-
-                                                        @if ($employer_representative)
-                                                            @foreach ($codes_zip as $obj)
-                                                                @if ($employer_representative->er_zip_addr1 == $obj->czc_zipcode)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->czc_zipcode }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->czc_zipcode }}
-                                                                    </option>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-
-
-
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $job_request->id }}">
-                                                    <label>{!! trans('job_application.Address') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_address_1"
-                                                            value="{{ old('er_address_1', $employer_representative->er_address_1) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_address_1"
-                                                            value="{{ old('er_address_1') }}" class="form-control">
-                                                    @endif
-
-                                                </div>
-                                            </div>
-
-
-                                            <div class="col-xl-6 col-xxl-6">
-
-
-
-
-
-
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.LawBusinessEmailAddress') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_lawfirm_email"
-                                                            value="{{ old('er_lawfirm_email', $employer_representative->er_lawfirm_email) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_lawfirm_email"
-                                                            value="{{ old('er_lawfirm_email') }}" class="form-control">
-                                                    @endif
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.LawBusinessName') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_lawfirm_business_name"
-                                                            value="{{ old('er_lawfirm_business_name', $employer_representative->er_lawfirm_business_name) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_lawfirm_business_name"
-                                                            value="{{ old('er_lawfirm_business_name') }}"
-                                                            class="form-control">
-                                                    @endif
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $job_request->id }}">
-                                                    <label>{!! trans('job_application.LawBusinessFEIN') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_lawfirm_fein_number"
-                                                            value="{{ old('er_lawfirm_fein_number', $employer_representative->er_lawfirm_fein_number) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_lawfirm_fein_number"
-                                                            value="{{ old('er_lawfirm_fein_number') }}"
-                                                            class="form-control">
-                                                    @endif
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $job_request->id }}">
-                                                    <label>{!! trans('job_application.StateBarNumber') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_state_bar_number"
-                                                            value="{{ old('er_state_bar_number', $employer_representative->er_state_bar_number) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_state_bar_number"
-                                                            value="{{ old('er_state_bar_number') }}"
-                                                            class="form-control">
-                                                    @endif
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $job_request->id }}">
-                                                    <label>{!! trans('job_application.StateHighestCourt') !!}</label>
-                                                    <select class="form-control select2"
-                                                        name="er_state_good_standing_id" id="er_state_good_standing_id">
-                                                        <option value="">Select</option>
-                                                        @if ($employer_representative)
-                                                            @foreach ($states as $obj)
-                                                                @if ($obj->id == $employer_representative->er_state_good_standing_id)
-                                                                    <option value="{{ $obj->id }}" selected>
-                                                                        {{ $obj->name }}
-                                                                    </option>
-                                                                @else
-                                                                    <option value="{{ $obj->id }}">
-                                                                        {{ $obj->name }}</option>
-                                                                @endif
-                                                            @endforeach
-                                                        @else
-                                                            @foreach ($states as $obj)
-                                                                <option value="{{ $obj->id }}">
-                                                                    {{ $obj->name }}</option>
-                                                            @endforeach
-                                                        @endif
-
-
-                                                    </select>
-
-                                                </div>
-
-
-                                            </div>
-
-
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-xl-4 col-xxl-4">
-                                                <div class="form-group">
-                                                    <label>{!! trans('job_application.TelephoneNumber') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_telephone_number"
-                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
-                                                            value="{{ old('er_telephone_number', $employer_representative->er_telephone_number) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_telephone_number"
-                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
-                                                            value="{{ old('er_telephone_number') }}"
-                                                            class="form-control">
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-xxl-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <br>
-                                                    <label>{!! trans('job_application.Extension') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_telephone_number_ext"
-                                                            value="{{ old('er_telephone_number_ext', $employer_representative->er_telephone_number_ext) }}"
-                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_telephone_number_ext"
-                                                            value="{{ old('er_telephone_number_ext') }}"
-                                                            data-inputmask="'mask': ['(999)999-9999']" data-mask
-                                                            class="form-control">
-                                                    @endif
-
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-xxl-4">
-
-                                                <div class="form-group">
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $job_request->id }}">
-                                                    <label>{!! trans('job_application.NameHighestCourt') !!}</label>
-                                                    @if ($employer_representative)
-                                                        <input type="text" name="er_highest_state_court_name"
-                                                            value="{{ old('er_highest_state_court_name', $employer_representative->er_highest_state_court_name) }}"
-                                                            class="form-control">
-                                                    @else
-                                                        <input type="text" name="er_highest_state_court_name"
-                                                            value="{{ old('er_highest_state_court_name') }}"
-                                                            class="form-control">
-                                                    @endif
-
+                                                    <button type="button" name="btn_add_lawyer" id="btn_add_lawyer"
+                                                        class="btn btn-primary" onclick="modal_lawyer()">Add
+                                                        Lawyer</button>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary float-right">Submit</button>
+                                        <div>
+                                            <div class="row">
+                                                <button type="submit" name="btn_add_lawyer" id="btn_add_lawyer"
+                                                    class="btn btn-primary">Next</button>
+                                            </div>
                                         </div>
                                     </form>
+
+
+
+
+
+
+
                                 </div>
 
+
+                                <div class="col-sm-12">
+                                    <!-- modal attorney  -->
+                                    <div class="modal fade bd-example-modal-lg" id="modal-lawyer" tabindex="-1"
+                                        role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">{!! trans('job_application.Position') !!}</h5>
+                                                    <button type="button" class="close"
+                                                        data-dismiss="modal"><span>&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form method="POST" action="{{ url('job_request_representative') }}">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>{!! trans('job_application.TypeRepresentation') !!}</label>
+                                                                    <input type="hidden" name="request_id"
+                                                                        value="{{ $job_request->id }}">
+                                                                    <select class="form-control select2"
+                                                                        name="er_type_of_representation_id"
+                                                                        id="er_type_of_representation_id">
+                                                                        <option value="">Select</option>
+                                                                        @foreach ($types_representation as $obj)
+                                                                            <option value="{{ $obj->id }}">
+                                                                                {{ $obj->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="row">
+                                                                <div class="col-xl-4 col-xxl-4">
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.FirstName') !!}</label>
+
+                                                                        <input type="text" name="er_first_name"
+                                                                            value="{{ old('er_first_name') }}"
+                                                                            class="form-control">
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-4 col-xxl-4">
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.MiddleName') !!}</label>
+
+                                                                        <input type="text" name="er_middle_name"
+                                                                            value="{{ old('er_middle_name') }}"
+                                                                            class="form-control">
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-4 col-xxl-4">
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.AttorneyAgentLastName') !!}</label>
+
+                                                                        <input type="text" name="er_last_name"
+                                                                            value="{{ old('er_last_name') }}"
+                                                                            class="form-control">
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+
+                                                                <div class="col-xl-12 col-xxl-12">&nbsp;</div>
+                                                                <div class="col-xl-6 col-xxl-6">
+
+
+
+
+
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.State') !!}</label>
+                                                                        <input type="hidden" name="country_id"
+                                                                            value="1">
+                                                                        <select class="form-control select2"
+                                                                            name="er_state_id" id="er_state_id">
+                                                                            <option value="">Select</option>
+
+
+                                                                            @foreach ($states as $obj)
+                                                                                <option value="{{ $obj->id }}">
+                                                                                    {{ $obj->name }}</option>
+                                                                            @endforeach
+
+
+
+
+                                                                        </select>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.Country') !!}</label>
+                                                                        <select class="form-control select2"
+                                                                            name="er_county_id" id="er_county_id">
+
+
+
+
+
+
+
+
+                                                                        </select>
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.City') !!}</label>
+                                                                        <select class="form-control select2"
+                                                                            name="er_city_id" id="er_city_id">
+
+
+
+
+
+
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.PostalCode') !!}</label>
+                                                                        <select class="form-control select2"
+                                                                            name="er_zip_addr1" id="er_zip_addr1">
+
+
+
+
+
+
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $job_request->id }}">
+                                                                        <label>{!! trans('job_application.Address') !!}</label>
+
+                                                                        <input type="text" name="er_address_1"
+                                                                            value="{{ old('er_address_1') }}"
+                                                                            class="form-control">
+
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div class="col-xl-6 col-xxl-6">
+
+
+
+
+
+
+
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.LawBusinessEmailAddress') !!}</label>
+
+                                                                        <input type="text" name="er_lawfirm_email"
+                                                                            value="{{ old('er_lawfirm_email') }}"
+                                                                            class="form-control">
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.LawBusinessName') !!}</label>
+
+                                                                        <input type="text"
+                                                                            name="er_lawfirm_business_name"
+                                                                            value="{{ old('er_lawfirm_business_name') }}"
+                                                                            class="form-control">
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $job_request->id }}">
+                                                                        <label>{!! trans('job_application.LawBusinessFEIN') !!}</label>
+
+                                                                        <input type="text"
+                                                                            name="er_lawfirm_fein_number"
+                                                                            value="{{ old('er_lawfirm_fein_number') }}"
+                                                                            class="form-control">
+
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $job_request->id }}">
+                                                                        <label>{!! trans('job_application.StateBarNumber') !!}</label>
+
+                                                                        <input type="text" name="er_state_bar_number"
+                                                                            value="{{ old('er_state_bar_number') }}"
+                                                                            class="form-control">
+
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $job_request->id }}">
+                                                                        <label>{!! trans('job_application.StateHighestCourt') !!}</label>
+                                                                        <select class="form-control select2"
+                                                                            name="er_state_good_standing_id"
+                                                                            id="er_state_good_standing_id">
+                                                                            <option value="">Select</option>
+
+                                                                            @foreach ($states as $obj)
+                                                                                <option value="{{ $obj->id }}">
+                                                                                    {{ $obj->name }}</option>
+                                                                            @endforeach
+
+
+
+                                                                        </select>
+
+                                                                    </div>
+
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-xl-4 col-xxl-4">
+                                                                    <div class="form-group">
+                                                                        <label>{!! trans('job_application.TelephoneNumber') !!}</label>
+
+                                                                        <input type="text" name="er_telephone_number"
+                                                                            data-inputmask="'mask': ['(999)999-9999']"
+                                                                            data-mask
+                                                                            value="{{ old('er_telephone_number') }}"
+                                                                            class="form-control">
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-4 col-xxl-4">
+                                                                    <div class="form-group">
+                                                                        <br>
+                                                                        <label>{!! trans('job_application.Extension') !!}</label>
+
+                                                                        <input type="text"
+                                                                            name="er_telephone_number_ext"
+                                                                            value="{{ old('er_telephone_number_ext') }}"
+                                                                            data-inputmask="'mask': ['(999)999-9999']"
+                                                                            data-mask class="form-control">
+
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-4 col-xxl-4">
+
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $job_request->id }}">
+                                                                        <label>{!! trans('job_application.NameHighestCourt') !!}</label>
+
+                                                                        <input type="text"
+                                                                            name="er_highest_state_court_name"
+                                                                            value="{{ old('er_highest_state_court_name') }}"
+                                                                            class="form-control">
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+
+
+
+
+
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger"
+                                                            data-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Save
+                                                            changes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end modal attorney -->
+                                </div>
 
                                 <div class="col-sm-12">&nbsp;</div>
 
@@ -2425,6 +2409,11 @@
             document.getElementById('id_detail').value = id;
             $('#modal-delete').modal('show');
         }
+
+        function modal_lawyer() {
+            $('#modal-lawyer').modal('show');
+        }
+
 
         function total_horas() {
             var horas = 0;

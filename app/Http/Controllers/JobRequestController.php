@@ -128,6 +128,7 @@ class JobRequestController extends Controller
 
         $employer_transportation = EmployerTransportation::where('request_id','=',$job_request->id)->where('employer_id','=',$job_request->employer_id)->first();
 
+        /*
         if($job_request->employer_representative_id)
         {
             $employer_representative = EmployerRepresentative::findOrFail($job_request->employer_representative_id);
@@ -135,9 +136,14 @@ class JobRequestController extends Controller
         else{
             $employer_representative = null;
         }
+*/
+
+        $employer_representative = null;
 
 
+        $employers_representative = EmployerRepresentative::all();
 
+        //dd($employers_representative);
 
         //dd($employer_representative);
 
@@ -194,7 +200,8 @@ class JobRequestController extends Controller
                     'deduction' => $deduction, 'deduction_medical' => $deduction_medical, 'deduction_dental' => $deduction_dental, 'deduction_vision' => $deduction_vision,
                     'deduction_other' => $deduction_other, 'bgcheck_reg' => $bgcheck_reg, 'employer_transportation' => $employer_transportation, 'types_representation' => $types_representation,
                     'states' => $states, 'counties' => $counties, 'cities' => $cities,
-                    'codes_zip' => $codes_zip, 'employer_representative' => $employer_representative]);
+                    'codes_zip' => $codes_zip,
+                    'employers_representative' => $employers_representative]);
 
     }
 
@@ -969,17 +976,54 @@ class JobRequestController extends Controller
 
     public function job_request_representative(Request $request){
 
-        //dd($request);
-        $user =  auth()->user();
-        $employer = $user->user_has_employer->first();
+        if($request->get('employer_representative_id'))
+        {
+            $job_request = JobRequest::findOrFail($request->get('request_id'));
+            $job_request->employer_representative_id = $request->get('employer_representative_id');
+            $job_request->update();
+        }
+        else{
+            //dd($request);
+            $user =  auth()->user();
+            $employer = $user->user_has_employer->first();
 
 
-        //dd($job_request);
+            //dd($job_request);
 
-        $cuenta_er = EmployerRepresentative::where('employer_id','=',$employer->id)->get()->count();
 
-        $job_request = JobRequest::findOrFail($request->get('request_id'));
 
+            $job_request = JobRequest::findOrFail($request->get('request_id'));
+
+            $er = new EmployerRepresentative();
+            $er->employer_id = $employer->id;
+            $er->er_last_name = $request->get('er_last_name');
+            $er->er_first_name = $request->get('er_first_name');
+            $er->er_middle_name = $request->get('er_middle_name');
+            $er->er_address_1 = $request->get('er_address_1');
+            $er->er_county_id = $request->get('er_county_id');
+            $er->er_city_id = $request->get('er_city_id');
+            $er->er_state_id = $request->get('er_state_id');
+            $er->er_zip_addr1 = $request->get('er_zip_addr1');
+            $er->er_country_id = $request->get('er_country_id');
+            $er->er_telephone_number = $request->get('er_telephone_number');
+            $er->er_lawfirm_email = $request->get('er_lawfirm_email');
+            $er->er_telephone_number_ext = $request->get('er_telephone_number_ext');
+            $er->er_lawfirm_business_name = $request->get('er_lawfirm_business_name');
+            $er->er_lawfirm_fein_number = $request->get('er_lawfirm_fein_number');
+            $er->er_type_of_representation_id = $request->get('er_type_of_representation_id');
+            $er->er_state_good_standing_id = $request->get('er_state_good_standing_id');
+            $er->er_highest_state_court_name = $request->get('er_highest_state_court_name');
+            $er->er_state_bar_number = $request->get('er_state_bar_number');
+            $er->save();
+
+            $job_request->employer_representative_id = $er->id;
+            $job_request->update();
+        }
+
+
+
+
+        /*$cuenta_er = EmployerRepresentative::where('employer_id','=',$employer->id)->get()->count();
         if ($cuenta_er > 0) {
             $er_id = EmployerRepresentative::where('employer_id','=',$employer->id)->first()->id;
 
@@ -1035,7 +1079,7 @@ class JobRequestController extends Controller
 
             $job_request->employer_representative_id = $er->id;
             $job_request->update();
-        }
+        }*/
 
 
         session_start();
