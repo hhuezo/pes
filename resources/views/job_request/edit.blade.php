@@ -1781,7 +1781,7 @@
                             </form>
                         </div>
 
-                        <div class="tab-pane fade  show active" id="tab5">
+                        <div class="tab-pane fade" id="tab5">
 
 
 
@@ -2188,7 +2188,7 @@
 
                         </div>
 
-                        <div class="tab-pane fade  show active" id="tab6">
+                        <div class="tab-pane fade" id="tab6">
                             <form action="{{ url('job_request_sign') }}" method="POST">
                                 @csrf
                                 <br>
