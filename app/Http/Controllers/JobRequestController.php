@@ -1052,13 +1052,13 @@ class JobRequestController extends Controller
 
         $job_request = JobRequest::findOrFail($request->get('request_id'));
 
+        if ($job_request->signature){
+            unlink(public_path("sign/") .$job_request->signature);
+        }
+
 
         //dd($editSign);
 
-        if ($editSign == 1) {
-            $job_request->signature = null;
-            $job_request->update();
-        } else {
 
             $imageBase64 = str_replace("data:image/png;base64", "", $request->get('sign'));
             $uniqid = uniqid() . ".png";
@@ -1069,7 +1069,7 @@ class JobRequestController extends Controller
 
             $job_request->signature = $uniqid;
             $job_request->update();
-        }
+
 
 
 
