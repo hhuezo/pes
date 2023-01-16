@@ -83,6 +83,9 @@ class JobRequestDetailController extends Controller
         $detail->user_id = auth()->user()->id;
         $detail->save();
 
+        session_start();
+        session(['tab_detail' => '2']);
+
         Alert::success('Ok', 'Record saved');
         return redirect('job_request_detail/' . $detail->id . '/edit');
     }
@@ -186,6 +189,9 @@ class JobRequestDetailController extends Controller
         //$detail->user_id = auth()->user()->id;
         $detail->save();
 
+        session_start();
+        session(['tab_detail' => '2']);
+
         Alert::info('Ok', 'Record saved');
         return redirect('job_request_detail/' . $detail->id . '/edit');
     }
@@ -281,6 +287,11 @@ class JobRequestDetailController extends Controller
         }
 
         $detail->update();
+
+        session_start();
+        session(['tab_detail' => '4']);
+
+        session(['tab_request' => '2']);
 
         Alert::success('Ok', 'Record saved');
         return back();
@@ -393,6 +404,12 @@ class JobRequestDetailController extends Controller
         }
 
         $detail->update();
+
+        session_start();
+        session(['tab_detail' => '1']);
+        session(['tab_request' => '2']);
+
+
         Alert::success('Ok', 'Record saved');
         return redirect('job_request/' .  $detail->request_id . '/edit');
         //return back();
@@ -412,6 +429,9 @@ class JobRequestDetailController extends Controller
         } else {
             JobOfferSupervise::where('request_detail_id', '=', $request->get('id'))->delete();
         }
+
+        session_start();
+        session(['tab_detail' => '3']);
 
         Alert::success('Ok', 'Record saved');
         return back();
