@@ -78,7 +78,7 @@ class JobRequestDetailController extends Controller
         $detail->ant_workday_fri_hour = $request->get('ant_workday_fri_hour');
         $detail->ant_workday_sat_hour = $request->get('ant_workday_sat_hour');
         $detail->ant_workday_total_hours = $request->get('ant_workday_total_hours');
-        $detail->primary_shift_time = $request->get('primary_shift_time');
+        //$detail->primary_shift_time = $request->get('primary_shift_time');
         $detail->are_there_additional_shift_times = $request->get('are_there_additional_shift_times');
         $detail->user_id = auth()->user()->id;
         $detail->save();
@@ -181,7 +181,7 @@ class JobRequestDetailController extends Controller
         $detail->ant_workday_fri_hour = $request->get('ant_workday_fri_hour');
         $detail->ant_workday_sat_hour = $request->get('ant_workday_sat_hour');
         $detail->ant_workday_total_hours = $request->get('ant_workday_total_hours');
-        $detail->primary_shift_time = $request->get('primary_shift_time');
+        //$detail->primary_shift_time = $request->get('primary_shift_time');
         $detail->are_there_additional_shift_times = $request->get('are_there_additional_shift_times');
         //$detail->user_id = auth()->user()->id;
         $detail->save();
