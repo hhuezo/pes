@@ -1039,12 +1039,50 @@ class JobRequestController extends Controller
 
 
         session_start();
-        session(['tab_request' => '1']);
+        session(['tab_request' => '6']);
 
 
         Alert::info('', 'Record saved');
         return redirect('job_request/' . $job_request->id . '/edit');
     }
+
+    public function job_request_sign(Request $request){
+
+        $editSign = $request->get('editSign');
+
+        $job_request = JobRequest::findOrFail($request->get('request_id'));
+
+
+        //dd($editSign);
+
+        if ($editSign == 1) {
+            $job_request->signature = null;
+            $job_request->update();
+        } else {
+
+            $imageBase64 = str_replace("data:image/png;base64", "", $request->get('sign'));
+            $uniqid = uniqid() . ".png";
+
+            $ruteOut =  (public_path("sign/") . $uniqid);
+            $imageBinary = base64_decode($imageBase64);
+            $bytes = file_put_contents($ruteOut, $imageBinary);
+
+            $job_request->signature = $uniqid;
+            $job_request->update();
+        }
+
+
+
+
+        session_start();
+        session(['tab_request' => '6']);
+
+        Alert::info('', 'Record saved');
+        return redirect('job_request/' . $request->get('request_id') . '/edit');
+
+        //dd("hola desde job_request_sign");
+    }
+
 
     public function form9141($id)
     {

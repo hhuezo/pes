@@ -28,7 +28,7 @@ return [
     'uniform_pieces' => 'List all required uniform pieces',
 
 
-    'EmployeeRights' => 'Employer Rights Under The H-2b Program',
+    'EmployeeRights' => 'EMPLOYER RIGHTS UNDER THE H-2B PROGRAM',
     'message4' => 'Two types of workers have rights under this program: <br><br>
     <strong>H-2B WORKERS and OTHER WORKERS performing substantially the same work included in
     the H-2B job order or substantially the same work as that performed by the H-2B workers,

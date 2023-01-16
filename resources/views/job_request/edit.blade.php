@@ -19,6 +19,21 @@
     @endif
 
 
+    @if ($job_request->signature)
+        <style>
+            .divCreateSign {
+                display: none;
+            }
+        </style>
+    @else
+        <style>
+            .divEditSign {
+                display: none;
+            }
+        </style>
+    @endif
+
+
     <div class="row">
 
 
@@ -51,7 +66,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#tab6">
+                            <a class="nav-link" data-toggle="tab" href="#tab6">EMPLOYER RIGHTS
                             </a>
                         </li>
                     </ul>
@@ -2173,6 +2188,90 @@
 
                         </div>
 
+                        <div class="tab-pane fade  show active" id="tab6">
+                            <form action="{{ url('job_request_sign') }}" method="POST">
+                                @csrf
+                                <br>
+                                <input type="hidden" id="request_id" name="request_id"
+                                    value="{{ $job_request->id }}">
+                                <div class="col-sm-12">
+                                    <h4>{!! trans('job_application.EmployeeRights') !!}</h4>
+                                </div>
+                                <div class="col-sm-12">{!! trans('job_application.message4') !!}</div>
+
+                                @if ($job_request->signature)
+                                    <div class="col-sm-12">
+                                        <h5><input type="checkbox" checked>&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
+                                    </div>
+                                    <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
+                                    <div class="col-sm-12">
+                                        <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                                    </div>
+                                @else
+                                    <div class="col-sm-12">
+                                        <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
+                                    </div>
+                                    <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
+                                    <div class="col-sm-12">
+                                        <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                                    </div>
+                                @endif
+
+
+
+                                <div class="col-sm-12">&nbsp;</div>
+                                <div class="col-sm-12">{!! trans('job_application.PleasSign') !!}</div>
+
+                                <div class="row">
+
+
+                                    <div class="col-sm-6">
+
+                                        <div id="divEditSign" class="divEditSign">
+                                            <img src="{{ asset('sign') }}/{{ $job_request->signature }}">
+                                            <input type="button" class="button" id="draw-editBtn"
+                                                onclick="editSign()" value="Edit Sign" />
+
+                                        </div>
+
+                                        <div id="divCreateSign" class="divCreateSign">
+                                            <canvas id="draw-canvas" width="300" height="200">
+
+                                            </canvas>
+                                            <textarea id="draw-dataUrl" name="sign" class="form-control" rows="5"></textarea>
+
+                                            <input type="button" class="button" id="draw-clearBtn"
+                                                value="Clear" />
+                                            <input type="submit" class="button" id="draw-submitBtn"
+                                                value="Send" />
+                                            <input type="color" id="color">
+                                            <input type="range" id="puntero" min="1" default="1"
+                                                max="5" width="10%">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+
+                                    </div>
+
+
+
+
+
+
+
+
+                                </div>
+
+
+
+
+
+
+                            </form>
+                        </div>
+
+
 
                     </div>
                 </div>
@@ -2220,9 +2319,12 @@
             show_multiple_employment_period();
             show_div_uniform();
 
-            //show_div_explain_benefits();
+            $('#draw-submitBtn').hide();
+            $('#color').hide();
+            $('#puntero').hide();
+            $('#draw-dataUrl').hide();
 
-            //show_div_requeriments();
+
 
             validHousing();
             validMedical();
@@ -2247,6 +2349,19 @@
             validArrangePay();
             validReimburse();
             validProvideAdvance();
+
+
+            //captura de firma
+            $("#draw-canvas").click(function() {
+                $('#draw-submitBtn').show();
+                //$('#draw-submitBtn').click();
+            });
+
+            //limpiar firma y ocultar boton send
+            $("#draw-clearBtn").click(function() {
+                $('#draw-submitBtn').hide();
+            });
+
 
 
             $("#er_state_id").change(function() {
@@ -2617,7 +2732,17 @@
 
 
 
+        function editSign() {
 
+            //document.getElementById('divEditSign').hidden = true;
+            //document.getElementById('divCreateSign').show = true;
+            $('#divEditSign').hide();
+            $('#divCreateSign').show();
+
+            // divCreateSign
+
+
+        }
 
 
 
@@ -2665,4 +2790,6 @@
             }
         }
     </script>
+
+    <script src="{{ asset('job_application/sign.js') }}"></script>
 @endsection
