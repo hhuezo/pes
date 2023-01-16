@@ -2205,7 +2205,7 @@
                                     </div>
                                     <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
                                     <div class="col-sm-12">
-                                        <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                                        <h5><input type="checkbox" checked>&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
                                     </div>
                                 @else
                                     <div class="col-sm-12">
