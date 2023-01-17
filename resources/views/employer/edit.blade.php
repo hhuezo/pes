@@ -26,6 +26,7 @@
 
 
     @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -280,7 +281,7 @@
                                         <div class="col-xl-6 col-xxl-6">
 
 
-
+                                            <br>
                                             <br>
                                             <br>
 
@@ -547,23 +548,61 @@
                                         </div>
 
 
-
-
-
-
-
-
-
                                         <div class="col-md-12">
                                             <button type="submit" class="btn btn-primary float-right">Submit</button>
                                         </div>
 
-
-
-
-
                                     </div>
                                 </form>
+                                <div class="col-md-12">&nbsp;</div>
+                                <div class="col-md-12">
+
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">List SWA</h4>
+                                                <button type="button" class="btn btn-primary float-right"
+                                                    onclick="modal_swa();" data-toggle="modal">Add</button>
+                                            </div>
+                                            <div class="card-body">
+                                                @if ($swa_login->count() > 0)
+                                                    <div class="table-responsive">
+                                                        <table class="table table-hover table-responsive-sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Username</th>
+                                                                    <th>Password</th>
+                                                                    <th>State</th>
+                                                                    <th>Website</th>
+                                                                    <th>Options</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($swa_login as $obj)
+                                                                    <tr>
+                                                                        <td>{{ $obj->swa_username }}</td>
+                                                                        <td>{{ $obj->swa_password }}</td>
+                                                                        <td>{{ $obj->swa->state_desc }}</td>
+                                                                        <td> {{ $obj->swa->wotc_website }}</td>
+                                                                        <td><i class="fa fa-edit fa-lg"
+                                                                                onclick="modal_edit_swa({{ $obj->id }});"></i>&nbsp;&nbsp;
+                                                                            <i class="fa fa-trash fa-lg"
+                                                                                onclick="modal_delete_swa({{ $obj->id }})"></i>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                        <!-- /# card -->
+                                    </div>
+
+                                </div>
                             </div>
                             <!-- end tab 2 -->
 
@@ -1258,6 +1297,124 @@
     </div>
 
 
+    <div class="modal fade " id="modal_swa" tabindex="-1" role="dialog" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/create_swa') }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title">SWA</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="employer_id" value="{{ $employer->id }}">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+
+
+                        <div class="form-group">
+                            <label>{!! trans('employer.Username') !!}</label>
+                            <input type="text" class="form-control" name="swa_username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{!! trans('employer.Password') !!}</label>
+                            <input type="text" class="form-control" name="swa_password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>SWA</label>
+                            <select class="form-control select2" name="catalog_swa_id" required>
+                                <option value="">Select</option>
+                                @foreach ($swa as $obj)
+                                    <option value="{{ $obj->id }}">
+                                        {{ $obj->state_desc }} {{ $obj->wotc_website }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade " id="modal_delete_swa" tabindex="-1" role="dialog" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/delete_swa') }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id_swa" id="id_swa">
+                        <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="employer_id" value="{{ $employer->id }}">
+                        <h4>Do you want to delete the record?</h4>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade " id="modal_edit_swa" tabindex="-1" role="dialog" aria-hidden="true" data-tipo="1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="POST" action="{{ url('employer/update_swa') }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title">SWA</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="employer_id" value="{{ $employer->id }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="id" id="swa_id" value="{{ $employer->id }}">
+
+                        <div class="form-group">
+                            <label>{!! trans('employer.Username') !!}</label>
+                            <input type="text" class="form-control" name="swa_username" id="swa_username" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{!! trans('employer.Password') !!}</label>
+                            <input type="text" class="form-control" name="swa_password" id="swa_password" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>SWA</label>
+                            <select class="form-control select2" name="catalog_swa_id" id="catalog_swa_id" required>
+                                <option value="">Select</option>
+                                @foreach ($swa as $obj)
+                                    <option value="{{ $obj->id }}">
+                                        {{ $obj->wotc_contact }} {{ $obj->wotc_website }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     @include('sweetalert::alert')
 
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
@@ -1545,6 +1702,45 @@
 
         function modal() {
             $('#modal_approve').modal('show');
+        }
+
+        function modal_swa() {
+            $('#modal_swa').modal('show');
+        }
+
+        function modal_delete_swa(id) {
+            document.getElementById('id_swa').value = id;
+            $('#modal_delete_swa').modal('show');
+        }
+
+        function modal_edit_swa(id) {
+            //document.getElementById('id_swa').value = id;
+            $('#modal_edit_swa').modal('show');
+            $.get("{{ url('employer/get_swa') }}" + '/' + id, function(data) {
+                //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                //console.log(data);
+                var _select = ''
+                for (var i = 0; i < data.swa.length; i++) {
+                    if (data.swa[i].id == data.swa_login.catalog_swa_id) {
+                        _select += '<option value="' + data.swa[i].id + '" selected >' + data.swa[i]
+                            .state_desc +' '+ data.swa[i]
+                            .wotc_website +
+                            '</option>';
+                    } else {
+                        _select += '<option value="' + data.swa[i].id + '" >' + data.swa[i]
+                            .state_desc +' '+ data.swa[i]
+                            .wotc_website +
+                            '</option>';
+                    }
+                }
+
+                $("#catalog_swa_id").html(_select);
+                document.getElementById('swa_username').value = data.swa_login.swa_username;
+                document.getElementById('swa_password').value = data.swa_login.swa_password;
+                document.getElementById('swa_id').value = id;
+            });
+
+
         }
     </script>
 @endsection

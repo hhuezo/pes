@@ -302,8 +302,8 @@
                                 <div class="stat-text">Your progress </div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar with_progress" role="progressbar"  aria-valuenow="41"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar with_progress" role="progressbar"  style="width: {{$porcentaje}}%;"
+                                    aria-valuemin="100" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>

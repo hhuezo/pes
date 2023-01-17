@@ -73,6 +73,10 @@ Route::post('employer_contact_information', [EmployerController::class, 'employe
 Route::post('employer_place_store', [EmployerController::class, 'employer_place_store']);
 Route::post('employer_additional_location', [EmployerController::class, 'employer_additional_location']);
 Route::post('employer/activate', [EmployerController::class, 'activate']);
+Route::post('employer/create_swa', [EmployerController::class, 'create_swa']);
+Route::post('employer/delete_swa', [EmployerController::class, 'delete_swa']);
+Route::get('employer/get_swa/{id}', [EmployerController::class, 'get_swa']);
+Route::post('employer/update_swa', [EmployerController::class, 'update_swa']);
 Route::get('profile_employer/{id}', [EmployerController::class, 'profile_employer']);
 
 Route::post('job_request_deductions', [JobRequestController::class,'job_request_deductions']);

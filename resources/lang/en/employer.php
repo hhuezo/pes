@@ -24,7 +24,7 @@ return [
     'PrincipalZipCode' => 'Principal Zip Code',
     'MailingAddress' => 'Mailing Address',
     'SameAsAbove'  => 'Same as above',
-    'SameAsLeft'  => 'Same as left',
+    'SameAsLeft'  => 'Same as business a|ddress',
     'MailingCity' => 'Mailing City',
     'MailingState' => 'Mailing State',
     'MailingCounty' => 'Mailing County',
@@ -110,5 +110,9 @@ return [
     'EmployerInformation' =>  'Employer information',
     'EmployerData' =>  'Employer data',
     'Contact' =>  'Contact',
+
+
+    'Username' => 'Username',
+    'Password' => 'Password',
 
 ];

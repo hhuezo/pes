@@ -97,4 +97,7 @@ return [
     'EmployerInformation' =>  'Información de Empleador',
     'EmployerData' =>  'Datos de Empleador',
     'Contact' =>  'Contacto',
+
+    'Username' => 'Usuario',
+    'Password' => 'Contraseña',
 ];

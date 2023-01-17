@@ -7,12 +7,13 @@ use App\Models\catalogue\NormalBusinessDays;
 use App\Models\catalogue\Industry;
 use App\Models\catalogue\County;
 use App\Models\catalogue\City;
-use App\Models\catalogue\CodeZip;
+use App\Models\SwaLogin;
 
 use App\Models\catalogue\CityZip;
 use App\Models\catalogue\State;
 use App\Models\Employer;
 use App\Models\EmployerWorksite;
+use App\Models\catalogue\Swa;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -292,8 +293,15 @@ class EmployerController extends Controller
             $codes_zip_work_site = null;
         }
 
+        $swa = Swa::get();
+        $swa_login = SwaLogin::where('employer_id','=',$employer->id)->get();
 
+        $porcentaje = 0;
+        $porcentaje_function = \DB::select("SELECT fun_get_progress_percentage('EMPLOYER',".auth()->user()->id.") as porcentaje");
 
+        foreach($porcentaje_function as $obj){
+            $porcentaje = $obj->porcentaje;
+        }
 
         return view('employer.edit', [
             'employer' => $employer, 'states' => $states, 'worksites_main' => $worksites_main, 'worksites_additional' => $worksites_additional,
@@ -305,11 +313,12 @@ class EmployerController extends Controller
             'work_sites_contact' => $work_sites_contact,
             'counties_work_sites_contact' => $counties_work_sites_contact,
             'cities_work_site_contact' => $cities_work_site_contact,
-            //'city_work_site_contact' => $city_work_site_contact,
-            'codes_zip_work_site_contact' => $codes_zip_work_site_contact
+            'swa' => $swa,
+            'swa_login' => $swa_login,
+            'codes_zip_work_site_contact' => $codes_zip_work_site_contact,
+            'porcentaje' => $porcentaje
         ]);
     }
-
 
     public function get_counties($id)
     {
@@ -323,10 +332,6 @@ class EmployerController extends Controller
             JSON_UNESCAPED_UNICODE
         );
     }
-
-
-
-
 
 
     public function get_cities($id)
@@ -347,13 +352,6 @@ class EmployerController extends Controller
             JSON_UNESCAPED_UNICODE
         );
     }
-
-
-
-
-
-
-
 
 
     public function update(Request $request, $id)
@@ -430,12 +428,53 @@ class EmployerController extends Controller
 
         $employer->save();
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         session_start();
         session(['action' => '3']);
         //dd(session('action'));
 
         return redirect('employer/' . $employer->id . '/edit')->with('message', 'Login Failed');
+    }
+
+    public function create_swa(Request $request)
+    {
+        $swa = new SwaLogin();
+        $swa->swa_username   = $request->get('swa_username');
+        $swa->swa_password   = $request->get('swa_password');
+        $swa->employer_id   = $request->get('employer_id');
+        $swa->catalog_swa_id   = $request->get('catalog_swa_id');
+        $swa->save();
+        Alert::success('', 'Record saved');
+        return redirect('employer/' .  $request->get('employer_id'). '/edit')->with('message', 'Login Failed');
+    }
+
+
+    public function update_swa(Request $request)
+    {
+        $swa =  SwaLogin::findOrFail($request->get('id'));
+        $swa->swa_username   = $request->get('swa_username');
+        $swa->swa_password   = $request->get('swa_password');
+        $swa->catalog_swa_id   = $request->get('catalog_swa_id');
+        $swa->update();
+        Alert::success('', 'Record saved');
+        return redirect('employer/' .  $request->get('employer_id'). '/edit')->with('message', 'Login Failed');
+    }
+
+    public function delete_swa(Request $request)
+    {
+        $swa = SwaLogin::findOrFail($request->get('id_swa'));
+        $swa->delete();
+        Alert::error('', 'Record deleted');
+        return redirect('employer/' .  $request->get('employer_id'). '/edit');
+    }
+
+    public function get_swa($id)
+    {
+        $swaLogin = SwaLogin::findOrFail($id);
+        $swa = Swa::get();
+        $reponse = ["swa_login" => $swaLogin,"swa"=>$swa];
+
+        return $reponse;
     }
 
 
@@ -550,7 +589,7 @@ class EmployerController extends Controller
         }
 
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         session_start();
         session(['action' => '4']);
         $employer->update();
@@ -899,7 +938,7 @@ class EmployerController extends Controller
         }
 
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         session(['action' => '2']);
         $employer->update();
         return redirect('employer/' . $employer->id . '/edit');
@@ -931,7 +970,7 @@ class EmployerController extends Controller
         $employerWorkSite->street_address = $request->get('street_address');
         $employerWorkSite->save();
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         session(['action' => '4']);
         return redirect('employer/' . $request->get('employer_id') . '/edit');
     }
