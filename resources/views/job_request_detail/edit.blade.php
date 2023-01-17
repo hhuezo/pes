@@ -96,6 +96,11 @@
         </style>
     @endif
 
+    @if (session()->has('tab_detail'))
+        @php($tab_detail = session('tab_detail'))
+    @else
+        @php($tab_detail = 1)
+    @endif
 
 
 
@@ -115,29 +120,29 @@
                         <div class="default-tab">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#general">General</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#tab1">General</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#supervise">Supervise</a>
+                                    <a class="nav-link" data-toggle="tab" href="#tab2">Supervise</a>
                                 </li>
                                 <li class="nav-item">
                                     @if (is_null($detail->has_to_supervise_others))
                                         <a class="nav-link" data-toggle="tab">Job requirements</a>
                                     @else
-                                        <a class="nav-link" data-toggle="tab" href="#requirements">Job requirements</a>
+                                        <a class="nav-link" data-toggle="tab" href="#tab3">Job requirements</a>
                                     @endif
                                 </li>
                                 <li class="nav-item">
                                     @if (is_null($detail->minimum_education_id))
-                                        <a class="nav-link" data-toggle="tab">Alternative job requirements</a>
+                                        <a class="nav-link" data-toggle="tab4">Alternative job requirements</a>
                                     @else
-                                        <a class="nav-link" data-toggle="tab" href="#message">Alternative job
+                                        <a class="nav-link" data-toggle="tab" href="#tab4">Alternative job
                                             requirements</a>
                                     @endif
                                 </li>
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane fade show active" id="general" role="tabpanel">
+                                <div class="tab-pane fade show active" id="tab1" role="tabpanel">
                                     <div class="col-md-12">&nbsp;</div>
                                     <form method="POST" action="{{ route('job_request_detail.update', $detail->id) }}">
                                         @method('PUT')
@@ -679,7 +684,7 @@
 
 
                                 </div>
-                                <div class="tab-pane fade" id="supervise">
+                                <div class="tab-pane fade" id="tab2">
                                     <div class="col-md-12 row">
 
                                         <div class="col-md-2 row">&nbsp;</div>
@@ -805,7 +810,7 @@
 
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="requirements">
+                                <div class="tab-pane fade" id="tab3">
 
 
                                     <div class="col-md-12">&nbsp;</div>
@@ -1109,7 +1114,7 @@
 
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="message">
+                                <div class="tab-pane fade" id="tab4">
                                     <div class="pt-4">
 
 
@@ -1417,7 +1422,35 @@
 
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function() {});
+        $(document).ready(function() {
+
+            var tab_request = '<?php echo $tab_detail; ?>';
+            //alert(tab_request);
+            switch (tab_request) {
+                case '1':
+                    $('.nav-tabs a[href="#tab1"]').tab('show');
+                    break;
+                case '2':
+                    $('.nav-tabs a[href="#tab2"]').tab('show');
+                    break;
+                case '3':
+                    $('.nav-tabs a[href="#tab3"]').tab('show');
+                    break;
+                case '4':
+                    $('.nav-tabs a[href="#tab4"]').tab('show');
+                    break;
+                case '5':
+                    $('.nav-tabs a[href="#tab5"]').tab('show');
+                    break;
+                case '6':
+                    $('.nav-tabs a[href="#tab6"]').tab('show');
+                    break;
+                case '7':
+                    $('.nav-tabs a[href="#tab7"]').tab('show');
+                    break;
+            }
+
+        });
 
         function show_div_explain_benefits(id) {
             if (id == 1) {

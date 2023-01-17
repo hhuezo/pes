@@ -43,7 +43,7 @@
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <label for="exampleInputUsername1">Posiction</label>
+                                    <label for="exampleInputUsername1">Position</label>
                                     <input type="text" name="primary_contact_job_title" required class="form-control">
                                 </div>
                             </div>

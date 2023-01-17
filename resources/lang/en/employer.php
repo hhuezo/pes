@@ -24,7 +24,7 @@ return [
     'PrincipalZipCode' => 'Principal Zip Code',
     'MailingAddress' => 'Mailing Address',
     'SameAsAbove'  => 'Same as above',
-    'SameAsLeft'  => 'Same as left',
+    'SameAsLeft'  => 'Same as business address',
     'MailingCity' => 'Mailing City',
     'MailingState' => 'Mailing State',
     'MailingCounty' => 'Mailing County',

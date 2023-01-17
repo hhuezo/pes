@@ -125,6 +125,25 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Role</label>
+                                    <select name="role" id="role" class="form-control">
+                                        @foreach ($roles as $obj)
+                                            <option value="{{ $obj->id }}">{{ $obj->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="div_case_manager">
+                                    <label for="exampleInputEmail1">Case manager</label>
+                                    <select name="case_manager" id="case_manager" class="form-control">
+                                        @foreach ($case_managers as $obj)
+                                            <option value="{{ $obj->id }}">{{ $obj->name }} {{ $obj->last_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name</label>
                                     <input type="text" name="name" class="form-control" required>
@@ -151,24 +170,7 @@
                                     </select>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Role</label>
-                                    <select name="role" id="role" class="form-control">
-                                        @foreach ($roles as $obj)
-                                            <option value="{{ $obj->id }}">{{ $obj->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
 
-                                <div class="form-group" id="div_case_manager">
-                                    <label for="exampleInputEmail1">Case manager</label>
-                                    <select name="case_manager" id="case_manager" class="form-control">
-                                        @foreach ($case_managers as $obj)
-                                            <option value="{{ $obj->id }}">{{ $obj->name }} {{ $obj->last_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
 
                             </div>
                         </div>
