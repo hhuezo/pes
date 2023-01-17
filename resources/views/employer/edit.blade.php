@@ -1,4 +1,5 @@
-@extends ('dashboard2')
+@extends ('dashboard')
+
 
 @section('contenido')
     @if (session()->has('action'))
@@ -1094,55 +1095,57 @@
 
 
                                     @if ($worksites_additional)
-                                        <table id="example2" class="display" style="min-width: 845px">
-                                            <thead>
-                                                <tr>
-                                                    <th>State</th>
-                                                    <th>County</th>
-                                                    <th>City</th>
-                                                    <th>Zip Code</th>
-                                                    <th>Address</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($worksites_additional as $obj)
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-responsive-sm">
+                                                <thead>
                                                     <tr>
-                                                        @if ($obj->state_id_address)
-                                                            <td>{{ $obj->state->cs_state }}</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-
-                                                        @if ($obj->county_id)
-                                                            <td>{{ $obj->county->czc_county }}aa</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-
-                                                        @if ($obj->city_id)
-                                                            <td>{{ $obj->city->czc_city }}</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-
-
-
-                                                        <td>{{ $obj->zip_code_address }}</td>
-
-
-
-                                                        @if ($obj->street_address)
-                                                            <td>{{ $obj->street_address }}</td>
-                                                        @else
-                                                            <td></td>
-                                                        @endif
-
-
-
+                                                        <th>State</th>
+                                                        <th>County</th>
+                                                        <th>City</th>
+                                                        <th>Zip Code</th>
+                                                        <th>Address</th>
                                                     </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($worksites_additional as $obj)
+                                                        <tr>
+                                                            @if ($obj->state_id_address)
+                                                                <td>{{ $obj->state->cs_state }}</td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+
+                                                            @if ($obj->county_id)
+                                                                <td>{{ $obj->county->czc_county }}aa</td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+
+                                                            @if ($obj->city_id)
+                                                                <td>{{ $obj->city->czc_city }}</td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+
+
+
+                                                            <td>{{ $obj->zip_code_address }}</td>
+
+
+
+                                                            @if ($obj->street_address)
+                                                                <td>{{ $obj->street_address }}</td>
+                                                            @else
+                                                                <td></td>
+                                                            @endif
+
+
+
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     @endif
 
 
@@ -1285,9 +1288,22 @@
                         <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
                         <h4>Do you want to approve the employer?</h4>
 
+                        <div class="form-group">
+                            <label>Case manager</label>
+                            <select class="form-control select2" name="case_manager_id">
+                                @if ($case_managers)
+                                    @foreach ($case_managers as $obj)
+                                        <option value="{{ $obj->id }}">
+                                            {{ $obj->name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>

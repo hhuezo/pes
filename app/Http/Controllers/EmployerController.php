@@ -12,6 +12,7 @@ use App\Models\SwaLogin;
 use App\Models\catalogue\CityZip;
 use App\Models\catalogue\State;
 use App\Models\Employer;
+use App\Models\Role;
 use App\Models\EmployerWorksite;
 use App\Models\catalogue\Swa;
 use Illuminate\Http\Request;
@@ -149,10 +150,9 @@ class EmployerController extends Controller
         $employer->catalog_industry_id = $request->get('industry_id');
         $employer->naics_id = $request->get('naics_id');
 
-        if($request->get('naics_id'))
-        {
+        if ($request->get('naics_id')) {
             $naics_cod = NaicsCode::findOrFail($request->get('naics_id'));
-            $employer->naics_code = $naics_cod ->cn_code;
+            $employer->naics_code = $naics_cod->cn_code;
         }
 
         if ($request->get('naics_code') == 6) {
@@ -182,6 +182,7 @@ class EmployerController extends Controller
     {
         $employer = Employer::findOrFail($request->get('id'));
         $employer->validated = 1;
+        $employer->case_manager_id = $request->get('case_manager_id');
         $employer->save();
         Alert::success('Ok', 'Record saved');
         return redirect('employer/');
@@ -205,11 +206,8 @@ class EmployerController extends Controller
         $worksites_main = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id', '=', '3')->first();
         $worksites_additional = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id', '=', '4')->get();
 
-        // dd($worksites_additional);
         $normal_business_days = NormalBusinessDays::get();
         $industries = Industry::get();
-
-
 
         if ($employer->principal_state_id != null) {
 
@@ -218,40 +216,24 @@ class EmployerController extends Controller
             $cities_principal = CityZip::select('id', 'czc_city as name')->where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->groupBy('czc_city')->get();
             $codes_zip_principal = CityZip::where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->where('czc_city', '=', $ZipCode->czc_city)->groupBy('czc_zipcode')->get();
 
-            //dd($codes_zip_principal);
-            /* $counties_principal = County::where('state', '=', $employer->principal_state_id)->get();
-            $county_principal = County::findOrFail($employer->principal_county_id);
-            $cities_principal = City::where('state', '=', $county_principal->state)->where('county', '=', $county_principal->name)->get();
-            $city_principal = City::findOrFail($employer->principal_city_id);
-            $codes_zip_principal = CodeZip::where('czc_state_fips', '=', $city_principal->state)->where('czc_county', '=', $city_principal->county)->where('czc_city', '=', $city_principal->name)->get();
-
-            */
 
             $ZipCode = CityZip::findOrFail($employer->mailing_county_id);
             $counties_mailing = CityZip::where('czc_state', '=', $ZipCode->czc_state)->select('id', 'czc_county as name')->groupBy('czc_county')->get();
-            //$county_mailing = County::findOrFail($employer->mailing_county_id);
             $cities_mailing = CityZip::select('id', 'czc_city as name')->where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->groupBy('czc_city')->get();
-            //$city_mailing = City::findOrFail($employer->mailing_city_id);
             $codes_zip_mailing = CityZip::where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->where('czc_city', '=', $ZipCode->czc_city)->groupBy('czc_zipcode')->get();
         } else {
             $counties_principal = null;
-            $county_principal = null;
             $cities_principal = null;
-            $city_principal = null;
             $codes_zip_principal = null;
 
 
             $counties_mailing = null;
-            $county_mailing = null;
             $cities_mailing = null;
-            $city_mailing = null;
             $codes_zip_mailing = null;
         }
 
         $work_sites_main = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id', '=', 3)->first();
-
         $work_sites_additional = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id', '=', 4)->get();
-
         $work_sites_contact = EmployerWorksite::where('employer_id', '=', $id)->where('address_type_id', '=', 5)->first();
 
 
@@ -259,42 +241,35 @@ class EmployerController extends Controller
             $ZipCode = CityZip::findOrFail($work_sites_contact->county_id);
 
             $counties_work_sites_contact = CityZip::where('czc_state', '=', $ZipCode->czc_state)->select('id', 'czc_county as name')->groupBy('czc_county')->get();
-           // $county_work_site_contact = County::findOrFail($work_sites_contact->county_id);
             $cities_work_site_contact = CityZip::select('id', 'czc_city as name')->where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->groupBy('czc_city')->get();
-            //$city_work_site_contact = City::findOrFail($work_sites_contact->city_id);
             $codes_zip_work_site_contact = CityZip::where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->where('czc_city', '=', $ZipCode->czc_city)->groupBy('czc_zipcode')->get();
-
-
         } else {
             $counties_work_sites_contact = null;
             $cities_work_site_contact =  null;
-            $city_work_site_contact = null;
             $codes_zip_work_site_contact = null;
         }
 
         if ($work_sites_main) {
-            //dd("hola uno");
             $ZipCode = CityZip::findOrFail($work_sites_main->county_id);
             $counties_work_sites = CityZip::where('czc_state', '=', $ZipCode->czc_state)->select('id', 'czc_county as name')->groupBy('czc_county')->get();
-            //$county_work_site = County::findOrFail($work_sites_main->county_id);
             $cities_work_site = CityZip::select('id', 'czc_city as name')->where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->groupBy('czc_city')->get();
-            //$city_work_site = City::findOrFail($work_sites_main->city_id);
             $codes_zip_work_site = CityZip::where('czc_state', '=', $ZipCode->czc_state)->where('czc_county', '=', $ZipCode->czc_county)->where('czc_city', '=', $ZipCode->czc_city)->groupBy('czc_zipcode')->get();
         } else {
-            //dd("hola dos");
             $counties_work_sites = null;
             $cities_work_site =  null;
-            $city_work_site = null;
             $codes_zip_work_site = null;
         }
 
         $swa = Swa::get();
-        $swa_login = SwaLogin::where('employer_id','=',$employer->id)->get();
+        $swa_login = SwaLogin::where('employer_id', '=', $employer->id)->get();
 
         $porcentaje = 0;
-        $porcentaje_function = \DB::select("SELECT fun_get_progress_percentage('EMPLOYER',".auth()->user()->id.") as porcentaje");
+        $porcentaje_function = \DB::select("SELECT fun_get_progress_percentage('EMPLOYER'," . auth()->user()->id . ") as porcentaje");
 
-        foreach($porcentaje_function as $obj){
+        $role = Role::findOrFail(4);
+        $case_managers = $role->user_has_role;
+
+        foreach ($porcentaje_function as $obj) {
             $porcentaje = $obj->porcentaje;
         }
 
@@ -311,7 +286,8 @@ class EmployerController extends Controller
             'swa' => $swa,
             'swa_login' => $swa_login,
             'codes_zip_work_site_contact' => $codes_zip_work_site_contact,
-            'porcentaje' => $porcentaje
+            'porcentaje' => $porcentaje,
+            'case_managers' => $case_managers
         ]);
     }
 
@@ -378,11 +354,6 @@ class EmployerController extends Controller
         ], $messages);
 
 
-        //dd($request->get('has_participate_h2b'));
-        //dd($request->get('naics_id'));
-
-
-
         $employer =  Employer::findOrFail($id);
         $employer->legal_business_name = $request->get('legal_business_name');
         $employer->applicable_trade_name = $request->get('applicable_trade_name');
@@ -410,23 +381,20 @@ class EmployerController extends Controller
         } else  if ($request->get('naics_code') == 6) {
             $employer->naics_code = $request->get('naics_code');
         }
-        if($request->get('naics_id'))
-        {
+        if ($request->get('naics_id')) {
             $naics_cod = NaicsCode::findOrFail($request->get('naics_id'));
-            $employer->naics_code = $naics_cod ->cn_code;
+            $employer->naics_code = $naics_cod->cn_code;
         }
 
 
         $employer->year_end_gross_company_income = $request->get('year_end_gross_company_income');
         $employer->year_end_net_company_income = $request->get('year_end_net_company_income');
-        //$employer->users_id = auth()->user()->id;
 
         $employer->save();
 
         Alert::success('', 'Record saved');
         session_start();
         session(['action' => '3']);
-        //dd(session('action'));
 
         return redirect('employer/' . $employer->id . '/edit')->with('message', 'Login Failed');
     }
@@ -440,7 +408,9 @@ class EmployerController extends Controller
         $swa->catalog_swa_id   = $request->get('catalog_swa_id');
         $swa->save();
         Alert::success('', 'Record saved');
-        return redirect('employer/' .  $request->get('employer_id'). '/edit')->with('message', 'Login Failed');
+        session_start();
+        session(['action' => '3']);
+        return redirect('employer/' .  $request->get('employer_id') . '/edit')->with('message', 'Login Failed');
     }
 
 
@@ -452,7 +422,9 @@ class EmployerController extends Controller
         $swa->catalog_swa_id   = $request->get('catalog_swa_id');
         $swa->update();
         Alert::success('', 'Record saved');
-        return redirect('employer/' .  $request->get('employer_id'). '/edit')->with('message', 'Login Failed');
+        session_start();
+        session(['action' => '3']);
+        return redirect('employer/' .  $request->get('employer_id') . '/edit')->with('message', 'Login Failed');
     }
 
     public function delete_swa(Request $request)
@@ -460,14 +432,16 @@ class EmployerController extends Controller
         $swa = SwaLogin::findOrFail($request->get('id_swa'));
         $swa->delete();
         Alert::error('', 'Record deleted');
-        return redirect('employer/' .  $request->get('employer_id'). '/edit');
+        session_start();
+        session(['action' => '3']);
+        return redirect('employer/' .  $request->get('employer_id') . '/edit');
     }
 
     public function get_swa($id)
     {
         $swaLogin = SwaLogin::findOrFail($id);
         $swa = Swa::get();
-        $reponse = ["swa_login" => $swaLogin,"swa"=>$swa];
+        $reponse = ["swa_login" => $swaLogin, "swa" => $swa];
 
         return $reponse;
     }
@@ -841,11 +815,9 @@ class EmployerController extends Controller
                 $principal_street_address = Employer::where('id', '=', $employer->id)->get()->first()->principal_street_address;
 
 
-                if($request->get('is_main_worksite_location') == 'on')
-                {
-                    $ZipCode = CityZip::where('czc_zipcode','=',$employer->principal_zip_code)->first();
-                }
-                else{
+                if ($request->get('is_main_worksite_location') == 'on') {
+                    $ZipCode = CityZip::where('czc_zipcode', '=', $employer->principal_zip_code)->first();
+                } else {
                     $ZipCode = CityZip::findOrFail($request->get('main_worksite_zip_code'));
                 }
 
@@ -889,20 +861,17 @@ class EmployerController extends Controller
 
         $id_ews = EmployerWorksite::where('employer_id', '=', $employer->id)->where('address_type_id', '=', 5)->get()->first();
 
-        if( $id_ews )
-        {
+        if ($id_ews) {
             $employerWorkSite =  EmployerWorksite::findOrFail($id_ews->id);
-        }
-        else{
+        } else {
             $employerWorkSite =  null;
         }
 
 
-        if( $employerWorkSite)
-        {
+        if ($employerWorkSite) {
             //add contact worksite
             $contact_worksite = $employerWorkSite;
-           // $contact_worksite->employer_id = $employer->id;
+            // $contact_worksite->employer_id = $employer->id;
 
             $ZipCode = CityZip::findOrFail($request->get('contact_zip_code'));
             //dd($ZipCode);
@@ -914,8 +883,7 @@ class EmployerController extends Controller
             $contact_worksite->street_address = $request->get('contact_street_address');
             //$contact_worksite->address_type_id = 5;
             $contact_worksite->update();
-        }
-        else{
+        } else {
             //add contact worksite
             $contact_worksite = new EmployerWorksite();
             $contact_worksite->employer_id = $employer->id;
@@ -946,7 +914,7 @@ class EmployerController extends Controller
     {
 
         $ZipCode = CityZip::findOrFail($request->get('zip_code_address'));
-       /* dd($ZipCode);
+        /* dd($ZipCode);
         $employer_id = $request->get('employer_id');
         $state_id_address = $request->get('state_id_address');
         $county_id = $ZipCode->id;
