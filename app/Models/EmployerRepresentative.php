@@ -55,4 +55,9 @@ class EmployerRepresentative extends Model
         return $this->belongsTo('App\Models\catalogue\CityZip', 'er_county_id', 'id');
     }
 
+    public function full_name()
+    {
+        return $this->er_last_name. ' ' . $this->er_first_name . ' ' . $this->er_middle_name;
+    }
+
 }

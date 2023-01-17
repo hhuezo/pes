@@ -143,6 +143,7 @@ return [
 
     'USWorker' => 'U.S. Worker Recruitment Information',
     'AttorneyAgentInformation' => 'ATTORNEY OR AGENT INFORMATION (IF APPLICABLE)',
+    'Lawyers' => 'Lawyers',
     'TypeRepresentation' => 'Type of Representation',
 
     'AttorneyAgentLastName' => 'Attorney or Agent’s Last (family) Name',
