@@ -70,7 +70,7 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade" id="tab1" role="tabpanel">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel">
                             <form method="POST" action="{{ route('job_request.update', $job_request->id) }}">
                                 @method('PUT')
                                 @csrf

@@ -46,9 +46,9 @@
                     <!-- Nav tabs -->
                     <div class="default-tab">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
+                            <!--<li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tab_content1">{!! trans('employer.GeneralData') !!}</a>
-                            </li>
+                            </li>-->
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                     href="#tab_content2">{!! trans('employer.EmployerInformation') !!}</a>

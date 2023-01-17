@@ -124,13 +124,6 @@ class EmployerController extends Controller
         ], $messages);
 
 
-
-        //dd($request);
-
-        //dd($request);
-
-        /* validations  */
-
         $employer = new Employer();
         $employer->legal_business_name = $request->get('legal_business_name');
         $employer->applicable_trade_name = $request->get('applicable_trade_name');
