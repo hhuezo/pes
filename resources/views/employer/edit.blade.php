@@ -1722,12 +1722,12 @@
                 for (var i = 0; i < data.swa.length; i++) {
                     if (data.swa[i].id == data.swa_login.catalog_swa_id) {
                         _select += '<option value="' + data.swa[i].id + '" selected >' + data.swa[i]
-                            .state_desc +' '+ data.swa[i]
+                            .state_desc + ' ' + data.swa[i]
                             .wotc_website +
                             '</option>';
                     } else {
                         _select += '<option value="' + data.swa[i].id + '" >' + data.swa[i]
-                            .state_desc +' '+ data.swa[i]
+                            .state_desc + ' ' + data.swa[i]
                             .wotc_website +
                             '</option>';
                     }
