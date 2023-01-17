@@ -76,10 +76,7 @@
                                         <div class="col-xl-12 col-xxl-12">&nbsp;</div>
                                         <div class="col-xl-6 col-xxl-6">
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}<b
-                                                        style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}<b> *</b></label>
                                                 <input type="text" name="legal_business_name"
                                                     value="{{ old('legal_business_name', $employer->legal_business_name) }}"
                                                     class="form-control">
@@ -95,9 +92,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.IdentificationNumber') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.IdentificationNumber') !!}<b> *</b></label>
                                                 <input type="text" name="federal_id_number"
                                                     data-inputmask="'mask': ['99-9999999']" data-mask
                                                     value="{{ old('federal_id_number', $employer->federal_id_number) }}"
@@ -108,9 +103,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.YearBusinessEstablished') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.YearBusinessEstablished') !!}<b> *</b></label>
                                                 <input type="text" name="year_business_established"
                                                     value="{{ old('year_business_established', $employer->year_business_established) }}"
                                                     min="1900" max="<?php echo date('Y'); ?>" class="form-control"
@@ -122,9 +115,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.NumberEmployees') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.NumberEmployees') !!}<b> *</b></label>
                                                 <input type="text" name="number_employees_full_time"
                                                     value="{{ old('number_employees_full_time', $employer->number_employees_full_time) }}"
                                                     class="form-control">
@@ -134,9 +125,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryBusinessPhone') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryBusinessPhone') !!}<b> *</b></label>
                                                 <input type="text" name="primary_business_phone"
                                                     data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                     value="{{ old('primary_business_phone', $employer->primary_business_phone) }}"
@@ -208,9 +197,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryBusiness') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryBusiness') !!}<b> *</b></label>
                                                 <select class="form-control select2" name="industry_id"
                                                     value="{{ old('industry_id', $employer->industry_id) }}"
                                                     id="Industry">
@@ -231,9 +218,7 @@
                                             </div>
 
                                             <div class="form-group" id="DivNaicsCodCompany">
-                                                <label>{!! trans('employer.NaicsCodCompany') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.NaicsCodCompany') !!}<b> *</b></label>
                                                 <select class="form-control select2" name="naics_id"
                                                     value="{{ old('naics_id', $employer->naics_id) }}" id="NaicsCod">
 
@@ -251,9 +236,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.GrossCompanyIncome') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.GrossCompanyIncome') !!}<b> *</b></label>
                                                 <input type="number" step="0.01" name="year_end_gross_company_income"
                                                     value="{{ old('year_end_gross_company_income', $employer->year_end_gross_company_income) }}"
                                                     class="form-control" class="form-control">
@@ -303,9 +286,7 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalState') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrincipalState') !!}<b> *</b></label>
                                                 <select class="form-control select2" name="principal_state_id"
                                                     id="PrincipalState">
                                                     <option value="">Select</option>
@@ -328,9 +309,7 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCountry') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrincipalCountry') !!}<b> *</b></label>
                                                 <select class="form-control select2" name="principal_county_id"
                                                     id="principal_county_id">
                                                     @if ($counties_principal)
@@ -357,9 +336,7 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalCity') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrincipalCity') !!}<b> *</b></label>
                                                 <select class="form-control select2" name="principal_city_id"
                                                     id="principal_city_id"
                                                     value="{{ old('principal_city_id', $employer->principal_city_id) }}">
@@ -385,9 +362,7 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrincipalZipCode') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrincipalZipCode') !!}<b> *</b></label>
                                                 <select class="form-control select2" name="principal_zip_code"
                                                     id="principal_zip_code">
                                                     @if ($codes_zip_principal)
@@ -417,9 +392,7 @@
 
                                             <div class="form-group">
                                                 <input type="hidden" name="id" value="{{ $employer->id }}">
-                                                <label>{!! trans('employer.PrincipalStreetAddress') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrincipalStreetAddress') !!}<b> *</b></label>
                                                 <input type="text" name="principal_street_address"
                                                     value="{{ old('principal_street_address', $employer->principal_street_address) }}"
                                                     class="form-control">
@@ -435,6 +408,12 @@
 
                                         <div class="col-xl-6 col-xxl-6">
                                             <div class="form-group">
+
+
+                                                <h3>
+                                                    {!! trans('employer.MailingAddress') !!}
+                                                </h3>
+
                                                 @if (old('mailing_address_same_above', $employer->mailing_address_same_above) === 1)
                                                     <input type="checkbox" name="mailing_address_same_above"
                                                         id="SameAsAbove" checked="">
@@ -449,10 +428,7 @@
                                             <div id="DivMailin">
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingState') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.MailingState') !!}<b> *</b></label>
                                                     <select class="form-control select2" name="mailing_state_id"
                                                         id="MailingState">
                                                         <option value="">Select</option>
@@ -475,10 +451,7 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCountry') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.MailingCountry') !!}<b> *</b></label>
                                                     <select class="form-control select2" name="mailing_county_id"
                                                         id="mailing_county_id">
                                                         @if ($counties_mailing)
@@ -505,10 +478,7 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingCity') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.MailingCity') !!}<b> *</b></label>
                                                     <select class="form-control select2" name="mailing_city_id"
                                                         id="mailing_city_id">
                                                         @if ($cities_mailing)
@@ -534,10 +504,7 @@
 
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.MailingZipCode') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.MailingZipCode') !!}<b> *</b></label>
                                                     <select class="form-control select2" name="mailing_zip_code"
                                                         id="mailing_zip_code"
                                                         value="{{ old('mailing_zip_code', $employer->mailing_zip_code) }}">
@@ -567,10 +534,7 @@
 
                                                 <div class="form-group">
                                                     <input type="hidden" name="id" value="{{ $employer->id }}">
-                                                    <label>{!! trans('employer.MailingAddress') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.MailingAddress') !!}<b> *</b></label>
                                                     <input type="text" name="mailing_street_address"
                                                         value="{{ old('mailing_street_address', $employer->mailing_street_address) }}"
                                                         class="form-control">
@@ -612,9 +576,7 @@
                                         <div class="col-xl-12 col-xxl-12">&nbsp;</div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryContact') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryContact') !!}<b> *</b></label>
                                                 <input type="text" name="primary_contact_name"
                                                     value="{{ old('primary_contact_name', $employer->primary_contact_name) }}"
                                                     class="form-control">
@@ -632,9 +594,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.Last') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.Last') !!}<b> *</b></label>
                                                 <input type="text" name="primary_contact_last_name"
                                                     value="{{ old('primary_contact_last_name', $employer->primary_contact_last_name) }}"
                                                     class="form-control">
@@ -644,9 +604,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryContactJobTitle') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryContactJobTitle') !!}<b> *</b></label>
                                                 <input type="text" name="primary_contact_job_title"
                                                     value="{{ old('primary_contact_job_title', $employer->primary_contact_job_title) }}"
                                                     class="form-control">
@@ -656,9 +614,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryContactEmail') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryContactEmail') !!}<b> *</b></label>
                                                 <input type="text" name="primary_contact_email"
                                                     value="{{ old('primary_contact_email', $employer->primary_contact_email) }}"
                                                     class="form-control">
@@ -668,9 +624,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryContactPhone') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryContactPhone') !!}<b> *</b></label>
                                                 <input type="text" name="primary_contact_phone"
                                                     data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                     value="{{ old('primary_contact_phone', $employer->primary_contact_phone) }}"
@@ -682,9 +636,7 @@
 
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.PrimaryContactCellPhone') !!}<b style="color: #FF9696">(*This field
-                                                        is required
-                                                        )</b></label>
+                                                <label>{!! trans('employer.PrimaryContactCellPhone') !!}<b> *</b></label>
                                                 <input type="text" name="primary_contact_cellphone"
                                                     data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                     value="{{ old('primary_contact_cellphone', $employer->primary_contact_cellphone) }}"
@@ -847,10 +799,7 @@
                                         <div id="DivSignatory" class="col-md-12 row DivSignatory">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryName') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.SignatoryName') !!}<b> *</b></label>
                                                     <input type="text" name="signatory_name"
                                                         value="{{ old('signatory_name', $employer->signatory_name) }}"
                                                         class="form-control">
@@ -860,10 +809,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryLastName') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.SignatoryLastName') !!}<b> *</b></label>
                                                     <input type="text" name="signatory_last_name"
                                                         value="{{ old('signatory_last_name', $employer->signatory_last_name) }}"
                                                         class="form-control">
@@ -873,10 +819,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryJobTitle') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.SignatoryJobTitle') !!}<b> *</b></label>
                                                     <input type="text" name="signatory_job_title"
                                                         value="{{ old('signatory_job_title', $employer->signatory_job_title) }}"
                                                         class="form-control">
@@ -887,10 +830,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryEmail') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.SignatoryEmail') !!}<b> *</b></label>
                                                     <input type="mail" name="signatory_email"
                                                         value="{{ old('signatory_email', $employer->signatory_email) }}"
                                                         class="form-control">
@@ -900,10 +840,7 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>{!! trans('employer.SignatoryPhone') !!}<b style="color: #FF9696">(*This
-                                                            field
-                                                            is required
-                                                            )</b></label>
+                                                    <label>{!! trans('employer.SignatoryPhone') !!}<b> *</b></label>
                                                     <input type="text" name="signatory_phone"
                                                         data-inputmask="'mask': ['(999)999-9999']" data-mask
                                                         value="{{ old('signatory_phone', $employer->signatory_phone) }}"
@@ -1073,7 +1010,7 @@
 
 
                                                     <div class="form-group">
-                                                        <label>{!! trans('employer.MainWorksiteStreetAddress') !!}<b style="color: #FF9696">(*This
+                                                        <label>{!! trans('employer.MainWorksiteStreetAddress') !!}<b>(*This
                                                                 field
                                                                 is required
                                                                 )</b></label>
