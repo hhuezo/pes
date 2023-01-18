@@ -2184,19 +2184,23 @@
 
                                 @if ($job_request->signature)
                                     <div class="col-sm-12">
-                                        <h5><input type="checkbox" checked>&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
+                                        <h5><input type="checkbox" id="chkAgree"
+                                                checked>&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
                                     </div>
                                     <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
                                     <div class="col-sm-12">
-                                        <h5><input type="checkbox" checked>&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                                        <h5><input type="checkbox" id="chkAgreeYes"
+                                                checked>&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
                                     </div>
                                 @else
                                     <div class="col-sm-12">
-                                        <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}</h5>
+                                        <h5><input type="checkbox" id="chkAgree">&nbsp;&nbsp;{!! trans('job_application.Agree') !!}
+                                        </h5>
                                     </div>
                                     <div class="col-sm-12">{!! trans('job_application.message5') !!}</div>
                                     <div class="col-sm-12">
-                                        <h5><input type="checkbox">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
+                                        <h5><input type="checkbox"
+                                                id="chkAgreeYes">&nbsp;&nbsp;{!! trans('employer.Yes') !!}</h5>
                                     </div>
                                 @endif
 
@@ -2337,12 +2341,16 @@
             //captura de firma
             $("#draw-canvas").click(function() {
                 $('#draw-submitBtn').show();
+                document.getElementById('chkAgree').checked = true;
+                document.getElementById('chkAgreeYes').checked = true;
                 //$('#draw-submitBtn').click();
             });
 
             //limpiar firma y ocultar boton send
             $("#draw-clearBtn").click(function() {
                 $('#draw-submitBtn').hide();
+                document.getElementById('chkAgree').checked = false;
+                document.getElementById('chkAgreeYes').checked = false;
             });
 
 

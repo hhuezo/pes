@@ -40,7 +40,7 @@
                                 @endif
                                 <td>{{ $obj->job_notes }}</td>
                                 <td align="center">
-                                    <a href="{{ url('job_request/get_div_admin') }}/{{ $obj->id }}"
+                                    <a href="{{ url('job_request_admin') }}/{{ $obj->id }}/edit"
                                         class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
                                     &nbsp;&nbsp;

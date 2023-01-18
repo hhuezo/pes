@@ -14,6 +14,7 @@ use App\Http\Controllers\security\UserController;
 use App\Http\Controllers\security\AccountController;
 use App\Http\Controllers\CaseManagerController;
 use App\Http\Controllers\CityZipController;
+use App\Http\Controllers\JobRequestAdminController;
 
 
 
@@ -79,6 +80,7 @@ Route::post('job_request_deductions', [JobRequestController::class,'job_request_
 Route::post('job_request_requirements', [JobRequestController::class,'job_request_requirements']);
 Route::post('job_request_representative', [JobRequestController::class,'job_request_representative']);
 Route::post('job_request_sign', [JobRequestController::class,'job_request_sign']);
+Route::resource('job_request_admin', JobRequestAdminController::class);
 
 Route::get('job_request/get_div_deductions', [JobRequestController::class,'get_div_deductions']);
 Route::get('job_request/get_div_deductions_medical', [JobRequestController::class,'get_div_deductions_medical']);

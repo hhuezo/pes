@@ -23,15 +23,18 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">{!! trans('job_application.start_date') !!}</label>
-                                    <input type="date" min="{{ date('Y-m-d') }}" name="start_date" id="start_date"
-                                        required class="form-control">
+                                    <input type="date" min="{{ date('Y-m-d', strtotime(date('Y-m-d') . '+ 3 month')) }}"
+                                        name="start_date" id="start_date" value="{{ old('start_date') }}" required
+                                        class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">{!! trans('job_application.end_date') !!}</label>
-                                    <input type="date" name="end_date" id="end_date" required class="form-control">
+                                    <input type="date" min="{{ date('Y-m-d', strtotime(date('Y-m-d') . '+ 3 month')) }}"
+                                        name="end_date" id="end_date" required class="form-control"
+                                        value="{{ old('end_date') }}" onchange="validarFechas()">
                                 </div>
 
                             </div>
@@ -88,11 +91,12 @@
                                     <label for="exampleInputEmail1">{!! trans('job_application.uniform') !!}</label>
                                     <br>
                                     {!! trans('job_application.Yes') !!}
-                                    <input type="radio" value="1" name="is_uniform_required"
-                                        id="is_uniform_required" onclick="show_div_uniform();">
+                                    <input type="radio" value="1" name="is_uniform_required" id="is_uniform_required"
+                                        onclick="show_div_uniform();">
                                     &nbsp;&nbsp;
                                     {!! trans('job_application.No') !!}
-                                    <input type="radio" value="0" checked name="is_uniform_required" onclick="show_div_uniform();">
+                                    <input type="radio" value="0" checked name="is_uniform_required"
+                                        onclick="show_div_uniform();">
                                 </div>
                                 <label for="exampleInputEmail1">{!! trans('job_application.message3') !!}</label>
                             </div>
@@ -115,202 +119,202 @@
                             <!-- end paid -->
 
                             <!--     <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{!! trans('job_application.ACWIA') !!}</label>
-                                            <br>
-                                            {!! trans('employer.Yes') !!}
-                                            <input type="radio" value="1" onclick="acwia();" id="has_acwia_yes"
-                                                name="has_acwia">
-                                            &nbsp;&nbsp;
-                                            {!! trans('employer.No') !!}
-                                            <input type="radio" value="0" checked onclick="acwia();" id="has_acwia_no"
-                                                name="has_acwia">
-                                            &nbsp;&nbsp;
-                                            N/A
-                                            <input type="radio" value="2" onclick="acwia();" id="has_acwia_na"
-                                                name="has_acwia">
-                                        </div>
-                                    </div>
+                                                                                                                                                                                <div class="form-group">
+                                                                                                                                                                                    <label for="exampleInputEmail1">{!! trans('job_application.ACWIA') !!}</label>
+                                                                                                                                                                                    <br>
+                                                                                                                                                                                    {!! trans('employer.Yes') !!}
+                                                                                                                                                                                    <input type="radio" value="1" onclick="acwia();" id="has_acwia_yes"
+                                                                                                                                                                                        name="has_acwia">
+                                                                                                                                                                                    &nbsp;&nbsp;
+                                                                                                                                                                                    {!! trans('employer.No') !!}
+                                                                                                                                                                                    <input type="radio" value="0" checked onclick="acwia();" id="has_acwia_no"
+                                                                                                                                                                                        name="has_acwia">
+                                                                                                                                                                                    &nbsp;&nbsp;
+                                                                                                                                                                                    N/A
+                                                                                                                                                                                    <input type="radio" value="2" onclick="acwia();" id="has_acwia_na"
+                                                                                                                                                                                        name="has_acwia">
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
 
 
 
-                                    <div class="col-sm-6">
-                                        <div id="div_acwia">
-                                            <label for="exampleInputEmail1">{!! trans('job_application.ifACWIA') !!}</label>
-                                            <label for="exampleInputEmail1"><input type="checkbox"> &nbsp;
-                                                {!! trans('job_application.i') !!}</label>
-                                            <label for="exampleInputEmail1"><input type="checkbox"> &nbsp;
-                                                {!! trans('job_application.ii') !!}</label>
-                                            <label for="exampleInputEmail1"><input type="checkbox"> &nbsp;
-                                                {!! trans('job_application.iii') !!}</label>
-                                        </div>
-                                    </div>
+                                                                                                                                                                            <div class="col-sm-6">
+                                                                                                                                                                                <div id="div_acwia">
+                                                                                                                                                                                    <label for="exampleInputEmail1">{!! trans('job_application.ifACWIA') !!}</label>
+                                                                                                                                                                                    <label for="exampleInputEmail1"><input type="checkbox"> &nbsp;
+                                                                                                                                                                                        {!! trans('job_application.i') !!}</label>
+                                                                                                                                                                                    <label for="exampleInputEmail1"><input type="checkbox"> &nbsp;
+                                                                                                                                                                                        {!! trans('job_application.ii') !!}</label>
+                                                                                                                                                                                    <label for="exampleInputEmail1"><input type="checkbox"> &nbsp;
+                                                                                                                                                                                        {!! trans('job_application.iii') !!}</label>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{!! trans('job_application.noACWIA') !!}</label>
-                                            <br>
-                                            {!! trans('employer.Yes') !!}
-                                            <input type="radio" value="1" name="has_reason_no_acwia">
-                                            &nbsp;&nbsp;
-                                            {!! trans('employer.No') !!}
-                                            <input type="radio" value="0" checked name="has_reason_no_acwia">
-                                            &nbsp;&nbsp;
-                                            N/A
-                                            <input type="radio" value="2" name="has_reason_no_acwia">
-                                        </div>
-                                    </div>
+                                                                                                                                                                            <div class="col-md-6">
+                                                                                                                                                                                <div class="form-group">
+                                                                                                                                                                                    <label for="exampleInputEmail1">{!! trans('job_application.noACWIA') !!}</label>
+                                                                                                                                                                                    <br>
+                                                                                                                                                                                    {!! trans('employer.Yes') !!}
+                                                                                                                                                                                    <input type="radio" value="1" name="has_reason_no_acwia">
+                                                                                                                                                                                    &nbsp;&nbsp;
+                                                                                                                                                                                    {!! trans('employer.No') !!}
+                                                                                                                                                                                    <input type="radio" value="0" checked name="has_reason_no_acwia">
+                                                                                                                                                                                    &nbsp;&nbsp;
+                                                                                                                                                                                    N/A
+                                                                                                                                                                                    <input type="radio" value="2" name="has_reason_no_acwia">
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{!! trans('job_application.SportsLeagueRules') !!}</label>
-                                            <br>
-                                            {!! trans('employer.Yes') !!}
-                                            <input type="radio" value="1" name="has_sports_league_regs">
-                                            &nbsp;&nbsp;
-                                            {!! trans('employer.No') !!}
-                                            <input type="radio" value="0" checked name="has_sports_league_regs">
+                                                                                                                                                                            <div class="col-md-6">
+                                                                                                                                                                                <div class="form-group">
+                                                                                                                                                                                    <label for="exampleInputEmail1">{!! trans('job_application.SportsLeagueRules') !!}</label>
+                                                                                                                                                                                    <br>
+                                                                                                                                                                                    {!! trans('employer.Yes') !!}
+                                                                                                                                                                                    <input type="radio" value="1" name="has_sports_league_regs">
+                                                                                                                                                                                    &nbsp;&nbsp;
+                                                                                                                                                                                    {!! trans('employer.No') !!}
+                                                                                                                                                                                    <input type="radio" value="0" checked name="has_sports_league_regs">
 
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">&nbsp;</div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            <div class="col-sm-12">&nbsp;</div>
 
-                                    <div class="col-sm-12">
-                                        <div id="accordion-one" class="accordion">
-                                            <div class="accordion__item">
-                                                <div class="accordion__header collapsed" data-toggle="collapse"
-                                                    data-target="#default_collapseTwo">
-                                                    <span class="accordion__header--text">{!! trans('job_application.Attorney_applicable') !!}</span>
-                                                    <span class="accordion__header--indicator"></span>
-                                                </div>
-                                                <div id="default_collapseTwo" class="collapse accordion__body"
-                                                    data-parent="#accordion-one">
-                                                    <div class="accordion__body--text row">
-
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.type_representation') !!}</label>
-                                                                <br>
-                                                                {!! trans('job_application.Attorney') !!}
-                                                                <input type="radio" value="1" checked>
-                                                                &nbsp;&nbsp;
-                                                                {!! trans('job_application.Agent') !!}
-                                                                <input type="radio" value="2">
-
-                                                            </div>
-
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.attorney_last_name') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
+                                                                                                                                                                            <div class="col-sm-12">
+                                                                                                                                                                                <div id="accordion-one" class="accordion">
+                                                                                                                                                                                    <div class="accordion__item">
+                                                                                                                                                                                        <div class="accordion__header collapsed" data-toggle="collapse"
+                                                                                                                                                                                            data-target="#default_collapseTwo">
+                                                                                                                                                                                            <span class="accordion__header--text">{!! trans('job_application.Attorney_applicable') !!}</span>
+                                                                                                                                                                                            <span class="accordion__header--indicator"></span>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <div id="default_collapseTwo" class="collapse accordion__body"
+                                                                                                                                                                                            data-parent="#accordion-one">
+                                                                                                                                                                                            <div class="accordion__body--text row">
 
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.attorney_first_name') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
+                                                                                                                                                                                                <div class="col-md-6">
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.type_representation') !!}</label>
+                                                                                                                                                                                                        <br>
+                                                                                                                                                                                                        {!! trans('job_application.Attorney') !!}
+                                                                                                                                                                                                        <input type="radio" value="1" checked>
+                                                                                                                                                                                                        &nbsp;&nbsp;
+                                                                                                                                                                                                        {!! trans('job_application.Agent') !!}
+                                                                                                                                                                                                        <input type="radio" value="2">
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.attorney_middle_name') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
+                                                                                                                                                                                                    </div>
+
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.attorney_last_name') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
 
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('employer.State') !!}</label>
-                                                                <select name="state_id" id="state_id"
-                                                                    class="form-control select2">
-                                                                    <option value="">Select</option>
-                                                                    @foreach ($states as $obj)
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.attorney_first_name') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.attorney_middle_name') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+
+
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('employer.State') !!}</label>
+                                                                                                                                                                                                        <select name="state_id" id="state_id"
+                                                                                                                                                                                                            class="form-control select2">
+                                                                                                                                                                                                            <option value="">Select</option>
+                                                                                                                                                                                                            @foreach ($states as $obj)
     <option value="{{ $obj->id }}">{{ $obj->name }}
-                                                                        </option>
+                                                                                                                                                                                                                </option>
     @endforeach
-                                                                </select>
-                                                            </div>
+                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                    </div>
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('employer.County') !!}</label>
-                                                                <select name="county_id" id="county_id"
-                                                                    class="form-control select2">
-                                                                </select>
-                                                            </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('employer.County') !!}</label>
+                                                                                                                                                                                                        <select name="county_id" id="county_id"
+                                                                                                                                                                                                            class="form-control select2">
+                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                    </div>
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('employer.City') !!}</label>
-                                                                <select name="city_id" id="city_id"
-                                                                    class="form-control select2">
-                                                                </select>
-                                                            </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('employer.City') !!}</label>
+                                                                                                                                                                                                        <select name="city_id" id="city_id"
+                                                                                                                                                                                                            class="form-control select2">
+                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                    </div>
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('employer.PostalCode') !!}</label>
-                                                                <select name="zip_code" id="zip_code" class="form-control">
-                                                                </select>
-                                                            </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('employer.PostalCode') !!}</label>
+                                                                                                                                                                                                        <select name="zip_code" id="zip_code" class="form-control">
+                                                                                                                                                                                                        </select>
+                                                                                                                                                                                                    </div>
 
-                                                        </div>
+                                                                                                                                                                                                </div>
 
-                                                        <div class="col-md-6">
+                                                                                                                                                                                                <div class="col-md-6">
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.address') !!} 1</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.address') !!} 1</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.address') !!} 2</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.address') !!} 2</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
 
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.province') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.telephone_number') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.extension') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.business_email') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.business_name') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label for="exampleInputEmail1">{!! trans('job_application.business_fein') !!}</label>
-                                                                <input type="text" name="explain_multiple_employment"
-                                                                    class="form-control">
-                                                            </div>
-
-
-                                                        </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.province') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.telephone_number') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.extension') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.business_email') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.business_name') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <div class="form-group">
+                                                                                                                                                                                                        <label for="exampleInputEmail1">{!! trans('job_application.business_fein') !!}</label>
+                                                                                                                                                                                                        <input type="text" name="explain_multiple_employment"
+                                                                                                                                                                                                            class="form-control">
+                                                                                                                                                                                                    </div>
 
 
+                                                                                                                                                                                                </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                    </div>
-                                -->
+
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>
+
+                                                                                                                                                                            </div>
+                                                                                                                                                                        -->
 
                             <div class="col-sm-12 form-group">
                                 <button type="submit" class="btn btn-primary float-right">Next</button>
@@ -337,6 +341,10 @@
             //$('#div_acwia').hide();
             $('#div_multiple_employment_period').hide();
             $('#div_uniform').hide();
+
+
+
+
 
 
             /*   $("#state_id").change(function() {
@@ -382,6 +390,14 @@
                    });
                });*/
         });
+
+        function validarFechas() {
+            if (document.getElementById('start_date').value == document.getElementById('end_date').value) {
+                alert('fechas NO deben ser iguales');
+                document.getElementById('end_date').value = '';
+                document.getElementById('end_date').focus();
+            }
+        }
 
         /* function acwia() {
              if (document.getElementById('has_acwia_yes').checked == true) {
