@@ -54,6 +54,21 @@ class JobRequestController extends Controller
         $employer = $user->user_has_employer->first();
         $time = Carbon::now('America/El_Salvador');
 
+        $start_date = Carbon::parse($request->get('start_date'));
+        $end_date = Carbon::parse($request->get('end_date'));
+
+        $date_validate = $start_date->addMonth(10);
+        if($end_date > $date_validate)
+        {
+            Alert::error('Error', 'Period time must be less than 10 months');
+            return back();
+        }
+
+
+
+
+
+
         $job = new JobRequest();
         $job->employer_id = $employer->id;
         $job->start_date = $request->get('start_date');
@@ -74,6 +89,7 @@ class JobRequestController extends Controller
         $job->job_notes = $request->get('job_notes');
         $job->user_id = auth()->user()->id;
         $job->created_at = $time;
+        $job->request_status_id = 1; //REQUEST STARTED
         $job->save();
 
         session_start();
@@ -100,6 +116,10 @@ class JobRequestController extends Controller
         ]);
     }
 
+    public function get_div_admin(Request $request)
+    {
+        return view('job_request.div_admin');
+    }
 
     public function edit($id)
     {
@@ -244,7 +264,6 @@ class JobRequestController extends Controller
         Alert::info('', 'Record saved');
         return redirect('job_request/' . $id . '/edit');
     }
-
 
 
 
@@ -753,6 +772,11 @@ class JobRequestController extends Controller
         }
     }
 
+    function job_request_admin(Request $request){
+        dd("hola desde admin");
+        return redirect('job_request/div_admin');
+    }
+
 
     public function job_request_requirements(Request $request){
 
@@ -1112,6 +1136,7 @@ class JobRequestController extends Controller
             $bytes = file_put_contents($ruteOut, $imageBinary);
 
             $job_request->signature = $uniqid;
+            $job_request->request_status_id = 2; //SUBMITTED
             $job_request->update();
 
 

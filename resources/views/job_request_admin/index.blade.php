@@ -10,10 +10,8 @@
 
             <div class="card-header">
                 <h4 class="card-title">Requirements</h4>
-                @can('create job application')
-                <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right">New Requirement</button></a>
-                @endcan
-
+                <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right"
+                        data-toggle="modal" data-target=".bd-example-modal-lg">New Requirement</button></a>
             </div>
 
             <div class="card-body">
@@ -42,7 +40,7 @@
                                 @endif
                                 <td>{{ $obj->job_notes }}</td>
                                 <td align="center">
-                                    <a href="{{ url('job_request/get_div_admin') }}/{{ $obj->id }}"
+                                    <a href="{{ url('job_request_admin') }}/{{ $obj->id }}/edit"
                                         class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
                                     &nbsp;&nbsp;
