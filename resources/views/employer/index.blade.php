@@ -18,23 +18,19 @@
                         <tr>
                             <th>{!! trans('employer.LegalName') !!}</th>
                             <th>{!! trans('employer.IdentificationNumber') !!}</th>
-                            <th>Primary business type</th>
+
                             <th>{!! trans('employer.PrimaryBusinessPhone') !!}</th>
                             <th>Validation</th>
                             <th>Option</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php($i = 1)
+
                         @foreach ($employers as $obj)
                             <tr>
                                 <td>{{ $obj->legal_business_name }}</td>
                                 <td>{{ $obj->federal_id_number }}</td>
-                                @if ($obj->primary_business_type_id)
-                                    <td>{{ $obj->naicsCode->name }}</td>
-                                @else
-                                    <td></td>
-                                @endif
+
                                 <td>{{ $obj->primary_business_phone }}</td>
                                 @if ($obj->validated == 0 || $obj->validated == 1)
                                     <td>{{ $estate[$obj->validated] }} </td>
@@ -46,7 +42,7 @@
                                         <i class="fa fa-eye fa-lg"></i></a>
                                 </td>
                             </tr>
-                            @php($i++)
+
                         @endforeach
 
 

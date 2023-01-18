@@ -279,22 +279,27 @@
                                     class="fa fa-bar-chart fa-lg"></i><span class="nav-text">Dashboar</span></a></li>
                     @endcan
 
-                    @can('read employer')
+                    @can('read admin employer')
                         <li> <a href="{{ url('employer') }}" aria-expanded="false"><i
                                     class="fa fa-user-o fa-lg"></i><span class="nav-text">Employer</span></a></li>
+
+
+
+                        <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
+                                    class="nav-text">Create acounts</span></a></li>
                     @endcan
 
-
-                    <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
-                                class="nav-text">Create acounts</span></a></li>
-
-
-                    <li> <a href="{{ url('case_manager') }}" aria-expanded="false"><i
-                                class="fa fa-newspaper-o"></i><span class="nav-text">Case managers</span></a></li>
+                    <!-- <li> <a href="{{ url('case_manager') }}" aria-expanded="false"><i
+                                class="fa fa-newspaper-o"></i><span class="nav-text">Case managers</span></a></li>-->
 
                     @can('create job application')
                         <li> <a href="{{ url('job_request') }}" aria-expanded="false"><i
                                     class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
+                    @endcan
+
+                    @can('read job application admin')
+                        <li> <a href="{{ url('job_request') }}" aria-expanded="false"><i
+                                    class="icon icon-form"></i><span class="nav-text">Requirements</span></a></li>
                     @endcan
 
 

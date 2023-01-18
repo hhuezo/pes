@@ -1,4 +1,4 @@
-@extends ('dashboard')
+@extends ('dashboard2')
 
 
 @section('contenido')
@@ -32,7 +32,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">EMPLOYER</h4>
+                    <h4 class="card-title">
+                        @can('approve employer') <a href="{{ url('employer') }}"><button type="button" class="btn btn-warning"><i class=" fa-arrow"></i>&nbsp;Back&nbsp;</button></a> @endcan
+                        &nbsp;&nbsp;&nbsp; EMPLOYER</h4>
 
                     @can('approve employer')
                         @if ($employer->validated != 1)

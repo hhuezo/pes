@@ -33,8 +33,9 @@ class RegisteredUserController extends Controller
         ->groupBy('czc_state_fips','czc_state')
         ->get();*/
 
+        $porcentaje = 0;
         $industries = Industry::get();
-        return view('auth.register', ['industries' => $industries]);
+        return view('auth.register', ['industries' => $industries,'porcentaje'=> $porcentaje]);
     }
 
     public function validate_email($id)

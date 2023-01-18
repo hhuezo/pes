@@ -79,20 +79,20 @@
             text-align: center;
         }
 
-        .with_progress{
+        .with_progress {
             width: 41%
         }
     </style>
 
-<style>
-    .header22 {
-        display: none;
-    }
+    <style>
+        .header22 {
+            display: none;
+        }
 
-    .nav-header1{
-        display: none;
-    }
-</style>
+        .nav-header1 {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -122,7 +122,7 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-               <!--<  <img class="logo-abbr" src="{{ asset('template/images/logo.png') }}" alt="">
+                <!--<  <img class="logo-abbr" src="{{ asset('template/images/logo.png') }}" alt="">
                 <img class="logo-compact" src="{{ asset('template/images/logo.svg') }}" alt="">
                 <img class="brand-title" src="{{ asset('template/images/logo.svg') }}" alt="">
                img class="logo-compact" src="{{ asset('template/images/logo-text.png') }}" alt="">
@@ -302,8 +302,12 @@
                                 <div class="stat-text">Your progress </div>
                             </div>
                             <div class="progress">
-                                <div class="progress-bar with_progress" role="progressbar"  style="width: {{$porcentaje}}%;"
-                                    aria-valuemin="100" aria-valuemax="100"></div>
+                                @if ($porcentaje)
+                                    <div class="progress-bar with_progress" role="progressbar"
+                                        style="width: {{ $porcentaje }}%;" aria-valuemin="100"
+                                        aria-valuemax="100"></div>
+                                @endif
+
                             </div>
                         </div>
                     </div>

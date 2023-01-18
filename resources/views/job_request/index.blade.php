@@ -10,8 +10,10 @@
 
             <div class="card-header">
                 <h4 class="card-title">Requirements</h4>
-                <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right" data-toggle="modal"
-                    data-target=".bd-example-modal-lg">New Requirement</button></a>
+                @can('create job application')
+                <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right">New Requirement</button></a>
+                @endcan
+
             </div>
 
             <div class="card-body">
