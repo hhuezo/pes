@@ -92,7 +92,7 @@ Route::post('job_request_detail/delete', [JobRequestDetailController::class, 'de
 Route::post('job_request_detail/job_requirements', [JobRequestDetailController::class, 'job_requirements']);
 Route::post('job_request_detail/job_offer_supervise', [JobRequestDetailController::class, 'job_offer_supervise']);
 Route::post('job_request_detail/job_requirements_alternative', [JobRequestDetailController::class, 'job_requirements_alternative']);
-
+Route::post('job_request_detail/english_levels', [JobRequestDetailController::class, 'english_levels']);
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);
