@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\catalogue\DegreeCode;
 use App\Models\catalogue\JobTitle;
 use App\Models\catalogue\SpecialSkill;
+use App\Models\catalogue\EnglishLevel;
+
 use App\Models\EmployerWorksite;
 use App\Models\JobOfferSupervise;
 use App\Models\JobRequest;
 use App\Models\JobRequestDetail;
 use App\Models\SpecialSkillJobRequest;
+use App\Models\RequestDetail;
+use App\Models\RequestDetailEnglishLevel;
+
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -97,6 +102,21 @@ class JobRequestDetailController extends Controller
         $job_request = JobRequest::findOrFail($detail->request_id);
 
 
+        $details = RequestDetail::where('request_id','=',$job_request->id)->get();
+
+        //dd($details);
+
+        $array_id_details = [];
+
+        foreach($details as $detail){
+            array_push($array_id_details, $detail->id);
+        }
+
+        $positions = RequestDetailEnglishLevel::whereIn('request_detail_id',$array_id_details)->with('english_level')->get();
+
+
+
+
         $job_offerts = JobOfferSupervise::where('request_detail_id', '=', $id)->get();
 
         $id_job_title_array = [];
@@ -122,10 +142,41 @@ class JobRequestDetailController extends Controller
         $worksites = EmployerWorksite::where('employer_id', '=', $job_request->employer_id)->get();
 
 
+
+
+
+
+
+
+
+        $english_details =  RequestDetailEnglishLevel::where('request_detail_id','=',$detail->id)->get();
+
+        $array_english_levels = [];
+
+        $total_workers = 0;
+
+        if ($english_details){
+            foreach($english_details as $english_detail){
+                $total_workers += $english_detail->number_of_workers;
+                array_push($array_english_levels, $english_detail->catalog_english_level_id);
+            }
+        }
+
+        //dd($detail->id, $total_workers, $array_english_levels);
+
+
+
+
+
+        $english_levels = EnglishLevel::whereNotIn('id',$array_english_levels)->get();
+
+
+
         return view('job_request_detail.edit', [
             'job_request' => $job_request, 'job_titles' => $job_titles, 'degree_codes' => $degree_codes, 'detail' => $detail,
             'special_skills' => $special_skills, 'special_skills_alternative' => $special_skills_alternative, 'skills' => $skills,
-            'job_offerts' => $job_offerts, 'worksites' => $worksites
+            'job_offerts' => $job_offerts, 'worksites' => $worksites, 'english_levels' => $english_levels, 'total_workers' => $total_workers,
+            'positions' => $positions
         ]);
     }
 
@@ -194,6 +245,26 @@ class JobRequestDetailController extends Controller
 
         Alert::info('Ok', 'Record saved');
         return redirect('job_request_detail/' . $detail->id . '/edit');
+    }
+
+    public function english_levels(Request $request){
+        //dd("entro a agregar niveles de ingles");
+
+
+
+
+        $rdel = new RequestDetailEnglishLevel();
+        $rdel->request_detail_id = $request->get('request_detail_id');
+        $rdel->catalog_english_level_id = $request->get('catalog_english_level_id');
+        $rdel->number_of_workers = $request->get('number_of_workers');
+        $rdel->save();
+
+        session_start();
+        session(['tab_detail' => '3']);
+
+        Alert::success('Ok', 'Record saved');
+        return back();
+
     }
 
     public function job_requirements(Request $request)

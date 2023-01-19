@@ -77,4 +77,15 @@ class JobRequestDetail extends Model
         return $this->belongsTo('App\Models\EmployerWorksite', 'employer_worksite_id', 'id');
     }
 
+    public function detail_has_english_level()
+    {
+        return $this->hasMany('App\Models\RequestDetailEnglishLevel', 'id', 'request_detail_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo('App\Models\catalogue\JobTitle', 'job_title_id', 'id');
+    }
+
+
 }

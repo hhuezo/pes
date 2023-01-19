@@ -624,7 +624,7 @@ class EmployerController extends Controller
 
                     'primary_contact_name' => 'required|min:4',
                     'primary_contact_last_name' => 'required|min:4',
-                    'primary_contact_job_title' => 'required|min:10',
+                    'primary_contact_job_title' => 'required|min:4',
                     'primary_contact_email' => 'required|min:10',
                     'primary_contact_phone' => 'required|min:10',
                     'primary_contact_cellphone' => 'required|min:10',
@@ -654,7 +654,7 @@ class EmployerController extends Controller
 
                     'primary_contact_name' => 'required|min:4',
                     'primary_contact_last_name' => 'required|min:4',
-                    'primary_contact_job_title' => 'required|min:10',
+                    'primary_contact_job_title' => 'required|min:4',
                     'primary_contact_email' => 'required|min:10',
                     'primary_contact_phone' => 'required|min:10',
                     'primary_contact_cellphone' => 'required|min:10',
@@ -690,7 +690,7 @@ class EmployerController extends Controller
 
                     'primary_contact_name' => 'required|min:4',
                     'primary_contact_last_name' => 'required|min:4',
-                    'primary_contact_job_title' => 'required|min:10',
+                    'primary_contact_job_title' => 'required|min:4',
                     'primary_contact_email' => 'required|min:10',
                     'primary_contact_phone' => 'required|min:10',
                     'primary_contact_cellphone' => 'required|min:10',
@@ -714,7 +714,7 @@ class EmployerController extends Controller
 
                     'primary_contact_name' => 'required|min:4',
                     'primary_contact_last_name' => 'required|min:4',
-                    'primary_contact_job_title' => 'required|min:10',
+                    'primary_contact_job_title' => 'required|min:4',
                     'primary_contact_email' => 'required|min:10',
                     'primary_contact_phone' => 'required|min:10',
                     'primary_contact_cellphone' => 'required|min:10',
@@ -725,9 +725,6 @@ class EmployerController extends Controller
 
         //dd($request);
 
-
-
-
         $employer = Employer::findOrFail($request->get('id'));
         $employer->primary_contact_name = $request->get('primary_contact_name');
         $employer->contact_middle_name = $request->get('contact_middle_name');
@@ -736,7 +733,6 @@ class EmployerController extends Controller
         $employer->primary_contact_email = $request->get('primary_contact_email');
         $employer->primary_contact_phone = $request->get('primary_contact_phone');
         $employer->primary_contact_cellphone = $request->get('primary_contact_cellphone');
-
 
         $employer->signed_all_documents = $signed_all_documents;
         if ($signed_all_documents == 0) {

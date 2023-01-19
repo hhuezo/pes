@@ -664,8 +664,7 @@
 
                                             <div class="col-md-12">
                                                 <center>
-                                                    <a
-                                                        href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                    <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                         <button type="button" class="btn btn-danger">Back</button>
                                                     </a>
                                                     &nbsp;&nbsp;
@@ -753,8 +752,7 @@
 
                                                 <div class="col-md-12">
                                                     <center>
-                                                        <a
-                                                            href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                        <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                             <button type="button" class="btn btn-danger">Back</button>
                                                         </a>
                                                         &nbsp;&nbsp;
@@ -766,12 +764,12 @@
 
 
 
-                                               <!-- <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        changes</button>
-                                                </div>-->
+                                                <!-- <div class="modal-footer">
+                                                                                                                                                                                                            <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                data-dismiss="modal">Close</button>
+                                                                                                                                                                                                            <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                changes</button>
+                                                                                                                                                                                                        </div>-->
 
 
                                             </form>
@@ -839,8 +837,10 @@
                                                                 @endif
                                                             @endforeach
                                                         </select>
+
                                                     </div>
                                                 </div>
+
 
                                                 <div class="div_diploma_degree" id="div_diploma_degree">
                                                     <div class="col-md-12">
@@ -852,6 +852,8 @@
                                                                 class="form-control">
                                                         </div>
                                                     </div>
+
+
 
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -1090,8 +1092,7 @@
 
                                                 <div class="col-md-12">
                                                     <center>
-                                                        <a
-                                                            href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                        <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                             <button type="button" class="btn btn-danger">Back</button>
                                                         </a>
                                                         &nbsp;&nbsp;
@@ -1101,18 +1102,147 @@
 
                                                 </div>
 
-                                               <!-- <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        changes</button>
-                                                </div>-->
+                                                <!-- <div class="modal-footer">
+                                                                                                                                                                                                            <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                data-dismiss="modal">Close</button>
+                                                                                                                                                                                                            <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                changes</button>
+                                                                                                                                                                                                        </div>-->
 
 
                                             </form>
                                         </div>
 
                                     </div>
+
+                                    <br>
+
+                                    <div class="col-md-12 row">
+                                        <div class="col-md-12">
+                                            <div class="form-group" align='center'>
+                                                <label for="exampleInputEmail1">
+                                                    English Level
+                                                </label>
+
+                                                <button class="btn btn-primary"
+                                                    onclick="modal_add_english_level()">Add</button>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- modal add english level -->
+                                        <div class="modal fade" id="modal-add-english-level" tabindex="-1"
+                                            role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Engish Level</h5>
+                                                        <button type="button" class="close"
+                                                            data-dismiss="modal"><span>&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{ url('job_request_detail/english_levels') }}"
+                                                        method="POST">
+                                                        @csrf
+
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <h5>Add english level</h5>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <input type="text" id="id_detail"
+                                                                        name="request_detail_id" id="request_detail_id"
+                                                                        value="{{ $detail->id }}">
+
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>English Level</label>
+                                                                        <select class="form-control "
+                                                                            name="catalog_english_level_id"
+                                                                            id="catalog_english_level_id">
+                                                                            <option value="">Select</option>
+                                                                            @foreach ($english_levels as $obj)
+                                                                                <option value="{{ $obj->id }}">
+                                                                                    {{ $obj->description_level_en }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Quantity</label>
+
+                                                                        <input type="number" name="number_of_workers"
+                                                                            min="1"
+                                                                            max="{{ $detail->number_workers - $total_workers }}"
+                                                                            id="number_of_workers" class="form-control">
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-danger"
+                                                                data-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- end modal add english level -->
+                                    </div>
+
+
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                Position
+                                            </td>
+                                            <td>
+                                                Workers
+                                            </td>
+                                            <td>
+                                                English Level
+                                            </td>
+                                        </tr>
+
+                                        @foreach ($positions as $position)
+                                            <tr>
+                                                <td>
+                                                    {{ $position->request_detail->position->title }}
+                                                </td>
+                                                <td>
+                                                    {{ $position->number_of_workers }}
+                                                </td>
+                                                <td>
+                                                    {{ $position->english_level->description_level_en }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </table>
+
+
+
                                 </div>
                                 <div class="tab-pane fade" id="tab4">
                                     <div class="pt-4">
@@ -1385,7 +1515,8 @@
                                                             <center>
                                                                 <a
                                                                     href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                                    <button type="button" class="btn btn-danger">Back</button>
+                                                                    <button type="button"
+                                                                        class="btn btn-danger">Back</button>
                                                                 </a>
                                                                 &nbsp;&nbsp;
                                                                 <button type="submit" class="btn btn-primary">Save
@@ -1395,11 +1526,11 @@
                                                         </div>
 
                                                         <!--<div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save
-                                                                changes</button>
-                                                        </div>-->
+                                                                                                                                                                                                                    <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                        data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                        changes</button>
+                                                                                                                                                                                                                </div>-->
                                                     </div>
 
 
@@ -1451,6 +1582,12 @@
             }
 
         });
+
+
+        function modal_add_english_level() {
+            $('#modal-add-english-level').modal('show');
+        }
+
 
         function show_div_explain_benefits(id) {
             if (id == 1) {
