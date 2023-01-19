@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\EmployerAdminController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\JobRequestController;
 use App\Http\Controllers\JobRequestDetailController;
@@ -53,6 +54,7 @@ require __DIR__ . '/auth.php';
 
 
 Route::resource('employer', EmployerController::class);
+Route::resource('employer_admin', EmployerAdminController::class);
 Route::get('get_naics_code/{id}', [EmployerController::class, 'get_naics_code']);
 
 #counties
@@ -74,6 +76,7 @@ Route::post('employer_contact_information', [EmployerController::class, 'employe
 Route::post('employer_place_store', [EmployerController::class, 'employer_place_store']);
 Route::post('employer_additional_location', [EmployerController::class, 'employer_additional_location']);
 Route::post('employer/activate', [EmployerController::class, 'activate']);
+Route::post('employer_admin/activate', [EmployerAdminController::class, 'activate']);
 Route::post('employer/create_swa', [EmployerController::class, 'create_swa']);
 Route::post('employer/delete_swa', [EmployerController::class, 'delete_swa']);
 Route::get('employer/get_swa/{id}', [EmployerController::class, 'get_swa']);

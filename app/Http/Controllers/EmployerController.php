@@ -895,7 +895,7 @@ class EmployerController extends Controller
 
 
         Alert::success('', 'Record saved');
-        session(['action' => '2']);
+        session(['action' => '4']);
         $employer->update();
         return redirect('employer/' . $employer->id . '/edit');
         //return back();

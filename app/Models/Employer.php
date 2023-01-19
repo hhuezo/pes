@@ -27,7 +27,7 @@ class Employer extends Model
         'company_website',
         'has_participate_h2b',
         'quantity_year_has_participate_h2b',
-        'primary_business_type_id',
+        'catalog_industry_id',
         'naics_id',
         'naics_code',
         'year_end_gross_company_income',
@@ -74,6 +74,7 @@ class Employer extends Model
         'local_transportation_website',
         'place_employment_notes',
         'validated',
+        'case_manager_id'
 
     ];
 
@@ -81,6 +82,11 @@ class Employer extends Model
 
     protected $guarded = [];
 
+
+    public function industry()
+    {
+        return $this->belongsTo('App\Models\catalogue\Industry', 'catalog_industry_id', 'id');
+    }
 
     public function naicsCode()
     {
@@ -92,9 +98,14 @@ class Employer extends Model
         return $this->belongsTo('App\Models\catalogue\State', 'principal_state_id', 'id');
     }
 
-    public function principal_city2()
+    public function principal_county()
     {
-        return $this->belongsTo('App\Models\catalogue\City', 'principal_city_id', 'id');
+        return $this->belongsTo('App\Models\catalogue\CityZip', 'principal_county_id', 'id');
+    }
+
+    public function principal_city()
+    {
+        return $this->belongsTo('App\Models\catalogue\CityZip', 'principal_city_id', 'id');
     }
 
     public function user_has_employer()
@@ -103,16 +114,12 @@ class Employer extends Model
     }
 
 
-    public function principal_county()
+    public function mailling_state()
     {
-        return $this->belongsTo('App\Models\catalogue\CityZip', 'principal_county_id', 'id');
+        return $this->belongsTo('App\Models\catalogue\State', 'mailing_state_id', 'id');
     }
 
 
-    public function principal_city()
-    {
-        return $this->belongsTo('App\Models\catalogue\CityZip', 'principal_city_id', 'id');
-    }
 
 
     public function mailling_county()
@@ -124,6 +131,12 @@ class Employer extends Model
     public function mailling_city()
     {
         return $this->belongsTo('App\Models\catalogue\CityZip', 'mailing_city_id', 'id');
+    }
+
+
+    public function case_manager()
+    {
+        return $this->belongsTo('App\Models\User', 'case_manager_id', 'id');
     }
 
 }

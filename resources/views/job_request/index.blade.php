@@ -11,7 +11,8 @@
             <div class="card-header">
                 <h4 class="card-title">Requirements</h4>
                 @can('create job application')
-                <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right">New Requirement</button></a>
+                    <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right">New
+                            Requirement</button></a>
                 @endcan
 
             </div>
@@ -26,6 +27,7 @@
                             <th>End date</th>
                             <th>Paid</th>
                             <th>Notes</th>
+                            <th>Status</th>
                             <th>Option</th>
                         </tr>
                     </thead>
@@ -41,9 +43,26 @@
                                     <td>Bi-weekly</td>
                                 @endif
                                 <td>{{ $obj->job_notes }}</td>
+
+                                @if ($obj->request_status_id)
+                                    @if ($obj->request_status_id == 1)
+                                        <td>
+                                            <div class="btn btn-warning">{{ $obj->status->name }}</div>
+                                        </td>
+                                    @elseif ($obj->request_status_id == 2)
+                                        <td>
+                                            <div class="btn btn-info">{{ $obj->status->name }}</div>
+                                        </td>
+                                    @elseif ($obj->request_status_id == 3)
+                                        <td>
+                                            <div class="btn btn-success">{{ $obj->status->name }}</div>
+                                        </td>
+                                    @endif
+                                @else
+                                    <td></td>
+                                @endif
                                 <td align="center">
-                                    <a href="{{ url('job_request/get_div_admin') }}/{{ $obj->id }}"
-                                        class="on-default edit-row">
+                                    <a href="{{ url('job_request') }}/{{ $obj->id }}/edit" class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
                                     &nbsp;&nbsp;
                                     <a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" target="_blank"

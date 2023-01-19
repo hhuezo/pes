@@ -18,6 +18,13 @@ return [
     'NetCompanyIncome' => 'Latest year-end NET Company income',
     'PrincipalPlaceBusiness' => 'PRINCIPAL PLACE OF BUSINESS',
     'PrincipalStreetAddress' => 'Principal Street Address',
+
+    'State' => 'State',
+    'City' => 'City',
+    'Country' => 'County',
+    'State' => 'State',
+    'ZipCode' => 'Zip Code',
+
     'PrincipalCity' => 'Principal City',
     'PrincipalCountry' => 'Principal COUNTY',
     'PrincipalState' => 'Principal State',
@@ -32,7 +39,7 @@ return [
     'SignedAllDocuments' => 'Will the PRIMARY Contact listed above SIGN all documents?',
     'AddContactPerson' => 'Would you like to add an Additional Contact Person?',
     'EmployerContactInformation'  => 'EMPLOYER CONTACT INFORMATION',
-    'PrimaryContact'  => 'Primary Contact',
+    'PrimaryContact'  => 'First name Contact',
     'contact_middle_name'=>'Middle name',
     'Name'  => 'First',
     'Last'  => 'Last',

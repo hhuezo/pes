@@ -62,4 +62,10 @@ class JobRequest extends Model
     {
         return $this->belongsTo('App\Models\Employer', 'employer_id', 'id');
     }
+
+
+    public function status()
+    {
+        return $this->belongsTo('App\Models\catalogue\RequestStatus', 'request_status_id', 'id');
+    }
 }

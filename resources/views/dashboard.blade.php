@@ -279,11 +279,12 @@
                                     class="fa fa-bar-chart fa-lg"></i><span class="nav-text">Dashboar</span></a></li>
                     @endcan
 
+
+
                     @can('read admin employer')
-                        <li> <a href="{{ url('employer') }}" aria-expanded="false"><i
-                                    class="fa fa-user-o fa-lg"></i><span class="nav-text">Employer</span></a></li>
 
-
+                    <li> <a href="{{ url('employer') }}" aria-expanded="false"><i
+                        class="fa fa-user-o fa-lg"></i><span class="nav-text">Employer</span></a></li>
 
                         <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
                                     class="nav-text">Create acounts</span></a></li>

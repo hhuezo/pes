@@ -35,7 +35,7 @@
 
                                 <div class="form-group">
                                     <label for="exampleInputUsername1">Contact Middle Name</label>
-                                    <input type="text" name="contact_middle_name" required class="form-control">
+                                    <input type="text" name="contact_middle_name" class="form-control">
                                 </div>
                             </div>
 
