@@ -664,8 +664,7 @@
 
                                             <div class="col-md-12">
                                                 <center>
-                                                    <a
-                                                        href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                    <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                         <button type="button" class="btn btn-danger">Back</button>
                                                     </a>
                                                     &nbsp;&nbsp;
@@ -753,8 +752,7 @@
 
                                                 <div class="col-md-12">
                                                     <center>
-                                                        <a
-                                                            href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                        <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                             <button type="button" class="btn btn-danger">Back</button>
                                                         </a>
                                                         &nbsp;&nbsp;
@@ -766,12 +764,12 @@
 
 
 
-                                               <!-- <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        changes</button>
-                                                </div>-->
+                                                <!-- <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-danger"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                                <button type="submit" class="btn btn-primary">Save
+                                                                                    changes</button>
+                                                                            </div>-->
 
 
                                             </form>
@@ -839,8 +837,63 @@
                                                                 @endif
                                                             @endforeach
                                                         </select>
+
                                                     </div>
                                                 </div>
+
+
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">
+                                                            English Level
+                                                        </label>
+
+                                                        <input type="hidden" name="id"
+                                                            value="{{ $detail->id }}">
+                                                        <button type="submit" class="btn btn-primary">Add</button>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                <!-- modal add english level -->
+                                                <div class="modal fade" id="modal-add-english-level" tabindex="-1"
+                                                    role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">{!! trans('job_application.Position') !!}</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal"><span>&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form method="POST"
+                                                                action="{{ url('job_request_detail/delete') }}">
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <input type="hidden" id="id_detail"
+                                                                                name="id">
+                                                                            <h5>Do you want to delete the record?</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        data-dismiss="modal">Close</button>
+                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                        changes</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end modal add english level -->
+
+
+
 
                                                 <div class="div_diploma_degree" id="div_diploma_degree">
                                                     <div class="col-md-12">
@@ -852,6 +905,8 @@
                                                                 class="form-control">
                                                         </div>
                                                     </div>
+
+
 
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -1090,8 +1145,7 @@
 
                                                 <div class="col-md-12">
                                                     <center>
-                                                        <a
-                                                            href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
+                                                        <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                             <button type="button" class="btn btn-danger">Back</button>
                                                         </a>
                                                         &nbsp;&nbsp;
@@ -1101,12 +1155,12 @@
 
                                                 </div>
 
-                                               <!-- <div class="modal-footer">
-                                                    <button type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        changes</button>
-                                                </div>-->
+                                                <!-- <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-danger"
+                                                                                    data-dismiss="modal">Close</button>
+                                                                                <button type="submit" class="btn btn-primary">Save
+                                                                                    changes</button>
+                                                                            </div>-->
 
 
                                             </form>
@@ -1385,7 +1439,8 @@
                                                             <center>
                                                                 <a
                                                                     href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                                    <button type="button" class="btn btn-danger">Back</button>
+                                                                    <button type="button"
+                                                                        class="btn btn-danger">Back</button>
                                                                 </a>
                                                                 &nbsp;&nbsp;
                                                                 <button type="submit" class="btn btn-primary">Save
@@ -1395,11 +1450,11 @@
                                                         </div>
 
                                                         <!--<div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save
-                                                                changes</button>
-                                                        </div>-->
+                                                                                        <button type="button" class="btn btn-danger"
+                                                                                            data-dismiss="modal">Close</button>
+                                                                                        <button type="submit" class="btn btn-primary">Save
+                                                                                            changes</button>
+                                                                                    </div>-->
                                                     </div>
 
 
