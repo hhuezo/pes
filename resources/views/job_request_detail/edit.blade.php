@@ -200,6 +200,18 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+
+
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.JobTitleOfficial') !!}</label>
+                                                    <input type="text" value="{{ $detail->official_job_title }}"
+                                                        name="official_job_title" class="form-control">
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.will_work_be_performed') !!}</label>
@@ -227,16 +239,7 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">{!! trans('job_application.JobTitleOfficial') !!}</label>
-                                                    <input type="text" value="{{ $detail->official_job_title }}"
-                                                        name="official_job_title" class="form-control">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                &nbsp;
-                                            </div>
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.WillTravel') !!}</label><br>
@@ -273,18 +276,10 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">{!! trans('job_application.JobDuties') !!}</label>
-                                                    <textarea class="form-control" name="desc_job_duties" placeholder="{!! trans('job_application.JobDutiesDescription') !!}">
-                                                    {{ $detail->desc_job_duties }}
-                                                    </textarea>
-                                                </div>
-
-                                            </div>
 
 
-                                            <div class="col-md-12">
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     @if ($detail->it_has_cba == 1)
                                                         <input type="checkbox" checked name="it_has_cba">
@@ -296,8 +291,17 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">{!! trans('job_application.JobDuties') !!}</label>
+                                                    <textarea class="form-control" name="desc_job_duties" placeholder="{!! trans('job_application.JobDutiesDescription') !!}">
+                                                    {{ $detail->desc_job_duties }}
+                                                    </textarea>
+                                                </div>
 
-                                            <div class="col-md-4">
+                                            </div>
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.workers_paid_position') !!}</label>
                                                     <select class="form-control" name="how_paid">
@@ -327,7 +331,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.PayRate') !!}</label>
                                                     <input type="number" name="pay_rate"
@@ -335,6 +339,9 @@
                                                         step="0.01" min="1" required>
                                                 </div>
                                             </div>
+
+
+
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -660,10 +667,7 @@
 
                                                 <div id="div_shift_times1">
 
-                                                    @if ($shift_times != '[]')
-                                                        {{ 'uno' }}
-                                                        {{ $shift_times }}
-                                                        {{ 'dos' }}
+                                                    @if ($shift_times->count() > 0)
                                                         @php($i = 1)
                                                         @foreach ($shift_times as $obj)
                                                             @if ($i == 1)
@@ -686,7 +690,6 @@
                                                             @php($i++)
                                                         @endforeach
                                                     @else
-                                                        {{ 'tres' }}
                                                         <div class="form-group">
                                                             <label
                                                                 for="exampleInputEmail1">{!! trans('job_application.primary_shift_start_time') !!}</label>
@@ -697,18 +700,6 @@
                                                             <label
                                                                 for="exampleInputEmail1">{!! trans('job_application.primary_shift_end_time') !!}</label>
                                                             <input type="text" name="primary_shift_end_time"
-                                                                class="form-control">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label
-                                                                for="exampleInputEmail1">{!! trans('job_application.secondary_shift_start_time') !!}</label>
-                                                            <input type="text" name="secundary_shift_start_time"
-                                                                class="form-control">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label
-                                                                for="exampleInputEmail1">{!! trans('job_application.secondary_shift_end_time') !!}</label>
-                                                            <input type="text" name="secundary_shift_end_time"
                                                                 class="form-control">
                                                         </div>
                                                     @endif
@@ -725,23 +716,23 @@
                                                     <br>
 
                                                     <div id="div_shift_times2">
-                                                        @if ($shift_times)
+                                                        @if ($shift_times->count() > 0)
                                                             @php($i = 1)
                                                             @foreach ($shift_times as $obj)
                                                                 @if ($i == 2)
                                                                     <div class="form-group">
                                                                         <label
-                                                                            for="exampleInputEmail1">{!! trans('job_application.secundary_shift_start_time') !!}</label>
+                                                                            for="exampleInputEmail1">{!! trans('job_application.secondary_shift_start_time') !!}</label>
                                                                         <input type="time"
-                                                                            name="secundary_shift_start_time"
+                                                                            name="secondary_shift_start_time"
                                                                             value="{{ $obj->start_time }}"
                                                                             class="form-control">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label
-                                                                            for="exampleInputEmail1">{!! trans('job_application.secundary_shift_end_time') !!}</label>
+                                                                            for="exampleInputEmail1">{!! trans('job_application.secondary_shift_end_time') !!}</label>
                                                                         <input type="time"
-                                                                            name="secundary_shift_end_time"
+                                                                            name="secondary_shift_end_time"
                                                                             value="{{ $obj->end_time }}"
                                                                             class="form-control">
                                                                     </div>
@@ -750,27 +741,18 @@
                                                             @endforeach
                                                         @else
                                                             <div class="form-group">
+                                                                <br>
+
+
                                                                 <label
-                                                                    for="exampleInputEmail1">{!! trans('job_application.primary_shift_start_time') !!}</label>
-                                                                <input type="text" name="primary_shift_start_time"
+                                                                    for="exampleInputEmail1">{!! trans('job_application.secondary_shift_start_time') !!}</label>
+                                                                <input type="text" name="secondary_shift_start_time"
                                                                     class="form-control">
                                                             </div>
                                                             <div class="form-group">
                                                                 <label
-                                                                    for="exampleInputEmail1">{!! trans('job_application.primary_shift_end_time') !!}</label>
-                                                                <input type="text" name="primary_shift_end_time"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label
-                                                                    for="exampleInputEmail1">{!! trans('job_application.secundary_shift_start_time') !!}</label>
-                                                                <input type="text" name="secundary_shift_start_time"
-                                                                    class="form-control">
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label
-                                                                    for="exampleInputEmail1">{!! trans('job_application.secundary_shift_end_time') !!}</label>
-                                                                <input type="text" name="secundary_shift_end_time"
+                                                                    for="exampleInputEmail1">{!! trans('job_application.secondary_shift_end_time') !!}</label>
+                                                                <input type="text" name="secondary_shift_end_time"
                                                                     class="form-control">
                                                             </div>
                                                         @endif
@@ -787,11 +769,12 @@
                                             <div class="col-md-12">
                                                 <center>
                                                     <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                        <button type="button" class="btn btn-danger">Back</button>
+                                                        <button type="button" class="btn btn-danger btn-rounded"
+                                                            style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</button>
                                                     </a>
                                                     &nbsp;&nbsp;
-                                                    <button type="submit" class="btn btn-primary">Save
-                                                        changes</button>
+                                                    <button type="submit" class="btn btn-primary btn-rounded"
+                                                        style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                                     <center>
 
                                             </div>
@@ -875,11 +858,12 @@
                                                 <div class="col-md-12">
                                                     <center>
                                                         <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                            <button type="button" class="btn btn-danger">Back</button>
+                                                            <button type="button" class="btn btn-danger btn-rounded"
+                                                                style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</button>
                                                         </a>
                                                         &nbsp;&nbsp;
-                                                        <button type="submit" class="btn btn-primary">Save
-                                                            changes</button>
+                                                        <button type="submit" class="btn btn-primary btn-rounded"
+                                                            style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                                         <center>
 
                                                 </div>
@@ -887,42 +871,52 @@
 
 
                                                 <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" class="btn btn-danger"
-                                                                                                                                                                                                                                                                                                                                                                                                                                    data-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" class="btn btn-primary">Save
-                                                                                                                                                                                                                                                                                                                                                                                                                                    changes</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                            </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        changes</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>-->
 
 
                                             </form>
 
-                                            @if ($job_offerts->count() > 0)
-                                                <table class="display" style="min-width: 845px">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Job title</th>
-                                                            <th>Number</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @php($i = 1)
-                                                        @foreach ($job_offerts as $obj)
-                                                            <tr>
-                                                                <td>{{ $obj->title->title }}</td>
-                                                                <td>{{ $obj->number_to_be_supervised }}</td>
-                                                            </tr>
-                                                            @php($i++)
-                                                        @endforeach
 
-
-                                                    </tbody>
-
-                                                </table>
-                                            @endif
+                                            <br>
 
 
 
-
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Positions</h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            @if ($job_offerts->count() > 0)
+                                                                <table class="table table-hover table-responsive-sm">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Job title</th>
+                                                                            <th>Number</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($job_offerts as $obj)
+                                                                            <tr>
+                                                                                <td>{{ $obj->title->title }}</td>
+                                                                                <td><span class="badge badge-primary"
+                                                                                        style="background-color: #2763FF">{{ $obj->number_to_be_supervised }}</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /# card -->
+                                            </div>
                                         </div>
 
                                         <div class="col-md-2 row">&nbsp;</div>
@@ -1215,21 +1209,22 @@
                                                 <div class="col-md-12">
                                                     <center>
                                                         <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                            <button type="button" class="btn btn-danger">Back</button>
+                                                            <button type="button" class="btn btn-danger btn-rounded"
+                                                                style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</button>
                                                         </a>
                                                         &nbsp;&nbsp;
-                                                        <button type="submit" class="btn btn-primary">Save
-                                                            changes</button>
+                                                        <button type="submit" class="btn btn-primary btn-rounded"
+                                                            style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                                         <center>
 
                                                 </div>
 
                                                 <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" class="btn btn-danger"
-                                                                                                                                                                                                                                                                                                                                                                                                                                    data-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" class="btn btn-primary">Save
-                                                                                                                                                                                                                                                                                                                                                                                                                                    changes</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                            </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        changes</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>-->
 
 
                                             </form>
@@ -1242,12 +1237,10 @@
                                     <div class="col-md-12 row">
                                         <div class="col-md-12">
                                             <div class="form-group" align='center'>
-                                                <label for="exampleInputEmail1">
-                                                    English Level
-                                                </label>
-
-                                                <button class="btn btn-primary"
-                                                    onclick="modal_add_english_level()">Add</button>
+                                                <button class="btn btn-primary btn-rounded"
+                                                    style="background-color: #2763FF"
+                                                    onclick="modal_add_english_level()">&nbsp;&nbsp;&nbsp;Add English level
+                                                    to Position&nbsp;&nbsp;&nbsp;</button>
 
                                             </div>
                                         </div>
@@ -1278,7 +1271,7 @@
 
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <input type="text" id="id_detail"
+                                                                    <input type="hidden" id="id_detail"
                                                                         name="request_detail_id" id="request_detail_id"
                                                                         value="{{ $detail->id }}">
 
@@ -1322,10 +1315,11 @@
 
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-dismiss="modal">Close</button>
-                                                            <button type="submit" class="btn btn-primary">Save
-                                                                changes</button>
+                                                            <button type="button" class="btn btn-danger btn-rounded"
+                                                                style="background-color: #F77883"
+                                                                data-dismiss="modal">&nbsp;&nbsp;&nbsp;Close&nbsp;&nbsp;&nbsp;</button>
+                                                            <button type="submit" class="btn btn-primary btn-rounded"
+                                                                style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -1335,34 +1329,46 @@
                                     </div>
 
 
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                Position
-                                            </td>
-                                            <td>
-                                                Workers
-                                            </td>
-                                            <td>
-                                                English Level
-                                            </td>
-                                        </tr>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-responsive-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Position</th>
+                                                        <th>Workers</th>
+                                                        <th>English Level</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($positions as $position)
+                                                        <tr>
+                                                            <td>{{ $position->request_detail->position->title }}</td>
+                                                            <td>{{ $position->number_of_workers }}</td>
+                                                            <td>
 
-                                        @foreach ($positions as $position)
-                                            <tr>
-                                                <td>
-                                                    {{ $position->request_detail->position->title }}
-                                                </td>
-                                                <td>
-                                                    {{ $position->number_of_workers }}
-                                                </td>
-                                                <td>
-                                                    {{ $position->english_level->description_level_en }}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </table>
+                                                                @if ($position->english_level->id == '1')
+                                                                    <span class="badge badge-danger"
+                                                                        style="background-color: #F77883">{{ $position->english_level->description_level_en }}</span>
+                                                                @elseif ($position->english_level->id == '2')
+                                                                    <span class="badge badge-primary"
+                                                                        style="background-color: #2763FF">{{ $position->english_level->description_level_en }}</span>
+                                                                @elseif ($position->english_level->id == '3')
+                                                                    <span
+                                                                        class="badge badge-success">{{ $position->english_level->description_level_en }}</span>
+                                                                @elseif ($position->english_level->id == '4')
+                                                                    <span
+                                                                        class="badge badge-info">{{ $position->english_level->description_level_en }}</span>
+                                                                @endif
 
+
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
 
 
                                 </div>
@@ -1638,21 +1644,22 @@
                                                                 <a
                                                                     href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
                                                                     <button type="button"
-                                                                        class="btn btn-danger">Back</button>
+                                                                        class="btn btn-danger btn-rounded"
+                                                                        style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</button>
                                                                 </a>
                                                                 &nbsp;&nbsp;
-                                                                <button type="submit" class="btn btn-primary">Save
-                                                                    changes</button>
+                                                                <button type="submit" class="btn btn-primary btn-rounded"
+                                                                    style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                                                 <center>
 
                                                         </div>
 
                                                         <!--<div class="modal-footer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="button" class="btn btn-danger"
-                                                                                                                                                                                                                                                                                                                                                                                                                                            data-dismiss="modal">Close</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" class="btn btn-primary">Save
-                                                                                                                                                                                                                                                                                                                                                                                                                                            changes</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                changes</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>-->
                                                     </div>
 
 

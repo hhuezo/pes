@@ -103,7 +103,7 @@
                                                     @endforeach
                                                     <tr>
                                                         <td colspan="2"><strong>Total</strong></td>
-                                                        <td><strong>{{$total}}</strong></td>
+                                                        <td><strong>{{ $total }}</strong></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -120,28 +120,35 @@
                     <div class="col-md-6">
                         <div class="col-md-12">
                             <br>
-                          <center> <h4 style="margin-top: 17px;"> Request will be ready in:<h4></center>
+                            <center>
+                                <h4 style="margin-top: 17px;"> Request will be ready in:<h4>
+                            </center>
                         </div>
 
                         <div class="col-md-12" style="text-align: center; display: flex; margi">
                             <div class="col-md-2"></div>
                             <div class="col-md-8 col-sm-12 row box" style="margin-top: 30px;">
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
-                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;"> {{ $DeferenceInDays }}</div><br>
-                                    <span style="color: white;  margin-top: 10px; font-weight: bold;"><span style="font: ">DAYS</span></span>
+                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">
+                                        {{ $DeferenceInDays }}</div><br>
+                                    <span style="color: white;  margin-top: 10px; font-weight: bold;"><span
+                                            style="font: ">DAYS</span></span>
                                 </div>
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
-                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">{{ $DeferenceInHours }}</div><br>
+                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">
+                                        {{ $DeferenceInHours }}</div><br>
                                     <span style="color: white;  margin-top: 10px; font-weight: bold;">HOURS</span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
-                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">{{ $DeferenceInMinutes }}</div><br>
+                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">
+                                        {{ $DeferenceInMinutes }}</div><br>
                                     <span style="color: white;  margin-top: 10px; font-weight: bold;">MINU</span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
-                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">{{ $DeferenceInSeconds }}</div><br>
+                                    <div class="big_letter" style="margin-top: 10px; font-weight: bold;">
+                                        {{ $DeferenceInSeconds }}</div><br>
                                     <span style="color: white;  margin-top: 10px; font-weight: bold;">SECO</span>
                                 </div>
                             </div>
@@ -155,18 +162,22 @@
                                 @csrf
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1"><h5>Assign rate</h5></label>
+                                        <label for="exampleInputEmail1">
+                                            <h5>Assign rate</h5>
+                                        </label>
 
-                                        <input type="number" name="request_rate" class="form-control" placeholder="To write" min="1" step="0.01"
+                                        <input type="number" name="request_rate" class="form-control"
+                                            placeholder="To write" min="1" step="0.01"
                                             value="{{ $job_request->request_rate }}">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <center><button type="submit" name="send_rate" id="send_rate"
-                                        class="btn btn-primary float-right btn-rounded">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                                            class="btn btn-primary float-right btn-rounded"
+                                            style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
                                     </center>
-                                    </div>
+                                </div>
                             </form>
 
 
