@@ -253,6 +253,12 @@ return [
     'total_hours' => 'Total Hours',
     'reminder' => '<strong>Reminder:</strong> this is the total number of hours OFFERED in a typical workweek. Full-time is considered 35-40 hours per week. ',
     'time_this_position' => 'Enter the PRIMARY shift time for this position (included break(s))',
+
+    'primary_shift_start_time' => 'Enter the PRIMARY shift start time for this position (included break(s))',
+    'primary_shift_end_time' => 'Enter the PRIMARY shift end time for this position (included break(s))',
+    'secondary_shift_start_time' => 'Enter the SECONDARY shift start time for this position (included break(s))',
+    'secondary_shift_end_time' => 'Enter the SECONDARY shift start time for this position (included break(s))',
+
     'shift_times_position' => 'Are there additional shift times for this position?',
 
 

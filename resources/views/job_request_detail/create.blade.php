@@ -37,7 +37,7 @@
 
                                             @csrf
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <input type="hidden" name="job_request_id"
                                                         value="{{ $job_request->id }}">
@@ -51,7 +51,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.Number_of_Workers') !!}</label>
                                                     <input type="number" name="number_workers" class="form-control"
@@ -59,28 +59,31 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.PlaceEmploymentInformation') !!}</label>
                                                     <select name="employer_worksite_id" class="form-control select2">
                                                         @foreach ($worksites as $obj)
-                                                            <option value="{{$obj->id}}">{{$obj->street_address}}, {{$obj->city->czc_city}}, {{$obj->county->czc_county}}
-                                                                , {{$obj->state->cs_state}}</option>
+                                                            <option value="{{ $obj->id }}">{{ $obj->street_address }},
+                                                                {{ $obj->city->czc_city }}, {{ $obj->county->czc_county }}
+                                                                , {{ $obj->state->cs_state }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.will_work_be_performed') !!}</label>
                                                     <br>
                                                     {!! trans('employer.Yes') !!}
 
-                                                    <input type="radio" value="1"  name="is_located_multiple_pwd_msa">
+                                                    <input type="radio" value="1" name="is_located_multiple_pwd_msa">
 
                                                     &nbsp;&nbsp;
                                                     {!! trans('employer.No') !!}
-                                                    <input type="radio" value="0" checked name="is_located_multiple_pwd_msa">
+                                                    <input type="radio" value="0" checked
+                                                        name="is_located_multiple_pwd_msa">
                                                 </div>
                                             </div>
 
@@ -90,17 +93,19 @@
                                                     <input type="text" name="official_job_title" class="form-control">
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                &nbsp;
-                                            </div>
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.WillTravel') !!}</label><br>
                                                     {!! trans('job_application.Yes') !!}
-                                                    <input type="radio" value="1" onclick="show_div_geographic_location(1);" name="is_travel_required">
+                                                    <input type="radio" value="1"
+                                                        onclick="show_div_geographic_location(1);"
+                                                        name="is_travel_required">
                                                     &nbsp;&nbsp;
                                                     {!! trans('job_application.No') !!}
-                                                    <input type="radio" value="0"  onclick="show_div_geographic_location(0);" checked name="is_travel_required">
+                                                    <input type="radio" value="0"
+                                                        onclick="show_div_geographic_location(0);" checked
+                                                        name="is_travel_required">
 
                                                 </div>
                                             </div>
@@ -108,28 +113,24 @@
                                             <div class="col-md-6" style="display: none;" id="div_geographic_location">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.provide_geographic_location') !!}</label>
-                                                    <input type="text" name="geographic_location_frecuency" class="form-control">
+                                                    <input type="text" name="geographic_location_frecuency"
+                                                        class="form-control">
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.JobDuties') !!}</label>
-                                                    <textarea class="form-control" name="desc_job_duties" placeholder="{!! trans('job_application.JobDutiesDescription') !!}"></textarea>
+                                                    <textarea rows="4" class="form-control" name="desc_job_duties" placeholder="{!! trans('job_application.JobDutiesDescription') !!}"></textarea>
                                                 </div>
 
                                             </div>
 
 
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <input type="checkbox" name="it_has_cba">&nbsp;&nbsp;<label
-                                                        for="exampleInputEmail1">{!! trans('job_application.CollectiveBargaining') !!}</label>
-                                                </div>
-                                            </div>
 
 
-                                            <div class="col-md-4">
+
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.workers_paid_position') !!}</label>
                                                     <select class="form-control" name="how_paid">
@@ -142,7 +143,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.PayRate') !!}</label>
                                                     <input type="number" name="pay_rate" class="form-control"
@@ -152,8 +153,14 @@
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
+                                                    <input type="checkbox" name="it_has_cba">&nbsp;&nbsp;<label
+                                                        for="exampleInputEmail1">{!! trans('job_application.CollectiveBargaining') !!}</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.tip_credit') !!}</label>
-                                                    <br>
                                                     {!! trans('employer.Yes') !!}
 
                                                     <input type="radio" value="1" checked name="use_tip_credit">
@@ -179,14 +186,16 @@
                                                         &nbsp;&nbsp;
                                                         {!! trans('employer.No') !!}
                                                         <input type="radio" value="0" checked
-                                                            name="is_there_benefits" onclick="show_div_explain_benefits(0)">
+                                                            name="is_there_benefits"
+                                                            onclick="show_div_explain_benefits(0)">
 
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6" id="div_explain_benefits">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">{!! trans('job_application.explain_bonus') !!}</label>
-                                                        <input type="text" name="explain_benefits" class="form-control">
+                                                        <input type="text" name="explain_benefits"
+                                                            class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -365,10 +374,11 @@
 
                                             <div class="modal-footer">
                                                 <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit"> <button
-                                                        type="button" class="btn btn-danger"
-                                                        data-dismiss="modal">Close</button></a>
-                                                <button type="submit" class="btn btn-primary">Save
-                                                    changes</button>
+                                                        type="button" class="btn btn-danger btn-rounded"
+                                                        data-dismiss="modal"
+                                                        style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Close&nbsp;&nbsp;&nbsp;</button></a>
+                                                <button type="submit" class="btn btn-primary btn-rounded"
+                                                    style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                             </div>
 
                                         </div>

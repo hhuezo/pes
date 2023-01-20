@@ -282,9 +282,8 @@
 
 
                     @can('read admin employer')
-
-                    <li> <a href="{{ url('employer_admin') }}" aria-expanded="false"><i
-                        class="fa fa-user-o fa-lg"></i><span class="nav-text">Employer</span></a></li>
+                        <li> <a href="{{ url('employer_admin') }}" aria-expanded="false"><i
+                                    class="fa fa-user-o fa-lg"></i><span class="nav-text">Employer</span></a></li>
 
                         <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
                                     class="nav-text">Create acounts</span></a></li>
@@ -454,7 +453,7 @@
         ***********************************-->
         <div class="footer">
             <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+
             </div>
         </div>
         <!--**********************************

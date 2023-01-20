@@ -129,18 +129,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6" id="div_multiple_employment_period">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{!! trans('job_application.multiple_employment_period') !!}</label>
-                                            <input type="text" name="explain_multiple_employment"
-                                                value="{{ $job_request->explain_multiple_employment }}"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">&nbsp;</div>
-
                                     <!-- paid -->
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">{!! trans('job_application.workers_paid') !!}</label>
                                             <br>
@@ -159,10 +149,9 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                    </div>
 
-                                    <div class="col-md-6">
+
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">{!! trans('job_application.uniform') !!}</label>
                                             <br>
@@ -187,20 +176,42 @@
                                         <label for="exampleInputEmail1">{!! trans('job_application.message3') !!}</label>
                                     </div>
 
-                                    <div class="col-md-6" id="div_uniform">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{!! trans('job_application.uniform_pieces') !!}</label>
-                                            <input type="text" name="uniform_pieces_required"
-                                                value="{{ $job_request->uniform_pieces_required }}" class="form-control">
+
+
+                                    <div class="col-sm-12">&nbsp;</div>
+
+
+                                    <div class="col-md-6">
+                                        <div id="div_multiple_employment_period">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{!! trans('job_application.multiple_employment_period') !!}</label>
+                                                <input type="text" name="explain_multiple_employment"
+                                                    value="{{ $job_request->explain_multiple_employment }}"
+                                                    class="form-control">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div id="div_uniform">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{!! trans('job_application.uniform_pieces') !!}</label>
+                                                <input type="text" name="uniform_pieces_required"
+                                                    value="{{ $job_request->uniform_pieces_required }}"
+                                                    class="form-control">
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">{!! trans('job_application.notes') !!}</label>
-                                            <input type="text" name="job_notes" value="{{ $job_request->job_notes }}"
-                                                class="form-control">
+                                            <textarea class="form-control" name="job_notes">
+                                            {{ $job_request->job_notes }}
+                                            </textarea>
                                         </div>
+
                                         <label for="exampleInputEmail1">{!! trans('job_application.additional_space') !!}</label>
                                     </div>
 
@@ -209,7 +220,9 @@
 
 
                                     <div class="col-sm-12 form-group">
-                                        <button type="submit" class="btn btn-primary float-right">Next</button>
+                                        <button type="submit"
+                                            class="btn btn-primary float-right btn-rounded">&nbsp;&nbsp;&nbsp;Next&nbsp;&nbsp;&nbsp;</button>
+
                                     </div>
 
                                 </div>
@@ -222,7 +235,9 @@
                             <div class="col-md-12">&nbsp;</div>
                             <div class="col-sm-12 form-group">
                                 <a href="{{ url('job_request_detail/create') }}/{{ $job_request->id }}">
-                                    <button type="button" class="btn btn-primary float-right">Add Position</button>
+                                    <button type="button"
+                                        class="btn btn-primary float-right btn-rounded">&nbsp;&nbsp;&nbsp;Add
+                                        Position&nbsp;&nbsp;&nbsp;</button>
                                 </a>
                             </div>
                             <div class="table-responsive">

@@ -14,6 +14,8 @@ use App\Models\JobRequestDetail;
 use App\Models\SpecialSkillJobRequest;
 use App\Models\RequestDetail;
 use App\Models\RequestDetailEnglishLevel;
+use App\Models\ShiftTime;
+
 
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -104,6 +106,7 @@ class JobRequestDetailController extends Controller
 
         $details = RequestDetail::where('request_id','=',$job_request->id)->get();
 
+
         //dd($details);
 
         $array_id_details = [];
@@ -165,10 +168,10 @@ class JobRequestDetailController extends Controller
         //dd($detail->id, $total_workers, $array_english_levels);
 
 
-
-
-
         $english_levels = EnglishLevel::whereNotIn('id',$array_english_levels)->get();
+
+
+        $shift_times = ShiftTime::where('request_detail_id','=',$detail->id)->get();
 
 
 
@@ -176,7 +179,7 @@ class JobRequestDetailController extends Controller
             'job_request' => $job_request, 'job_titles' => $job_titles, 'degree_codes' => $degree_codes, 'detail' => $detail,
             'special_skills' => $special_skills, 'special_skills_alternative' => $special_skills_alternative, 'skills' => $skills,
             'job_offerts' => $job_offerts, 'worksites' => $worksites, 'english_levels' => $english_levels, 'total_workers' => $total_workers,
-            'positions' => $positions
+            'positions' => $positions, 'shift_times' => $shift_times
         ]);
     }
 
@@ -239,6 +242,75 @@ class JobRequestDetailController extends Controller
         $detail->are_there_additional_shift_times = $request->get('are_there_additional_shift_times');
         //$detail->user_id = auth()->user()->id;
         $detail->save();
+
+
+
+        $primary_shift_start_time = $request->get('primary_shift_start_time');
+        $primary_shift_end_time = $request->get('primary_shift_end_time');
+        $secondary_shift_start_time = $request->get('secondary_shift_start_time');
+        $secondary_shift_end_time = $request->get('secondary_shift_end_time');
+
+
+        $st_upd = ShiftTime::where('request_detail_id','=',$detail->id)->get();
+
+
+        if ($st_upd) {// Update a Shift Time
+            if ($primary_shift_start_time <> '' && $primary_shift_end_time <> '') {
+                $st_upd->start_time = $primary_shift_start_time;
+                $st_upd->end_time = $primary_shift_end_time;
+                $st_upd->request_detail_id = $detail->id;
+                $st_upd->update();
+            }
+
+            if ($secondary_shift_start_time <> '' && $secondary_shift_end_time <> '') {
+                $st_upd->start_time = $secondary_shift_start_time;
+                $st_upd->end_time = $secondary_shift_end_time;
+                $st_upd->request_detail_id = $detail->id;
+                $st_upd->update();
+            }
+        } else { // Create a new Shift Time
+            if ($primary_shift_start_time <> '' && $primary_shift_end_time <> '') {
+                $st = new ShiftTime();
+                $st->start_time = $primary_shift_start_time;
+                $st->end_time = $primary_shift_end_time;
+                $st->request_detail_id = $detail->id;
+                $st->save();
+            }
+
+            if ($secondary_shift_start_time <> '' && $secondary_shift_end_time <> '') {
+                $st = new ShiftTime();
+                $st->start_time = $secondary_shift_start_time;
+                $st->end_time = $secondary_shift_end_time;
+                $st->request_detail_id = $detail->id;
+                $st->save();
+            }
+        }
+
+
+
+        //dd($primary_shift_start_time, $primary_shift_end_time, $secondary_shift_start_time, $secondary_shift_end_time);
+
+
+
+
+        /*if (($primary_shift_start_time <> '' && $primary_shift_end_time <> '') &&
+            ($secondary_shift_start_time <> '' && $secondary_shift_end_time <> '')) {
+                $st = new ShiftTime();
+                $st->start_time = $primary_shift_start_time;
+                $st->end_time = $primary_shift_end_time;
+                $st->request_detail_id = $detail->id;
+                $st->save();
+
+                $st = new ShiftTime();
+                $st->start_time = $secondary_shift_start_time;
+                $st->end_time = $secondary_shift_end_time;
+                $st->request_detail_id = $detail->id;
+                $st->save();
+        }*/
+
+
+
+
 
         session_start();
         session(['tab_detail' => '2']);
@@ -356,6 +428,7 @@ class JobRequestDetailController extends Controller
         } else {
             SpecialSkillJobRequest::where('request_detail_id', '=', $request->get('id'))->where('is_alternate_skill', '=', 0)->delete();
         }
+
 
         $detail->update();
 
