@@ -621,39 +621,161 @@
 
 
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleInputEmail1">{!! trans('job_application.time_this_position') !!}</label>
-                                                    <input type="number" name="primary_shift_time"
-                                                        value="{{ $detail->primary_shift_time }}" class="form-control">
+
+                                                <label for="exampleInputEmail1">{!! trans('job_application.shift_times_position') !!}</label>
+                                                <br>
+                                                {!! trans('employer.Yes') !!}
+
+                                                @if ($detail->are_there_additional_shift_times == 1)
+                                                    <input type="radio" value="1" checked
+                                                        name="are_there_additional_shift_times"
+                                                        id="are_there_additional_shift_times"
+                                                        onclick="show_div_shift_times(1)">
+                                                @else
+                                                    <input type="radio" value="1"
+                                                        name="are_there_additional_shift_times"
+                                                        id="are_there_additional_shift_times"
+                                                        onclick="show_div_shift_times(1)">
+                                                @endif
+
+
+
+                                                &nbsp;&nbsp;
+                                                {!! trans('employer.No') !!}
+
+                                                @if ($detail->are_there_additional_shift_times == 0)
+                                                    <input type="radio" value="0" checked
+                                                        name="are_there_additional_shift_times"
+                                                        id="are_there_additional_shift_times"
+                                                        onclick="show_div_shift_times(0)">
+                                                @else
+                                                    <input type="radio" value="0"
+                                                        name="are_there_additional_shift_times"
+                                                        id="are_there_additional_shift_times"
+                                                        onclick="show_div_shift_times(0)">
+                                                @endif
+
+                                                <br>
+
+
+                                                <div id="div_shift_times1">
+
+                                                    @if ($shift_times != '[]')
+                                                        {{ 'uno' }}
+                                                        {{ $shift_times }}
+                                                        {{ 'dos' }}
+                                                        @php($i = 1)
+                                                        @foreach ($shift_times as $obj)
+                                                            @if ($i == 1)
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="exampleInputEmail1">{!! trans('job_application.primary_shift_start_time') !!}</label>
+                                                                    <input type="time" name="primary_shift_start_time"
+                                                                        value="{{ $obj->start_time }}"
+                                                                        class="form-control">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label
+                                                                        for="exampleInputEmail1">{!! trans('job_application.primary_shift_end_time') !!}</label>
+                                                                    <input type="time" name="primary_shift_end_time"
+                                                                        value="{{ $obj->end_time }}"
+                                                                        class="form-control">
+                                                                </div>
+                                                            @endif
+
+                                                            @php($i++)
+                                                        @endforeach
+                                                    @else
+                                                        {{ 'tres' }}
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.primary_shift_start_time') !!}</label>
+                                                            <input type="text" name="primary_shift_start_time"
+                                                                class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.primary_shift_end_time') !!}</label>
+                                                            <input type="text" name="primary_shift_end_time"
+                                                                class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.secondary_shift_start_time') !!}</label>
+                                                            <input type="text" name="secundary_shift_start_time"
+                                                                class="form-control">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label
+                                                                for="exampleInputEmail1">{!! trans('job_application.secondary_shift_end_time') !!}</label>
+                                                            <input type="text" name="secundary_shift_end_time"
+                                                                class="form-control">
+                                                        </div>
+                                                    @endif
+
+
                                                 </div>
+
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">{!! trans('job_application.shift_times_position') !!}</label>
+
                                                     <br>
-                                                    {!! trans('employer.Yes') !!}
+                                                    <br>
 
-                                                    @if ($detail->are_there_additional_shift_times == 1)
-                                                        <input type="radio" value="1" checked
-                                                            name="are_there_additional_shift_times">
-                                                    @else
-                                                        <input type="radio" value="1"
-                                                            name="are_there_additional_shift_times">
-                                                    @endif
+                                                    <div id="div_shift_times2">
+                                                        @if ($shift_times)
+                                                            @php($i = 1)
+                                                            @foreach ($shift_times as $obj)
+                                                                @if ($i == 2)
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                            for="exampleInputEmail1">{!! trans('job_application.secundary_shift_start_time') !!}</label>
+                                                                        <input type="time"
+                                                                            name="secundary_shift_start_time"
+                                                                            value="{{ $obj->start_time }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                            for="exampleInputEmail1">{!! trans('job_application.secundary_shift_end_time') !!}</label>
+                                                                        <input type="time"
+                                                                            name="secundary_shift_end_time"
+                                                                            value="{{ $obj->end_time }}"
+                                                                            class="form-control">
+                                                                    </div>
+                                                                @endif
+                                                                @php($i++)
+                                                            @endforeach
+                                                        @else
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="exampleInputEmail1">{!! trans('job_application.primary_shift_start_time') !!}</label>
+                                                                <input type="text" name="primary_shift_start_time"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="exampleInputEmail1">{!! trans('job_application.primary_shift_end_time') !!}</label>
+                                                                <input type="text" name="primary_shift_end_time"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="exampleInputEmail1">{!! trans('job_application.secundary_shift_start_time') !!}</label>
+                                                                <input type="text" name="secundary_shift_start_time"
+                                                                    class="form-control">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label
+                                                                    for="exampleInputEmail1">{!! trans('job_application.secundary_shift_end_time') !!}</label>
+                                                                <input type="text" name="secundary_shift_end_time"
+                                                                    class="form-control">
+                                                            </div>
+                                                        @endif
+                                                    </div>
 
-
-
-                                                    &nbsp;&nbsp;
-                                                    {!! trans('employer.No') !!}
-
-                                                    @if ($detail->are_there_additional_shift_times == 0)
-                                                        <input type="radio" value="0" checked
-                                                            name="are_there_additional_shift_times">
-                                                    @else
-                                                        <input type="radio" value="0"
-                                                            name="are_there_additional_shift_times">
-                                                    @endif
 
                                                 </div>
                                             </div>
@@ -765,11 +887,11 @@
 
 
                                                 <!-- <div class="modal-footer">
-                                                                                                                                                                                                            <button type="button" class="btn btn-danger"
-                                                                                                                                                                                                                data-dismiss="modal">Close</button>
-                                                                                                                                                                                                            <button type="submit" class="btn btn-primary">Save
-                                                                                                                                                                                                                changes</button>
-                                                                                                                                                                                                        </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                                                                                                                                                                                                                                    changes</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                            </div>-->
 
 
                                             </form>
@@ -1103,11 +1225,11 @@
                                                 </div>
 
                                                 <!-- <div class="modal-footer">
-                                                                                                                                                                                                            <button type="button" class="btn btn-danger"
-                                                                                                                                                                                                                data-dismiss="modal">Close</button>
-                                                                                                                                                                                                            <button type="submit" class="btn btn-primary">Save
-                                                                                                                                                                                                                changes</button>
-                                                                                                                                                                                                        </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                                                                                                                                                                                                                                    changes</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                            </div>-->
 
 
                                             </form>
@@ -1526,11 +1648,11 @@
                                                         </div>
 
                                                         <!--<div class="modal-footer">
-                                                                                                                                                                                                                    <button type="button" class="btn btn-danger"
-                                                                                                                                                                                                                        data-dismiss="modal">Close</button>
-                                                                                                                                                                                                                    <button type="submit" class="btn btn-primary">Save
-                                                                                                                                                                                                                        changes</button>
-                                                                                                                                                                                                                </div>-->
+                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="button" class="btn btn-danger"
+                                                                                                                                                                                                                                                                                                                                                                                                                                            data-dismiss="modal">Close</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                        <button type="submit" class="btn btn-primary">Save
+                                                                                                                                                                                                                                                                                                                                                                                                                                            changes</button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>-->
                                                     </div>
 
 
@@ -1581,6 +1703,12 @@
                     break;
             }
 
+
+            if (document.getElementById('are_there_additional_shift_times').checked == true)
+                show_div_shift_times(1);
+            else
+                show_div_shift_times(0);
+
         });
 
 
@@ -1602,6 +1730,16 @@
                 $('#div_requeriments').show();
             } else {
                 $('#div_requeriments').hide();
+            }
+        }
+
+        function show_div_shift_times(id) {
+            if (id == 1) {
+                $('#div_shift_times1').show();
+                $('#div_shift_times2').show();
+            } else {
+                $('#div_shift_times1').hide();
+                $('#div_shift_times2').hide();
             }
         }
 
