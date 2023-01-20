@@ -261,7 +261,7 @@ class JobRequestController extends Controller
 
         // $job_application->signature = $uniqid;
         // $job_application->update();
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         return redirect('job_request/' . $id . '/edit');
     }
 
@@ -992,7 +992,7 @@ class JobRequestController extends Controller
 
 
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         return redirect('job_request/' . $request->get('request_id') . '/edit');
 
     }
@@ -1110,7 +1110,7 @@ class JobRequestController extends Controller
         session(['tab_request' => '6']);
 
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         return redirect('job_request/' . $job_request->id . '/edit');
     }
 
@@ -1146,7 +1146,7 @@ class JobRequestController extends Controller
         session_start();
         session(['tab_request' => '6']);
 
-        Alert::info('', 'Record saved');
+        Alert::success('', 'Record saved');
         return redirect('job_request/' . $request->get('request_id') . '/edit');
 
         //dd("hola desde job_request_sign");

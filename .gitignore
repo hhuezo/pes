@@ -3,6 +3,7 @@
 /public/hot
 /public/storage
 /public/sign
+/public/invoice
 /storage/*.key
 /vendor
 .env

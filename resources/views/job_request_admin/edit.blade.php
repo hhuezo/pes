@@ -137,12 +137,12 @@
 
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
                                     <div class="big_letter" style="margin-top: 10px; font-weight: bold;">{{ $DeferenceInMinutes }}</div><br>
-                                    <span style="color: white;  margin-top: 10px; font-weight: bold;">MINU</span>
+                                    <span style="color: white;  margin-top: 10px; font-weight: bold;">MIN.</span>
                                 </div>
 
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
                                     <div class="big_letter" style="margin-top: 10px; font-weight: bold;">{{ $DeferenceInSeconds }}</div><br>
-                                    <span style="color: white;  margin-top: 10px; font-weight: bold;">SECO</span>
+                                    <span style="color: white;  margin-top: 10px; font-weight: bold;">SEC.</span>
                                 </div>
                             </div>
                             <div class="col-md-2"></div>

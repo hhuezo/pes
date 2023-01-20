@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\JobRequest;
 use App\Models\RequestDetail;
@@ -19,14 +20,10 @@ class JobRequestAdminController extends Controller
     public function index()
     {
         if (auth()->user()->can('read request admin')) {
-            $job_requests = JobRequest::where('request_status_id','>','1')->get();
+            $job_requests = JobRequest::where('request_status_id', '>', '1')->get();
 
             return view('job_request_admin.index', ['job_requests' => $job_requests]);
-
         }
-
-
-
     }
 
     /**
@@ -72,17 +69,17 @@ class JobRequestAdminController extends Controller
         //
         $job_request = JobRequest::findOrFail($id);
 
-        $details = RequestDetail::where('request_id','=',$id)->get();
+        $details = RequestDetail::where('request_id', '=', $id)->get();
 
         //dd($details);
 
         $array_id_details = [];
 
-        foreach($details as $detail){
+        foreach ($details as $detail) {
             array_push($array_id_details, $detail->id);
         }
 
-        $positions = RequestDetailEnglishLevel::whereIn('request_detail_id',$array_id_details)->with('english_level')->get();
+        $positions = RequestDetailEnglishLevel::whereIn('request_detail_id', $array_id_details)->with('english_level')->get();
 
         //dd($positions);
 
@@ -102,25 +99,18 @@ class JobRequestAdminController extends Controller
 
 
 
-        return view('job_request_admin.edit', ['job_request' => $job_request, 'positions'=>$positions,
-                    'DeferenceInDays'=>$DeferenceInDays, 'DeferenceInHours'=>$DeferenceInHours, 'DeferenceInMinutes'=>$DeferenceInMinutes,
-                    'DeferenceInSeconds'=>$DeferenceInSeconds]);
+        return view('job_request_admin.edit', [
+            'job_request' => $job_request, 'positions' => $positions,
+            'DeferenceInDays' => $DeferenceInDays, 'DeferenceInHours' => $DeferenceInHours, 'DeferenceInMinutes' => $DeferenceInMinutes,
+            'DeferenceInSeconds' => $DeferenceInSeconds
+        ]);
 
         //dd($job_request);
         //dd("llego a edit");
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
-        //dd($id);
         $job_request = JobRequest::findOrFail($id);
         $job_request->request_rate = $request->get('request_rate');
         $job_request->request_status_id = 3; //RATE ASSIGNED
@@ -128,18 +118,12 @@ class JobRequestAdminController extends Controller
 
         Alert::success('', 'Record saved');
         return redirect('job_request_admin/' . $id . '/edit');
-
-
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
     }
+
+
 }
