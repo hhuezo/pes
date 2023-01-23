@@ -6,12 +6,12 @@
         <div class="col-lg-12">
             <div class="profile">
                 <div class="profile-head">
-                    <div class="photo-content">
+                    <!--<div class="photo-content">
                         <div class="cover-photo"></div>
                         <div class="profile-photo">
                             <img src="{{ asset('images/profile.png') }}" class="img-fluid rounded-circle" alt="">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="profile-info">
                         <div class="row justify-content-center">
                             <div class="col-xl-8">
@@ -329,7 +329,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <input type="text" value="{{ $contact_worksite->street_address }}"
+                                                    <input type="text"  @if ($contact_worksite) value="{{ $contact_worksite->street_address }}" @endif
                                                         class="form-control" readonly>
                                                 </div>
 

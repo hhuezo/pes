@@ -73,11 +73,11 @@ class RolesAndPermissions extends Seeder
 
 
         $consulta = User::create([
-            'name' => 'admin',
-            'email' => 'admin@mail.com',
+            'name' => 'financial',
+            'email' => 'financial@mail.com',
             'password' => bcrypt('12345678'),
         ]);
-        $consulta->assignRole('administrator');
+        $consulta->assignRole('financial');
 
 
 

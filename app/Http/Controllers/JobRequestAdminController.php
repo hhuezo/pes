@@ -20,8 +20,10 @@ class JobRequestAdminController extends Controller
     public function index()
     {
         if (auth()->user()->can('read request admin')) {
-            $job_requests = JobRequest::where('request_status_id', '>', '1')->get();
-
+            $job_requests = JobRequest::join('employer','request.employer_id','=','employer.id')
+            ->select('request.id','employer.legal_business_name as employer', 'request.start_date', 'request.end_date','request.request_status_id','request.paid',\DB::raw(
+            "(select ifnull(SUM(detail.number_workers),0) from request_detail as detail where detail.request_id = request.id) as number_workers") )
+            ->where('request.request_status_id', '>', '1')->get();
             return view('job_request_admin.index', ['job_requests' => $job_requests]);
         }
     }
