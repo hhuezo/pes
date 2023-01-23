@@ -175,6 +175,11 @@
                                                             @if ($obj->catalog_invoice_status_id != 1)
                                                                 <button class="btn btn-success btn-circle"
                                                                     onclick="modal_pay({{ $obj->id }})">Pay</button>
+
+                                                                    &nbsp;&nbsp;
+                                                                    <button class="btn btn-info btn-circle" onclick="load_invoice({{ $obj->id }})"><i
+                                                                            class="fa fa-pencil fa-lg"></i></button></a>
+
                                                             @endif
 
 
@@ -243,6 +248,10 @@
         function modal_pay(id) {
             document.getElementById('id').value = id;
             $('#modal-pay').modal('show');
+        }
+
+        function load_invoice(id) {
+
         }
     </script>
 @endsection

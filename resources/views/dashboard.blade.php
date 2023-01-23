@@ -297,10 +297,6 @@
                                     class="icon icon-form"></i><span class="nav-text">My requirements</span></a></li>
                     @endcan
 
-                    @can('read job application admin')
-                        <li> <a href="{{ url('job_request') }}" aria-expanded="false"><i
-                                    class="icon icon-form"></i><span class="nav-text">Requirements</span></a></li>
-                    @endcan
 
 
                     @can('read request admin')
