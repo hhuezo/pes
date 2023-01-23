@@ -156,6 +156,10 @@ class RegisteredUserController extends Controller
         $employer->company_website = $request->get('company_website');
         $employer->catalog_industry_id = $request->get('catalog_industry_id');
         $employer->legal_business_name = $request->get('name');
+
+        $employer->year_business_established = null;
+        $employer->number_employees_full_time = null;
+
         $employer->save();
 
         $employer->user_has_employer()->attach(auth()->user()->id);
