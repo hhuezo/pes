@@ -11,7 +11,7 @@
             <div class="card-header">
                 <h4 class="card-title">Requirements</h4>
                 @can('create job application')
-                    <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-info float-right">New
+                    <a href="{{ url('job_request/create') }}"><button type="button" class="btn btn-primary float-right">New
                             Requirement</button></a>
                 @endcan
 

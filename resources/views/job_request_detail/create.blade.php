@@ -54,7 +54,7 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">{!! trans('job_application.Number_of_Workers') !!}</label>
-                                                    <input type="number" name="number_workers" class="form-control"
+                                                    <input type="number" name="number_workers" required class="form-control"
                                                         min="1">
                                                 </div>
                                             </div>

@@ -257,7 +257,7 @@ class EmployerController extends Controller
         $swa_login = SwaLogin::where('employer_id', '=', $employer->id)->get();
 
         $porcentaje = 0;
-        $porcentaje_function = \DB::select("SELECT fun_get_progress_percentage('EMPLOYER'," . auth()->user()->id . ") as porcentaje");
+        $porcentaje_function = \DB::select("SELECT fun_get_progress_percentage('EMPLOYER'," . $employer->id . ") as porcentaje");
 
         $role = Role::findOrFail(4);
         $case_managers = $role->user_has_role;
@@ -444,7 +444,8 @@ class EmployerController extends Controller
     {
 
 
-
+        session_start();
+        session(['action' => '3']);
 
         $mailing_address_same_above = $request['mailing_address_same_above'];
 
@@ -567,6 +568,8 @@ class EmployerController extends Controller
     public function employer_contact_information(Request $request)
     {
 
+        session_start();
+        session(['action' => '4']);
         $signed_all_documents = $request->get('signed_all_documents');
 
 
