@@ -27,6 +27,10 @@ use Illuminate\Support\Facades\Http;
 
 class JobRequestController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
     {
         if (auth()->user()->can('read admin job application')) {
