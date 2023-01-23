@@ -15,8 +15,11 @@
                             <h4 class="card-title">Users listing</h4>
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-primary float-right" data-toggle="modal"
-                                data-target=".bd-example-modal-lg">New</button>
+                            @can('create acount')
+                                <button type="button" class="btn btn-primary float-right" data-toggle="modal"
+                                    data-target=".bd-example-modal-lg">New</button>
+                            @endcan
+
                         </div>
                     </div>
                     <div class="card-body">
@@ -35,66 +38,76 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($case_managers as $obj)
-                                    <tr>
-                                        <td>{{ $obj->id }}</td>
-                                        <td>{{ $obj->email }}</td>
-                                        <td>{{ $obj->name }} {{ $obj->last_name }}</td>
-                                        <td>{{ $obj->role }}</td>
-                                        @if ($obj->case_manager)
-                                            <td>{{ $obj->case_managers->name }}</td>
-                                        @else
-                                            <td></td>
-                                        @endif
+                                @if ($case_managers)
+                                    @foreach ($case_managers as $obj)
+                                        <tr>
+                                            <td>{{ $obj->id }}</td>
+                                            <td>{{ $obj->email }}</td>
+                                            <td>{{ $obj->name }} {{ $obj->last_name }}</td>
+                                            <td>{{ $obj->role }}</td>
+                                            @if ($obj->case_manager)
+                                                <td>{{ $obj->case_managers->name }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
 
-                                        @if ($obj->country_id)
-                                            <td>{{ $obj->countries->cc_country }}</td>
-                                        @else
-                                            <td></td>
-                                        @endif
+                                            @if ($obj->country_id)
+                                                <td>{{ $obj->countries->cc_country }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
 
-                                        <td align="center">
-                                            <a href="{{ url('user') }}/{{ $obj->id }}/edit"
-                                                class="on-default edit-row">
-                                                <i class="icon icon-form lg"></i></a>
-                                            &nbsp;&nbsp;
-                                            <a href="" data-target="#modal-delete-{{ $obj->id }}"
-                                                data-toggle="modal"><i class="fa fa-trash"></i></a>
-                                            <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
-                                        </td>
-                                    </tr>
-                                    @include('security.user.modal')
-                                @endforeach
+                                            <td align="center">
+                                                @can('edit acount')
+                                                    <a href="{{ url('user') }}/{{ $obj->id }}/edit"
+                                                        class="on-default edit-row">
+                                                        <i class="icon icon-form lg"></i></a>
+                                                    &nbsp;&nbsp;
+                                                    <a href="" data-target="#modal-delete-{{ $obj->id }}"
+                                                        data-toggle="modal"><i class="fa fa-trash"></i></a>
+                                                @endcan
+                                                <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
+                                            </td>
+                                        </tr>
+                                        @include('security.user.modal')
+                                    @endforeach
+                                @endif
 
-                                @foreach ($recluters as $obj)
-                                    <tr>
-                                        <td>{{ $obj->id }}</td>
-                                        <td>{{ $obj->email }}</td>
-                                        <td>{{ $obj->name }} {{ $obj->last_name }}</td>
-                                        <td>{{ $obj->role }}</td>
-                                        @if ($obj->case_manager)
-                                            <td>{{ $obj->case_managers->name }}</td>
-                                        @else
-                                            <td></td>
-                                        @endif
+                                @if ($recluters->count() > 0)
+                                    @foreach ($recluters as $obj)
+                                        <tr>
+                                            <td>{{ $obj->id }}</td>
+                                            <td>{{ $obj->email }}</td>
+                                            <td>{{ $obj->name }} {{ $obj->last_name }}</td>
+                                            <td>{{ $obj->role }}</td>
+                                            @if ($obj->case_manager)
+                                                <td>{{ $obj->case_managers->name }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
 
-                                        @if ($obj->country_id)
-                                            <td>{{ $obj->countries->cc_country }}</td>
-                                        @else
-                                            <td></td>
-                                        @endif
-                                        <td align="center">
-                                            <a href="{{ url('user') }}/{{ $obj->id }}/edit"
-                                                class="on-default edit-row">
-                                                <i class="icon icon-form lg"></i></a>
-                                            &nbsp;&nbsp;
-                                            <a href="" data-target="#modal-delete-{{ $obj->id }}"
-                                                data-toggle="modal"><i class="fa fa-trash"></i></a>
-                                            <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
-                                        </td>
-                                    </tr>
-                                    @include('security.user.modal')
-                                @endforeach
+                                            @if ($obj->country_id)
+                                                <td>{{ $obj->countries->cc_country }}</td>
+                                            @else
+                                                <td></td>
+                                            @endif
+                                            <td align="center">
+                                                @can('edit acount')
+                                                    <a href="{{ url('user') }}/{{ $obj->id }}/edit"
+                                                        class="on-default edit-row">
+                                                        <i class="icon icon-form lg"></i></a>
+                                                    &nbsp;&nbsp;
+                                                    <a href="" data-target="#modal-delete-{{ $obj->id }}"
+                                                        data-toggle="modal"><i class="fa fa-trash"></i></a>
+                                                    <!--<i class="fa fa-trash lg" onclick="modal({{ $obj->id }})"></i>-->
+                                                @endcan
+                                            </td>
+                                        </tr>
+                                        @include('security.user.modal')
+                                    @endforeach
+                                @endif
+
+
                             </tbody>
                         </table>
 
@@ -138,10 +151,14 @@
                                 <div class="form-group" id="div_case_manager">
                                     <label for="exampleInputEmail1">Case manager</label>
                                     <select name="case_manager" id="case_manager" class="form-control">
-                                        @foreach ($case_managers as $obj)
-                                            <option value="{{ $obj->id }}">{{ $obj->name }} {{ $obj->last_name }}
-                                            </option>
-                                        @endforeach
+                                        @if ($case_managers)
+                                            @foreach ($case_managers as $obj)
+                                                <option value="{{ $obj->id }}">{{ $obj->name }}
+                                                    {{ $obj->last_name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+
                                     </select>
                                 </div>
                                 <div class="form-group">

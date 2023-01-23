@@ -53,8 +53,8 @@
                     <div class="default-tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <!--<li class="nav-item">
-                                                                                                                            <a class="nav-link" data-toggle="tab" href="#tab_content1">{!! trans('employer.GeneralData') !!}</a>
-                                                                                                                        </li>-->
+                                                                                                                                <a class="nav-link" data-toggle="tab" href="#tab_content1">{!! trans('employer.GeneralData') !!}</a>
+                                                                                                                            </li>-->
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                     href="#tab_content2">{!! trans('employer.EmployerInformation') !!}</a>
@@ -1138,73 +1138,77 @@
 
                                 </form>
 
-                                @if ($work_sites_main)
-                                    <button type="button" class="btn btn-rounded btn-info btn-lg" data-toggle="modal"
-                                        data-target=".bd-example-modal-lg"><strong>Add
-                                            Worksite</strong><span class="btn-icon-right">
-                                            <i class="fa fa-plus color-info"></i></span>
-                                    </button>
+                                <br><br>
+                                <div class="card">
+                                    <div class="card-body">
+                                        @if ($work_sites_main)
+                                            <button type="button" class="btn  btn-success "
+                                                data-toggle="modal" data-target=".bd-example-modal-lg"><strong>Add
+                                                    Worksite</strong>
+                                            </button>
 
 
 
 
 
-                                    @if ($worksites_additional)
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-responsive-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>State</th>
-                                                        <th>County</th>
-                                                        <th>City</th>
-                                                        <th>Zip Code</th>
-                                                        <th>Address</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($worksites_additional as $obj)
-                                                        <tr>
-                                                            @if ($obj->state_id_address)
-                                                                <td>{{ $obj->state->cs_state }}</td>
-                                                            @else
-                                                                <td></td>
-                                                            @endif
+                                            @if ($worksites_additional)
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover table-responsive-sm">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>State</th>
+                                                                <th>County</th>
+                                                                <th>City</th>
+                                                                <th>Zip Code</th>
+                                                                <th>Address</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($worksites_additional as $obj)
+                                                                <tr>
+                                                                    @if ($obj->state_id_address)
+                                                                        <td>{{ $obj->state->cs_state }}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
 
-                                                            @if ($obj->county_id)
-                                                                <td>{{ $obj->county->czc_county }}aa</td>
-                                                            @else
-                                                                <td></td>
-                                                            @endif
+                                                                    @if ($obj->county_id)
+                                                                        <td>{{ $obj->county->czc_county }}aa</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
 
-                                                            @if ($obj->city_id)
-                                                                <td>{{ $obj->city->czc_city }}</td>
-                                                            @else
-                                                                <td></td>
-                                                            @endif
-
-
-
-                                                            <td>{{ $obj->zip_code_address }}</td>
+                                                                    @if ($obj->city_id)
+                                                                        <td>{{ $obj->city->czc_city }}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
 
 
 
-                                                            @if ($obj->street_address)
-                                                                <td>{{ $obj->street_address }}</td>
-                                                            @else
-                                                                <td></td>
-                                                            @endif
+                                                                    <td>{{ $obj->zip_code_address }}</td>
 
 
 
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    @endif
+                                                                    @if ($obj->street_address)
+                                                                        <td>{{ $obj->street_address }}</td>
+                                                                    @else
+                                                                        <td></td>
+                                                                    @endif
 
 
 
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @endif
+
+
+
+                                    </div>
+                                </div>
 
                                 @endif
 

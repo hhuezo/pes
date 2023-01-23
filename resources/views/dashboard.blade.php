@@ -284,10 +284,14 @@
                     @can('read admin employer')
                         <li> <a href="{{ url('employer_admin') }}" aria-expanded="false"><i
                                     class="fa fa-user-o fa-lg"></i><span class="nav-text">Employer</span></a></li>
-
-                        <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
-                                    class="nav-text">Create acounts</span></a></li>
                     @endcan
+
+
+                    @can('read acount')
+                        <li> <a href="{{ url('account') }}" aria-expanded="false"><i class="fa fa-users fa-lg"></i><span
+                                    class="nav-text">Acounts</span></a></li>
+                    @endcan
+
 
                     <!-- <li> <a href="{{ url('case_manager') }}" aria-expanded="false"><i
                                 class="fa fa-newspaper-o"></i><span class="nav-text">Case managers</span></a></li>-->

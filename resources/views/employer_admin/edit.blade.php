@@ -7,11 +7,11 @@
             <div class="profile">
                 <div class="profile-head">
                     <!--<div class="photo-content">
-                        <div class="cover-photo"></div>
-                        <div class="profile-photo">
-                            <img src="{{ asset('images/profile.png') }}" class="img-fluid rounded-circle" alt="">
-                        </div>
-                    </div>-->
+                            <div class="cover-photo"></div>
+                            <div class="profile-photo">
+                                <img src="{{ asset('images/profile.png') }}" class="img-fluid rounded-circle" alt="">
+                            </div>
+                        </div>-->
                     <div class="profile-info">
                         <div class="row justify-content-center">
                             <div class="col-xl-8">
@@ -29,11 +29,11 @@
                                         </div>
                                     </div>
                                     <!-- <div class="col-xl-4 col-sm-4 prf-col">
-                                                                                <div class="profile-call">
-                                                                                    <h4 class="text-muted">(+1) 321-837-1030</h4>
-                                                                                    <p>Phone No.</p>
-                                                                                </div>
-                                                                            </div> -->
+                                                                                    <div class="profile-call">
+                                                                                        <h4 class="text-muted">(+1) 321-837-1030</h4>
+                                                                                        <p>Phone No.</p>
+                                                                                    </div>
+                                                                                </div> -->
                                 </div>
                             </div>
                         </div>
@@ -58,10 +58,10 @@
                                     </button>
                                 </div>
                             @else
-                            <p><strong>Case manager: </strong>
-                                @if ($employer->case_manager_id)
-                                {{ $employer->case_manager->name }}
-                                @endif
+                                <p><strong>Case manager: </strong>
+                                    @if ($employer->case_manager_id)
+                                        {{ $employer->case_manager->name }}
+                                    @endif
                                 </p>
                             @endif
                         @endcan
@@ -329,7 +329,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <input type="text"  @if ($contact_worksite) value="{{ $contact_worksite->street_address }}" @endif
+                                                    <input type="text"
+                                                        @if ($contact_worksite) value="{{ $contact_worksite->street_address }}" @endif
                                                         class="form-control" readonly>
                                                 </div>
 

@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function countries()
     {
-        return $this->belongsTo('App\Models\catalogue\Country','country_id','id');
+        return $this->belongsTo('App\Models\catalogue\Country','country_id','cc_id');
     }
 
 

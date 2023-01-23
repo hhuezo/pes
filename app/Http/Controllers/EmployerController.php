@@ -553,7 +553,7 @@ class EmployerController extends Controller
 
 
         Alert::success('', 'Record saved');
-        session_start();
+       // session_start();
         session(['action' => '4']);
         $employer->update();
 
