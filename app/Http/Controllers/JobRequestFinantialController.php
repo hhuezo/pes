@@ -94,9 +94,35 @@ class JobRequestFinantialController extends Controller
         return redirect('job_request_finantial/' . $invoice->request_id);
     }
 
+    function update_pay(Request $request){
+
+        $id = $request->get('invoice_id_upd');
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->catalog_invoice_types_id = $request->get('catalog_invoice_types_id_upd');
+        $invoice->ammount_due = $request->get('ammount_due_upd');
+        $invoice->date_due = $request->get('date_due_upd');
+        $invoice->comments = $request->get('comments_upd');
+        $invoice->update();
+
+        Alert::success('', 'Record saved');
+        return redirect('job_request_finantial/' . $invoice->request_id);
+
+    }
+
+
     public function edit($id)
     {
         //
+        $invoice_types = InvoiceType::get();
+
+        $invoice = Invoice::findOrFail($id);
+
+        $response = ["types"=>$invoice_types, "invoice"=>$invoice];
+
+        //dd($response);
+
+        return $response;
     }
 
 

@@ -176,10 +176,10 @@
                                                                 <button class="btn btn-success btn-circle"
                                                                     onclick="modal_pay({{ $obj->id }})">Pay</button>
 
-                                                                    &nbsp;&nbsp;
-                                                                    <button class="btn btn-info btn-circle" onclick="load_invoice({{ $obj->id }})"><i
-                                                                            class="fa fa-pencil fa-lg"></i></button></a>
-
+                                                                &nbsp;&nbsp;
+                                                                <button class="btn btn-info btn-circle"
+                                                                    onclick="load_invoice({{ $obj->id }})"><i
+                                                                        class="fa fa-pencil fa-lg"></i></button></a>
                                                             @endif
 
 
@@ -241,8 +241,98 @@
         </div>
 
 
+        <!-- modal edit payment -->
+        <div class="modal fade" id="modal-update">
+            <div class="modal-dialog" role="document">
+                <form method="POST" action="{{ url('job_request_finantial/update_pay') }}">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">You want to update the invoice payment?</h5>
+                            <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!--You want to record the invoice payment?-->
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <input type="hidden" name="invoice_id_upd" id="invoice_id_upd">
+                                    <label class="col-sm-3 col-form-label">
+                                        <h5>Type</h5>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <select name="catalog_invoice_types_id_upd" id="catalog_invoice_types_id_upd"
+                                            class="form-control">
+                                            @foreach ($types as $obj)
+                                                <option value="{{ $obj->id }}">{{ $obj->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">
+                                        <h5>Ammount</h5>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="number" name="ammount_due_upd" id="ammount_due_upd" step="0.01"
+                                            min="1.00" class="form-control" required>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">
+                                        <h5>Date due</h5>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="date" name="date_due_upd" id="date_due_upd" class="form-control"
+                                            required>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label">
+                                        <h5>Comments</h5>
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="comments_upd" id="comments_upd" class="form-control"
+                                            required>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- end edit payment -->
 
     </div>
+
+
+
+
+
+
+
 
     <script>
         function modal_pay(id) {
@@ -252,6 +342,38 @@
 
         function load_invoice(id) {
 
+            $.get("{{ url('job_request_finantial') }}" + '/' + id + '/edit', function(data) {
+                //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                console.log(data);
+                var _select = ''
+
+
+                for (var i = 0; i < data.types.length; i++) {
+                    if (data.types[i].id == data.invoice.catalog_invoice_types_id) {
+                        _select += '<option value="' + data.types[i].id + '" selected >' + data.types[i]
+                            .name +
+                            '</option>';
+                    } else {
+                        _select += '<option value="' + data.types[i].id + '" >' + data.types[i]
+                            .name +
+                            '</option>';
+                    }
+                }
+
+                //alert(_select);
+                $('catalog_invoice_types_id_upd').html(_select);
+                document.getElementById('invoice_id_upd').value = data.invoice.id;
+                document.getElementById('catalog_invoice_types_id_upd').value = data.invoice
+                    .catalog_invoice_types_id;
+                document.getElementById('ammount_due_upd').value = data.invoice.ammount_due;
+                document.getElementById('date_due_upd').value = data.invoice.date_due.substring(0, 10);
+                document.getElementById('comments_upd').value = data.invoice.comments;
+
+
+
+            });
+
+            $('#modal-update').modal('show');
         }
     </script>
 @endsection
