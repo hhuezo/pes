@@ -73,6 +73,11 @@ class JobRequestFinantialController extends Controller
                 $invoice->catalog_invoice_status_id = 3;
                 $invoice->save();
             }
+            else if ($now <= $date  && $invoice->catalog_invoice_status_id == 3)
+            {
+                $invoice->catalog_invoice_status_id = 2;
+                $invoice->save();
+            }
         }
 
         $color = ["", "", "warning", "danger"];
