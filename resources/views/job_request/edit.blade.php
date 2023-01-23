@@ -694,16 +694,6 @@
                                 {{-- divMedical --}}
                                 <div id="divMedical">
                                     <div class="col-sm-12">
-                                        <div>
-                                            <h4>
-                                                <b>
-                                                    {!! trans('job_application.NoDeductionsTitle') !!}
-                                                </b>
-                                            </h4>
-                                        </div>
-                                        <br>
-                                        <br>
-
                                         <h4>
                                             <b>
                                                 {!! trans('job_application.MedicalTitle') !!}
@@ -1018,13 +1008,7 @@
 
                                 {{-- divDaily --}}
                                 <div id="divDaily">
-                                    <div>
-                                        <h4>
-                                            <b>
-                                                {!! trans('job_application.NoDeductionsTitle') !!}
-                                            </b>
-                                        </h4>
-                                    </div>
+
                                     <div class="col-sm-12">
                                         <div class="card-header">
                                             <h4 class="card-title">{!! trans('job_application.DailyTransportationTitle') !!}</h4>
@@ -1069,13 +1053,6 @@
 
 
                                 <div id="divOther">
-                                    <div>
-                                        <h4>
-                                            <b>
-                                                {!! trans('job_application.NoDeductionsTitle') !!}
-                                            </b>
-                                        </h4>
-                                    </div>
                                     <div class="col-sm-12">
                                         <div class="card-header">
                                             <h4 class="card-title">{!! trans('job_application.OtherTitle') !!}
@@ -1109,7 +1086,7 @@
                                             <div>
                                                 <h4>
                                                     <b>
-                                                        {!! trans('job_application.NoDeductionsTitle') !!}
+                                                        {!! trans('job_application.MealsTitle') !!}
                                                     </b>
                                                 </h4>
                                             </div>
@@ -2329,6 +2306,8 @@
             validProvideAdvance();
 
 
+
+
             //captura de firma
             $("#draw-canvas").click(function() {
                 $('#draw-submitBtn').show();
@@ -2543,6 +2522,8 @@
 
 
         function validHousing() {
+            validNoDeductions();
+
             if (document.getElementById('Housing').checked == true)
                 document.getElementById('divHousing').hidden = false;
             else
@@ -2552,6 +2533,8 @@
 
 
         function validMedical() {
+            validNoDeductions();
+
             if (document.getElementById('Medical').checked == true)
                 document.getElementById('divMedical').hidden = false;
             else
@@ -2561,6 +2544,8 @@
 
 
         function validDaily() {
+            validNoDeductions();
+
             if (document.getElementById('DailyTransportation').checked == true)
                 document.getElementById('divDaily').hidden = false;
             else
@@ -2570,6 +2555,8 @@
 
 
         function validOther() {
+            validNoDeductions();
+
             if (document.getElementById('Other').checked == true)
                 document.getElementById('divOther').hidden = false;
             else
@@ -2578,6 +2565,8 @@
 
 
         function validMeals() {
+            validNoDeductions();
+
             if (document.getElementById('Meals').checked == true)
                 document.getElementById('divMeals').hidden = false;
             else
@@ -2586,10 +2575,10 @@
 
 
         function validNoDeductions() {
-            if (document.getElementById('NoDeductions').checked == true)
-                document.getElementById('divNoDeductions').hidden = false;
-            else
+            if (document.getElementById('Housing').checked == true)
                 document.getElementById('divNoDeductions').hidden = true;
+            else
+                document.getElementById('divNoDeductions').hidden = false;
         }
 
 

@@ -33,8 +33,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
-                        @can('approve employer') <a href="{{ url('employer') }}"><button type="button" class="btn btn-warning"><i class=" fa-arrow"></i>&nbsp;Back&nbsp;</button></a> @endcan
-                        &nbsp;&nbsp;&nbsp; EMPLOYER</h4>
+                        @can('approve employer')
+                            <a href="{{ url('employer') }}"><button type="button" class="btn btn-warning"><i
+                                        class=" fa-arrow"></i>&nbsp;Back&nbsp;</button></a>
+                        @endcan
+                        &nbsp;&nbsp;&nbsp; EMPLOYER
+                    </h4>
 
                     @can('approve employer')
                         @if ($employer->validated != 1)
@@ -49,8 +53,8 @@
                     <div class="default-tab">
                         <ul class="nav nav-tabs" role="tablist">
                             <!--<li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tab_content1">{!! trans('employer.GeneralData') !!}</a>
-                            </li>-->
+                                                                                                                            <a class="nav-link" data-toggle="tab" href="#tab_content1">{!! trans('employer.GeneralData') !!}</a>
+                                                                                                                        </li>-->
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab"
                                     href="#tab_content2">{!! trans('employer.EmployerInformation') !!}</a>
@@ -81,9 +85,15 @@
                                         <div class="col-xl-6 col-xxl-6">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">{!! trans('employer.LegalName') !!}<b> *</b></label>
-                                                <input type="text" name="legal_business_name"
+                                                <input type="text" name="legal_business_name" id="legal_business_name"
                                                     value="{{ old('legal_business_name', $employer->legal_business_name) }}"
-                                                    class="form-control">
+                                                    class="form-control" onblur="validateRequired('legal_business_name')">
+                                                <div id="div_legal_business_name">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('legal_business_name')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -97,10 +107,16 @@
 
                                             <div class="form-group">
                                                 <label>{!! trans('employer.IdentificationNumber') !!}<b> *</b></label>
-                                                <input type="text" name="federal_id_number"
+                                                <input type="text" name="federal_id_number" id="federal_id_number"
                                                     data-inputmask="'mask': ['99-9999999']" data-mask
                                                     value="{{ old('federal_id_number', $employer->federal_id_number) }}"
-                                                    class="form-control">
+                                                    class="form-control" onblur="validateRequired('federal_id_number')">
+                                                <div id="div_federal_id_number">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('federal_id_number')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -109,10 +125,17 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.YearBusinessEstablished') !!}<b> *</b></label>
                                                 <input type="text" name="year_business_established"
+                                                    id="year_business_established"
                                                     value="{{ old('year_business_established', $employer->year_business_established) }}"
                                                     min="1900" max="<?php echo date('Y'); ?>" class="form-control"
                                                     data-inputmask="'mask': ['9999']" data-mask class="form-control"
-                                                    maxlength="4">
+                                                    maxlength="4" onblur="validateRequired('year_business_established')">
+                                                <div id="div_year_business_established">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('year_business_established')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -121,8 +144,16 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.NumberEmployees') !!}<b> *</b></label>
                                                 <input type="text" name="number_employees_full_time"
+                                                    id="number_employees_full_time"
                                                     value="{{ old('number_employees_full_time', $employer->number_employees_full_time) }}"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                    onblur="validateRequired('number_employees_full_time')">
+                                                <div id="div_number_employees_full_time">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('number_employees_full_time')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -131,9 +162,17 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.PrimaryBusinessPhone') !!}<b> *</b></label>
                                                 <input type="text" name="primary_business_phone"
-                                                    data-inputmask="'mask': ['(999)999-9999']" data-mask
+                                                    id="primary_business_phone" data-inputmask="'mask': ['(999)999-9999']"
+                                                    data-mask
                                                     value="{{ old('primary_business_phone', $employer->primary_business_phone) }}"
-                                                    class="form-control">
+                                                    class="form-control"
+                                                    onblur="validateRequired('primary_business_phone')">
+                                                <div id="div_primary_business_phone">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('primary_business_phone')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -152,10 +191,16 @@
                                         <div class="col-xl-6 col-xxl-6">
 
                                             <div class="form-group">
-                                                <label>{!! trans('employer.CompanyWebsite') !!}</label>
-                                                <input type="text" name="company_website"
+                                                <label>{!! trans('employer.CompanyWebsite') !!}<b> *</b></label>
+                                                <input type="text" name="company_website" id="company_website"
                                                     value="{{ old('company_website', $employer->company_website) }}"
-                                                    class="form-control">
+                                                    class="form-control" onblur="validateRequired('company_website')">
+                                                <div id="div_company_website">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('company_website')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -242,8 +287,16 @@
                                             <div class="form-group">
                                                 <label>{!! trans('employer.GrossCompanyIncome') !!}<b> *</b></label>
                                                 <input type="number" step="0.01" name="year_end_gross_company_income"
+                                                    id="year_end_gross_company_income"
                                                     value="{{ old('year_end_gross_company_income', $employer->year_end_gross_company_income) }}"
-                                                    class="form-control" class="form-control">
+                                                    class="form-control" class="form-control"
+                                                    onblur="validateRequired('year_end_gross_company_income')">
+                                                <div id="div_year_end_gross_company_income">
+                                                    <label for="exampleInputUsername1"
+                                                        style="background-color: #FF9696; color: red; width: 100%; height: 40px; padding: 10px">This
+                                                        field is
+                                                        required</label>
+                                                </div>
                                                 @error('year_end_gross_company_income')
                                                     <div class="alert-danger">{{ $message }}</div>
                                                 @enderror
@@ -1436,6 +1489,63 @@
 
     <script src="{{ asset('template/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript">
+        $('form').submit(function(event) {
+            if (document.getElementById('legal_business_name').value == '') {
+                validateRequired('legal_business_name');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('federal_id_number').value == '') {
+                validateRequired('federal_id_number');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('year_business_established').value == '') {
+                validateRequired('year_business_established');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('number_employees_full_time').value == '') {
+                validateRequired('number_employees_full_time');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('primary_business_phone').value == '') {
+                validateRequired('primary_business_phone');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('company_website').value == '') {
+                validateRequired('company_website');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('year_end_gross_company_income').value == '') {
+                validateRequired('year_end_gross_company_income');
+                event.preventDefault();
+                return;
+            }
+
+            if (document.getElementById('year_end_net_company_income').value == '') {
+                validateRequired('year_end_net_company_income');
+                event.preventDefault();
+                return;
+            }
+
+            // $("span").text("Not valid!").show().fadeOut(1000);
+            // event.preventDefault();
+        });
+
+
+
+
+
         $(document).ready(function() {
 
             if (document.getElementById('ParticipatedH-2B').value == 1) {
@@ -1704,6 +1814,19 @@
 
             });
 
+
+
+            //validando divs required
+            $('#div_legal_business_name').hide();
+            $('#div_federal_id_number').hide();
+            $('#div_year_business_established').hide();
+            $('#div_number_employees_full_time').hide();
+            $('#div_primary_business_phone').hide();
+            $('#div_company_website').hide();
+            $('#div_year_end_gross_company_income').hide();
+
+
+
         });
 
         // tab one
@@ -1756,6 +1879,25 @@
                 document.getElementById('swa_password').value = data.swa_login.swa_password;
                 document.getElementById('swa_id').value = id;
             });
+
+
+        }
+
+
+        function validateRequired(nombre_field) {
+
+            elemento = document.getElementById(nombre_field);
+
+            if (elemento.value == '') {
+                elemento.style.backgroundColor = '#FF9696';
+                elemento.focus();
+                $('#div_' + nombre_field).show();
+            } else {
+                elemento.style.backgroundColor = '#FFFFFF';
+                $('#div_' + nombre_field).hide();
+            }
+
+
 
 
         }
