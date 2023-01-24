@@ -20,7 +20,7 @@ class JobRequestAdminController extends Controller
     public function index()
     {
         $user = auth()->user();
-        if ($user->hasRole('administrator pes') == true || $user->hasRole('financial') == true) {
+        if ($user->hasRole('administrator pes') == true || $user->hasRole('financial') == true || $user->hasRole('admin') == true) {
             $job_requests = JobRequest::join('employer','request.employer_id','=','employer.id')
             ->select('request.id','employer.legal_business_name as employer', 'request.start_date', 'request.end_date','request.request_status_id','request.paid',\DB::raw(
             "(select ifnull(SUM(detail.number_workers),0) from request_detail as detail where detail.request_id = request.id) as number_workers") )
@@ -31,7 +31,7 @@ class JobRequestAdminController extends Controller
             $job_requests = JobRequest::join('employer','request.employer_id','=','employer.id')
             ->select('request.id','employer.legal_business_name as employer', 'request.start_date', 'request.end_date','request.request_status_id','request.paid',\DB::raw(
             "(select ifnull(SUM(detail.number_workers),0) from request_detail as detail where detail.request_id = request.id) as number_workers") )
-            ->where('request.request_status_id', '>', '0')->get();
+            ->where('request.request_status_id', '>', '0')->where('employer.case_manager_id', '=', $user->id)->get();
             return view('job_request_admin.index', ['job_requests' => $job_requests]);
         }
     }
@@ -42,12 +42,7 @@ class JobRequestAdminController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
