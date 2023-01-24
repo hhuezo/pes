@@ -319,7 +319,7 @@
                     @endcan
 
 
-                    @can('read request admin')
+                    @can('read flight admin')
                         <li> <a href="{{ url('flight_admin') }}" aria-expanded="false"><i
                                     class="icon icon-form"></i><span class="nav-text">Flight List</span></a></li>
                     @endcan
