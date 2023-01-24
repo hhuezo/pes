@@ -303,6 +303,13 @@
                         <li> <a href="{{ url('job_request_admin') }}" aria-expanded="false"><i
                                     class="icon icon-form"></i><span class="nav-text">Requirements</span></a></li>
                     @endcan
+
+
+                    @can('read request admin')
+                        <li> <a href="{{ url('flight_admin') }}" aria-expanded="false"><i
+                                    class="icon icon-form"></i><span class="nav-text">Flight List</span></a></li>
+                    @endcan
+
                     <!--
                     <li> <a href="# " aria-expanded="false"><i class="fa fa-bell-o"></i><span
                                 class="nav-text">Pending tasks</span></a></li>

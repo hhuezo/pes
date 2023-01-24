@@ -17,6 +17,8 @@ use App\Http\Controllers\CaseManagerController;
 use App\Http\Controllers\CityZipController;
 use App\Http\Controllers\JobRequestAdminController;
 use App\Http\Controllers\JobRequestFinantialController;
+use App\Http\Controllers\FlightController;
+
 
 
 Route::get('/', function () {
@@ -103,6 +105,10 @@ Route::post('job_request_detail/job_requirements', [JobRequestDetailController::
 Route::post('job_request_detail/job_offer_supervise', [JobRequestDetailController::class, 'job_offer_supervise']);
 Route::post('job_request_detail/job_requirements_alternative', [JobRequestDetailController::class, 'job_requirements_alternative']);
 Route::post('job_request_detail/english_levels', [JobRequestDetailController::class, 'english_levels']);
+
+
+Route::resource('flight_admin', FlightController::class);
+Route::post('flight_admin/update_itinerary', [FlightController::class,'update_itinerary']);
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);
