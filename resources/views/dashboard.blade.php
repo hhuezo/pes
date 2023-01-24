@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 
     <style>
+
+        .nav-header .brand-title {
+            margin-left: 15px;
+            max-width: 144px;
+        }
         .nav-header {
             background-color: #ffffff;
         }
@@ -106,8 +111,8 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="{{ asset('template/images/logo.png') }}" alt="">
-                <img class="logo-compact" src="{{ asset('template/images/logo.svg') }}" alt="">
+                <!--<img class="logo-abbr" src="{{ asset('template/images/logo.svg') }}" alt="">-->
+                <!--<img class="logo-compact" src="{{ asset('template/images/logo.svg') }}" alt="">-->
                 <img class="brand-title" src="{{ asset('template/images/logo.svg') }}" alt="">
                 <!--<img class="logo-compact" src="{{ asset('template/images/logo-text.png') }}" alt="">
                 <img class="brand-title" src="{{ asset('template/images/logo-text.png') }}" alt="">-->
@@ -166,9 +171,10 @@
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     <i class="mdi mdi-bell"></i>
                                     <div class="pulse-css"></div>
-                                </a>
+                                </a><span style="color: red; font-weight: bold;">10</span>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <ul class="list-unstyled">
+
+                                   <!-- <ul class="list-unstyled">
                                         <li class="media dropdown-item">
                                             <span class="success"><i class="ti-user"></i></span>
                                             <div class="media-body">
@@ -222,7 +228,7 @@
                                         </li>
                                     </ul>
                                     <a class="all-notification" href="#">See all notifications <i
-                                            class="ti-arrow-right"></i></a>
+                                            class="ti-arrow-right"></i></a>-->
                                 </div>
                             </li>
                             <li class="nav-item dropdown header-profile">
@@ -280,7 +286,7 @@
 
                     @can('read employer')
                         <li> <a href="{{ url('dashboard') }}" aria-expanded="false"><i
-                                    class="fa fa-bar-chart fa-lg"></i><span class="nav-text">Dashboar</span></a></li>
+                                    class="fa fa-bar-chart fa-lg"></i><span class="nav-text">Dashboard</span></a></li>
                     @endcan
 
 

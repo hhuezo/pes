@@ -38,7 +38,13 @@ class JobRequestController extends Controller
         } else if (auth()->user()->can('read job application')) {
             $user = auth()->user();
             $employer = $user->user_has_employer->first();
-            $job_requests = JobRequest::where('employer_id', '=', $employer->id)->get();
+
+            $job_requests = JobRequest::join('employer','request.employer_id','=','employer.id')
+            ->select('request.id','employer.legal_business_name as employer', 'request.start_date', 'request.end_date','request.request_status_id','request.paid',\DB::raw(
+            "(select ifnull(SUM(detail.number_workers),0) from request_detail as detail where detail.request_id = request.id) as number_workers") )
+            ->where('request.employer_id', '=', $employer->id)->get();
+
+            //$job_requests = JobRequest::where('employer_id', '=', $employer->id)->get();
         }
 
 

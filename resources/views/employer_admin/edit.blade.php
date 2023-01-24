@@ -214,7 +214,7 @@
 
                                             </form>
                                             <br>
-                                            <h4 class="text-primary">List SWA</h4>
+                                            <h4 class="text-primary">List SWA Logins</h4>
                                             <form>
                                                 @if ($swa_login->count() > 0)
                                                     <div class="table-responsive">

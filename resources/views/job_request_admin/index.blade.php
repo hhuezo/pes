@@ -68,14 +68,15 @@
                                             <i class="fa fa-dollar fa-lg"></i></a>
                                     @endcan
 
-                                    &nbsp;&nbsp;
-                                    <a href="{{ url('job_request/format') }}/{{ $obj->id }}"
-                                        class="on-default edit-row">
-                                        <i class="fa fa-print fa-lg"></i></a>
-                                    <!--<a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" target="_blank"
-                                        class="on-default edit-row">
-                                        <i class="fa fa-print fa-lg"></i></a>-->
-
+                                    @can('print formats')
+                                        &nbsp;&nbsp;
+                                        <a href="{{ url('job_request/format') }}/{{ $obj->id }}"
+                                            class="on-default edit-row">
+                                            <i class="fa fa-print fa-lg"></i></a>
+                                        <!--<a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" target="_blank"
+                                                class="on-default edit-row">
+                                                <i class="fa fa-print fa-lg"></i></a>-->
+                                    @endcan
 
                                 </td>
                             </tr>

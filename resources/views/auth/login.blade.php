@@ -29,11 +29,13 @@
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Login Account</h4>
 
-                                    <p class="text-center mb-4" style="font-size: 8.785px;">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nos</p>
+                                    <p class="text-center mb-4" style="font-size: 8.785px;">Do you want to join PES? / ¿Quieres uni rte a PES?<br>
+
+                                        Please enter the following information to create your user account. / Por favor, ingresa la siguiente información para crear tu cuenta.</p>
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Email ID" id="email" name="email" :value="old('email')" required autofocus>
+                                            <input type="email" class="form-control" placeholder="Email ID / ID correo electrónico" id="email" name="email" :value="old('email')" required autofocus>
                                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                         </div>
                                         <div class="form-group">

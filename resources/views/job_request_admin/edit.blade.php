@@ -60,17 +60,17 @@
             <div class="card-body">
                 <div class="row">
 
-                    <div class="col-md-6 row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 row">
                         <div class="col-md-4" style="text-align: center;">
                             <img src="{{ asset('img/pes_admin.png') }}" style="width: 77px;">
                         </div>
                         <div class="col-md-8" style="display: flex; align-items: center;">
                             <h4>Client: <br>{{ $job_request->employer->legal_business_name }}</h4>
                         </div>
-                        <div class="col-md-12">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <hr>
 
-                            <div class="col-lg-12 col-md-12">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="card-title">English level</h4>
@@ -117,7 +117,7 @@
                     <hr>
 
 
-                    <div class="col-md-6">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 row">
                         <div class="col-md-12">
                             <br>
                             <center>
@@ -125,9 +125,9 @@
                             </center>
                         </div>
 
-                        <div class="col-md-12" style="text-align: center; display: flex; margi">
-                            <div class="col-md-2"></div>
-                            <div class="col-md-8 col-sm-12 row box" style="margin-top: 30px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center; display: flex; margi">
+
+                            <div class="col-md-12 col-sm-12 row box" style="margin-top: 30px;">
                                 <div class="col-md-3 col-sm-12" style="text-align: center;     margin-top: 12px;">
                                     <div class="big_letter" style="margin-top: 10px; font-weight: bold;">
                                         {{ $DeferenceInDays }}</div><br>
@@ -150,7 +150,7 @@
                                     <span style="color: white;  margin-top: 10px; font-weight: bold;">SEC.</span>
                                 </div>
                             </div>
-                            <div class="col-md-2"></div>
+
                         </div>
                         <br>
                         <br>

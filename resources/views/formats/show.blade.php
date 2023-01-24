@@ -18,9 +18,12 @@
                             </a>
                         </div>
 
-                        <div class="col-md-6">
 
-                            <div class="alert alert-success"><strong>RR Attestation</strong> Form.-WITH US Workers</div>
+                        <div class="col-md-6">
+                            <a href="{{ url('job_request/form9141') }}/{{ $job_request->id }}" target="_blank">
+                                <div class="alert alert-dark"><strong>Form 9141</strong></div>
+                            </a>
+                        </div>
                         </div>
 
                     </div>

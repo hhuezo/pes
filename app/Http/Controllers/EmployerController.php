@@ -15,6 +15,7 @@ use App\Models\Employer;
 use App\Models\Role;
 use App\Models\EmployerWorksite;
 use App\Models\catalogue\Swa;
+use App\Models\PendingTaskRequest;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -890,6 +891,25 @@ class EmployerController extends Controller
             $contact_worksite->street_address = $request->get('contact_street_address');
             $contact_worksite->address_type_id = 5;
             $contact_worksite->save();
+        }
+
+
+        $porcentaje_function = \DB::select("SELECT fun_get_progress_percentage('EMPLOYER'," . $employer->id . ") as porcentaje");
+
+         foreach ($porcentaje_function as $obj) {
+           if($obj->porcentaje == 100)
+           {
+                $count = PendingTaskRequest::where('employer_id','=',$employer->id)->where('catalog_pending_task_id','=',1)->count();
+
+                if($count == 0)
+                {
+                    $pending = new PendingTaskRequest ();
+                    $pending->employer_id = $employer->id;
+                    $pending->catalog_pending_task_id = 1;
+                    $pending->detail = "The employer ". $employer->legal_business_name.", is ready to be approved.";
+                    $pending->save();
+                }
+           }
         }
 
 

@@ -615,7 +615,7 @@
                                     <div class="col-lg-12">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h4 class="card-title">List SWA</h4>
+                                                <h4 class="card-title">List SWA Logins</h4>
                                                 <button type="button" class="btn btn-primary float-right"
                                                     onclick="modal_swa();" data-toggle="modal">Add</button>
                                             </div>

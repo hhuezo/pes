@@ -372,11 +372,12 @@
 
 
 
-                                            <div class="modal-footer">
+                                            <div class="modal-footer col-md-12">
                                                 <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit"> <button
                                                         type="button" class="btn btn-danger btn-rounded"
                                                         data-dismiss="modal"
-                                                        style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Close&nbsp;&nbsp;&nbsp;</button></a>
+                                                        style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Close&nbsp;&nbsp;&nbsp;</button>
+                                                    </a>
                                                 <button type="submit" class="btn btn-primary btn-rounded"
                                                     style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                             </div>

@@ -766,17 +766,15 @@
 
 
 
-                                            <div class="col-md-12">
-                                                <center>
-                                                    <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                        <button type="button" class="btn btn-danger btn-rounded"
-                                                            style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</button>
-                                                    </a>
-                                                    &nbsp;&nbsp;
-                                                    <button type="submit" class="btn btn-primary btn-rounded"
-                                                        style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
-                                                    <center>
 
+                                            <div class="modal-footer col-md-12">
+                                                <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit"> <button
+                                                        type="button" class="btn btn-danger btn-rounded"
+                                                        data-dismiss="modal"
+                                                        style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Close&nbsp;&nbsp;&nbsp;</button>
+                                                    </a>
+                                                <button type="submit" class="btn btn-primary btn-rounded"
+                                                    style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
                                             </div>
 
 
@@ -1206,18 +1204,16 @@
                                                 </div>
 
 
-                                                <div class="col-md-12">
-                                                    <center>
-                                                        <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit">
-                                                            <button type="button" class="btn btn-danger btn-rounded"
-                                                                style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Back&nbsp;&nbsp;&nbsp;</button>
-                                                        </a>
-                                                        &nbsp;&nbsp;
-                                                        <button type="submit" class="btn btn-primary btn-rounded"
-                                                            style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
-                                                        <center>
 
-                                                </div>
+                                            <div class="modal-footer col-md-12">
+                                                <a href="{{ url('job_request') }}/{{ $job_request->id }}/edit"> <button
+                                                        type="button" class="btn btn-danger btn-rounded"
+                                                        data-dismiss="modal"
+                                                        style="background-color: #F77883">&nbsp;&nbsp;&nbsp;Close&nbsp;&nbsp;&nbsp;</button>
+                                                    </a>
+                                                <button type="submit" class="btn btn-primary btn-rounded"
+                                                    style="background-color: #2763FF">&nbsp;&nbsp;&nbsp;Save&nbsp;&nbsp;&nbsp;</button>
+                                            </div>
 
                                                 <!-- <div class="modal-footer">
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <button type="button" class="btn btn-danger"
@@ -1234,9 +1230,13 @@
 
                                     <br>
 
-                                    <div class="col-md-12 row">
+
+
+                                    <div class="card">
+
                                         <div class="col-md-12">
-                                            <div class="form-group" align='center'>
+                                            <br>
+                                            <div class="form-group">
                                                 <button class="btn btn-primary btn-rounded"
                                                     style="background-color: #2763FF"
                                                     onclick="modal_add_english_level()">&nbsp;&nbsp;&nbsp;Add English level
@@ -1244,6 +1244,54 @@
 
                                             </div>
                                         </div>
+                                        <div class="card-header">
+                                            <h4 class="card-title">Positions</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-responsive-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Position</th>
+                                                            <th>Workers</th>
+                                                            <th>English Level</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach ($positions as $position)
+                                                            <tr>
+                                                                <td>{{ $position->request_detail->position->title }}</td>
+                                                                <td>{{ $position->number_of_workers }}</td>
+                                                                <td>
+
+                                                                    @if ($position->english_level->id == '1')
+                                                                        <span class="badge badge-danger btn-block"
+                                                                            style="background-color: #F77883">{{ $position->english_level->description_level_en }}</span>
+                                                                    @elseif ($position->english_level->id == '2')
+                                                                        <span class="badge badge-primary btn-block"
+                                                                            style="background-color: #2763FF">{{ $position->english_level->description_level_en }}</span>
+                                                                    @elseif ($position->english_level->id == '3')
+                                                                        <span
+                                                                            class="badge badge-success btn-block">{{ $position->english_level->description_level_en }}</span>
+                                                                    @elseif ($position->english_level->id == '4')
+                                                                        <span
+                                                                            class="badge badge-info btn-block">{{ $position->english_level->description_level_en }}</span>
+                                                                    @endif
+
+
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
 
 
 
@@ -1326,50 +1374,6 @@
                                             </div>
                                         </div>
                                         <!-- end modal add english level -->
-                                    </div>
-
-
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover table-responsive-sm">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Position</th>
-                                                        <th>Workers</th>
-                                                        <th>English Level</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($positions as $position)
-                                                        <tr>
-                                                            <td>{{ $position->request_detail->position->title }}</td>
-                                                            <td>{{ $position->number_of_workers }}</td>
-                                                            <td>
-
-                                                                @if ($position->english_level->id == '1')
-                                                                    <span class="badge badge-danger"
-                                                                        style="background-color: #F77883">{{ $position->english_level->description_level_en }}</span>
-                                                                @elseif ($position->english_level->id == '2')
-                                                                    <span class="badge badge-primary"
-                                                                        style="background-color: #2763FF">{{ $position->english_level->description_level_en }}</span>
-                                                                @elseif ($position->english_level->id == '3')
-                                                                    <span
-                                                                        class="badge badge-success">{{ $position->english_level->description_level_en }}</span>
-                                                                @elseif ($position->english_level->id == '4')
-                                                                    <span
-                                                                        class="badge badge-info">{{ $position->english_level->description_level_en }}</span>
-                                                                @endif
-
-
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
 
                                 </div>
                                 <div class="tab-pane fade" id="tab4">

@@ -20,7 +20,7 @@ class JobRequestAdminController extends Controller
     public function index()
     {
         $user = auth()->user();
-        if ($user->hasRole('administrator pes') == true) {
+        if ($user->hasRole('administrator pes') == true || $user->hasRole('financial') == true) {
             $job_requests = JobRequest::join('employer','request.employer_id','=','employer.id')
             ->select('request.id','employer.legal_business_name as employer', 'request.start_date', 'request.end_date','request.request_status_id','request.paid',\DB::raw(
             "(select ifnull(SUM(detail.number_workers),0) from request_detail as detail where detail.request_id = request.id) as number_workers") )
