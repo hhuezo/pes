@@ -69,9 +69,12 @@
                                     @endcan
 
                                     &nbsp;&nbsp;
-                                    <a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" target="_blank"
+                                    <a href="{{ url('job_request/format') }}/{{ $obj->id }}"
                                         class="on-default edit-row">
                                         <i class="fa fa-print fa-lg"></i></a>
+                                    <!--<a href="{{ url('job_request/form9141') }}/{{ $obj->id }}" target="_blank"
+                                        class="on-default edit-row">
+                                        <i class="fa fa-print fa-lg"></i></a>-->
 
 
                                 </td>

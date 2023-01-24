@@ -152,24 +152,11 @@ class JobRequestController extends Controller
 
         $employer_transportation = EmployerTransportation::where('request_id','=',$job_request->id)->where('employer_id','=',$job_request->employer_id)->first();
 
-        /*
-        if($job_request->employer_representative_id)
-        {
-            $employer_representative = EmployerRepresentative::findOrFail($job_request->employer_representative_id);
-        }
-        else{
-            $employer_representative = null;
-        }
-*/
 
         $employer_representative = null;
 
 
         $employers_representative = EmployerRepresentative::all();
-
-        //dd($employers_representative);
-
-        //dd($employer_representative);
 
         $types_representation = TypeRepresentation::where('status','=','ACT')->get();
 
@@ -1222,6 +1209,8 @@ class JobRequestController extends Controller
         return view('reports.form9141', ['request_details' => $request_details,'contact_worksite' => $contact_worksite,'special_skills' => $special_skills,'degree_codes'=>$degree_codes]);
 
     }
+
+
 
 
     function base64_to_jpeg($base64_string, $output_file) {

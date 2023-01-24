@@ -13,6 +13,10 @@
     <!-- Datatable -->
     <link href="{{ asset('template/vendor/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
 
+
+      <!-- Summernote -->
+  <link href="{{ asset('template/vendor/summernote/summernote.css') }}" rel="stylesheet">
+
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
 
@@ -493,6 +497,13 @@
 
     <!-- mascara de entrada -->
     <script src="{{ asset('template/vendor/input-mask/jquery.inputmask.js') }}"></script>
+
+
+
+    <!-- Summernote -->
+    <script src="{{ asset('template/vendor/summernote/js/summernote.min.js') }}"></script>
+    <!-- Summernote init -->
+    <script src="{{ asset('template/js/plugins-init/summernote-init.js') }}"></script>
 
 
     <script>

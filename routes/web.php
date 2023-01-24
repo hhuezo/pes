@@ -17,6 +17,7 @@ use App\Http\Controllers\CaseManagerController;
 use App\Http\Controllers\CityZipController;
 use App\Http\Controllers\JobRequestAdminController;
 use App\Http\Controllers\JobRequestFinantialController;
+use App\Http\Controllers\FormatController;
 
 
 Route::get('/', function () {
@@ -107,6 +108,9 @@ Route::post('job_request_detail/english_levels', [JobRequestDetailController::cl
 Route::resource('case_manager', CaseManagerController::class);
 
 
-
-
 Route::get('job_request/form9141/{id}', [JobRequestController::class, 'form9141']);
+
+
+Route::get('job_request/format/{id}', [FormatController::class, 'show']);
+Route::get('job_request/format_export/{id}/{type}', [FormatController::class, 'create']);
+Route::post('job_request/format_export', [FormatController::class, 'store']);
