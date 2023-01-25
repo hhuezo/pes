@@ -111,6 +111,8 @@ Route::post('job_request_detail/english_levels', [JobRequestDetailController::cl
 
 Route::resource('flight_admin', FlightController::class);
 Route::post('flight_admin/update_itinerary', [FlightController::class,'update_itinerary']);
+Route::get('get_airports_code/{id}', [FlightController::class, 'get_airports_code']);
+Route::get('get_flight_itinerary/{id}', [FlightController::class, 'get_flight_itinerary']);
 
 //case manager
 Route::resource('case_manager', CaseManagerController::class);

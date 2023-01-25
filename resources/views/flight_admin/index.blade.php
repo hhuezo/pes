@@ -35,9 +35,11 @@
                                 <td align="center">
 
                                     <a href="#"
-                                        onclick="modal_add_flight_itinerary({{ $obj->candidate_id }},{{ $obj->request_id }})"
+                                        onclick="modal_add_flight_itinerary({{ $obj->candidate_id }},{{ $obj->request_id }},{{ $obj->country_id }})"
                                         class="on-default edit-row">
                                         <i class="fa fa-edit fa-lg"></i></a>
+
+
 
 
 
@@ -65,7 +67,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                     </button>
                 </div>
-                <form action="{{ url('flight_admin/update_itinerary') }}" method="POST">
+                <form action="{{ url('flight_admin/update_itinerary') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="modal-body">
@@ -97,16 +99,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Aeropuerto de salida</label>
+                                    <label>Departure Airport</label>
                                     <select name="departure_airport_id" id="departure_airport_id"
                                         class="form-control select2">
-                                        <option value="">Select</option>
-                                        @if ($airports)
-                                            @foreach ($airports as $obj)
-                                                <option value="{{ $obj->id }}">{{ $obj->ident }} -
-                                                    {{ $obj->name }}</option>
-                                            @endforeach
-                                        @endif
                                     </select>
                                 </div>
                             </div>
@@ -129,7 +124,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Hora de llegada</label>
+                                    <label>Arrival time</label>
                                     <input type="time" name="arrival_time" id="arrival_time" class="form-control">
                                 </div>
                             </div>
@@ -139,7 +134,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Aeropuerto de llegada</label>
+                                    <label>Arriving Airport</label>
                                     <select name="arrival_airport_id" id="arrival_airport_id" class="form-control select2">
                                         <option value="">Select</option>
                                         @if ($airports)
@@ -149,6 +144,22 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="form-group row">
+                                        <label class="col-sm-12 col-form-label">
+                                            <h5>Airplane ticket</h5>
+                                        </label>
+                                        <div class="col-sm-9">
+                                            <input type="file" name="airplane_ticket" required>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -182,10 +193,32 @@
         });
 
 
-        function modal_add_flight_itinerary(candidate_id, request_id) {
+        function modal_add_flight_itinerary(candidate_id, request_id, country_id) {
+            get_airports(country_id);
             $('#modal-add-flight-itinerary').modal('show');
             document.getElementById('candidate_id').value = candidate_id;
             document.getElementById('request_id').value = request_id;
+        }
+
+
+
+        function get_airports(country_id) {
+            $.get("{{ url('get_airports_code') }}" + '/' + country_id, function(data) {
+                //esta el la peticion get, la cual se divide en tres partes. ruta,variables y funcion
+                console.log(data);
+
+                var _select = '';
+                _select += '<option value="">Select</option>';
+                for (var i = 0; i < data.length; i++)
+
+                    _select += '<option value="' + data[i].id + '"  >' + data[i].ident +
+                    ' ' + data[i]
+                    .name +
+                    '</option>';
+
+                $("#departure_airport_id").html(_select);
+
+            });
         }
     </script>
 @endsection
