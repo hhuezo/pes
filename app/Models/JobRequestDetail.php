@@ -87,5 +87,10 @@ class JobRequestDetail extends Model
         return $this->belongsTo('App\Models\catalogue\JobTitle', 'job_title_id', 'id');
     }
 
+    public function candidate_has_request_detail()
+    {
+        return $this->belongsToMany('App\Models\candidate\Candidate','candidates_per_request','request_detail_id');
+    }
+
 
 }

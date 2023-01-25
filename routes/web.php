@@ -19,6 +19,8 @@ use App\Http\Controllers\JobRequestAdminController;
 use App\Http\Controllers\JobRequestFinantialController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\FlightController;
+use App\Http\Controllers\RequestTrackingController;
+
 
 
 
@@ -95,6 +97,8 @@ Route::resource('job_request_admin', JobRequestAdminController::class);
 Route::resource('job_request_finantial', JobRequestFinantialController::class);
 Route::post('job_request_finantial/pay', [JobRequestFinantialController::class,'pay']);
 Route::post('job_request_finantial/update_pay', [JobRequestFinantialController::class,'update_pay']);
+Route::resource('job_request_tracking', RequestTrackingController::class);
+
 
 Route::get('job_request/get_div_deductions', [JobRequestController::class,'get_div_deductions']);
 Route::get('job_request/get_div_deductions_medical', [JobRequestController::class,'get_div_deductions_medical']);

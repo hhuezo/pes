@@ -84,4 +84,11 @@ class RequestDetail extends Model
 
     protected $guarded = [];
 
+
+
+    public function candidate_has_request_detail()
+    {
+        return $this->belongsToMany('App\Models\candidate\Candidate','candidates_per_request','request_detail_id');
+    }
+
 }
