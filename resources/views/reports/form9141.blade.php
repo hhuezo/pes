@@ -432,7 +432,11 @@
     <table border="1" cellspacing="0" style="width: 95%" align="center">
         <tr>
             <td colspan="4"><span class="fuente_header">1. Education: Minimum U.S. diploma/degree required *
-                <strong>{{ $detail->degree_code->name }}</strong>
+                <strong>
+                    @if($detail->minimum_education_id)
+                    {{  $detail->degree_code->name }}
+                    @endif
+                </strong>
             </span></td>
         </tr>
         <tr>
