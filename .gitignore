@@ -4,6 +4,7 @@
 /public/storage
 /public/sign
 /public/invoice
+/public/flights
 /storage/*.key
 /vendor
 .env
